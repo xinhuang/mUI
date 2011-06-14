@@ -33,7 +33,6 @@ public:
 	virtual bool LogicTick(float delta);
 
 private:
-	void MainFrame_OnPaint(void* sender, PaintEventArgs* e);
 	void MainFrame_OnKeyPress( void* sender, KeyPressEventArgs* e );
 
 	void AddForm();

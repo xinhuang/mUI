@@ -13,7 +13,7 @@ MainFrame::MainFrame()
 
 int MainFrame::get_Fps() const
 {
-	return HGEFPS_UNLIMITED;
+	return 50;
 }
 
 void MainFrame::ShowQuickSortForm( void* sender, EventArgs* e )

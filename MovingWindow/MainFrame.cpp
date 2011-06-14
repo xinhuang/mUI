@@ -11,12 +11,11 @@ MainFrame::MainFrame()
 
 int MainFrame::get_Fps() const
 {
-	return 50;
+	return HGEFPS_UNLIMITED;
 }
 
 bool MainFrame::Initialize()
 {
-	Paint += PaintEventHandler(this, &MainFrame::MainFrame_OnPaint);
 	KeyPress += KeyPressEventHandler(this, &MainFrame::MainFrame_OnKeyPress);
 
 	infoform_ = new InfoForm();
@@ -24,11 +23,6 @@ bool MainFrame::Initialize()
 	infoform_->Show();
 
 	return true;
-}
-
-void MainFrame::MainFrame_OnPaint( void* sender, PaintEventArgs* e )
-{
-
 }
 
 void MainFrame::MainFrame_OnKeyPress( void* sender, KeyPressEventArgs* e )
