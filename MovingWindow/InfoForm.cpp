@@ -15,7 +15,7 @@ void InfoForm::InitializeComponent()
 {
 	Paint += PaintEventHandler(this, &InfoForm::InfoForm_OnPaint);
 
-	set_Size(Size(200, 50));
+	set_Size(Size(200, 36));
 	set_BackColor(0x80333399);
 	set_TopMost(true);
 }
