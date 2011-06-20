@@ -30,13 +30,13 @@ class MUI_ENTRY EventHandler : public Delegate<void, void*, TEventArgs>
 public:
 	EventHandler() {}
 
-	template<typename TClass>
-	EventHandler(TClass& c, void (TClass::*f)(void*, TEventArgs))
+	template<typename TClass, typename TClassF>
+	EventHandler(TClass& c, void (TClassF::*f)(void*, TEventArgs))
 	{
 		Add(c, f);
 	}
-	template<typename TClass>
-	EventHandler(TClass* c, void (TClass::*f)(void*, TEventArgs))
+	template<typename TClass, typename TClassF>
+	EventHandler(TClass* c, void (TClassF::*f)(void*, TEventArgs))
 	{
 		Add(*c, f);
 	}

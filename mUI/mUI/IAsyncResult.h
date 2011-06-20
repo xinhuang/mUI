@@ -14,38 +14,26 @@
 	limitations under the License.
 */
 
-#ifndef __INVOCATIONLIST_H__
-#define __INVOCATIONLIST_H__
+#ifndef __IASYNCRESULT_H__
+#define __IASYNCRESULT_H__
 
-#include <map>
-using std::map;
-#include <deque>
-using std::deque;
+#include "Threading/Threading.h"
 
-#include "../Threading/Threading.h"
-using namespace mUI::System::Threading;
+#include "../mUI.h"
 
 namespace mUI{ namespace System{ 
 
-class ISynchronizeInvoke;
+namespace Threading{
+	class WaitHandle;
+}
 
-// TODO: Use SList instead of deque.
-class InvocationList: private deque<ISynchronizeInvoke*>
+class MUI_ENTRY IAsyncResult
 {
 public:
-	InvocationList(void);
-	~InvocationList(void);
-
-	static void DoEvents();
-
-	static void Register(ISynchronizeInvoke& invokable);
-	static void Unregister(const ISynchronizeInvoke& invokable);
-
-private:
-	const IntPtr tid_;
-	deque<ISynchronizeInvoke*> invokable_list_;
+	virtual Threading::WaitHandle& getAsyncWaitHandle() = 0;
+	virtual bool IsComplete() const = 0;
 };
 
 }}
 
-#endif 
+#endif

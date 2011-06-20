@@ -7,12 +7,18 @@ using std::swap;
 
 using namespace mUI::System;
 
+#include "TitleBar.h"
+
 VisualSortForm::VisualSortForm(void)
 {
 	set_Size(Drawing::Size(500, 400));
 	set_Location(Point(100, 100));
 
-	Paint += EventHandler<PaintEventArgs*>(this, &VisualSortForm::OnPaint);
+	titlebar_ = new TitleBar();
+	titlebar_->set_Size(Size(this->get_Size().Width - 2, 20));
+	Controls.Add(*titlebar_);
+
+	Paint += PaintEventHandler(this, &VisualSortForm::OnPaint);
 }
 
 VisualSortForm::~VisualSortForm(void)
@@ -27,6 +33,7 @@ void VisualSortForm::OnPaint( void* sender, PaintEventArgs* e )
 		return;
 
 	Drawing::Size size = get_ClientSize();
+	size.Height -= titlebar_->get_Size().Height;
 	int max = array_.front();
 	for (size_t i = 1; i < array_.size(); ++i)
 	{
@@ -41,7 +48,8 @@ void VisualSortForm::OnPaint( void* sender, PaintEventArgs* e )
 	for (size_t i = 0; i < array_.size(); ++i)
 	{
 		Brush brush(color_[i]);
-		g.FillRectangle(brush, i * unit_width + 5, size.Height - array_[i] * unit_height, 
+		g.FillRectangle(brush, i * unit_width + 5, 
+			size.Height - array_[i] * unit_height + titlebar_->get_Size().Height, 
 			unit_width - 10, array_[i] * unit_height);
 	}
 }
@@ -54,7 +62,7 @@ void VisualSortForm::set_Fixed( size_t i )
 void VisualSortForm::Swap( size_t a, size_t b )
 {
 	if (InvokeRequired())
-		BeginInvoke(Delegate<>(this, &VisualSortForm::Swap, a, b));
+		Invoke(Delegate<>(this, &VisualSortForm::Swap, a, b));
 	else
 		swap(array_.at(a), array_.at(b));
 }

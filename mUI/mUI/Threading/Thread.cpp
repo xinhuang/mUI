@@ -1,8 +1,7 @@
 ﻿#include "Thread.h"
-#include "../../stdafx.h"
+#include <Windows.h>
 #include <process.h>
 
-#include "../ComponentModel/InvocationList.h"
 #include "AutoLock.h"
 #include "Interlocked.h"
 
@@ -56,29 +55,29 @@ Thread::~Thread()
 	Dispose();
 }
 
-IntPtr Thread::ManagedThreadID()
+IntPtr Thread::get_ManagedThreadID()
 {
 	return reinterpret_cast<IntPtr>(::GetCurrentThreadId());
 }
 
-LocalDataStorage Thread::AllocateDataSlot()
+LocalDataStoreSlot Thread::AllocateDataSlot()
 {
-	return reinterpret_cast<LocalDataStorage>(::TlsAlloc());
+	return reinterpret_cast<LocalDataStoreSlot>(::TlsAlloc());
 }
 
-void Thread::FreeDataSlot( const LocalDataStorage& tls )
+void Thread::FreeDataSlot( const LocalDataStoreSlot& tls )
 {
 	bool ret = ::TlsFree(reinterpret_cast<DWORD>(tls)) == TRUE;
 	assert(ret);
 }
 
-void Thread::SetData( const LocalDataStorage& tls, void* value )
+void Thread::SetData( const LocalDataStoreSlot& tls, void* value )
 {
 	bool ret = ::TlsSetValue(reinterpret_cast<DWORD>(tls), value) == TRUE;
 	assert(ret);
 }
 
-void* Thread::GetData( const LocalDataStorage& tls )
+void* Thread::GetData( const LocalDataStoreSlot& tls )
 {
 	return ::TlsGetValue(reinterpret_cast<DWORD>(tls));
 }
@@ -89,12 +88,12 @@ void Thread::ThreadEntry( void* param )
 	assert(tcb != NULL);
 	bool is_foreground = !tcb->IsBackground;
 
-	LocalDataStorage slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
 	Thread::SetData(slot, &tcb);
 
 	{
 		AutoLock lock(*tcb);
-		tcb->ID = Thread::ManagedThreadID();
+		tcb->ID = Thread::get_ManagedThreadID();
 		tcb->IsAlive = true;
         tcb->Handle = get_Handle();
 	}
@@ -224,7 +223,7 @@ void Thread::SpinWait( int iterations )
 
 Thread Thread::CurrentThread()
 {
-	LocalDataStorage slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
 	Thread thread;
 	thread.tcb_ = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
 	if (thread.tcb_ == NULL)
@@ -240,13 +239,13 @@ Thread Thread::CurrentThread()
 
 void Thread::_MakeTCB()
 {
-	LocalDataStorage slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
 	ThreadControlBlock* tcb = new ThreadControlBlock();
 	assert(tcb != NULL);
 	assert(Thread::GetData(slot) == NULL);
 	Thread::SetData(slot, tcb);
 
-	IntPtr tid = Thread::ManagedThreadID();
+	IntPtr tid = Thread::get_ManagedThreadID();
 
 	tcb->ReferenceCount = 1;
 	tcb->ID = tid;
@@ -284,7 +283,7 @@ void Thread::_MakeTCB()
 
 void Thread::DisposeTCBForMainThread()
 {
-	LocalDataStorage slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
 	ThreadControlBlock* tcb = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
 	assert(tcb != NULL);
 	delete tcb;

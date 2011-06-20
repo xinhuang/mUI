@@ -23,7 +23,7 @@ void QuickSortForm::Swap(vector<int>& array, size_t a, size_t b )
 	swap(array[a], array[b]);
 
 	if (InvokeRequired())
-		BeginInvoke(Delegate<void>(*this, &VisualSortForm::Swap, a, b));
+		Invoke(Delegate<void>(*this, &VisualSortForm::Swap, a, b));
 	else
 		VisualSortForm::Swap(a, b);
 
@@ -65,7 +65,7 @@ size_t QuickSortForm::Partition( vector<int>& array, size_t a, size_t b )
 		Swap(array, i, b - 1);
 
 		if (InvokeRequired())
-			BeginInvoke(Delegate<void>(this, &QuickSortForm::set_Fixed, i));
+			Invoke(Delegate<void>(this, &QuickSortForm::set_Fixed, i));
 
 		return i;
 	}

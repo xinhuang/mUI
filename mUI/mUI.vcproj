@@ -658,46 +658,14 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="APC"
-				>
-				<File
-					RelativePath=".\mUI\APC\IAsyncResult.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="ComponentModel"
 				>
-				<File
-					RelativePath=".\mUI\ComponentModel\AsyncResult.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\ComponentModel\AsyncResult.h"
-					>
-				</File>
 				<File
 					RelativePath=".\mUI\ComponentModel\ComponentModel.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\mUI\ComponentModel\ComponentModel.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\ComponentModel\InvocationEntry.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\ComponentModel\InvocationList.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\ComponentModel\InvocationList.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\ComponentModel\ISynchronizeInvoke.cpp"
 					>
 				</File>
 				<File
@@ -780,6 +748,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\mUI\IAsyncResult.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

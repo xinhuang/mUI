@@ -266,7 +266,13 @@ void FormManager::RaiseKeyboardEvent( UINT message, WPARAM wParam, LPARAM lParam
 
 void FormManager::DoEvents()
 {
-	Control::_InvokeAll();
+	for (map<IntPtr, Control*>::iterator iter = handle_map_.begin();
+		iter != handle_map_.end(); ++iter)
+	{
+		Control* control = iter->second;
+		assert(control != NULL);
+		control->_InvokeAll();
+	}
 }
 
 void FormManager::OnFrameActivated()
@@ -345,6 +351,7 @@ void FormManager::UnregisterControl( Control& ctrl )
 {
 	map<IntPtr, Control*>::iterator iter = handle_map_.find(ctrl.get_Handle());
 	assert(iter != handle_map_.end());
+	iter->second = NULL;
 	handle_map_.erase(iter);
 }
 

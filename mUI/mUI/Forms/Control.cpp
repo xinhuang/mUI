@@ -11,8 +11,6 @@ using namespace mUI::System::Threading;
 #include "Form.h"
 #include "FormManager.h"
 
-#include "../ComponentModel/InvocationList.h"
-
 // -------------------------------------------------------------- //
 
 namespace mUI{ namespace System{  namespace Forms{
@@ -26,6 +24,7 @@ Control::Control(void) :
 	background_image_layout_(ImageLayout::None),
 	suspend_layout_count_(0)
 {
+	thread_ = Threading::Thread::get_ManagedThreadID();
 	handle_ = FormManager::get_Instance().RegisterControl(*this);
 }
 
@@ -504,9 +503,57 @@ void Control::OnKeyPress( KeyPressEventArgs* e )
 	KeyPress(this, e);
 }
 
+// ----------------------------------------------------- //
+class Control::Task
+{
+public:
+	Task(const Delegate<>& method)
+	{
+		method_ = method;
+	}
+	void Invoke()
+	{
+		method_();
+	}
+
+private:
+	Delegate<> method_;
+};
+
+void Control::InvokeHelper( const Delegate<>& method, bool fSynchronous )
+{
+	{
+		AutoLock lock(this);
+		qutaskinvoke_.push(new Task(method));
+	}
+
+	if (!InvokeRequired())
+	{
+		_InvokeAll();
+	}
+}
+
 void Control::_InvokeAll()
 {
-	InvocationList::DoEvents();
+	AutoLock lock(this);
+	while (!qutaskinvoke_.empty())
+	{
+		Task* task = qutaskinvoke_.front();
+		qutaskinvoke_.pop();
+		assert(task != NULL);
+		task->Invoke();
+		delete task;
+	}
+}
+
+bool Control::InvokeRequired() const
+{
+	return Thread::get_ManagedThreadID() != thread_;
+}
+
+void Control::Invoke( const Delegate<void>& method )
+{
+	InvokeHelper(method, false);
 }
 // ------------------------------------------------- //
 
