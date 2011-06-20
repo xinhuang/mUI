@@ -31,7 +31,7 @@ public:
 	//IAsyncResult* BeginInvoke(const Delegate<void>& delegate);
 	//void* EndInvoke(IAsyncResult& asyncResult);
 
-	virtual void BeginInvoke(const Delegate<>& method) = 0;
+	virtual void Invoke(const Delegate<>& method) = 0;
 
 	virtual bool InvokeRequired() const = 0;
 };

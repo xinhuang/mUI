@@ -385,6 +385,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\mUI\Forms\ControlInvoke.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\mUI\Forms\ControlPaint.cpp"
 					>
 				</File>
