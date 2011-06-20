@@ -33,8 +33,8 @@ namespace mUI{ namespace System{  namespace Threading{
 typedef Delegate<void> ThreadStart;
 typedef Delegate<void, void*> ParameterizedThreadStart;
 
-typedef IntPtr LocalDataStorage;
-const LocalDataStorage INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalDataStorage>(TLS_OUT_OF_INDEXES);
+typedef IntPtr LocalDataStoreSlot;
+const LocalDataStoreSlot INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalDataStoreSlot>(TLS_OUT_OF_INDEXES);
 
 class MUI_ENTRY Thread
 {
@@ -63,13 +63,13 @@ public:
 	static void SpinWait(int interations);
 
 	static Thread	CurrentThread();
-	static IntPtr	ManagedThreadID();
+	static IntPtr	get_ManagedThreadID();
 
-	static LocalDataStorage AllocateDataSlot();
-	static void* GetData(const LocalDataStorage& slot);
-	static void SetData(const LocalDataStorage& slot, void* data);
+	static LocalDataStoreSlot AllocateDataSlot();
+	static void* GetData(const LocalDataStoreSlot& slot);
+	static void SetData(const LocalDataStoreSlot& slot, void* data);
 
-	static void FreeDataSlot(const LocalDataStorage& tls);			// Non-CLR
+	static void FreeDataSlot(const LocalDataStoreSlot& tls);			// Non-CLR
 
 protected:
 	friend bool MUI_ENTRY Init();

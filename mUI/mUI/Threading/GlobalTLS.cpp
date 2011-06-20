@@ -4,7 +4,7 @@
 
 namespace mUI{ namespace System{  namespace Threading{
 
-LocalDataStorage GlobalTLS::slot_[SLOT_MAX];
+LocalDataStoreSlot GlobalTLS::slot_[SLOT_MAX];
 
 bool GlobalTLS::Init()
 {
@@ -13,7 +13,7 @@ bool GlobalTLS::Init()
 	return true;
 }
 
-mUI::System::Threading::LocalDataStorage GlobalTLS::GetSlot( SLOT tr )
+mUI::System::Threading::LocalDataStoreSlot GlobalTLS::GetSlot( SLOT tr )
 {
 	assert(tr < SLOT_MAX);
 	return slot_[tr];

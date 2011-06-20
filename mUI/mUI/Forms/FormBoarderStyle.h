@@ -16,9 +16,6 @@
 
 #ifndef __FORMBOARDERSTYLE_H__
 #define __FORMBOARDERSTYLE_H__
-//
-////warning C4482: nonstandard extension used: enum 'mUI::System::Forms::FormBorderStyle' used in qualified name
-//#pragma warning(disable:4482)
 
 namespace mUI{ namespace System{  namespace Forms{
 
@@ -28,11 +25,11 @@ public:
 	enum FBS {
 		None,
 		FixedSingle,
-		Fixed3D,			// Not supported yet
-		FixedDialog,		// Not supported yet
-		Sizable,			// Not supported yet
-		FixedToolWindow,	// Not supported yet
-		SizableToolWindow,	// Not supported yet
+		//Fixed3D,			// Not supported yet
+		//FixedDialog,		// Not supported yet
+		//Sizable,			// Not supported yet
+		//FixedToolWindow,	// Not supported yet
+		//SizableToolWindow,	// Not supported yet
 	};
 
 	FormBorderStyle() : fbs_(None)

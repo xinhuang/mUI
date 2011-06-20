@@ -17,53 +17,25 @@
 #ifndef __ISYNCHRONIZEINVOKE_H__
 #define __ISYNCHRONIZEINVOKE_H__
 
-#include "../Delegate/Delegate.h"
-#include "../Threading/Threading.h"
-
 #include "../mUIBase.h"
 
-#include <deque>
-using std::deque;
+#include "../Delegate/Delegate.h"
 
-namespace mUI{ namespace System{ 
-
-class IAsyncResult;
-class InvocationEntry;
-
-#if defined(_MSC_VER)
-#	pragma warning(push)
-#	pragma warning(disable : 4251)
-#endif
+namespace mUI{ namespace System{ namespace ComponentModel{
 
 class MUI_ENTRY ISynchronizeInvoke
 {
 public:
-	ISynchronizeInvoke();
-	virtual ~ISynchronizeInvoke();
+	virtual ~ISynchronizeInvoke() {}
 
 	//IAsyncResult* BeginInvoke(const Delegate<void>& delegate);
 	//void* EndInvoke(IAsyncResult& asyncResult);
 
-	void BeginInvoke(const Delegate<void>& delegate);
+	virtual void BeginInvoke(const Delegate<>& method) = 0;
 
-	bool InvokeRequired() const;
-
-private:
-	void Remove(InvocationEntry& mi);
-
-	friend class InvocationList;
-	void DoInvocations();
-
-private:
-	Threading::Lock milist_lock_;
-	deque<InvocationEntry*> mi_list_;
-	const IntPtr tid_;
+	virtual bool InvokeRequired() const = 0;
 };
 
-#if defined(_MSC_VER)
-#	pragma warning(pop)
-#endif
-
-}}
+}}}
 
 #endif

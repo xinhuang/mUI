@@ -13,9 +13,32 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#ifndef __COMPONENTMODEL_H__
-#define __COMPONENTMODEL_H__
 
-#include "ISynchronizeInvoke.h"
+#ifndef __TITLEBAR_H__
+#define __TITLEBAR_H__
+
+#include <mUI.h>
+using namespace mUI::System;
+using namespace mUI::System::Forms;
+
+class TitleBar :
+	public Control
+{
+public:
+	TitleBar();
+	virtual ~TitleBar();
+
+private:
+	void InitializeComponent();
+	void TitleBar_OnMouseDown	( void* sender, MouseEventArgs* e );
+	void TitleBar_OnMouseMove	( void* sender, MouseEventArgs* e );
+	void TitleBar_OnMouseUp		( void* sender, MouseEventArgs* e );
+	void TitleBar_OnLeave		( void* sender, EventArgs* e );
+	void TitleBar_OnPaint		( void* sender, PaintEventArgs* e );
+
+private:
+	bool moving_;
+	Point down_loc_;
+};
 
 #endif

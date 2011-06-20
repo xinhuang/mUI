@@ -28,19 +28,18 @@ class GlobalTLS
 public:
 	enum SLOT
 	{
-		InvocableObject,
 		ThreadControlBlock,
 
 		SLOT_MAX
 	};
 
 	static bool Init();
-	static LocalDataStorage GetSlot(SLOT tr);
+	static LocalDataStoreSlot GetSlot(SLOT tr);
 
 private:
 	static bool RegisterTLS();
 
-	static LocalDataStorage slot_[SLOT_MAX];
+	static LocalDataStoreSlot slot_[SLOT_MAX];
 };
 
 }}}

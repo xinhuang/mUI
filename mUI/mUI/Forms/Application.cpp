@@ -6,14 +6,16 @@
 #include <ctime>
 
 #include "../Threading/Threading.h"
-#include "../ComponentModel/ComponentModel.h"
 
-#include "Form.h"
+#include "../Drawing/Drawing.h"
+using namespace mUI::System::Drawing;
+
 #include "../Drawing/hgeDrawing/hgeGraphics.h"
 #include "../Drawing/hgeDrawing/PHGE.h"
 using mUI::System::Drawing::HGEDrawing::PHGE;
 
 #include "Frame.h"
+#include "Form.h"
 #include "FormManager.h"
 
 // -------------------------------------------------------------------- //

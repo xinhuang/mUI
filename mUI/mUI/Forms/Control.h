@@ -17,16 +17,21 @@
 #ifndef __CONTROL_H__
 #define __CONTROL_H__
 
-#include "../Delegate/Delegate.h"
-#include "../ComponentModel/ISynchronizeInvoke.h"
-
 #include <vector>
 using std::vector;
+
+#include <queue>
+using std::queue;
 
 #include <map>
 using std::map;
 
+#include "../mUIBase.h"
 #include "../String.h"
+
+#include "../Delegate/Delegate.h"
+#include "../ComponentModel/ComponentModel.h"
+#include "../Threading/Threading.h"
 
 #include "ControlEventArgs.h"
 #include "MouseEventArgs.h"
@@ -37,15 +42,13 @@ using std::map;
 #include "ImageLayout.h"
 
 #include "../Drawing/Color.h"
-using mUI::System::Drawing::Color;
 #include "../Drawing/Size.h"
-using mUI::System::Drawing::Size;
-#include "../Drawing/Point.h"
-using mUI::System::Drawing::Point;
 #include "../Drawing/Graphics.h"
+#include "../Drawing/Point.h"
+using mUI::System::Drawing::Color;
+using mUI::System::Drawing::Size;
+using mUI::System::Drawing::Point;
 using mUI::System::Drawing::Graphics;
-
-#include "../mUIBase.h"
 
 // -------------------------------------------------------------- //
 
@@ -62,7 +65,7 @@ namespace mUI{ namespace System{  namespace Forms{
 
 class Form;
 
-class MUI_ENTRY Control : public ISynchronizeInvoke
+class MUI_ENTRY Control : public ComponentModel::ISynchronizeInvoke, public Threading::Lockable
 {
 public:
 
@@ -165,6 +168,9 @@ public:
 	Form& FindForm();
 	const Form& FindForm() const;
 
+	virtual void Invoke(const Delegate<void>& method);
+	virtual bool InvokeRequired() const;
+
 	// -------------------------------------------------------//
 	// ControlCollection
 	class MUI_ENTRY ControlCollection
@@ -202,9 +208,7 @@ protected:
 	friend class Application;
 	friend class FormManager;
 
-	static void _InvokeAll();
-
-	virtual void InitializeComponent	() {}
+	void InitializeComponent	() {}
 
 	virtual void OnControlAdded			( ControlEventArgs* e );
 	virtual void OnControlRemoved		( ControlEventArgs* e );
@@ -244,6 +248,14 @@ protected:			// Below is NON-CLR interface.
 	static void _Deactivate(Control& c);
 
 private:
+	class Task;
+	void InvokeHelper(const Delegate<>& method, bool fSynchronous);
+	void _InvokeAll();
+
+private:
+	IntPtr			thread_;
+	queue<Task*>	qutaskinvoke_;
+
 	Control*		parent_;
 	IntPtr			handle_;
 

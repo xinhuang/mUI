@@ -23,6 +23,8 @@ using namespace mUI::System::Forms;
 using namespace mUI::System::Drawing;
 using namespace mUI::System::Threading;
 
+class TitleBar;
+
 class VisualSortForm : public Form
 {
 public:
@@ -40,6 +42,7 @@ protected:
 	virtual void OnPaint(void* sender, PaintEventArgs* e);
 
 private:
+	TitleBar* titlebar_;
 	Thread worker_;
 	vector<int> array_;
 	vector<Color> color_;
