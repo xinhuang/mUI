@@ -21,6 +21,10 @@
 
 #include "../Delegate/Delegate.h"
 
+namespace mUI{ namespace System{ 
+	class IAsyncResult;
+}}
+
 namespace mUI{ namespace System{ namespace ComponentModel{
 
 class MUI_ENTRY ISynchronizeInvoke
@@ -28,12 +32,12 @@ class MUI_ENTRY ISynchronizeInvoke
 public:
 	virtual ~ISynchronizeInvoke() {}
 
-	//IAsyncResult* BeginInvoke(const Delegate<void>& delegate);
-	//void* EndInvoke(IAsyncResult& asyncResult);
+	virtual IAsyncResult* BeginInvoke(const Delegate<void>& method) = 0;
+	virtual void EndInvoke(IAsyncResult& asyncResult) = 0;
 
 	virtual void Invoke(const Delegate<>& method) = 0;
 
-	virtual bool InvokeRequired() const = 0;
+	virtual bool get_InvokeRequired() const = 0;
 };
 
 }}}
