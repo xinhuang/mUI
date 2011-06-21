@@ -30,8 +30,8 @@ namespace Threading{
 class MUI_ENTRY IAsyncResult
 {
 public:
-	virtual Threading::WaitHandle& getAsyncWaitHandle() = 0;
-	virtual bool IsComplete() const = 0;
+	virtual Threading::WaitHandle* get_AsyncWaitHandle() = 0;
+	virtual bool get_IsComplete() const = 0;
 };
 
 }}

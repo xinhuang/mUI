@@ -1,12 +1,10 @@
 #include "Control.h"
 
+#include "../IAsyncResult.h"
+using namespace mUI::System;
+
 #include "../Threading/Threading.h"
 using namespace mUI::System::Threading;
-
-#include "SystemInformation.h"
-#include "Application.h"
-#include "Form.h"
-#include "FormManager.h"
 
 // ------------------------------------------------------- //
 
@@ -15,30 +13,95 @@ namespace mUI{ namespace System { namespace Forms{
 class Control::Task
 {
 public:
-	Task(const Delegate<>& method)
+	Task(const Delegate<>& method, bool synchronous);
+
+	void Invoke();
+	IAsyncResult* get_AsyncResult();
+
+private:
+	class AsyncResult : public IAsyncResult
 	{
-		method_ = method;
-	}
-	void Invoke()
-	{
-		method_();
-	}
+		friend Task;
+
+	public:
+		AsyncResult(Task& binds) : task_(&binds)
+		{}
+
+		virtual ~AsyncResult();
+		virtual WaitHandle* get_AsyncWaitHandle();
+		virtual bool get_IsComplete() const;
+
+	private:
+		Task* task_;
+		EventWaitHandle wait_handle_;
+		bool completed_;
+	};
 
 private:
 	Delegate<> method_;
+	AsyncResult* async_result_;
 };
 
-void Control::InvokeHelper( const Delegate<>& method, bool fSynchronous )
+// ---------------------------------------------------------------------- //
+
+Control::Task::Task(const Delegate<>& method, bool synchronous)
 {
+	method_ = method;
+	if (synchronous)
+	{
+		async_result_ = new AsyncResult(*this);
+	}
+	else
+	{
+		async_result_ = NULL;
+	}
+}
+
+void Control::Task::Invoke()
+{
+	method_();
+	if (async_result_ != NULL)
+	{
+		async_result_->wait_handle_.Set();
+		async_result_->completed_ = true;
+	}
+}
+
+IAsyncResult* Control::Task::get_AsyncResult()
+{
+	return async_result_;
+}
+
+Control::Task::AsyncResult::~AsyncResult()
+{
+	task_->async_result_ = NULL;
+}
+
+WaitHandle* Control::Task::AsyncResult::get_AsyncWaitHandle()
+{
+	return &wait_handle_;
+}
+
+bool Control::Task::AsyncResult::get_IsComplete() const
+{
+	return completed_;
+}
+// ---------------------------------------------------------------------- //
+
+IAsyncResult* Control::InvokeHelper( const Delegate<>& method, bool fSynchronous )
+{
+	Task* task = new Task(method, fSynchronous);
 	{
 		AutoLock lock(this);
-		qutaskinvoke_.push(new Task(method));
+		qutaskinvoke_.push(task);
 	}
 
-	if (!InvokeRequired())
+	if (!get_InvokeRequired())
 	{
 		_InvokeAll();
 	}
+
+	return task->get_AsyncResult();
 }
 
 void Control::_InvokeAll()
@@ -54,14 +117,26 @@ void Control::_InvokeAll()
 	}
 }
 
-bool Control::InvokeRequired() const
+bool Control::get_InvokeRequired() const
 {
 	return Thread::get_ManagedThreadID() != thread_;
 }
 
 void Control::Invoke( const Delegate<void>& method )
 {
-	InvokeHelper(method, false);
+	IAsyncResult* r = InvokeHelper(method, false);
+	assert(r == NULL);									// Should not return.
+}
+
+IAsyncResult* Control::BeginInvoke( const Delegate<void>& method )
+{
+	return InvokeHelper(method, true);
+}
+
+void Control::EndInvoke( IAsyncResult& asyncResult )
+{
+	WaitHandle* wait_handle = asyncResult.get_AsyncWaitHandle();
+	wait_handle->WaitOne();
 }
 
 }}}

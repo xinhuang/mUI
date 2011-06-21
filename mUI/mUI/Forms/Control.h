@@ -168,8 +168,10 @@ public:
 	Form& FindForm();
 	const Form& FindForm() const;
 
+	virtual IAsyncResult* BeginInvoke(const Delegate<void>& method);
+	virtual void EndInvoke(IAsyncResult& asyncResult);
 	virtual void Invoke(const Delegate<void>& method);
-	virtual bool InvokeRequired() const;
+	virtual bool get_InvokeRequired() const;
 
 	// -------------------------------------------------------//
 	// ControlCollection
@@ -249,7 +251,7 @@ protected:			// Below is NON-CLR interface.
 
 private:
 	class Task;
-	void InvokeHelper(const Delegate<>& method, bool fSynchronous);
+	IAsyncResult* InvokeHelper(const Delegate<>& method, bool fSynchronous);
 	void _InvokeAll();
 
 private:
