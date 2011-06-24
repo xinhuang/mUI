@@ -61,7 +61,7 @@ void VisualSortForm::set_Fixed( size_t i )
 
 void VisualSortForm::Swap( size_t a, size_t b )
 {
-	if (InvokeRequired())
+	if (get_InvokeRequired())
 		Invoke(Delegate<>(this, &VisualSortForm::Swap, a, b));
 	else
 		swap(array_.at(a), array_.at(b));
