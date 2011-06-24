@@ -14,6 +14,10 @@ class Control::Task
 {
 public:
 	Task(const Delegate<>& method, bool synchronous);
+	~Task()
+	{
+		async_result_ = NULL;
+	}
 
 	void Invoke();
 	IAsyncResult* get_AsyncResult();
@@ -62,8 +66,8 @@ void Control::Task::Invoke()
 	method_();
 	if (async_result_ != NULL)
 	{
-		async_result_->wait_handle_.Set();
 		async_result_->completed_ = true;
+		async_result_->wait_handle_.Set();
 	}
 }
 
@@ -91,6 +95,7 @@ bool Control::Task::AsyncResult::get_IsComplete() const
 IAsyncResult* Control::InvokeHelper( const Delegate<>& method, bool fSynchronous )
 {
 	Task* task = new Task(method, fSynchronous);
+	IAsyncResult* async_result = task->get_AsyncResult();
 	{
 		AutoLock lock(this);
 		qutaskinvoke_.push(task);
@@ -101,7 +106,7 @@ IAsyncResult* Control::InvokeHelper( const Delegate<>& method, bool fSynchronous
 		_InvokeAll();
 	}
 
-	return task->get_AsyncResult();
+	return async_result;
 }
 
 void Control::_InvokeAll()
@@ -124,8 +129,9 @@ bool Control::get_InvokeRequired() const
 
 void Control::Invoke( const Delegate<void>& method )
 {
-	IAsyncResult* r = InvokeHelper(method, false);
-	assert(r == NULL);									// Should not return.
+	IAsyncResult* r = InvokeHelper(method, true);
+	r->get_AsyncWaitHandle()->WaitOne();
+	delete r;
 }
 
 IAsyncResult* Control::BeginInvoke( const Delegate<void>& method )
