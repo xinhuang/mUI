@@ -1,4 +1,4 @@
-﻿/*
+/*
 	Copyright 2011 hello.patz@gmail.com
 
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,39 +13,28 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 */
+#pragma once
 
-#ifndef __MOUSEBUTTONS_H__
-#define __MOUSEBUTTONS_H__
+#include <mUI.h>
+using namespace mUI::System;
+using namespace mUI::System::Forms;
+using namespace mUI::System::Drawing;
 
-#include "../mUIBase.h"
-
-namespace mUI{ namespace System{  namespace Forms{
-
-class MUI_ENTRY MouseButtons
+class DigitBox :
+	public Control
 {
 public:
-	enum Tag
-	{
-		None,
-		Left,
-		Right,
-		Middle,
-		XButton1,
-		XButton2
-	};
+	DigitBox(void);
+	virtual ~DigitBox(void);
 
-	MouseButtons() : tag_(None) {}
-	MouseButtons(Tag t) : tag_(t) {}
+	void set_Value(int value);
+	int get_Value() const;
 
-	operator Tag() const { return tag_; }
-
-	bool operator==(Tag t) const { return tag_ == t; }
-	bool operator!=(Tag t) const { return !(tag_ == t); }
-	
 private:
-	Tag tag_;
+	void InitializeComponent();
+
+private:
+	static const int MAX_DIGITS = 3;
+	int value_;
+	PictureBox digits[MAX_DIGITS];
 };
-
-}}}
-
-#endif // __MOUSEBUTTONS_H__

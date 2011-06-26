@@ -31,6 +31,8 @@ public:
 	Size Size;
 
 	Rectangle(const Point& pt, const Drawing::Size& size);
+	Rectangle(int x, int y, int w, int h);
+
 	Rectangle& operator+= (const Point& point);
 	Rectangle operator+ (const Point& point) const;
 

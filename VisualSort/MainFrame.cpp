@@ -41,7 +41,7 @@ bool MainFrame::Initialize()
 	show_qsort_.set_Text("Quick Sort");
 	show_qsort_.set_Size(Drawing::Size(100, 20));
 	show_qsort_.set_Location(Drawing::Point(20, 15));
-	show_qsort_.Clicked += EventHandler<>(this, &MainFrame::ShowQuickSortForm);
+	show_qsort_.Click += EventHandler<>(this, &MainFrame::ShowQuickSortForm);
 	Controls.Add(show_qsort_);
 
 	return true;

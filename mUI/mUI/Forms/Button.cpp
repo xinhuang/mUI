@@ -11,11 +11,17 @@ Button::Button()
 	normal_color_ = Color::Black;
 	pressed_color_ = Color::Silver;
 	state_ = Normal;
+	for (size_t i = 0; i < StateMax; ++i)
+	{
+		state_images_[i] = NULL;
+	}
 }
 
 void Button::OnMouseUp( MouseEventArgs* e )
 {
 	Control::OnMouseUp(e);
+	if (e->Button != MouseButtons::Left)
+		return;
 
 	if (Drawing::Rectangle(Point::Empty, get_Size()).Contains(e->Location))
 	{
@@ -46,7 +52,8 @@ void Button::OnMouseLeave( EventArgs* e )
 void Button::OnMouseDown( MouseEventArgs* e )
 {
 	Control::OnMouseDown(e);
-	state_ = static_cast<State>(state_ | Pressed);
+	if (e->Button == MouseButtons::Left)
+		state_ = static_cast<State>(state_ | Pressed);
 }
 
 void Button::OnMouseEnter( EventArgs* e )
@@ -57,12 +64,27 @@ void Button::OnMouseEnter( EventArgs* e )
 
 void Button::OnPaint( PaintEventArgs* e )
 {
-	if (state_ == Normal)
-		set_BackColor(SystemColors::ButtonFace);
-	else if (state_ == HoverPressed)
-		set_BackColor(SystemColors::ButtonShadow);
-	else
+	if (state_ == Hover)
+	{
 		set_BackColor(SystemColors::ButtonHighlight);
+		Image* image = state_images_[Hover];
+		if (image == NULL)
+			image = state_images_[Normal];
+		set_BackgroundImage(image, false);
+	}	
+	else if (state_ == HoverPressed)
+	{
+		set_BackColor(SystemColors::ButtonShadow);
+		Image* image = state_images_[Pressed];
+		if (image == NULL)
+			image = state_images_[Normal];
+		set_BackgroundImage(image, false);
+	}
+	else
+	{
+		set_BackColor(SystemColors::ButtonFace);
+		set_BackgroundImage(state_images_[Normal], false);
+	}
 
 	ButtonBase::OnPaint(e);
 
@@ -92,6 +114,40 @@ void Button::OnMouseMove( MouseEventArgs* e )
 void Button::OnLeave( EventArgs* e )
 {
 	state_ = Normal;
+}
+
+void Button::set_NormalImage( const String& image )
+{
+	set_StateImage(Normal, image);
+}
+
+void Button::set_HoverImage( const String& image )
+{
+	set_StateImage(Hover, image);
+}
+
+void Button::set_PressedImage( const String& image )
+{
+	set_StateImage(Pressed, image);
+}
+
+void Button::set_StateImage( State s, const String& image )
+{
+	if (state_images_[s] != NULL)
+	{
+		delete state_images_[s];
+	}
+	state_images_[s] = Image::FromFile(image);
+}
+
+Button::~Button()
+{
+	set_BackgroundImage(NULL, false);
+	for (size_t i = 0; i < StateMax; ++i)
+	{
+		delete state_images_[i];
+		state_images_[i] = NULL;
+	}
 }
 
 }}}
