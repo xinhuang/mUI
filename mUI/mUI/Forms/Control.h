@@ -84,7 +84,7 @@ public:
 
 	KeyPressEventHandler	KeyPress;
 
-	EventHandler<>			Clicked;
+	EventHandler<>			Click;
 
 	PaintEventHandler		Paint;
 
@@ -145,6 +145,7 @@ public:
 	Drawing::Image* get_BackgroundImage() { return background_image_; }
 	const Drawing::Image* get_BackgroundImage() const { return background_image_; }
 	void set_BackgroundImage(Drawing::Image* image);
+	void set_BackgroundImage(Drawing::Image* image, bool delete_old);
 
 	ImageLayout get_BackgroundImageLayout() const { return background_image_layout_; }
 	void set_BackgroundImageLayout(const ImageLayout& value);
@@ -209,8 +210,6 @@ protected:
 
 	friend class Application;
 	friend class FormManager;
-
-	void InitializeComponent	() {}
 
 	virtual void OnControlAdded			( ControlEventArgs* e );
 	virtual void OnControlRemoved		( ControlEventArgs* e );

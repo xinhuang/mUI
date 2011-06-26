@@ -2,7 +2,7 @@
 
 MovingForm::MovingForm()
 {
-	set_BackgroundImage(Image::FromFile(L"anchor.png"));
+	set_BackgroundImage(Image::FromFile(L"res/anchor.png"));
 	Random random;
 	delta_.X = random.Next(-5, 5);
 	delta_.Y = random.Next(-5, 5);

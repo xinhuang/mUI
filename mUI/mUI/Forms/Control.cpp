@@ -262,7 +262,7 @@ void Control::OnMouseClick( MouseEventArgs* e )
 
 void Control::OnClick( EventArgs* e )
 {
-	Clicked(this, e);
+	Click(this, e);
 }
 
 Control* Control::FromHandle( const IntPtr& handle )
@@ -286,9 +286,15 @@ void Control::set_Visible( bool Value )
 
 void Control::set_BackgroundImage( Drawing::Image* image )
 {
+	set_BackgroundImage(image, true);
+}
+
+void Control::set_BackgroundImage( Drawing::Image* image, bool delete_old )
+{
 	if (image != background_image_)
 	{
-		delete background_image_;
+		if (delete_old)
+			delete background_image_;
 		background_image_ = image;
 		OnBackgroundImageChanged(&EventArgs::Empty);
 	}
@@ -532,6 +538,7 @@ void Control::ControlCollection::Add( Control& control )
 	controls_.push_back(&control);
 	control.parent_ = &outer_class_;
 	control.set_Visible(true);
+
 	ControlEventArgs e(control);
 	outer_class_.OnControlAdded(&e);
 	outer_class_.PerformLayout();

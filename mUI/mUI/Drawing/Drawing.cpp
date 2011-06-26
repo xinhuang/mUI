@@ -11,7 +11,7 @@ Graphics* CreateGraphics( const Rectangle& clip_rect )
 
 void CreateSystemFonts()
 {
-	SystemFonts::DefaultFont = new Font(L"youyuan", 18);
+	SystemFonts::DefaultFont = new Font(L"res/default", 18);
 	assert(SystemFonts::DefaultFont != NULL);
 }
 void FreeSystemFonts()

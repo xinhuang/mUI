@@ -21,12 +21,21 @@
 
 #include "../mUIBase.h"
 
+namespace mUI{ namespace System{ namespace Drawing{
+	class Image;
+}}}
+
 namespace mUI{ namespace System{  namespace Forms{
 
 class MUI_ENTRY Button : public ButtonBase
 {
 public:
 	Button();
+	virtual ~Button();
+
+	void set_NormalImage(const String& image);			// Non-WinForm interface!
+	void set_HoverImage(const String& image);			// Non-WinForm interface!
+	void set_PressedImage(const String& image);			// Non-WinForm interface!
 
 protected:
 	virtual void OnPaint			( PaintEventArgs* e );
@@ -41,17 +50,21 @@ protected:
 	virtual void OnLeave			( EventArgs* e );
 
 private:
-	Color normal_color_;
-	Color pressed_color_;
-
 	enum State
 	{
-		Normal = 0,
-		Hover = 1,
-		Pressed = 2,
+		Normal		= 0,
+		Hover		= 1,
+		Pressed		= 2,
+		StateMax	= 3,
 		HoverPressed = Hover | Pressed,
 	};
+	void set_StateImage( State s, const String& image );
+
+private:
+	Color normal_color_;
+	Color pressed_color_;
 	State state_;
+	Drawing::Image *state_images_[StateMax];
 };
 
 }}}

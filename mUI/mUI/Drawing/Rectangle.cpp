@@ -19,6 +19,11 @@ Rectangle::Rectangle( const Point& pt, const Drawing::Size& size ) : Location(pt
 {
 }
 
+Rectangle::Rectangle(int x, int y, int w, int h) : Location(x, y), Size(w, h)
+{
+
+}
+
 Rectangle Rectangle::operator+( const Point& point ) const
 {
 	Rectangle rect = *this;
