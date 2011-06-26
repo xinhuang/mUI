@@ -1,4 +1,4 @@
-#include "MineSweeper.h"
+﻿#include "MineSweeper.h"
 
 int APIENTRY wWinMain(HINSTANCE hInstance,
 					  HINSTANCE hPrevInstance,
