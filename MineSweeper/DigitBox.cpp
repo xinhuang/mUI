@@ -1,4 +1,4 @@
-#include "DigitBox.h"
+﻿#include "DigitBox.h"
 
 DigitBox::DigitBox(void)
 {
