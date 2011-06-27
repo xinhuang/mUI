@@ -60,12 +60,12 @@ bool MineSweeper::Initialize()
 
 	tiles_ = new Tile[get_Width() * get_Height()];
 
-	Paint += PaintEventHandler(this, &MineSweeper::OnPaintMineBox);
-	MouseDown += MouseEventHandler(this, &MineSweeper::OnSweepDown);
-	MouseUp += MouseEventHandler(this, &MineSweeper::OnSweepUp);
+	Paint += PaintEventHandler(this, &MineSweeper::MineBox_OnPaint);
+	MouseDown += MouseEventHandler(this, &MineSweeper::Sweep_OnMouseDown);
+	MouseUp += MouseEventHandler(this, &MineSweeper::Sweep_OnMouseUp);
 	MouseMove += MouseEventHandler(this, &MineSweeper::OnSweepMove);
 
-	NewGame();
+	Reset();
 
 	return true;
 }
@@ -95,8 +95,25 @@ bool MineSweeper::LogicTick( float delta )
 	return false;
 }
 
-void MineSweeper::OnPaintMineBox( void* sender, PaintEventArgs* e )
+void MineSweeper::MineBox_OnPaint( void* sender, PaintEventArgs* e )
 {
+	Brush normal_brush(SystemColors::Control);
+	Brush highlight_brush(Color::Silver);
+	Brush dark_brush(Color::Grey);
+
+	Drawing::Rectangle rect = get_ClientRectangle();
+	e->Graphics.FillRectangle(dark_brush, rect);
+
+	rect.Location.X += BORDER_SIZE / 2;
+	rect.Location.Y += BORDER_SIZE / 2;
+	rect.Size.Width -= BORDER_SIZE;
+	rect.Size.Height -= BORDER_SIZE;
+	e->Graphics.FillRectangle(normal_brush, rect);
+
+	e->Graphics.FillRectangle(dark_brush, 0, 
+		timer_->get_Location().Y + timer_->get_Size().Height + BORDER_SIZE / 4,
+		get_Size().Width, BORDER_SIZE / 4);
+
 	int tiles_x = BORDER_SIZE;
 	int tiles_y = BORDER_SIZE + timer_->get_Location().Y + timer_->get_Size().Height;
 	for (size_t i = 0; i < get_Width(); ++i)
@@ -121,12 +138,14 @@ void MineSweeper::OnPaintMineBox( void* sender, PaintEventArgs* e )
 	}
 }
 
-void MineSweeper::NewGame()
+void MineSweeper::Reset()
 {
+	size_t nMine = get_MineNumber();
 	started_ = false;
 	end_ = false;
+	opened_ = 0;
 	timer_->set_Value(0);
-	size_t nMine = get_MineNumber();
+	remains_->set_Value(nMine);
 
 	for (size_t i = 0; i < nMine; ++i)
 	{
@@ -182,7 +201,7 @@ bool MineSweeper::Open( size_t x, size_t y, bool allow_boom )
 	if (x < 0 || x >= get_Width() || y < 0 || y >= get_Height())
 		return false;
 	Tile* tile = &tiles_[x * get_Width() + y];
-	if (tile->State != Tile::Coverred)
+	if (tile->State != Tile::Coverred && tile->State != Tile::Question)
 		return false;
 
 	if (!allow_boom)
@@ -202,10 +221,12 @@ bool MineSweeper::Open( size_t x, size_t y, bool allow_boom )
 		if (tile->AdjacentMine > 0)
 		{
 			tile->State = static_cast<Tile::Tag>(tile->AdjacentMine);
+			++opened_;
 		}
 		else
 		{
 			tile->State = Tile::Safe;
+			++opened_;
 			Open(x - 1, y - 1, allow_boom);
 			Open(x    , y - 1, allow_boom);
 			Open(x + 1, y - 1, allow_boom);
@@ -221,10 +242,10 @@ bool MineSweeper::Open( size_t x, size_t y, bool allow_boom )
 
 void MineSweeper::OnResetClick( void * sender, EventArgs* e )
 {
-	NewGame();
+	Reset();
 }
 
-void MineSweeper::OnSweepDown( void* sender, MouseEventArgs* e )
+void MineSweeper::Sweep_OnMouseDown( void* sender, MouseEventArgs* e )
 {
 	if (end_)
 		return;
@@ -239,13 +260,14 @@ void MineSweeper::OnSweepDown( void* sender, MouseEventArgs* e )
 		if (e->Button == MouseButtons::Left)
 		{
 			pressed_tile_ = i * get_Height() + j;
-			if (tiles_[pressed_tile_].State == Tile::Coverred)
+			if (tiles_[pressed_tile_].State == Tile::Coverred
+				|| tiles_[pressed_tile_].State == Tile::Question)
 				reset_.set_NormalImage(L"res/oops.png");
 		}
 	}
 }
 
-void MineSweeper::OnSweepUp( void* sender, MouseEventArgs* e )
+void MineSweeper::Sweep_OnMouseUp( void* sender, MouseEventArgs* e )
 {
 	if (end_)
 		return;
@@ -276,6 +298,12 @@ void MineSweeper::OnSweepUp( void* sender, MouseEventArgs* e )
 
 		if (!started_)
 			started_ = true;
+
+		if (get_Winned())
+		{
+			end_ = true;
+			reset_.set_NormalImage(L"res/sunglass.png");
+		}
 	}
 }
 
@@ -306,9 +334,14 @@ void MineSweeper::Flag( size_t x, size_t y )
 		tile->State = Tile::Flag;
 		remains_->set_Value(remains_->get_Value() - 1);
 		break;
+
 	case Tile::Flag:
-		tile->State = Tile::Coverred;
+		tile->State = Tile::Question;
 		remains_->set_Value(remains_->get_Value() + 1);
+		break;
+
+	case Tile::Question:
+		tile->State = Tile::Coverred;
 		break;
 	}
 }
@@ -356,4 +389,9 @@ size_t MineSweeper::get_Height() const
 	default:
 		return 32;
 	}	
+}
+
+bool MineSweeper::get_Winned()
+{
+	return opened_ == get_Width() * get_Height() - get_MineNumber();
 }
