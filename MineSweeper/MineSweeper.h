@@ -33,10 +33,10 @@ public:
 	virtual bool LogicTick(float delta);
 
 private:
-	void OnPaintMineBox( void* sender, PaintEventArgs* e);
+	void MineBox_OnPaint( void* sender, PaintEventArgs* e);
 	void OnResetClick(void * sender, EventArgs* e);
-	void OnSweepDown(void* sender, MouseEventArgs* e);
-	void OnSweepUp(void* sender, MouseEventArgs* e);
+	void Sweep_OnMouseDown(void* sender, MouseEventArgs* e);
+	void Sweep_OnMouseUp(void* sender, MouseEventArgs* e);
 	void OnSweepMove(void* sender, MouseEventArgs* e);
 
 	struct Tile
@@ -68,12 +68,14 @@ private:
 		static const int Width = 16;
 		static const int Height = 16;
 	};
-	void NewGame();		
+	void Reset();		
 
 	size_t get_MineNumber() const;
 	size_t get_Width() const;
 	size_t get_Height() const;
 	bool Open(size_t x, size_t y, bool allow_boom);		// return true of BOOM!
+
+	bool get_Winned();
 	void Flag(size_t x, size_t y);
 
 private:
@@ -93,6 +95,7 @@ private:
 	bool	started_;
 	bool	end_;
 	float	elapsed_;
+	size_t	opened_;
 
 	static const int BORDER_SIZE = 16;
 };

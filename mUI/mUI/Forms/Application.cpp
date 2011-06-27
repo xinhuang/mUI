@@ -50,13 +50,13 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 		case WM_RBUTTONDOWN:
 		case WM_MOUSEWHEEL:
 			FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
-			return 0;
+			break;
 
 		case WM_KEYDOWN:
 		case WM_KEYUP:
 		case WM_CHAR:
 			FormManager::get_Instance().RaiseKeyboardEvent(message, wParam, lParam);
-			return 0;
+			break;
 
 		case WM_CLOSE:
 			break;
