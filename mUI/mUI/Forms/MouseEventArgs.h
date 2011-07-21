@@ -23,7 +23,7 @@
 #include "../Drawing/Point.h"
 #include "MouseButtons.h"
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Forms{
 

@@ -11,9 +11,9 @@ int Interlocked::Increment( int& location )
 	return ::InterlockedIncrement(p);
 }
 
-long long Interlocked::Increment( long long& location )
+int64_t Interlocked::Increment( int64_t& location )
 {
-	assert(!"My Windows XP dont have the entry in kernel32.dll.");
+	assert(!"My Windows XP dont have the InterlockedIncrement64 in kernel32.dll.");
 	//return ::InterlockedIncrement64(&location);
 	return 0;
 }
@@ -48,9 +48,9 @@ int Interlocked::Decrement( int& location )
 	return ::InterlockedDecrement(p);
 }
 
-long long Interlocked::Decrement( long long& location )
+int64_t Interlocked::Decrement( int64_t& location )
 {
-	assert(!"My Windows XP dont have the entry in kernel32.dll.");
+	assert(!"My Windows XP dont have the InterlockedDecrement64 in kernel32.dll.");
 	//return ::InterlockedDecrement64(&location);
 	return 0;
 }
@@ -77,6 +77,20 @@ IntPtr Interlocked::Decrement( IntPtr& location )
 		assert(!"Hello future man. I'm from the 2012. And the memory address range is 32-bit.");
 	}
 	return INVALID_VALUE;
+}
+
+int Interlocked::CompareExchange( int volatile* dest, int value, int comparand )
+{
+	LONG volatile* p = reinterpret_cast<LONG volatile*>(dest);
+	return ::InterlockedCompareExchange(p, value, comparand);
+}
+
+int64_t Interlocked::CompareExchange( int64_t volatile* dest, int64_t value, int64_t comparand )
+{
+	LONGLONG volatile* p = reinterpret_cast<LONGLONG volatile*>(dest);
+	assert(!"My Windows XP dont have the InterlockedCompareExchange64 in kernel32.dll.");
+	//return ::InterlockedCompareExchange64(p, value, comparand);
+	return 0;
 }
 
 }}}

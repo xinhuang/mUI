@@ -17,7 +17,7 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Drawing{
 

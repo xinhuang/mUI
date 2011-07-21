@@ -17,12 +17,10 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
-#include "../Delegate/Delegate.h"
-
-#include "../mUIBase.h"
-#include "../../stdafx.h"
+#include "../System.h"
 
 #include "ThreadPriority.h"
+#include <Windows.h>
 
 namespace mUI{ namespace System{  namespace Forms{
 	class Application;
@@ -44,7 +42,7 @@ public:
 	Thread(const Thread& thread);
 	Thread& operator=(const Thread& thread);
 
-	Thread(const ThreadStart& thread_start);
+	explicit Thread(const ThreadStart& thread_start);
 	~Thread();
 
 	bool IsAlive() const;

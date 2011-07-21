@@ -9,7 +9,7 @@ using namespace mUI::System;
 
 #include "TitleBar.h"
 
-VisualSortForm::VisualSortForm(void)
+VisualSortForm::VisualSortForm(void) : worker_(NULL)
 {
 	set_Size(Drawing::Size(500, 400));
 	set_Location(Point(100, 100));
@@ -24,7 +24,6 @@ VisualSortForm::VisualSortForm(void)
 VisualSortForm::~VisualSortForm(void)
 {
 	Dispose();
-
 }
 
 void VisualSortForm::OnPaint( void* sender, PaintEventArgs* e )
@@ -72,14 +71,19 @@ void VisualSortForm::BeginSort( vector<int>& array )
 	array_ = array;
 	color_.clear();
 	color_.resize(array_.size(), Color::Grey);
-	worker_.Join();
-	worker_ = ThreadStart(this, &VisualSortForm::Sort, array_);
-	worker_.Start();
+	if (worker_ != NULL)
+		worker_->Join();
+	delete worker_;
+	worker_ = new Thread(ThreadStart(this, &VisualSortForm::Sort, array_));
+	worker_->Start();
 }
 
 void VisualSortForm::Dispose()
 {
-	while (!worker_.Join(100))
+	if (worker_ == NULL)
+		return;
+
+	while (!worker_->Join(100))
 	{
 		Application::DoEvents();
 	}

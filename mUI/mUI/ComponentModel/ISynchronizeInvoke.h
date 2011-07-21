@@ -17,8 +17,6 @@
 #ifndef __ISYNCHRONIZEINVOKE_H__
 #define __ISYNCHRONIZEINVOKE_H__
 
-#include "../mUIBase.h"
-
 #include "../Delegate/Delegate.h"
 
 namespace mUI{ namespace System{ 

@@ -43,7 +43,7 @@ protected:
 
 private:
 	TitleBar* titlebar_;
-	Thread worker_;
+	Thread* worker_;
 	vector<int> array_;
 	vector<Color> color_;
 };

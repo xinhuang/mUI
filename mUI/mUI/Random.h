@@ -17,7 +17,7 @@
 #ifndef __RANDOM_H__
 #define __RANDOM_H__
 
-#include "mUIBase.h"
+#include "Export.h"
 
 namespace mUI{ namespace System{
 

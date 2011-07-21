@@ -26,7 +26,7 @@ using std::deque;
 #include "../Delegate/Delegate.h"
 using mUI::System::EventArgs;
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 // ------------------------------------------------------------
 

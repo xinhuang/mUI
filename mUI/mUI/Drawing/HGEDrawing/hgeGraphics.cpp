@@ -9,6 +9,8 @@
 #include "../Brush.h"
 #include "../Image.h"
 #include "../Font.h"
+#include "../Internal/Glyph.h"
+#include "../Internal/FontImpl.h"
 
 #include <hgesprite.h>
 #include "hgefont.h"
@@ -191,14 +193,25 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, c
 	pos.X += offset_.X;
 	pos.Y += offset_.Y;
 
-	Font& hgefont = *reinterpret_cast<Font*>(font.ToHfont());
+	PHGE hge;
+	FontImpl& fi = *reinterpret_cast<FontImpl*>(font.ToHfont());
+	pos.Y += fi.get_Height();
 	for (String::const_iterator iter = s.begin();
 		iter != s.end(); ++iter)
 	{
-		hgeSprite sprite = hgefont.get_Sprite(*iter);
-		sprite.SetColor(brush.color.get_ARGB());
-		sprite.Render(pos.X, pos.Y);
-		pos.X += sprite.GetWidth();
+		Glyph* glyph = fi.get_Glyph(*iter);
+		if (glyph != NULL && glyph->get_Texture().IsValid())
+		{
+			Texture& texture = glyph->get_Texture();
+			texture.Render(hge, pos.X + glyph->get_X(), 
+				pos.Y + glyph->get_Y(), brush.color);
+
+			pos.X += glyph->get_AdvanceX();
+		}
+		else
+		{
+			pos.X += fi.get_Size();
+		}
 	}
 }
 

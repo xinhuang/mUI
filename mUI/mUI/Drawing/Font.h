@@ -14,18 +14,15 @@
 	limitations under the License.
 */
 
-#ifndef __FONT_H__
-#define __FONT_H__
+#ifndef __MUI_FONT_H__
+#define __MUI_FONT_H__
 
-#include "../mUIBase.h"
-
-namespace mUI{ namespace System{
-	class String;
-}}
+#include "../Export.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{ namespace Drawing{
 
-class IFont;
+class FontImpl;
 
 class MUI_ENTRY Font
 {
@@ -33,15 +30,29 @@ public:
 	Font(const String& family_name, float size);
 	virtual ~Font();
 
-	int get_Size() const;
-	const String& get_FontFamily() const;
+	bool	get_Bold()				const;
+	bool	get_Italic()			const;
+	bool	get_Strikeout()			const;
+	bool	get_Underline()			const;
+
+	size_t	get_Height()			const;
+	//float	get_Size()				const;
+	float	get_SizeInPoints()		const;
+
+	const String get_Name()		const;
 
 	IntPtr ToHfont() const;
+
+protected:
+	friend bool InitializeFont();
+	static bool Initialize();
+	friend bool DisposeFont();
+	static bool Dispose();
 	
 private:
-	IFont* impl_;
+	FontImpl* impl_;
 };
 
 }}}
 
-#endif
+#endif // __MUI_FONT_H__

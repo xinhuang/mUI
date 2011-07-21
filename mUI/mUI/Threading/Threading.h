@@ -27,7 +27,7 @@
 #include "ThreadPriority.h"
 #include "WaitHandle.h"
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{ namespace Threading{
 

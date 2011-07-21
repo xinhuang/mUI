@@ -17,9 +17,9 @@
 #ifndef __LOCK_H__
 #define __LOCK_H__
 
-#include "../../stdafx.h"
+#include "Windows.h"
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Threading{
 

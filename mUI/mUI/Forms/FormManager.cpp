@@ -361,7 +361,6 @@ void FormManager::Dispose()
 	{
 		delete instance_->form_list_.front();
 	}
-	instance_->form_list_.clear();
 
 	delete instance_;
 	instance_ = NULL;

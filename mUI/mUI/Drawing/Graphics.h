@@ -17,7 +17,7 @@
 #ifndef __GRAPHICS_H__
 #define __GRAPHICS_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{
 	class String;

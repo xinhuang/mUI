@@ -26,7 +26,7 @@ using std::queue;
 #include <map>
 using std::map;
 
-#include "../mUIBase.h"
+#include "../System.h"
 #include "../String.h"
 
 #include "../Delegate/Delegate.h"

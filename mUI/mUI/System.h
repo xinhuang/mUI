@@ -14,31 +14,17 @@
 	limitations under the License.
 */
 
-#ifndef __IFONT_H__
-#define __IFONT_H__
+#ifndef __MUI_SYSTEM_H__
+#define __MUI_SYSTEM_H__
 
-#ifdef CreateFont
-#	undef CreateFont
-#endif
+#include "Export.h"
 
-#include "../mUIBase.h"
+#include "BasicType.h"
+#include "IAsyncResult.h"
+#include "IDisposable.h"
+#include "Random.h"
+#include "String.h"
+#include "Delegate/Delegate.h"
+#include "IAsyncResult.h"
 
-namespace mUI{ namespace System{
-	class String;
-}}
-
-namespace mUI{ namespace System{ namespace Drawing{
-
-class IFont
-{
-public:
-	static IFont* CreateFont(const String& family_name, float size);
-
-	virtual ~IFont() {}
-	virtual int get_Size() const = 0;
-	virtual const String& get_FontFamily() const = 0;
-};
-
-}}}
-
-#endif
+#endif	// __MUI_SYSTEM_H__

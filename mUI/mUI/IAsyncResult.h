@@ -17,9 +17,7 @@
 #ifndef __IASYNCRESULT_H__
 #define __IASYNCRESULT_H__
 
-#include "Threading/Threading.h"
-
-#include "../mUI.h"
+#include "Export.h"
 
 namespace mUI{ namespace System{ 
 

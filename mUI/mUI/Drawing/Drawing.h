@@ -17,7 +17,7 @@
 #ifndef __DRAWING_H__
 #define __DRAWING_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 #include "Brush.h"
 #include "Color.h"

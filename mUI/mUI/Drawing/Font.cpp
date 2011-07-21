@@ -1,16 +1,52 @@
 ﻿#include "Font.h"
-#include "IFont.h"
+#include "Internal/FontImpl.h"
 
 namespace mUI{ namespace System{ namespace Drawing{
 
-int Font::get_Size() const
+Font::Font( const String& family_name, float size )
 {
-	return impl_->get_Size();
+	impl_ = FontImpl::CreateFont(family_name, size);
 }
 
-const String& Font::get_FontFamily() const
+Font::~Font()
 {
-	return impl_->get_FontFamily();
+	delete impl_;
+	impl_ = 0;
+}
+
+bool Font::get_Bold() const
+{
+	return impl_->get_Bold();
+}
+
+bool Font::get_Italic() const
+{
+	return impl_->get_Italic();
+}
+
+bool Font::get_Strikeout() const
+{
+	return impl_->get_Strikeout();
+}
+
+bool Font::get_Underline() const
+{
+	return impl_->get_Underline();
+}
+
+size_t Font::get_Height() const
+{
+	return impl_->get_Height();
+}
+
+float Font::get_SizeInPoints() const
+{
+	return impl_->get_SizeInPoints();
+}
+
+const String Font::get_Name() const
+{
+	return impl_->get_Name();
 }
 
 mUI::System::IntPtr Font::ToHfont() const
@@ -18,15 +54,14 @@ mUI::System::IntPtr Font::ToHfont() const
 	return reinterpret_cast<IntPtr>(impl_);
 }
 
-Font::Font( const String& family_name, float size )
+bool Font::Initialize()
 {
-	impl_ = IFont::CreateFont(family_name, size);
+	return FontImpl::Initialize();
 }
 
-Font::~Font()
+bool Font::Dispose()
 {
-	delete impl_;
-	impl_ = 0;
+	return FontImpl::Dispose();
 }
 
 }}}
