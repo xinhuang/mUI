@@ -14,11 +14,12 @@
 	limitations under the License.
 */
 
-#ifndef __STRING_H__
-#define __STRING_H__
+#ifndef __MUI_SYSTEM_STRING_H__
+#define __MUI_SYSTEM_STRING_H__
 
+#include "Export.h"
 #include <string>
-#include "mUIBase.h"
+#include "BasicType.h"
 
 namespace mUI{ namespace System{ 
 
@@ -40,4 +41,4 @@ public:
 
 }}
 
-#endif // __STRING_H__
+#endif // __MUI_SYSTEM_STRING_H__

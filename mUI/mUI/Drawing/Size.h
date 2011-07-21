@@ -17,7 +17,7 @@
 #ifndef __SIZE_H__
 #define __SIZE_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{ namespace Drawing{
 

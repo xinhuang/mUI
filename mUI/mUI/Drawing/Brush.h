@@ -17,7 +17,7 @@
 #ifndef __BRUSH_H__
 #define __BRUSH_H__
 
-#include "../mUIBase.h"
+#include "../Export.h"
 #include "Color.h"
 
 namespace mUI{ namespace System{  namespace Drawing{

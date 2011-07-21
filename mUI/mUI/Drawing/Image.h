@@ -17,7 +17,7 @@
 #ifndef __IMAGE_H__
 #define __IMAGE_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 #include "../String.h"
 #include "Size.h"
 

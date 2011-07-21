@@ -17,7 +17,7 @@
 #ifndef __INTERLOCKED_H__
 #define __INTERLOCKED_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 #include <cassert>
 
@@ -28,13 +28,16 @@ class MUI_ENTRY Interlocked
 public:
 	static int Increment(int& location);
 	static int Increment(size_t& location) { return _PlatformIncrement(location); }
-	static long long Increment(long long& location);
+	static int64_t Increment(int64_t& location);
 	static IntPtr Increment(IntPtr& location);
 
 	static int Decrement(int& location);
 	static int Decrement(size_t& location) { return _PlatformDecrement(location); }
-	static long long Decrement(long long& location);
+	static int64_t Decrement(int64_t& location);
 	static IntPtr Decrement(IntPtr& location);
+
+	static int CompareExchange(int volatile* dest, int value, int comparand);
+	static int64_t CompareExchange(int64_t volatile* dest, int64_t value, int64_t comparand);
 
 private:
 	template <typename T>

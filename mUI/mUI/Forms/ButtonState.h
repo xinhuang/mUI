@@ -17,7 +17,7 @@
 #ifndef __BUTTONSTATE_H__
 #define __BUTTONSTATE_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Forms{
 

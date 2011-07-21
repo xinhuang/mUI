@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\HGE\include"
+				AdditionalIncludeDirectories="..\hge\include;..\dependency\freetype2\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;MUI_EXPORTS"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
@@ -62,9 +62,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="hge.lib hgehelp.lib"
+				AdditionalDependencies="hge.lib hgehelp.lib freetype245_D.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\dependency\hge\lib\vc"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\dependency\hge\lib\vc;..\dependency\freetype2\lib"
+				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -119,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\HGE\include"
+				AdditionalIncludeDirectories="..\hge\include;..\freetype2\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;MUI_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -138,9 +139,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="hge.lib hgehelp.lib"
+				AdditionalDependencies="hge.lib hgehelp.lib freetype245.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\dependency\hge\lib\vc"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\dependency\hge\lib\vc;..\dependency\freetype2\lib"
 				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -175,18 +176,22 @@
 	</References>
 	<Files>
 		<Filter
-			Name="mUI"
+			Name="System"
 			>
+			<File
+				RelativePath=".\mUI\BasicType.h"
+				>
+			</File>
+			<File
+				RelativePath=".\mUI\Export.h"
+				>
+			</File>
 			<File
 				RelativePath=".\mUI\IAsyncResult.h"
 				>
 			</File>
 			<File
 				RelativePath=".\mUI\IDisposable.h"
-				>
-			</File>
-			<File
-				RelativePath=".\mUI\mUIBase.h"
 				>
 			</File>
 			<File
@@ -205,6 +210,14 @@
 				RelativePath=".\mUI\String.h"
 				>
 			</File>
+			<File
+				RelativePath=".\mUI\System.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\mUI\System.h"
+				>
+			</File>
 			<Filter
 				Name="Drawing"
 				>
@@ -214,6 +227,10 @@
 				</File>
 				<File
 					RelativePath=".\mUI\Drawing\Brush.h"
+					>
+				</File>
+				<File
+					RelativePath=".\mUI\Drawing\Color.cpp"
 					>
 				</File>
 				<File
@@ -238,14 +255,6 @@
 				</File>
 				<File
 					RelativePath=".\mUI\Drawing\Graphics.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\IFont.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\IFont.h"
 					>
 				</File>
 				<File
@@ -309,16 +318,36 @@
 					>
 				</File>
 				<Filter
-					Name="HGEDrawing"
+					Name="Internal"
 					>
 					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeFont.cpp"
+						RelativePath=".\mUI\Drawing\Internal\FontImpl.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeFont.h"
+						RelativePath=".\mUI\Drawing\Internal\FontImpl.h"
 						>
 					</File>
+					<File
+						RelativePath=".\mUI\Drawing\Internal\FTFont.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mUI\Drawing\Internal\FTFont.h"
+						>
+					</File>
+					<File
+						RelativePath=".\mUI\Drawing\Internal\Glyph.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mUI\Drawing\Internal\Glyph.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="HGEDrawing"
+					>
 					<File
 						RelativePath=".\mUI\Drawing\HGEDrawing\hgeGraphics.cpp"
 						>
@@ -333,6 +362,14 @@
 					</File>
 					<File
 						RelativePath=".\mUI\Drawing\HGEDrawing\hgeImage.h"
+						>
+					</File>
+					<File
+						RelativePath=".\mUI\Drawing\HGEDrawing\hgeTexture.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\mUI\Drawing\HGEDrawing\hgeTexture.h"
 						>
 					</File>
 					<File

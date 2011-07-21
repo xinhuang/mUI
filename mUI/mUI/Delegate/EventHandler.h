@@ -17,10 +17,9 @@
 #ifndef __EVENTHANDLER_H__
 #define __EVENTHANDLER_H__
 
+#include "../Export.h"
 #include "EventArgs.h"
 #include "Delegate.h"
-
-#include "../mUIBase.h"
 
 namespace mUI{ namespace System{
 

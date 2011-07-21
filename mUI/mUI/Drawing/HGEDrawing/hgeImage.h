@@ -20,6 +20,7 @@
 #include "../Image.h"
 #include "../Size.h"
 #include <HGE.h>
+#include "hgeTexture.h"
 
 namespace mUI{ namespace System{  namespace Drawing{ namespace HGEDrawing{
 
@@ -34,9 +35,10 @@ public:
 	virtual IntPtr GetHowFromImage() const;
 
 protected:
+	Image(const String& filename);
 
 private:
-	HTEXTURE texture_;
+	Texture texture_;
 };
 
 }}}}

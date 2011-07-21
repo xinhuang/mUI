@@ -17,11 +17,12 @@
 #ifndef __COLOR_H__
 #define __COLOR_H__
 
-#ifdef get_ARGB
-#	undef get_ARGB
-#endif // get_ARGB
+#ifdef ARGB
+#	undef ARGB
+#endif // ARGB
 
-#include "../mUIBase.h"
+#include "../Export.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Drawing{
 
@@ -75,7 +76,12 @@ public:
 		B = static_cast<unsigned char>(value);
 	}
 
-	unsigned char A, R, G, B;
+	union{
+		argb_t ARGB;
+		struct{
+			unsigned char A, R, G, B;
+		};
+	};
 };
 
 }}}

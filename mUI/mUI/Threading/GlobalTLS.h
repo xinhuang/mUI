@@ -17,7 +17,7 @@
 #ifndef __GLOBALTLS_H__
 #define __GLOBALTLS_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 #include "Thread.h"
 

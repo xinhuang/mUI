@@ -16,7 +16,7 @@
 #ifndef __FORMMANAGER_H__
 #define __FORMMANAGER_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 #include <Windows.h>
 

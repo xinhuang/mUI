@@ -21,7 +21,7 @@
 #include <vector>
 using std::vector;
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Threading{
 

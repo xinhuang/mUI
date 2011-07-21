@@ -17,10 +17,7 @@
 #ifndef __MUI_H__
 #define __MUI_H__
 
-#include "mUI/mUIBase.h"
-
-#include "mUI/Delegate/Delegate.h"
-#include "mUI/IAsyncResult.h"
+#include "mUI/System.h"
 
 #include "mUI/Drawing/Drawing.h"
 
@@ -41,9 +38,6 @@
 #include "mUI/Forms/PaintEventArgs.h"
 #include "mUI/Forms/PictureBox.h"
 #include "mUI/Forms/SystemInformation.h"
-
-#include "mUI/Random.h"
-#include "mUI/String.h"
 
 #include "mUI/Threading/Threading.h"
 

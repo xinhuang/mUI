@@ -17,10 +17,11 @@
 #ifndef __DELEGATE_H__
 #define __DELEGATE_H__
 
+#include "../Export.h"
+
 #include "Functor.h"
 #include "MemberFunctor.h"
 #include "FunctorBinder.h"
-#include "../mUIBase.h"
 
 #include <vector>
 using std::vector;

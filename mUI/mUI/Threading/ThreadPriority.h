@@ -17,7 +17,7 @@
 #ifndef __THREADPRIORITY_H__
 #define __THREADPRIORITY_H__
 
-#include "../mUIBase.h"
+#include "../System.h"
 
 namespace mUI{ namespace System{  namespace Threading{
 
