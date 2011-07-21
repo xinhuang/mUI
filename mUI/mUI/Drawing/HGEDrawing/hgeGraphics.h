@@ -27,6 +27,7 @@ namespace mUI{ namespace System{
 
 namespace mUI{ namespace System{  namespace Drawing{
 	class Brush;
+	class SolidBrush;
 	class Font;
 	class Pen;
 	class PointF;
@@ -51,7 +52,7 @@ public:
 	virtual void DrawLine(Pen& pen, float X1, float Y1, float X2, float Y2);
 
 	virtual void FillRectangle(Brush& brush, const Rectangle& rect);
-	virtual void FillRectangle(Brush& brush, int X, int Y, int Width, int Height);
+	virtual void FillRectangle(Brush& brush, int x, int y, int width, int height);
 
 	virtual void DrawRectangle(Pen& pen, const Rectangle& rect);
 	virtual void DrawRectangle(Pen& pen, int X, int Y, int Width, int Height);
@@ -64,6 +65,12 @@ public:
 	virtual void SetClip(int X, int Y, int Width, int Height);
 
 	virtual void DrawString(const String& s, Drawing::Font& font, Brush& brush, const PointF& pt);
+
+protected:
+	void FillRectangle(SolidBrush& brush, const Rectangle& rect);
+	void FillRectangle(SolidBrush& brush, int X, int Y, int Width, int Height);
+
+	void DrawString(const String& s, Drawing::Font& font, SolidBrush& brush, const PointF& pt);
 
 private:
 	bool enabled_;				// If the clipping is so small that we ignore the request.

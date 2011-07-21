@@ -26,7 +26,7 @@ void InfoForm::InfoForm_OnPaint( void* sender, PaintEventArgs* e )
 	wchar_t buffer[128];
 	_snwprintf_s(buffer, sizeof(buffer) / 2 - 1, sizeof(buffer) - 1, L"FPS: %3d", hge->Timer_GetFPS());
 
-	Brush brush(Color::Red);
+	SolidBrush brush(Color::Red);
 	e->Graphics.DrawString(buffer, *SystemFonts::DefaultFont, brush, PointF(0.f, 0.f));
 
 	_snwprintf_s(buffer, sizeof(buffer) / 2 - 1, sizeof(buffer) - 1, L"Number of Forms: %4d", form_number_);

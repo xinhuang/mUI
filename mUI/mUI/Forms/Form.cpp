@@ -47,7 +47,7 @@ void Form::OnPaint( PaintEventArgs* e )
 			g.DrawRectangle(pen, 1, 1, get_Size().Width - 1, get_Size().Height - 1);
 
 			int caption_height = SystemInformation::GetCaptionHeight();
-			Brush brush(Color::Grey);
+			SolidBrush brush(Color::Grey);
 			//g.FillRectangle(brush, 1, 1, get_Size().Width - border_size * 2, caption_height - border_size);
 		}
 	}

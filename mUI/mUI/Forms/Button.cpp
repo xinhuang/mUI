@@ -93,7 +93,7 @@ void Button::OnPaint( PaintEventArgs* e )
 	Drawing::Pen pen(Color::Black);
 	g.DrawRectangle(pen, 1, 1, get_Size().Width - 1, get_Size().Height - 1);
 
-	Brush brush(SystemColors::ControlText);
+	SolidBrush brush(SystemColors::ControlText);
 	g.DrawString(get_Text(), *SystemFonts::DefaultFont, brush, PointF(3, 3));
 }
 

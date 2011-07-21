@@ -47,6 +47,6 @@ void TitleBar::TitleBar_OnLeave( void* sender, EventArgs* e )
 
 void TitleBar::TitleBar_OnPaint( void* sender, PaintEventArgs* e )
 {
-	Brush brush(Color::Silver);
+	SolidBrush brush(Color::Silver);
 	e->Graphics.FillRectangle(brush, get_ClientRectangle());
 }

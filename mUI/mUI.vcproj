@@ -302,6 +302,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\mUI\Drawing\SolidBrush.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mUI\Drawing\SolidBrush.h"
+					>
+				</File>
+				<File
 					RelativePath=".\mUI\Drawing\SystemColors.cpp"
 					>
 				</File>
@@ -315,6 +323,14 @@
 				</File>
 				<File
 					RelativePath=".\mUI\Drawing\SystemFonts.h"
+					>
+				</File>
+				<File
+					RelativePath=".\mUI\Drawing\TextureBrush.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mUI\Drawing\TextureBrush.h"
 					>
 				</File>
 				<Filter

@@ -46,7 +46,7 @@ void VisualSortForm::OnPaint( void* sender, PaintEventArgs* e )
 	Graphics& g = e->Graphics;
 	for (size_t i = 0; i < array_.size(); ++i)
 	{
-		Brush brush(color_[i]);
+		SolidBrush brush(color_[i]);
 		g.FillRectangle(brush, i * unit_width + 5, 
 			size.Height - array_[i] * unit_height + titlebar_->get_Size().Height, 
 			unit_width - 10, array_[i] * unit_height);
