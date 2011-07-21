@@ -6,7 +6,7 @@
 #include "../PointF.h"
 #include "../Rectangle.h"
 #include "../Pen.h"
-#include "../Brush.h"
+#include "../SolidBrush.h"
 #include "../Image.h"
 #include "../Font.h"
 #include "../Internal/Glyph.h"
@@ -54,12 +54,12 @@ void Graphics::DrawLine( Pen& pen, float X1, float Y1, float X2, float Y2 )
 		hge_->Gfx_RenderLine(X1, Y1, X2, Y2, pen.color.get_ARGB());
 }
 
-void Graphics::FillRectangle( Brush& brush, const Rectangle& rect )
+void Graphics::FillRectangle( SolidBrush& brush, const Rectangle& rect )
 {
 	FillRectangle(brush, rect.Location.X, rect.Location.Y, rect.Size.Width, rect.Size.Height);
 }
 
-void Graphics::FillRectangle( Brush& brush, int X, int Y, int Width, int Height )
+void Graphics::FillRectangle( SolidBrush& brush, int X, int Y, int Width, int Height )
 {
 	hgeQuad quad;
 	hgeVertex vertex;
@@ -67,7 +67,7 @@ void Graphics::FillRectangle( Brush& brush, int X, int Y, int Width, int Height 
 	X += offset_.X;
 	Y += offset_.Y;
 
-	vertex.col = brush.color.get_ARGB();
+	vertex.col = brush.get_Color().get_ARGB();
 	vertex.z = UI_Z;
 
 	vertex.x = X;
@@ -91,6 +91,26 @@ void Graphics::FillRectangle( Brush& brush, int X, int Y, int Width, int Height 
 
 	if (enabled_)
 		hge_->Gfx_RenderQuad(&quad);
+}
+
+void Graphics::FillRectangle( Brush& brush, const Rectangle& rect )
+{
+	switch (brush.get_Type())
+	{
+	case Brush::Solid:
+		FillRectangle(static_cast<SolidBrush&>(brush), rect);
+		break;
+	}
+}
+
+void Graphics::FillRectangle( Brush& brush, int x, int y, int width, int height )
+{
+	switch (brush.get_Type())
+	{
+	case Brush::Solid:
+		FillRectangle(static_cast<SolidBrush&>(brush), x, y, width, height);
+		break;
+	}
 }
 
 void Graphics::SetClip( const Rectangle& rect )
@@ -187,7 +207,7 @@ void Graphics::DrawImage( const Image& image, int X, int Y, int Width, int Heigh
 		sprite.RenderEx(X, Y, 0, hscale, vscale);
 }
 
-void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, const PointF& pt )
+void Graphics::DrawString( const String& s, Drawing::Font& font, SolidBrush& brush, const PointF& pt )
 {
 	PointF pos(pt);
 	pos.X += offset_.X;
@@ -204,7 +224,7 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, c
 		{
 			Texture& texture = glyph->get_Texture();
 			texture.Render(hge, pos.X + glyph->get_X(), 
-				pos.Y + glyph->get_Y(), brush.color);
+				pos.Y + glyph->get_Y(), brush.get_Color());
 
 			pos.X += glyph->get_AdvanceX();
 		}
@@ -212,6 +232,16 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, c
 		{
 			pos.X += fi.get_Size();
 		}
+	}
+}
+
+void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, const PointF& pt )
+{
+	switch (brush.get_Type())
+	{
+	case Brush::Solid:
+		DrawString(s, font, static_cast<SolidBrush&>(brush), pt);
+		break;
 	}
 }
 

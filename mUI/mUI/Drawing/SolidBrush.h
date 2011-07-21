@@ -14,33 +14,28 @@
 	limitations under the License.
 */
 
-#ifndef __DRAWING_H__
-#define __DRAWING_H__
+#ifndef __SOLIDBRUSH_H__
+#define __SOLIDBRUSH_H__
 
-#include "../System.h"
-
-#include "Brush.h"
+#include "../Export.h"
 #include "Color.h"
-#include "Font.h"
-#include "Graphics.h"
-#include "Image.h"
-#include "Pen.h"
-#include "Point.h"
-#include "PointF.h"
-#include "Rectangle.h"
-#include "Size.h"
-#include "SolidBrush.h"
-#include "SystemColors.h"
-#include "SystemFonts.h"
-#include "TextureBrush.h"
+#include "Brush.h"
 
 namespace mUI{ namespace System{  namespace Drawing{
 
-bool Initialize();
-void Dispose();
+class MUI_ENTRY SolidBrush : public Brush
+{
+public:
+	SolidBrush(const Color& color);
 
-Graphics MUI_ENTRY *CreateGraphics(const Drawing::Rectangle& clip_rect);
+	const Color& get_Color() const;
+	Color& get_Color();
+	void set_Color(const Color& color);
+
+private:
+	Color color_;
+};
 
 }}}
 
-#endif
+#endif // __SOLIDBRUSH_H__

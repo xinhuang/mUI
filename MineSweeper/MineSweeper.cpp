@@ -97,9 +97,9 @@ bool MineSweeper::LogicTick( float delta )
 
 void MineSweeper::MineBox_OnPaint( void* sender, PaintEventArgs* e )
 {
-	Brush normal_brush(SystemColors::Control);
-	Brush highlight_brush(Color::Silver);
-	Brush dark_brush(Color::Grey);
+	SolidBrush normal_brush(SystemColors::Control);
+	SolidBrush highlight_brush(Color::Silver);
+	SolidBrush dark_brush(Color::Grey);
 
 	Drawing::Rectangle rect = get_ClientRectangle();
 	e->Graphics.FillRectangle(dark_brush, rect);

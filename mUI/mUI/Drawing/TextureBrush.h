@@ -14,33 +14,19 @@
 	limitations under the License.
 */
 
-#ifndef __DRAWING_H__
-#define __DRAWING_H__
+#ifndef __TEXTUREBRUSH_H__
+#define __TEXTUREBRUSH_H__
 
-#include "../System.h"
-
+#include "../Export.h"
 #include "Brush.h"
-#include "Color.h"
-#include "Font.h"
-#include "Graphics.h"
-#include "Image.h"
-#include "Pen.h"
-#include "Point.h"
-#include "PointF.h"
-#include "Rectangle.h"
-#include "Size.h"
-#include "SolidBrush.h"
-#include "SystemColors.h"
-#include "SystemFonts.h"
-#include "TextureBrush.h"
 
 namespace mUI{ namespace System{  namespace Drawing{
 
-bool Initialize();
-void Dispose();
-
-Graphics MUI_ENTRY *CreateGraphics(const Drawing::Rectangle& clip_rect);
+class MUI_ENTRY TextureBrush : public Brush
+{
+public:
+};
 
 }}}
 
-#endif
+#endif // __TEXTUREBRUSH_H__

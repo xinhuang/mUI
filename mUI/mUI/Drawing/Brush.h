@@ -18,16 +18,29 @@
 #define __BRUSH_H__
 
 #include "../Export.h"
-#include "Color.h"
 
 namespace mUI{ namespace System{  namespace Drawing{
 
 class MUI_ENTRY Brush
 {
 public:
-	Brush(const Color& Color) : color(Color) {}
+	virtual ~Brush() {}
 
-	Color color;
+	enum Type
+	{
+		Solid,
+		Texture,
+	};
+	Type get_Type() const { return type_; }
+
+protected:
+	Brush(Type type) : type_(type)
+	{
+	}
+
+
+private:
+	const Type type_;
 };
 
 }}}

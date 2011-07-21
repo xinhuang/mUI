@@ -47,7 +47,7 @@ void Control::OnPaint( PaintEventArgs* e )
 	Graphics& g = e->Graphics;
 	const Drawing::Rectangle& bounds = e->ClipRectangle;
 
-	Brush brush(get_BackColor());
+	SolidBrush brush(get_BackColor());
 	g.FillRectangle(brush, bounds);
 
 	if (get_BackgroundImage() != NULL)
