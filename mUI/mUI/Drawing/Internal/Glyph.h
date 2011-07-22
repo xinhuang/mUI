@@ -43,7 +43,6 @@ public:
 	const Texture&	get_Texture()	const;
 	size_t		get_Width()		const;
 	size_t		get_Height()	const;
-	size_t		get_HorizonOffset() const;
 	int			get_X() const;
 	int			get_Y() const;
 	int			get_AdvanceX()	const;

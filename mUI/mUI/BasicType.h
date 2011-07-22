@@ -17,6 +17,8 @@
 #ifndef __MUI_SYSTEM_BASICTYPE_H__
 #define __MUI_SYSTEM_BASICTYPE_H__
 
+#include <cmath>
+
 namespace mUI{ namespace System{
 
 // coz using intptr_t it would be impossible to reload foo(int) with foo(intptr_t). 
@@ -64,6 +66,19 @@ typedef uint32_t argb_t;
 #ifndef NULL
 #	define NULL (0)
 #endif // NULL
+
+const float FLOAT_MIN = 0.0000001f;
+const double DOUBLE_MIN = 0.000000000000001f;
+
+inline bool fequ(const float lhs, const float rhs)
+{
+	return abs(lhs - rhs) < FLOAT_MIN;
+}
+
+inline bool fequ(const double lhs, const double rhs)
+{
+	return abs(lhs - rhs) < DOUBLE_MIN;
+}
 
 }}
 

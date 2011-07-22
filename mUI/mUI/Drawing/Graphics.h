@@ -18,6 +18,7 @@
 #define __GRAPHICS_H__
 
 #include "../System.h"
+#include "SizeF.h"
 
 namespace mUI{ namespace System{
 	class String;
@@ -28,10 +29,10 @@ namespace mUI{ namespace System{  namespace Drawing{
 class Brush;
 class Font;
 class Image;
-class Rectangle;
 class Pen;
 class Point;
 class PointF;
+class Rectangle;
 
 class MUI_ENTRY Graphics
 {
@@ -54,7 +55,9 @@ public:
 	virtual void SetClip(const Rectangle& rect) = 0;
 	virtual void SetClip(int X, int Y, int Width, int Height) = 0;
 
-	virtual void DrawString(const String& s, Font& font, Brush& brush, const PointF& pt) = 0;
+	virtual void DrawString(const String& s, const Font& font, Brush& brush, const PointF& pt) = 0;
+
+	virtual SizeF MeasureString(const String& text, const Font& font) = 0;
 };
 
 }}}

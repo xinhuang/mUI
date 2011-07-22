@@ -207,7 +207,7 @@ void Graphics::DrawImage( const Image& image, int X, int Y, int Width, int Heigh
 		sprite.RenderEx(X, Y, 0, hscale, vscale);
 }
 
-void Graphics::DrawString( const String& s, Drawing::Font& font, SolidBrush& brush, const PointF& pt )
+void Graphics::DrawString( const String& s, const Font& font, SolidBrush& brush, const PointF& pt )
 {
 	PointF pos(pt);
 	pos.X += offset_.X;
@@ -216,6 +216,8 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, SolidBrush& bru
 	PHGE hge;
 	FontImpl& fi = *reinterpret_cast<FontImpl*>(font.ToHfont());
 	pos.Y += fi.get_Height();
+
+	utf32_t prev_code = 0;
 	for (String::const_iterator iter = s.begin();
 		iter != s.end(); ++iter)
 	{
@@ -226,7 +228,7 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, SolidBrush& bru
 			texture.Render(hge, pos.X + glyph->get_X(), 
 				pos.Y + glyph->get_Y(), brush.get_Color());
 
-			pos.X += glyph->get_AdvanceX();
+			pos.X += glyph->get_AdvanceX() + fi.get_Kerning(prev_code, *iter).X;
 		}
 		else
 		{
@@ -235,7 +237,7 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, SolidBrush& bru
 	}
 }
 
-void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, const PointF& pt )
+void Graphics::DrawString( const String& s, const Font& font, Brush& brush, const PointF& pt )
 {
 	switch (brush.get_Type())
 	{
@@ -243,6 +245,25 @@ void Graphics::DrawString( const String& s, Drawing::Font& font, Brush& brush, c
 		DrawString(s, font, static_cast<SolidBrush&>(brush), pt);
 		break;
 	}
+}
+
+SizeF Graphics::MeasureString( const String& text, const Font& font )
+{
+	float height = 0.f;
+	float width	= 0.f;
+	FontImpl& fi = *reinterpret_cast<FontImpl*>(font.ToHfont());
+	for (String::const_iterator iter = text.begin();
+		iter != text.end(); ++iter)
+	{
+		Glyph* glyph = fi.get_Glyph(*iter);
+		if (glyph != NULL)
+		{
+			height = max(height, glyph->get_Height());
+			width += glyph->get_Width();
+			// TODO: add kerning here.
+		}
+	}
+	return SizeF(width, height);
 }
 
 }}}}
