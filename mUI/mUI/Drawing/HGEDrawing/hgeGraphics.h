@@ -64,13 +64,14 @@ public:
 	virtual void SetClip(const Rectangle& rect);
 	virtual void SetClip(int X, int Y, int Width, int Height);
 
-	virtual void DrawString(const String& s, Drawing::Font& font, Brush& brush, const PointF& pt);
+	virtual void DrawString(const String& s, const Font& font, Brush& brush, const PointF& pt);
+	virtual SizeF MeasureString(const String& text, const Font& font);
 
 protected:
 	void FillRectangle(SolidBrush& brush, const Rectangle& rect);
 	void FillRectangle(SolidBrush& brush, int X, int Y, int Width, int Height);
 
-	void DrawString(const String& s, Drawing::Font& font, SolidBrush& brush, const PointF& pt);
+	void DrawString(const String& s, const Font& font, SolidBrush& brush, const PointF& pt);
 
 private:
 	bool enabled_;				// If the clipping is so small that we ignore the request.

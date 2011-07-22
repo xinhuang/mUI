@@ -29,6 +29,7 @@
 #include "PointF.h"
 #include "Rectangle.h"
 #include "Size.h"
+#include "SizeF.h"
 #include "SolidBrush.h"
 #include "SystemColors.h"
 #include "SystemFonts.h"

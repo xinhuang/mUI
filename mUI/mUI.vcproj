@@ -302,6 +302,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\mUI\Drawing\SizeF.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\mUI\Drawing\SizeF.h"
+					>
+				</File>
+				<File
 					RelativePath=".\mUI\Drawing\SolidBrush.cpp"
 					>
 				</File>

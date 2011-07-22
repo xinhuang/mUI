@@ -30,11 +30,11 @@ public:
 	int Width;
 	int Height;
 
-	bool operator==(const Size& rhs)
+	bool operator==(const Size& rhs) const
 	{
 		return Width == rhs.Width && Height == rhs.Height;
 	}
-	bool operator!=(const Size& rhs)
+	bool operator!=(const Size& rhs) const
 	{
 		return !(*this == rhs);
 	}
