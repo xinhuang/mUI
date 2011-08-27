@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="mUI"
-	ProjectGUID="{C81AE111-8852-4562-943B-39E22F6E48F1}"
+	ProjectGUID="{D5D71DB4-5560-464B-B122-15D99FB19A5A}"
 	RootNamespace="mUI"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
@@ -41,12 +41,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\hge\include;..\dependency\freetype2\include"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)&quot;;../HGE/include;../dependency/freetype2/include;../Pal"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;MUI_EXPORTS"
-				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
@@ -62,10 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="hge.lib hgehelp.lib freetype245_D.lib"
+				AdditionalDependencies="hge.lib hgehelp.lib freetype245_D.lib Pal.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\dependency\hge\lib\vc;..\dependency\freetype2\lib"
-				IgnoreAllDefaultLibraries="false"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;../Dependency/hge/lib/vc;../Dependency/freetype2/lib"
 				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -120,7 +119,6 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\hge\include;..\freetype2\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;MUI_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -139,10 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="hge.lib hgehelp.lib freetype245.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\dependency\hge\lib\vc;..\dependency\freetype2\lib"
-				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -179,648 +174,590 @@
 			Name="System"
 			>
 			<File
-				RelativePath=".\mUI\BasicType.h"
+				RelativePath=".\System\BasicType.h"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\Export.h"
+				RelativePath=".\System\Export.h"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\IAsyncResult.h"
+				RelativePath=".\System\IAsyncResult.h"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\IDisposable.h"
+				RelativePath=".\System\IDisposable.h"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\Random.cpp"
+				RelativePath=".\System\Random.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\Random.h"
+				RelativePath=".\System\Random.h"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\String.cpp"
+				RelativePath=".\System\String.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\String.h"
+				RelativePath=".\System\String.h"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\System.cpp"
+				RelativePath=".\System\System.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\mUI\System.h"
+				RelativePath=".\System\System.h"
 				>
 			</File>
-			<Filter
-				Name="Drawing"
-				>
-				<File
-					RelativePath=".\mUI\Drawing\Brush.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Brush.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Color.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Color.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Drawing.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Drawing.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Font.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Font.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Graphics.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Image.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Image.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Pen.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Pen.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Point.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Point.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\PointF.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\PointF.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Rectangle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Rectangle.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\Size.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SizeF.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SizeF.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SolidBrush.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SolidBrush.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SystemColors.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SystemColors.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SystemFonts.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\SystemFonts.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\TextureBrush.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Drawing\TextureBrush.h"
-					>
-				</File>
-				<Filter
-					Name="Internal"
-					>
-					<File
-						RelativePath=".\mUI\Drawing\Internal\FontImpl.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\Internal\FontImpl.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\Internal\FTFont.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\Internal\FTFont.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\Internal\Glyph.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\Internal\Glyph.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="HGEDrawing"
-					>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeGraphics.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeGraphics.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeImage.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeImage.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeTexture.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\hgeTexture.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Drawing\HGEDrawing\PHGE.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="Forms"
-				>
-				<File
-					RelativePath=".\mUI\Forms\Application.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Application.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Button.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Button.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ButtonBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ButtonBase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ButtonState.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ButtonState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\CaptionButton.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\CaptionButton.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Control.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Control.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ControlInvoke.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ControlPaint.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ControlPaint.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Form.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Form.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\FormBoarderStyle.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Frame.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\Frame.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\ImageLayout.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\MouseButtons.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\MouseButtons.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\PictureBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\PictureBox.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\SystemInformation.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Forms\SystemInformation.h"
-					>
-				</File>
-				<Filter
-					Name="EventArgs"
-					>
-					<File
-						RelativePath=".\mUI\Forms\ControlEventArgs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Forms\KeyEventArgs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Forms\KeyPressEventArgs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Forms\LayoutEventArgs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Forms\MouseEventArgs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Forms\PaintEventArgs.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Internals"
-					>
-					<File
-						RelativePath=".\mUI\Forms\FormManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Forms\FormManager.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="Threading"
-				>
-				<File
-					RelativePath=".\mUI\Threading\AutoLock.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\EventWaitHandle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\EventWaitHandle.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\GlobalTLS.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\GlobalTLS.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Interlocked.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Interlocked.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Lock.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Lock.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Lockable.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Lockable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\ManualResetEvent.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\ManualResetEvent.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Thread.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Thread.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Threading.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\Threading.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\ThreadPriority.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\ThreadPriority.h"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\WaitHandle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\mUI\Threading\WaitHandle.h"
-					>
-				</File>
-			</Filter>
 			<Filter
 				Name="Delegate"
 				>
 				<File
-					RelativePath=".\mUI\Delegate\EventArgs.cpp"
+					RelativePath=".\System\Delegate\Delegate.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\EventArgs.h"
+					RelativePath=".\System\Delegate\DelegateNoArg.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\EventHandler.h"
+					RelativePath=".\System\Delegate\DelegateRoot.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\FunctorBinder.h"
+					RelativePath=".\System\Delegate\DelegateSpec.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\FunctorBinder01.h"
+					RelativePath=".\System\Delegate\EventArgs.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\FunctorBinder02.h"
+					RelativePath=".\System\Delegate\EventArgs.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\FunctorBinder10.h"
+					RelativePath=".\System\Delegate\EventHandler.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\MemberFunctor.h"
+					RelativePath=".\System\Delegate\Functor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\MemberFunctor00.h"
+					RelativePath=".\System\Delegate\FunctorBinder.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\MemberFunctor01.h"
+					RelativePath=".\System\Delegate\FunctorBinder01.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\MemberFunctor02.h"
+					RelativePath=".\System\Delegate\FunctorBinder02.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\Delegate\MemberFunctor10.h"
-					>
-				</File>
-				<Filter
-					Name="Functor"
-					>
-					<File
-						RelativePath=".\mUI\Delegate\Functor.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Delegate\FunctorRoot.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Delegate\FunctorSpec.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Delegate"
-					>
-					<File
-						RelativePath=".\mUI\Delegate\Delegate.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Delegate\DelegateNoArg.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Delegate\DelegateRoot.h"
-						>
-					</File>
-					<File
-						RelativePath=".\mUI\Delegate\DelegateSpec.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="ComponentModel"
-				>
-				<File
-					RelativePath=".\mUI\ComponentModel\ComponentModel.cpp"
+					RelativePath=".\System\Delegate\FunctorBinder10.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\ComponentModel\ComponentModel.h"
+					RelativePath=".\System\Delegate\FunctorRoot.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\ComponentModel\ISynchronizeInvoke.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="PAL"
-				>
-				<File
-					RelativePath=".\mUI\PAL\Pal.cpp"
+					RelativePath=".\System\Delegate\FunctorSpec.h"
 					>
 				</File>
 				<File
-					RelativePath=".\mUI\PAL\Pal.h"
+					RelativePath=".\System\Delegate\MemberFunctor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System\Delegate\MemberFunctor00.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System\Delegate\MemberFunctor01.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System\Delegate\MemberFunctor02.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System\Delegate\MemberFunctor10.h"
 					>
 				</File>
 			</Filter>
 		</Filter>
 		<Filter
-			Name="DllMain"
+			Name="System.Drawing"
 			>
 			<File
-				RelativePath=".\dllmain.cpp"
+				RelativePath=".\System.Drawing\Brush.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Brush.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Color.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Color.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Drawing.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Drawing.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Font.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Font.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Graphics.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Image.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Image.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Pen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Pen.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Point.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Point.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\PointF.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\PointF.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Rectangle.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Rectangle.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\Size.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SizeF.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SizeF.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SolidBrush.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SolidBrush.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SystemColors.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SystemColors.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SystemFonts.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\SystemFonts.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\TextureBrush.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Drawing\TextureBrush.h"
+				>
+			</File>
+			<Filter
+				Name="Internal"
+				>
+				<File
+					RelativePath=".\System.Drawing\Internal\FontImpl.cpp"
 					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+				</File>
+				<File
+					RelativePath=".\System.Drawing\Internal\FontImpl.h"
 					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\mUI.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\mUI.h"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
+				</File>
+				<File
+					RelativePath=".\System.Drawing\Internal\FTFont.cpp"
 					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
+				</File>
+				<File
+					RelativePath=".\System.Drawing\Internal\FTFont.h"
 					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\Internal\Glyph.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\Internal\Glyph.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="HGEDrawing"
+				>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\hgeGraphics.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\hgeGraphics.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\hgeImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\hgeImage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\hgeTexture.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\hgeTexture.h"
+					>
+				</File>
+				<File
+					RelativePath=".\System.Drawing\HGEDrawing\PHGE.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="System.Threading"
+			>
 			<File
-				RelativePath=".\stdafx.h"
+				RelativePath=".\System.Threading\AutoLock.h"
 				>
 			</File>
 			<File
-				RelativePath=".\targetver.h"
+				RelativePath=".\System.Threading\EventWaitHandle.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\EventWaitHandle.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\GlobalTLS.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\GlobalTLS.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Interlocked.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Interlocked.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Lock.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Lock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Lockable.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Lockable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\ManualResetEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\ManualResetEvent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Thread.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Thread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Threading.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\Threading.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\ThreadPriority.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\ThreadPriority.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\WaitHandle.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Threading\WaitHandle.h"
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="System.ComponentModel"
+			>
+			<File
+				RelativePath=".\System.ComponentModel\ComponentModel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.ComponentModel\ComponentModel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.ComponentModel\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.ComponentModel\ISynchronizeInvoke.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="System.Forms"
+			>
+			<File
+				RelativePath=".\System.Forms\Application.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Button.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Button.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ButtonBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ButtonBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ButtonState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ButtonState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\CaptionButton.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\CaptionButton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Control.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Control.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ControlEventArgs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ControlInvoke.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ControlPaint.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ControlPaint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Form.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Form.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\FormBoarderStyle.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\FormManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\FormManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Forms.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Forms.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Frame.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\Frame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\ImageLayout.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\KeyEventArgs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\KeyPressEventArgs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\LayoutEventArgs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\MouseButtons.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\MouseButtons.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\MouseEventArgs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\PaintEventArgs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\PictureBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\PictureBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\SystemInformation.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\System.Forms\SystemInformation.h"
+				>
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\dllmain.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\mUI.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
