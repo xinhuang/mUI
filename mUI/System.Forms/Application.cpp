@@ -130,8 +130,6 @@ void Application::Run( Frame* frame )
 	{
 		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 	}
-
-	_CrtDumpMemoryLeaks();
 }
 
 void Application::OnFormClose( void* sender, EventArgs* e )
