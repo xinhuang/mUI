@@ -70,6 +70,7 @@ private:
 
 	static LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
 
+	bool IsDisposing() const;
 private:
 	HWND			hwnd_;
 	Frame			*frame_;

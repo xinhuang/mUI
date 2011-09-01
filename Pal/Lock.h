@@ -7,7 +7,7 @@
 
 namespace mUI{ namespace Pal{
 
-PAL_ENTRY IntPtr CreateLock();
+PAL_ENTRY IntPtr NewLock();
 
 PAL_ENTRY void AcquireLock(
 	IntPtr Lock);
@@ -18,7 +18,7 @@ PAL_ENTRY bool TryAcquireLock(
 PAL_ENTRY void ReleaseLock(
 	IntPtr Lock);
 
-PAL_ENTRY void DestroyLock(
+PAL_ENTRY void DeleteLock(
 	IntPtr Lock);
 
 
