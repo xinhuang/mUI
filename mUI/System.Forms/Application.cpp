@@ -35,28 +35,17 @@ Application::Application() :
 
 LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-	if (!application_.disposing_)
+	if (application_.IsDisposing())
+		return CallWindowProc(application_.prev_wnd_proc_, hWnd, message, wParam, lParam);
+
+	if (message >= WM_MOUSEFIRST && message <= WM_MOUSELAST)
+		FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
+	else if (message >= WM_KEYFIRST && message <= WM_KEYLAST)
+		FormManager::get_Instance().RaiseKeyboardEvent(message, wParam, lParam);
+	else
 	{
 		switch (message)
 		{
-		case WM_MOUSEMOVE:
-		case WM_MOUSEHOVER:
-		case WM_MOUSELEAVE:
-		case WM_LBUTTONUP:
-		case WM_LBUTTONDOWN:
-		case WM_LBUTTONDBLCLK:
-		case WM_RBUTTONUP:
-		case WM_RBUTTONDOWN:
-		case WM_MOUSEWHEEL:
-			FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
-			break;
-
-		case WM_KEYDOWN:
-		case WM_KEYUP:
-		case WM_CHAR:
-			FormManager::get_Instance().RaiseKeyboardEvent(message, wParam, lParam);
-			break;
-
 		case WM_CLOSE:
 			break;
 
@@ -79,7 +68,7 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 bool Application::DoEvents()
 {
 	bool ret = true;
-	if (!application_.disposing_)
+	if (!application_.IsDisposing())
 	{
 		PHGE hge;
 		ret = application_.frame_->LogicTick(hge->Timer_GetDelta());
@@ -141,6 +130,8 @@ void Application::Run( Frame* frame )
 	{
 		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 	}
+
+	_CrtDumpMemoryLeaks();
 }
 
 void Application::OnFormClose( void* sender, EventArgs* e )
@@ -151,7 +142,7 @@ void Application::OnFormClose( void* sender, EventArgs* e )
 
 void Application::Dispose()
 {
-	if (disposing_)
+	if (IsDisposing())
 		return;
 
 	disposing_ = true;
@@ -202,6 +193,11 @@ bool Application::InitFunc()
 
 Application::~Application()
 {
+}
+
+bool Application::IsDisposing() const
+{
+	return disposing_;
 }
 
 }}}

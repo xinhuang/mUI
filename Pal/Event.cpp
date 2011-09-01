@@ -2,11 +2,9 @@
 
 #include <Windows.h>
 
-#undef CreateEvent
-
 namespace mUI{ namespace Pal{
 
-PAL_ENTRY IntPtr CreateEvent(
+PAL_ENTRY IntPtr NewEvent(
 	__in bool ManualReset, 
 	__in bool InitialValue, 
 	__in const wchar_t* Name)
@@ -15,7 +13,7 @@ PAL_ENTRY IntPtr CreateEvent(
 		::CreateEventW(NULL, ManualReset, InitialValue, Name));
 }
 
-PAL_ENTRY void DestroyEvent( __in IntPtr Event )
+PAL_ENTRY void DeleteEvent( __in IntPtr Event )
 {
 	::CloseHandle(Event);
 }

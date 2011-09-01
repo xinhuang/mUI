@@ -5,13 +5,13 @@ namespace mUI{ namespace System{  namespace Threading{
 
 ManualResetEvent::ManualResetEvent(void)
 {
-	IntPtr handle = Pal::CreateEvent(true, false, NULL);
+	IntPtr handle = Pal::NewEvent(true, false, NULL);
 	set_SafeWaitHandle(handle);
 }
 
 ManualResetEvent::~ManualResetEvent(void)
 {
-	Pal::DestroyEvent(get_SafeWaitHandle());
+	Pal::DeleteEvent(get_SafeWaitHandle());
 }
 
 }}}

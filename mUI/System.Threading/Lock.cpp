@@ -5,14 +5,14 @@ namespace mUI{ namespace System{  namespace Threading{
 
 Lock::Lock() : lock_(NULL)
 {
-	lock_ = Pal::CreateLock();
+	lock_ = Pal::NewLock();
 	assert(lock_ != NULL);
 }
 
 Lock::~Lock(void)
 {
 	Release();
-	Pal::DestroyLock(lock_);
+	Pal::DeleteLock(lock_);
 	lock_ = NULL;
 }
 

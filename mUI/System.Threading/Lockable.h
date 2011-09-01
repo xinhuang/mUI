@@ -25,6 +25,8 @@ namespace mUI{ namespace System{  namespace Threading{
 class THREADING_ENTRY Lockable
 {
 public:
+	virtual ~Lockable() {}
+
 	Lock& GetLock()
 	{
 		return lock_;
