@@ -17,7 +17,7 @@
 #ifndef __MUI_FTFONT_H__
 #define __MUI_FTFONT_H__
 
-#include "../../System.h"
+#include <System/System.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -26,10 +26,6 @@
 
 #include <map>
 using std::map;
-
-namespace mUI{ namespace System{
-	class String;
-}}
 
 namespace mUI{ namespace System { namespace Drawing{
 
@@ -43,7 +39,7 @@ public:
 
 	FTFont( const String& filename, float font_size );
 	FTFont( const void* buffer, size_t cb_buf, float font_size );
-	~FTFont();
+	virtual ~FTFont();
 
 	// Freetype2 interfaces
 	size_t	get_NumberOfGlyph() const;
