@@ -17,7 +17,7 @@
 #ifndef __MUI_GLYPH_H__
 #define __MUI_GLYPH_H__
 
-#include "../../System.h"
+#include <System/System.h>
 
 #include "../HGEDrawing/hgeTexture.h"
 

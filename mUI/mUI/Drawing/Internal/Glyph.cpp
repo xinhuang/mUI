@@ -48,7 +48,7 @@ int Glyph::get_AdvanceY() const
 	return adv_y_ >> 6;
 }
 
-mUI::System::utf32_t Glyph::get_Code() const
+utf32_t Glyph::get_Code() const
 {
 	return code_;
 }

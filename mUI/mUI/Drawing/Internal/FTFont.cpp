@@ -1,9 +1,6 @@
 ﻿#include "FTFont.h"
 
-#include "../../Threading/Threading.h"
-using namespace mUI::System::Threading;
-
-#include "../../System.h"
+#include <System/System.h>
 
 #include "Glyph.h"
 
@@ -17,11 +14,11 @@ FTFont::FTFont(const String& filename, float font_size)
 	set_Size(font_size);
 }
 
-FTFont::FTFont( const void* buffer, size_t cb_buf, float font_size )
-{
-	Load(buffer, cb_buf, 0);
-	set_Size(font_size);
-}
+//FTFont::FTFont( const void* buffer, size_t cb_buf, float font_size )
+//{
+//	Load(buffer, cb_buf, 0);
+//	set_Size(font_size);
+//}
 
 FTFont::~FTFont()
 {

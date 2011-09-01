@@ -1,4 +1,5 @@
 ﻿#include "FontImpl.h"
+
 #include "FTFont.h"
 
 #ifdef CreateFont

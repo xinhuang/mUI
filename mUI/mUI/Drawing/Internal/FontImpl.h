@@ -21,12 +21,8 @@
 #	undef CreateFont
 #endif
 
-#include "../../System.h"
+#include <System/System.h>
 #include "../Point.h"
-
-namespace mUI{ namespace System{
-	class String;
-}}
 
 namespace mUI{ namespace System{ namespace Drawing{
 
