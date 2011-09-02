@@ -81,14 +81,14 @@ namespace mUI{ namespace System{
 		}
 
 		
-		virtual vector<TRet> operator() () const
+		virtual TRet operator() () const
 		{
-			vector<TRet> ret;
+			TRet ret;
 			for (size_t i = 0; i < delegates.size(); ++i)
 			{
 				Functor<TRet>* f = delegates[i];
 				assert(f);
-				ret.push_back((*f)());
+				ret = (*f)();
 			}
 			return ret;
 		}

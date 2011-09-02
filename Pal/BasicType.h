@@ -67,6 +67,10 @@ typedef uint32_t argb_t;
 #	define NULL (0)
 #endif // NULL
 
+#ifndef null
+#	define null (0)
+#endif // null
+
 const float FLOAT_MIN = 0.0000001f;
 const double DOUBLE_MIN = 0.000000000000001f;
 
