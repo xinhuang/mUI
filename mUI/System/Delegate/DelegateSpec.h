@@ -22,8 +22,6 @@ template <TPL_RET_ARGLIST>
 class SYSTEM_ENTRY Delegate<RET_ARGLIST>
 {
 public:
-	typedef vector<TRet> ReturnType;
-
 	Delegate() {}
 	virtual ~Delegate()
 	{
@@ -71,14 +69,14 @@ public:
 		return lhs;
 	}
 
-	virtual vector<TRet> operator() (FUN_ARGLIST) const
+	virtual TRet operator() (FUN_ARGLIST) const
 	{
-		vector<TRet> ret;
+		TRet ret;
 		for (size_t i = 0; i < delegates.size(); ++i)
 		{
 			Functor<RET_ARGLIST>* f = delegates[i];
 			assert(f);
-			ret.push_back((*f)(ARGLIST));
+			ret = (*f)(ARGLIST);
 		}
 		return ret;
 	}
@@ -163,9 +161,6 @@ class Delegate<void, T_ARGLIST>
 	typedef void TRet;
 
 public:
-
-	typedef void ReturnType;
-
 	Delegate() {}
 	virtual ~Delegate()
 	{
