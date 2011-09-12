@@ -1,5 +1,5 @@
 ﻿#include "Font.h"
-#include "Internal/FontImpl.h"
+#include "Internals/FontImpl.h"
 
 namespace mUI{ namespace System{ namespace Drawing{
 

@@ -21,6 +21,12 @@
 #include <string>
 #include "BasicType.h"
 
+
+#if defined(_MSC_VER)
+#	pragma warning(push)
+#	pragma warning(disable : 4251)
+#endif
+
 namespace mUI{ namespace System{ 
 
 class SYSTEM_ENTRY String : public std::wstring
@@ -40,5 +46,9 @@ public:
 };
 
 }}
+
+#if defined(_MSC_VER)
+#	pragma warning(pop)
+#endif
 
 #endif // __MUI_SYSTEM_STRING_H__

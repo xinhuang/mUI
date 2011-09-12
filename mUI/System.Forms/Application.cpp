@@ -10,7 +10,7 @@
 #include <System.Drawing/Drawing.h>
 using namespace mUI::System::Drawing;
 
-#include <System.Drawing/hgeDrawing/PHGE.h>
+#include <System.Drawing/Internals/PHGE.h>
 using mUI::System::Drawing::HGEDrawing::PHGE;
 
 #include "Frame.h"

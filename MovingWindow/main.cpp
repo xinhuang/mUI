@@ -1,6 +1,6 @@
 ﻿#include "MainFrame.h"
 
-int APIENTRY wWinMain(HINSTANCE hInstance,
+int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
