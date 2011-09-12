@@ -9,8 +9,8 @@
 #include "../SolidBrush.h"
 #include "../Image.h"
 #include "../Font.h"
-#include "../Internal/Glyph.h"
-#include "../Internal/FontImpl.h"
+#include "../Internals/Glyph.h"
+#include "../Internals/FontImpl.h"
 
 #include <hgesprite.h>
 #include "hgefont.h"

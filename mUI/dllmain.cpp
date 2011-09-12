@@ -1,4 +1,5 @@
 ﻿#define WIN32_LEAN_AND_MEAN
+#include <cstdlib>
 #include <windows.h>
 
 BOOL APIENTRY DllMain( HMODULE hModule,

@@ -46,16 +46,16 @@ using mUI::System::Drawing::Graphics;
 
 // -------------------------------------------------------------- //
 
+#if defined(_MSC_VER)
+#	pragma warning(push)
+#	pragma warning(disable : 4251)
+#endif
+
 namespace mUI{ namespace System{  namespace Drawing{
 	class Image;
 }}}
 
 namespace mUI{ namespace System{  namespace Forms{
-
-#if defined(_MSC_VER)
-#	pragma warning(push)
-#	pragma warning(disable : 4251)
-#endif
 
 class Form;
 
@@ -269,10 +269,10 @@ private:
 	vector<LayoutEventArgs> layout_queue_;
 };
 
+}}}
+
 #if defined(_MSC_VER)
 #	pragma warning(pop)
 #endif
-
-}}}
 
 #endif // __CONTROL_H__

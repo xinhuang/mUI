@@ -19,7 +19,7 @@
 
 #include <System/System.h>
 
-#include "../HGEDrawing/hgeTexture.h"
+#include "../Internals/hgeTexture.h"
 
 namespace mUI{ namespace System { namespace Drawing{
 

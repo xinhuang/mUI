@@ -1,6 +1,6 @@
 ﻿#include "Image.h"
 
-#include "HGEDrawing/hgeImage.h"
+#include "Internals/hgeImage.h"
 
 namespace mUI{ namespace System{  namespace Drawing{
 
