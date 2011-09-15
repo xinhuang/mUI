@@ -3,8 +3,6 @@
 #include "AutoLock.h"
 #include "Interlocked.h"
 
-#include "GlobalTLS.h"
-
 #include <Pal.h>
 
 namespace mUI{ namespace System{  namespace Threading{
@@ -24,6 +22,7 @@ struct Thread::ThreadControlBlock : public Lockable				// Lock this if nessesary
 // ------------------------------------------------------- //
 
 size_t Thread::foreground_thread_count_ = 0;		// Using Interlocked method to access
+LocalDataStoreSlot Thread::tcb_slot_ = INVALID_LOCAL_DATA_STORAGE;
 
 Thread::Thread( const ThreadStart& thread_start ) : tcb_(NULL)
 {
@@ -88,7 +87,7 @@ void Thread::ThreadEntry( void* param )
 	assert(tcb != NULL);
 	bool is_foreground = !tcb->IsBackground;
 
-	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = tcb_slot_;
 	Thread::SetData(slot, &tcb);
 
 	{
@@ -223,7 +222,7 @@ void Thread::SpinWait( int iterations )
 
 Thread Thread::CurrentThread()
 {
-	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = tcb_slot_;
 	Thread thread;
 	thread.tcb_ = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
 	if (thread.tcb_ == NULL)
@@ -239,7 +238,7 @@ Thread Thread::CurrentThread()
 
 void Thread::_MakeTCB()
 {
-	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = tcb_slot_;
 	ThreadControlBlock* tcb = new ThreadControlBlock();
 	assert(tcb != NULL);
 	assert(Thread::GetData(slot) == NULL);
@@ -283,7 +282,7 @@ void Thread::_MakeTCB()
 
 void Thread::DisposeTCBForMainThread()
 {
-	LocalDataStoreSlot slot = GlobalTLS::GetSlot(GlobalTLS::ThreadControlBlock);
+	LocalDataStoreSlot slot = tcb_slot_;
 	ThreadControlBlock* tcb = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
 	assert(tcb != NULL);
 	delete tcb;
