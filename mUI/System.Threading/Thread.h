@@ -74,7 +74,17 @@ protected:
 	friend bool THREADING_ENTRY Init();
 	friend void THREADING_ENTRY Dispose();
 
+	static bool Init()
+	{
+		Thread::_MakeTCB();
+		return AllocateTCBSlot();
+	}
 	static void _MakeTCB();
+	static bool AllocateTCBSlot()
+	{
+		tcb_slot_ = Thread::AllocateDataSlot();
+		return tcb_slot_ != INVALID_LOCAL_DATA_STORAGE;
+	}
 
 	static void DisposeTCBForMainThread();
 	static void ThreadEntry(void* param);
@@ -88,6 +98,7 @@ private:
 	ThreadControlBlock* tcb_;
 
 	static size_t foreground_thread_count_;
+	static LocalDataStoreSlot tcb_slot_;
 
 	static IntPtr get_Handle();
 };
