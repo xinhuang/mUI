@@ -12,6 +12,7 @@ if (WIN32)
 			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK (November 2007)/Include"
 			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK (August 2007)/Include"
 			"$ENV{PROGRAMFILES}/Microsoft DirectX 9.0 SDK (Summer 2004)/Include"
+			"$ENV{PROGRAMFILES}/Microsoft DirectX 9.0 SDK (October 2004)/Include"
 			"C:/DX90SDK/Include"
 			"$ENV{PROGRAMFILES}/DX90SDK/Include"
 			)
@@ -25,6 +26,7 @@ if (WIN32)
 			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK (November 2007)/Lib/x86"
 			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK (August 2007)/Lib/x86"
 			"$ENV{PROGRAMFILES}/Microsoft DirectX 9.0 SDK (Summer 2004)/Lib"
+			"$ENV{PROGRAMFILES}/Microsoft DirectX 9.0 SDK (October 2004)/Lib"
 			"C:/DX90SDK/Lib"
 			"$ENV{PROGRAMFILES}/DX90SDK/Lib"
 			)
