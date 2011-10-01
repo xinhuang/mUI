@@ -18,24 +18,28 @@
 
 namespace mUI{ namespace System{
 
-	template<TPL_T_ARG>
-	struct Arguments
+    namespace __internal{
+
+	    template<TPL_T_ARG>
+	    struct Arguments
 #if !defined BINDER_ROOT
-        <T_ARG>
+            <T_ARG>
 #endif
-	{
-		Arguments(FUN_T_ARG_ARG)
-		{
-            MEMBER_ARG_ASSIGN;
-        }
+	    {
+		    Arguments(FUN_T_ARG_ARG)
+		    {
+                MEMBER_ARG_ASSIGN;
+            }
 
-		virtual bool operator== (const Arguments<T_ARG>& args) const
-		{
-			return ARGUMENTS_EQUAL;
-		}
+		    virtual bool operator== (const Arguments<T_ARG>& args) const
+		    {
+			    return ARGUMENTS_EQUAL;
+		    }
 
-		MEMBER_ARG_DECL;
-	};
+		    MEMBER_ARG_DECL;
+	    };
+
+    }
 
 	template<TPL_T_RET_ARG>
 	class FunctorBinder
@@ -88,7 +92,7 @@ namespace mUI{ namespace System{
 
 	private:
 		Functor<T_RET_ARG>* functor_;
-		Arguments<T_ARG> args_;
+        __internal::Arguments<T_ARG> args_;
 	};
 
 }}
