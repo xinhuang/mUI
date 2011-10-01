@@ -4,7 +4,6 @@ namespace mUI{ namespace System{ namespace Threading{
 
 bool Init()
 {
-	//bool ret = GlobalTLS::Init();
 	bool ret = Thread::Init();
 	assert(ret);
 
