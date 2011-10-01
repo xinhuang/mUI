@@ -63,7 +63,9 @@ using std::vector;
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9
 
-#	include "DelegateRoot.h"
+#define DELEGATE_ROOT
+
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -71,6 +73,7 @@ using std::vector;
 #undef T_ARGLIST
 #undef ARGLIST
 #undef FUN_ARGLIST
+#undef DELEGATE_ROOT
 
 
 // --------------------------------------------------- //
@@ -101,7 +104,7 @@ using std::vector;
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8 
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -136,7 +139,7 @@ using std::vector;
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6, TArg7 arg7
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -169,7 +172,7 @@ using std::vector;
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -200,7 +203,7 @@ using std::vector;
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -228,7 +231,7 @@ using std::vector;
 #define ARGLIST arg0, arg1, arg2, arg3, arg4
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -254,7 +257,7 @@ using std::vector;
 #define ARGLIST arg0, arg1, arg2, arg3
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -278,7 +281,7 @@ using std::vector;
 #define ARGLIST arg0, arg1, arg2
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -296,7 +299,7 @@ using std::vector;
 #define ARGLIST arg0, arg1
 #define FUN_ARGLIST TArg0 arg0, TArg1 arg1
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST
@@ -314,7 +317,7 @@ using std::vector;
 #define ARGLIST arg0
 #define FUN_ARGLIST TArg0 arg0
 
-#	include "DelegateSpec.h"
+#	include "DelegateImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef TPL_ARGLIST

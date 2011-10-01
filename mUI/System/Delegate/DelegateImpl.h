@@ -19,7 +19,10 @@
 namespace mUI{ namespace System{
 
 template <TPL_RET_ARGLIST>
-class SYSTEM_ENTRY Delegate<RET_ARGLIST>
+class SYSTEM_ENTRY Delegate
+#ifndef DELEGATE_ROOT
+    <RET_ARGLIST>
+#endif
 {
 public:
 	Delegate() {}
