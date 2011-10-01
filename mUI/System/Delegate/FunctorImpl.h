@@ -19,7 +19,10 @@
 namespace mUI{ namespace System{
 
 template <TPL_RET_ARGLIST>
-class Functor<RET_ARGLIST>
+class Functor
+#ifndef FUNCTOR_ROOT
+    <RET_ARGLIST>
+#endif
 {
 public:
 	virtual ~Functor() {};

@@ -35,11 +35,14 @@
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8, TArg9 arg9 
 
-#	include "FunctorRoot.h"
+#define FUNCTOR_ROOT 1
+
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
 #undef FUN_ARGLIST
+#undef FUNCTOR_ROOT
 
 // ----------------------------------------------------------------- //
 
@@ -57,7 +60,7 @@
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6, TArg7 arg7, TArg8 arg8 
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -78,7 +81,7 @@
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6, TArg7 arg7
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -98,7 +101,7 @@
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5, TArg6 arg6
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -117,7 +120,7 @@
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4, \
 	TArg5 arg5
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -134,7 +137,7 @@
 #define RET_ARGLIST TRet, TArg0, TArg1, TArg2, TArg3, TArg4
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -150,7 +153,7 @@
 #define RET_ARGLIST TRet, TArg0, TArg1, TArg2, TArg3
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -165,7 +168,7 @@
 #define RET_ARGLIST TRet, TArg0, TArg1, TArg2
 #define FUN_ARGLIST	TArg0 arg0, TArg1 arg1, TArg2 arg2
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -177,7 +180,7 @@
 #define RET_ARGLIST TRet, TArg0, TArg1
 #define FUN_ARGLIST TArg0 arg0, TArg1 arg1
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -189,7 +192,7 @@
 #define RET_ARGLIST TRet, TArg0
 #define FUN_ARGLIST TArg0 arg0
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
@@ -201,7 +204,7 @@
 #define RET_ARGLIST TRet
 #define FUN_ARGLIST
 
-#	include "FunctorSpec.h"
+#	include "FunctorImpl.h"
 
 #undef TPL_RET_ARGLIST
 #undef RET_ARGLIST
