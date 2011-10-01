@@ -14,39 +14,46 @@
 	limitations under the License.
 */
 
-#ifndef __FUNCTORBINDER01_H__
-#define __FUNCTORBINDER01_H__
-
 #include "Functor.h"
 
 namespace mUI{ namespace System{
 
-	template<typename TArg0>
-	struct Arguments<TArg0>
+	template<TPL_T_ARG>
+	struct Arguments
+#if !defined BINDER_ROOT
+        <T_ARG>
+#endif
 	{
-		Arguments(TArg0 a0) : arg0(a0)
-		{}
-
-		virtual bool operator== (const Arguments<TArg0>& args) const
+		Arguments(FUN_T_ARG_ARG)
 		{
-			return args.arg0 == arg0;
+            MEMBER_ARG_ASSIGN;
+        }
+
+		virtual bool operator== (const Arguments<T_ARG>& args) const
+		{
+			return ARGUMENTS_EQUAL;
 		}
 
-		TArg0 arg0;
+		MEMBER_ARG_DECL;
 	};
 
-	template<typename TRet, typename TArg0>
-	class FunctorBinder<TRet, TArg0> : public Functor<TRet>
+	template<TPL_T_RET_ARG>
+	class FunctorBinder
+#if !defined BINDER_ROOT
+        <T_RET_ARG>
+#endif
+        : public Functor<TRet>
 	{
 	public:
-		FunctorBinder(const Functor<TRet, TArg0>& f, const TArg0& arg0)
-			: functor_(f.Clone()), args_(arg0)
+		FunctorBinder(const Functor<T_RET_ARG>& f, ARG_DECL)
+			: functor_(f.Clone()), args_(ARG)
 		{}
+
 		template<typename TClass>
-		FunctorBinder(TClass& c, TRet (TClass::*F)(TArg0), const TArg0& arg0)
-			: args_(arg0)
+		FunctorBinder(TClass& c, TRet (TClass::*F)(T_ARG), ARG_DECL)
+			: args_(ARG)
 		{
-			functor_ = new MemberFunctor<TClass, TRet, TArg0>(c, F);
+			functor_ = new MemberFunctor<TClass, T_RET_ARG>(c, F);
 			assert(functor_ != NULL);
 		}
 
@@ -58,33 +65,30 @@ namespace mUI{ namespace System{
 
 		virtual TRet operator() ()
 		{
-			return (*functor_)(args_.arg0);
+			return (*functor_)(BINDING_ARG);
 		}
+
 		virtual bool operator== (const Functor<TRet>& rhs) const
 		{
 			if (&rhs == this)
 				return true;
-			else
-			{
-				const FunctorBinder<TRet, TArg0>* fb = 
-					dynamic_cast<const FunctorBinder<TRet, TArg0>*>(&rhs);
-				if (fb)
-				{
-					return (fb->args_) == args_ && *fb->functor_ == *functor_;
-				}
-			}
+
+			const FunctorBinder<T_RET_ARG>* fb = 
+				dynamic_cast<const FunctorBinder<T_RET_ARG>*>(&rhs);
+			if (fb != 0)
+				return (fb->args_) == args_ && *fb->functor_ == *functor_;
+
 			return false;
 		}
+
 		virtual Functor<TRet>* Clone() const
 		{
-			return new FunctorBinder(*functor_, args_.arg0);
+			return new FunctorBinder(*functor_, BINDING_ARG);
 		}
 
 	private:
-		Functor<TRet, TArg0>* functor_;
-		Arguments<TArg0> args_;
+		Functor<T_RET_ARG>* functor_;
+		Arguments<T_ARG> args_;
 	};
 
 }}
-
-#endif
