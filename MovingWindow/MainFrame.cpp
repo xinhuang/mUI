@@ -6,7 +6,7 @@
 
 MainFrame::MainFrame()
 {
-	set_Text("mUI Example - Moving Window");
+	set_Text(L"mUI Example - Moving Window");
 }
 
 int MainFrame::get_Fps() const

@@ -132,7 +132,11 @@ float FTFont::get_SizeInPoints() const
 
 const String FTFont::get_Name() const
 {
+// warning C4996: 'mUI::System::String::String': was declared deprecated
+#pragma warning(push)
+#pragma warning(disable: 4996)
 	return face_->family_name;
+#pragma warning(pop)
 }
 
 bool FTFont::Initialize()

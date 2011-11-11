@@ -10,7 +10,7 @@ using namespace std;
 MineSweeper::MineSweeper() : elapsed_(0.f), started_(false), pressed_tile_(-1)
 {
 	level_ = Intermediate;
-	set_Text("mUI Example - Mine Sweeper");
+	set_Text(L"mUI Example - Mine Sweeper");
 	set_Size(Size(get_Width() * Tile::Width + 2 * BORDER_SIZE, 
 		get_Height() * Tile::Height + 2 * BORDER_SIZE + BORDER_SIZE + 23));
 }

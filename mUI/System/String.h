@@ -37,8 +37,9 @@ public:
 	String(const wchar_t* value);
 	String& operator=(const wchar_t* value);
 
-	String(const char* value);
-	String& operator=(const char* value);
+	DEPRECATED String(const char* value);
+	DEPRECATED String& operator=(const char* value);
+
 
 	std::string ToANSI() const;
 

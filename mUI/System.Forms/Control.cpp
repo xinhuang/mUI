@@ -96,7 +96,7 @@ void Control::set_Size( const Drawing::Size& size )
 	{
 		size_ = size; 
 		OnSizeChanged(&EventArgs::Empty);
-		PerformLayout(this, "Size");
+		PerformLayout(this, L"Size");
 	}
 }
 

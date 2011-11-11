@@ -8,7 +8,7 @@ using namespace std;
 
 MainFrame::MainFrame()
 {
-	set_Text("mUI Example - Visual Sort");
+	set_Text(L"mUI Example - Visual Sort");
 }
 
 int MainFrame::get_Fps() const
@@ -38,7 +38,7 @@ bool MainFrame::Initialize()
 {
 	Paint += PaintEventHandler(this, &MainFrame::MainFrame_OnPaint);
 
-	show_qsort_.set_Text("Quick Sort");
+	show_qsort_.set_Text(L"Quick Sort");
 	show_qsort_.set_Size(Drawing::Size(100, 20));
 	show_qsort_.set_Location(Drawing::Point(20, 15));
 	show_qsort_.Click += EventHandler<>(this, &MainFrame::ShowQuickSortForm);

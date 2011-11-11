@@ -36,7 +36,11 @@ String::String( const char* value )
 	if (value == NULL)
 		return;
 
+// warning C4996: 'mUI::System::String::String': was declared deprecated
+#pragma warning(push)
+#pragma warning(disable: 4996)
 	*this = value;
+#pragma warning(pop)
 }
 
 String& String::operator=( const char* value )

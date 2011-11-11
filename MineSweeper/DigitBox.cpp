@@ -18,14 +18,14 @@ void DigitBox::set_Value( int value )
 	value = value < 0 ? -value : value;
 
 	int temp;
-	char szbuf[32];
+	wchar_t szbuf[32];
 	for (int i = MAX_DIGITS - 1; i >= 0; --i)
 	{
 		if (value != 0)
 		{
 			temp = value % 10;
 			value /= 10;
-			_snprintf(szbuf, sizeof(szbuf)-1, "res/%d.png", temp);
+			_snwprintf(szbuf, sizeof(szbuf)-1, L"res/%d.png", temp);
 			digits[i].Load(szbuf);
 		}
 		else
