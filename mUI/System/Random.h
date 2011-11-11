@@ -25,6 +25,7 @@ class SYSTEM_ENTRY Random
 {
 public:
 	Random();
+	Random(size_t seed);
 	virtual ~Random();
 
 	virtual int Next();
@@ -32,8 +33,7 @@ public:
 	virtual int Next(int min_value, int max_value);
 
 private:
-	class Impl;
-	Impl* impl_;
+	size_t seed_;
 };
 
 }}

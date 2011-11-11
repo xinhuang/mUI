@@ -1,30 +1,25 @@
 ﻿#include "Random.h"
 
 #include <cstdlib>
+#include <ctime>
 
 namespace mUI{ namespace System{
 
-class Random::Impl
+Random::Random() : seed_(static_cast<size_t>(time(NULL)))
 {
-public:
-	Impl() : seed(rand()) {}
-	size_t seed;
-};
+}
 
-Random::Random() : impl_(new Random::Impl)
+Random::Random(size_t seed) : seed_(seed)
 {
-
 }
 
 Random::~Random()
 {
-	delete impl_;
-	impl_ = NULL;
 }
 
 int Random::Next()
 {
-	return (((impl_->seed = impl_->seed * 214013L + 2531011L) >> 16) & 0x7fff);
+	return (((seed_ = seed_ * 214013L + 2531011L) >> 16) & 0x7fff);
 }
 
 int Random::Next( int max_value )
