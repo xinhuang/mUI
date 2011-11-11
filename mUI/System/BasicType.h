@@ -80,6 +80,12 @@ inline bool fequ(const double lhs, const double rhs)
 	return abs(lhs - rhs) < DOUBLE_MIN;
 }
 
+#ifdef _WINDOWS
+#	ifndef DEPRECATED
+#		define DEPRECATED __declspec(deprecated) 
+#	endif // DEPRECATED
+#endif 
+
 }
 
 #endif // __MUI_BASICTYPE_H__

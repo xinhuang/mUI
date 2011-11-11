@@ -14,8 +14,8 @@
 	limitations under the License.
 */
 
-#ifndef __FUNCTORBINDER_H__
-#define __FUNCTORBINDER_H__
+#ifndef __MUI_FUNCTORBINDER_H__
+#define __MUI_FUNCTORBINDER_H__
 
 #define BINDER_ROOT
 
@@ -132,4 +132,4 @@
 
 #undef BINDING_ARG
 
-#endif
+#endif // __MUI_FUNCTORBINDER_H__

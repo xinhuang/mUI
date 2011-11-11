@@ -74,11 +74,7 @@ protected:
 	friend bool THREADING_ENTRY Init();
 	friend void THREADING_ENTRY Dispose();
 
-	static bool Init()
-	{
-		Thread::_MakeTCB();
-		return AllocateTCBSlot();
-	}
+	static bool Init();
 	static void _MakeTCB();
 	static bool AllocateTCBSlot()
 	{

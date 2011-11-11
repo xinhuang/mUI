@@ -311,4 +311,11 @@ IntPtr Thread::get_Handle()
     return handle;
 }
 
+bool Thread::Init()
+{
+	tcb_slot_ = Thread::AllocateDataSlot();
+	Thread::_MakeTCB();
+	return AllocateTCBSlot();
+}
+
 }}}
