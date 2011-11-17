@@ -17,3 +17,8 @@ int MineField::get_MineTotal() const
 {
 	return _MGame->get_MineTotal();
 }
+
+ISquare* MineField::SquareAt(int row, int column)
+{
+	return NULL;
+}

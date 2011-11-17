@@ -20,6 +20,7 @@ public:
 	int get_MineTotal() const;
 
 	void NewGame();
+	void Uncover(int rowIndex, int columnIndex);
 
 private:
 	Size _MineFieldSize;

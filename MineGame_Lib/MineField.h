@@ -6,6 +6,7 @@
 using mUI::System::Drawing::Size;
 
 class MGame;
+class ISquare;
 
 class MineField
 {
@@ -14,6 +15,8 @@ public:
 
 	const Size& get_Size() const;
 	int get_MineTotal() const;
+
+	ISquare* SquareAt(int row, int column);
 
 private:
 	MGame* _MGame;

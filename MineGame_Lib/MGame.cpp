@@ -43,3 +43,7 @@ void MGame::NewGame()
 	delete _MineField;
 	_MineField = new MineField(this);
 }
+
+void MGame::Uncover(int rowIndex, int columnIndex)
+{
+}
