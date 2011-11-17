@@ -1,7 +1,8 @@
 #include "NumberSquare.h"
 
-NumberSquare::NumberSquare()
-	: _state(SquareState::Covered)
+NumberSquare::NumberSquare(MGame* game)
+	: _state(SquareState::Covered), 
+	_game(game)
 {
 }
 

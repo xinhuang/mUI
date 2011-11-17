@@ -35,6 +35,7 @@ protected:
 TEST_F(MineFieldTest, Constructor_Typical)
 {
 	MineField* mineField = new MineField(_game);
+
 	ASSERT_TRUE(NULL != mineField);
 	delete mineField;
 }

@@ -15,9 +15,13 @@ public:
 
 TEST_F(NumberSquareTest, Constructor_Typical)
 {
-	NumberSquare* numberSquare = new NumberSquare();
+	MGame* game = new MGame();
+
+	NumberSquare* numberSquare = new NumberSquare(game);
+
 	ASSERT_TRUE(NULL != numberSquare);
 	ASSERT_EQ(SquareState::Covered, numberSquare->get_State());
 	delete numberSquare;
+	delete game;
 }
 

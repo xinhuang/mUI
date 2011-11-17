@@ -3,13 +3,16 @@
 
 #include <ISquare.h>
 
+class MGame;
+
 class NumberSquare : public ISquare
 {
 public:
-	NumberSquare();
+	NumberSquare(MGame* game);
 	virtual SquareState::Enum get_State() const;
 
 private:
+	MGame* _game;
 	SquareState::Enum _state;
 };
 
