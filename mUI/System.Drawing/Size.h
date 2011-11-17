@@ -38,6 +38,8 @@ public:
 	{
 		return !(*this == rhs);
 	}
+
+	static const Size Empty;
 };
 
 }}}
