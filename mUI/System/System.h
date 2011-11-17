@@ -21,6 +21,7 @@
 #include "Delegate/Delegate.h"
 #include "Delegate/EventHandler.h"
 #include "Delegate/EventArgs.h"
+#include "Exception.h"
 #include "IAsyncResult.h"
 #include "IDisposable.h"
 #include "Random.h"

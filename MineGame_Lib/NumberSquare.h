@@ -8,7 +8,7 @@ class MGame;
 class NumberSquare : public ISquare
 {
 public:
-	NumberSquare(MGame* game);
+	NumberSquare(MGame* game, int neighborMineTotal);
 	virtual SquareState::Enum get_State() const;
 
 private:
