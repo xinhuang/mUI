@@ -64,4 +64,11 @@ TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooSmall)
 	}
 }
 
+TEST_F(NumberSquareTest, Uncover_Typical)
+{
+	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
 
+	numberSquare.Uncover();
+
+	ASSERT_EQ(SquareState::Uncovered, numberSquare.get_State());
+}

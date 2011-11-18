@@ -16,3 +16,8 @@ int NumberSquare::get_NeighborMineTotal() const
 {
 	return _neighborMineTotal;
 }
+
+void NumberSquare::Uncover()
+{
+	set_State(SquareState::Uncovered);
+}

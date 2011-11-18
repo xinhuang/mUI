@@ -15,6 +15,7 @@ public:
 		: base(game, mineField, row, column)
 	{
 	}
+	virtual void Uncover() {}
 };
 
 class AbstractSquareTest : public testing::Test

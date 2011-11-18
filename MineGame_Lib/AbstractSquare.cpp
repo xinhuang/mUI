@@ -11,3 +11,8 @@ SquareState::Enum AbstractSquare::get_State() const
 {
 	return _state;
 }
+
+void AbstractSquare::set_State(SquareState::Enum state)
+{
+	_state = state;
+}

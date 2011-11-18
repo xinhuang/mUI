@@ -9,7 +9,9 @@ class MineSquare : public ISquare
 {
 public:
 	MineSquare(MGame* game);
+
 	virtual SquareState::Enum get_State() const;
+	virtual void Uncover() {}
 
 private:
 	MGame* _game;

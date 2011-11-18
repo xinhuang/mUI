@@ -12,6 +12,8 @@ class NumberSquare : public AbstractSquare
 public:
 	NumberSquare(MGame* game, MineField* mineField, int row, int column, int neighborMineTotal);
 
+	virtual void Uncover();
+
 	int get_NeighborMineTotal() const;
 
 private:
