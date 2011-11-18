@@ -1,12 +1,7 @@
 #include "BlankSquare.h"
 
-BlankSquare::BlankSquare(MGame* game)
-	: _state(SquareState::Covered), 
-	_game(game)
+BlankSquare::BlankSquare(MGame* game, MineField* mineField, int row, int column)
+	: base(game, mineField, row, column)
 {
 }
 
-SquareState::Enum BlankSquare::get_State() const
-{
-	return _state;
-}
