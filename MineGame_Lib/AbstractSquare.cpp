@@ -2,6 +2,8 @@
 
 AbstractSquare::AbstractSquare(MGame* game, MineField* mineField, int row, int column)
 	: _state(SquareState::Covered)
+	, _game(game)
+	, _mineField(mineField)
 	, _row(row)
 	, _column(column)
 {
@@ -36,4 +38,14 @@ void AbstractSquare::ToggleFlag()
 	default:
 		break;
 	}
+}
+
+MGame* AbstractSquare::get_Game()
+{
+	return _game;
+}
+
+MineField* AbstractSquare::get_MineField()
+{
+	return _mineField;
 }

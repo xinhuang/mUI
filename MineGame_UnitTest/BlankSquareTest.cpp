@@ -1,11 +1,16 @@
-#include <gtest\gtest.h>
+#include <gtest/gtest.h>
 #include <mUI.h>
+
+#include <gmock/gmock.h>
+using ::testing::_;
 
 #define private public
 #include <MGame.h>
 #include <MineField.h>
 #include <BlankSquare.h>
 #undef private
+
+#include "mocks/MineFieldMock.h"
 
 class BlankSquareTest : public testing::Test
 {
@@ -21,3 +26,13 @@ TEST_F(BlankSquareTest, Constructor_Typical)
 	delete blankSquare;
 }
 
+TEST_F(BlankSquareTest, Uncover_Typical)
+{
+	MineFieldMock mineField;
+	BlankSquare blankSquare(NULL, &mineField, 0, 0);
+	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
+
+	blankSquare.Uncover();
+
+	//ASSERT_EQ(true, _mineFieldFake);
+}

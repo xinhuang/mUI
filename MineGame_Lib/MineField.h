@@ -17,6 +17,7 @@ public:
 	int get_MineTotal() const;
 
 	ISquare* SquareAt(int row, int column);
+	virtual void UncoverNeighborSquares(const ISquare& square) {}
 
 private:
 	MGame* _MGame;

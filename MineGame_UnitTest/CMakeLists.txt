@@ -2,15 +2,19 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 SET(TARGET_NAME MineGame_UnitTest)
 
-SET(DIR_WITH_SRC .)
+SET(DIR_WITH_SRC . mocks)
 	
 INCLUDE_DIRECTORIES(. 
 	${PROJECT_SOURCE_DIR}/dependency/include
 	${PROJECT_SOURCE_DIR}/MineGame_Lib
 	${PROJECT_SOURCE_DIR}/mUI)
 
-SET(DEPENDENCY_LIBS mUI gtest gtest_main MineGame_Lib)
-LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/dependency/lib/gtest)
+SET(DEPENDENCY_LIBS mUI gtest gtest_main MineGame_Lib gmockd)
+
+LINK_DIRECTORIES(
+	${PROJECT_SOURCE_DIR}/dependency/lib/gtest
+	${PROJECT_SOURCE_DIR}/dependency/lib/gmock
+)
 
 SET(SRC_FILES "")
 FOREACH(DIR IN LISTS DIR_WITH_SRC)

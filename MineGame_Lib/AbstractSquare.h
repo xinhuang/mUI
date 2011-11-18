@@ -18,10 +18,14 @@ public:
 
 protected:
 	void set_State(SquareState::Enum state);
+	MGame* get_Game();
+	MineField* get_MineField();
 
 private:
 	SquareState::Enum _state;
 	int _row, _column;
+	MGame* _game;
+	MineField* _mineField;
 };
 
 #endif // __ABSTRACTORSQUARE_H__

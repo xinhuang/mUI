@@ -11,10 +11,7 @@ class BlankSquare : public AbstractSquare
 public:
 	BlankSquare(MGame* game, MineField* mineField, int row, int column);
 
-	virtual void Uncover() {}
-
-private:
-	MGame* _game;
+	virtual void Uncover();
 };
 
 #endif // __BLANKSQUARE_H__
