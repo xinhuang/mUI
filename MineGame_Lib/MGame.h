@@ -22,6 +22,8 @@ public:
 	void NewGame();
 	void Uncover(int rowIndex, int columnIndex);
 
+	virtual void Lose() {}
+
 private:
 	Size _MineFieldSize;
 	int _MineTotal;

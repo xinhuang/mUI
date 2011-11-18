@@ -11,7 +11,7 @@ class MineSquare : public AbstractSquare
 public:
 	MineSquare(MGame* game, MineField* mineField, int row, int column);
 
-	virtual void Uncover() {}
+	virtual void Uncover();
 
 private:
 	MGame* _game;

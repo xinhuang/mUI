@@ -30,9 +30,8 @@ TEST_F(BlankSquareTest, Uncover_Typical)
 {
 	MineFieldMock mineField;
 	BlankSquare blankSquare(NULL, &mineField, 0, 0);
+
 	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
 
 	blankSquare.Uncover();
-
-	//ASSERT_EQ(true, _mineFieldFake);
 }
