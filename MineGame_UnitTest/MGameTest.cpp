@@ -55,15 +55,3 @@ TEST_F(MGameTest, NewGame_Typical)
 	ASSERT_EQ(arbitrarySize, _Game->_MineField->get_Size());
 	ASSERT_EQ(arbitraryMineTotal, _Game->_MineField->get_MineTotal());
 }
-
-//TEST_F(MGameTest, Uncover_Typical)
-//{
-//	int arbitraryRowIndex = _Game->get_MineFieldSize().Width / 2;
-//	int arbitraryColumnIndex = _Game->get_MineFieldSize().Height / 2;
-//
-//	_Game->Uncover(arbitraryRowIndex, arbitraryColumnIndex);
-//
-//	ISquare* square = _Game->_MineField->SquareAt(arbitraryRowIndex, arbitraryColumnIndex);
-//	ASSERT_TRUE(NULL != square);
-//	ASSERT_NE(SquareState::Uncovered, square->get_State());
-//}
