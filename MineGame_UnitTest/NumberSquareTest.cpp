@@ -2,9 +2,11 @@
 #include <mUI.h>
 
 #define private public
-#include <MGame.h>
-#include <MineField.h>
-#include <NumberSquare.h>
+#define protected public
+#	include <MGame.h>
+#	include <MineField.h>
+#	include <NumberSquare.h>
+#undef protected
 #undef private
 
 using namespace mUI::System;
@@ -67,6 +69,27 @@ TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooSmall)
 TEST_F(NumberSquareTest, Uncover_Typical)
 {
 	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
+
+	numberSquare.Uncover();
+
+	ASSERT_EQ(SquareState::Uncovered, numberSquare.get_State());
+}
+
+TEST_F(NumberSquareTest, Uncover_WhenFlagged)
+{
+	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
+	numberSquare.ToggleFlag();
+
+	numberSquare.Uncover();
+
+	ASSERT_EQ(SquareState::Flagged, numberSquare.get_State());
+}
+
+TEST_F(NumberSquareTest, Uncover_WhenQuestionMark)
+{
+	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
+	numberSquare.ToggleFlag();
+	numberSquare.ToggleFlag();
 
 	numberSquare.Uncover();
 

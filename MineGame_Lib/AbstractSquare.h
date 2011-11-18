@@ -11,9 +11,10 @@ class AbstractSquare : public ISquare
 public:
 	AbstractSquare(MGame* game, MineField* mineField, int row, int column);
 
-	SquareState::Enum get_State() const;
-	int get_Row() const { return _row; }
-	int get_Column() const { return _column; }
+	virtual SquareState::Enum get_State() const;
+	virtual int get_Row() const { return _row; }
+	virtual int get_Column() const { return _column; }
+	virtual void ToggleFlag();
 
 protected:
 	void set_State(SquareState::Enum state);

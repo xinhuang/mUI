@@ -19,5 +19,7 @@ int NumberSquare::get_NeighborMineTotal() const
 
 void NumberSquare::Uncover()
 {
+	if (get_State() == SquareState::Flagged)
+		return;
 	set_State(SquareState::Uncovered);
 }

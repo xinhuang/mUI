@@ -38,3 +38,45 @@ TEST_F(AbstractSquareTest, Constructor_Typical)
 
 	delete abstractSquare;
 }
+
+TEST_F(AbstractSquareTest, ToggleFlag_Once)
+{
+	int arbitraryRow = 27, arbitraryColumn = 43;
+	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
+											arbitraryRow, arbitraryColumn);
+
+	abstractSquare->ToggleFlag();
+	
+	ASSERT_EQ(SquareState::Flagged, abstractSquare->get_State());
+
+	delete abstractSquare;
+}
+
+TEST_F(AbstractSquareTest, ToggleFlag_Twice)
+{
+	int arbitraryRow = 27, arbitraryColumn = 43;
+	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
+											arbitraryRow, arbitraryColumn);
+	
+	abstractSquare->ToggleFlag();
+	abstractSquare->ToggleFlag();
+	
+	ASSERT_EQ(SquareState::QuestionMark, abstractSquare->get_State());
+
+	delete abstractSquare;
+}
+
+TEST_F(AbstractSquareTest, ToggleFlag_ThreeTimes)
+{
+	int arbitraryRow = 27, arbitraryColumn = 43;
+	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
+											arbitraryRow, arbitraryColumn);
+	
+	abstractSquare->ToggleFlag();
+	abstractSquare->ToggleFlag();
+	abstractSquare->ToggleFlag();
+	
+	ASSERT_EQ(SquareState::Uncovered, abstractSquare->get_State());
+
+	delete abstractSquare;
+}

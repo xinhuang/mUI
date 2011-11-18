@@ -16,3 +16,24 @@ void AbstractSquare::set_State(SquareState::Enum state)
 {
 	_state = state;
 }
+
+void AbstractSquare::ToggleFlag()
+{
+	switch (get_State())
+	{
+	case SquareState::Covered:
+		set_State(SquareState::Flagged);
+		break;
+
+	case SquareState::Flagged:
+		set_State(SquareState::QuestionMark);
+		break;
+
+	case SquareState::QuestionMark:
+		set_State(SquareState::Uncovered);
+		break;
+
+	default:
+		break;
+	}
+}

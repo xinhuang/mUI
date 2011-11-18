@@ -7,6 +7,7 @@ namespace SquareState{
 		Covered,
 		Boomed,
 		Flagged,
+		QuestionMark,
 	};
 };
 
@@ -16,6 +17,7 @@ public:
 	virtual ~ISquare() {};
 	virtual SquareState::Enum get_State() const = 0;
 	virtual void Uncover() = 0;
+	virtual void ToggleFlag() = 0;
 };
 
 #endif // __ISQUARE_H__
