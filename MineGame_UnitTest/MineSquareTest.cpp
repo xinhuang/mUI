@@ -14,13 +14,10 @@ public:
 
 TEST_F(MineSquareTest, Constructor_Typical)
 {
-	MGame* game = new MGame();
-
-	MineSquare* mineSquare = new MineSquare(game);
+	MineSquare* mineSquare = new MineSquare(NULL, NULL, 0, 0);
 
 	ASSERT_TRUE(NULL != mineSquare);
 	ASSERT_EQ(SquareState::Covered, mineSquare->get_State());
 	delete mineSquare;
-	delete game;
 }
 

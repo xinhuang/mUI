@@ -1,12 +1,6 @@
 #include "MineSquare.h"
 
-MineSquare::MineSquare(MGame* game)
-	: _state(SquareState::Covered), 
-	_game(game)
+MineSquare::MineSquare(MGame* game, MineField* mineField, int row, int column)
+	: base(game, mineField, row, column)
 {
-}
-
-SquareState::Enum MineSquare::get_State() const
-{
-	return _state;
 }

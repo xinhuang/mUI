@@ -1,21 +1,20 @@
 #ifndef __MINESQUARE_H__
 #define __MINESQUARE_H__
 
-#include <ISquare.h>
+#include <AbstractSquare.h>
 
 class MGame;
 
-class MineSquare : public ISquare
+class MineSquare : public AbstractSquare
 {
+	typedef AbstractSquare base;
 public:
-	MineSquare(MGame* game);
+	MineSquare(MGame* game, MineField* mineField, int row, int column);
 
-	virtual SquareState::Enum get_State() const;
 	virtual void Uncover() {}
 
 private:
 	MGame* _game;
-	SquareState::Enum _state;
 };
 
 #endif // __MINESQUARE_H__
