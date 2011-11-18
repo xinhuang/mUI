@@ -1,19 +1,17 @@
 #ifndef __NUMBERSQUARE_H__
 #define __NUMBERSQUARE_H__
 
-#include <ISquare.h>
+#include "AbstractSquare.h"
 
 class MGame;
+class MineField;
 
-class NumberSquare : public ISquare
+class NumberSquare : public AbstractSquare
 {
+	typedef AbstractSquare base;
 public:
-	NumberSquare(MGame* game, int neighborMineTotal);
-	virtual SquareState::Enum get_State() const;
+	NumberSquare(MGame* game, MineField* mineField, int row, int column, int neighborMineTotal);
 
-private:
-	MGame* _game;
-	SquareState::Enum _state;
 };
 
 #endif // __NUMBERSQUARE_H__

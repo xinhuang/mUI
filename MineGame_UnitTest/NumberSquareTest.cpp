@@ -16,34 +16,35 @@ public:
 	void SetUp()
 	{
 		_game = new MGame();
+		_mineField = new MineField(_game);
 	}
 
 	void TearDown()
 	{
 		delete _game;
+		delete _mineField;
 	}
 
 protected:
 	MGame* _game;
+	MineField* _mineField;
 };
 
 TEST_F(NumberSquareTest, Constructor_Typical)
 {
-	MGame* game = new MGame();
-
-	NumberSquare* numberSquare = new NumberSquare(game, 2);
+	NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0, 2);
 
 	ASSERT_TRUE(NULL != numberSquare);
 	ASSERT_EQ(SquareState::Covered, numberSquare->get_State());
+
 	delete numberSquare;
-	delete game;
 }
 
 TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooBig)
 {
 	try
 	{
-		NumberSquare* numberSquare = new NumberSquare(_game, 9);
+		NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0, 9);
 		ASSERT_TRUE(false);
 	}
 	catch(const ArgumentException&)
@@ -55,7 +56,7 @@ TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooSmall)
 {
 	try
 	{
-		NumberSquare* numberSquare = new NumberSquare(_game, 0);
+		NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0, 0);
 		ASSERT_TRUE(false);
 	}
 	catch(const ArgumentException&)
