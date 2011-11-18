@@ -12,6 +12,10 @@ class NumberSquare : public AbstractSquare
 public:
 	NumberSquare(MGame* game, MineField* mineField, int row, int column, int neighborMineTotal);
 
+	int get_NeighborMineTotal() const;
+
+private:
+	int _neighborMineTotal;
 };
 
 #endif // __NUMBERSQUARE_H__

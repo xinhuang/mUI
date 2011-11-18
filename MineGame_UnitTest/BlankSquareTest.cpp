@@ -4,7 +4,6 @@
 #define private public
 #include <MGame.h>
 #include <MineField.h>
-#include <ISquare.h>
 #include <BlankSquare.h>
 #undef private
 

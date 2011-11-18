@@ -4,7 +4,6 @@
 #define private public
 #include <MGame.h>
 #include <MineField.h>
-#include <ISquare.h>
 #include <NumberSquare.h>
 #undef private
 
@@ -36,6 +35,7 @@ TEST_F(NumberSquareTest, Constructor_Typical)
 
 	ASSERT_TRUE(NULL != numberSquare);
 	ASSERT_EQ(SquareState::Covered, numberSquare->get_State());
+	ASSERT_EQ(2, numberSquare->get_NeighborMineTotal());
 
 	delete numberSquare;
 }
@@ -63,4 +63,5 @@ TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooSmall)
 	{
 	}
 }
+
 

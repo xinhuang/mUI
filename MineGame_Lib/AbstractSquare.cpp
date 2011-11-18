@@ -2,6 +2,8 @@
 
 AbstractSquare::AbstractSquare(MGame* game, MineField* mineField, int row, int column)
 	: _state(SquareState::Covered)
+	, _row(row)
+	, _column(column)
 {
 }
 
