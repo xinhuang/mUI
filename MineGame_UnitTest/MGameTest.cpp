@@ -12,23 +12,23 @@ class MGameTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_Game = new MGame();
+		_game = new MGame();
 		Size arbitrarySize(30, 20);
 		int arbitraryMineTotal = 28;
-		_Game->set_MineFieldWidth(arbitrarySize.Width);
-		_Game->set_MineFieldHeight(arbitrarySize.Height);
-		_Game->set_MineTotal(arbitraryMineTotal);
+		_game->set_MineFieldWidth(arbitrarySize.Width);
+		_game->set_MineFieldHeight(arbitrarySize.Height);
+		_game->set_MineTotal(arbitraryMineTotal);
 
-		_Game->NewGame();
+		_game->NewGame();
 	}
 
 	void TearDown()
 	{
-		delete _Game;
+		delete _game;
 	}
 
 protected:
-	MGame* _Game;
+	MGame* _game;
 };
 
 TEST_F(MGameTest, Constructor_Typical)
@@ -41,17 +41,17 @@ TEST_F(MGameTest, Constructor_Typical)
 
 TEST_F(MGameTest, NewGame_Typical)
 {
-	delete _Game;
-	_Game = new MGame();
+	delete _game;
+	_game = new MGame();
 	Size arbitrarySize(30, 20);
 	int arbitraryMineTotal = 28;
-	_Game->set_MineFieldWidth(arbitrarySize.Width);
-	_Game->set_MineFieldHeight(arbitrarySize.Height);
-	_Game->set_MineTotal(arbitraryMineTotal);
+	_game->set_MineFieldWidth(arbitrarySize.Width);
+	_game->set_MineFieldHeight(arbitrarySize.Height);
+	_game->set_MineTotal(arbitraryMineTotal);
 
-	_Game->NewGame();
+	_game->NewGame();
 
-	ASSERT_TRUE(_Game->_MineField != NULL);
-	ASSERT_EQ(arbitrarySize, _Game->_MineField->get_Size());
-	ASSERT_EQ(arbitraryMineTotal, _Game->_MineField->get_MineTotal());
+	ASSERT_TRUE(_game->_MineField != NULL);
+	ASSERT_EQ(arbitrarySize, _game->_MineField->get_Size());
+	ASSERT_EQ(arbitraryMineTotal, _game->_MineField->get_MineTotal());
 }
