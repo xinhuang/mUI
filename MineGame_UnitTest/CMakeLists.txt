@@ -3,17 +3,25 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 SET(TARGET_NAME MineGame_UnitTest)
 
 SET(DIR_WITH_SRC . mocks)
+
+FIND_PACKAGE(GTest)
+IF (GTEST_FOUND)
+	INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIR})
+	LINK_DIRECTORIES(${GTEST_LIBRARY_DIR})
+ELSE()
+	MESSAGE(FATAL_ERROR "Unable to find GTest!")
+ENDIF()
 	
 INCLUDE_DIRECTORIES(. 
-	${PROJECT_SOURCE_DIR}/dependency/include
+#	${PROJECT_SOURCE_DIR}/dependency/include
 	${PROJECT_SOURCE_DIR}/MineGame_Lib
 	${PROJECT_SOURCE_DIR}/mUI)
 
 SET(DEPENDENCY_LIBS mUI gtest gtest_main MineGame_Lib gmockd)
 
 LINK_DIRECTORIES(
-	${PROJECT_SOURCE_DIR}/dependency/lib/gtest
-	${PROJECT_SOURCE_DIR}/dependency/lib/gmock
+#	${PROJECT_SOURCE_DIR}/dependency/lib/gtest
+#	${PROJECT_SOURCE_DIR}/dependency/lib/gmock
 )
 
 SET(SRC_FILES "")
