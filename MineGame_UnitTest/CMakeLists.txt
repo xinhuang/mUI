@@ -4,6 +4,7 @@ SET(TARGET_NAME MineGame_UnitTest)
 
 SET(DIR_WITH_SRC . mocks)
 
+# GTest
 FIND_PACKAGE(GTest)
 IF (GTEST_FOUND)
 	INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIR})
@@ -12,6 +13,7 @@ ELSE()
 	MESSAGE(FATAL_ERROR "Unable to find GTest!")
 ENDIF()
 
+# GMock
 FIND_PACKAGE(GMock)
 IF (GTEST_FOUND)
 	INCLUDE_DIRECTORIES(${GMOCK_INCLUDE_DIR})
@@ -19,13 +21,14 @@ IF (GTEST_FOUND)
 ELSE()
 	MESSAGE(FATAL_ERROR "Unable to find GMock!")
 ENDIF()
-	
+
+# Include Directories
 INCLUDE_DIRECTORIES(. 
 	${PROJECT_SOURCE_DIR}/MineGame_Lib
 	${PROJECT_SOURCE_DIR}/mUI)
 
+# Link Libraries
 SET(DEPENDENCY_LIBS mUI gtest gtest_main MineGame_Lib gmock)
-
 LINK_DIRECTORIES(
 )
 
