@@ -1,6 +1,6 @@
-# -*- cmake -*-
+# Locate DirectX Library
 
-#TODO: Add version recognizing here.
+SET(DXSDK_FOUND FALSE)
 
 if (WIN32)
 	find_path(DXSDK_INCLUDE_DIR dxdiag.h
