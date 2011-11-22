@@ -1,6 +1,6 @@
-# -*- cmake -*-
+# Locate DirectX Library
 
-#TODO: Add version recognizing here.
+SET(DXSDK_FOUND FALSE)
 
 if (WIN32)
 	find_path(DXSDK_INCLUDE_DIR dxdiag.h
@@ -34,4 +34,6 @@ if (WIN32)
 	IF (DXSDK_INCLUDE_DIR AND DXSDK_LIBRARY_DIR)
 		SET(DXSDK_FOUND TRUE)
 	ENDIF()
-endif ()
+ELSE()
+	MESSAGE(FATAL_ERROR "HGE only works on Windows right now!")
+ENDIF ()
