@@ -54,6 +54,24 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1AllMine)
 	ASSERT_EQ(1, _squares.size());
 	ASSERT_EQ(0, _squares[0]->get_Row());
 	ASSERT_EQ(0, _squares[0]->get_Column());
-	MineSquare* mineSquare = dynamic_cast<MineSquare*>(_squares[0]);
-	ASSERT_TRUE(NULL != mineSquare);
+	MineSquare* square = dynamic_cast<MineSquare*>(_squares[0]);
+	ASSERT_TRUE(NULL != square);
+}
+
+
+TEST_F(SquareFactoryTest, CreateSquares_MineField1x1NoMine)
+{
+	MGame game;
+	game.set_MineFieldWidth(1);
+	game.set_MineFieldHeight(1);
+	game.set_MineTotal(0);
+	MineField mineField(&game);
+	
+	_squares = _factory->CreateSquares(&game, &mineField);
+
+	ASSERT_EQ(1, _squares.size());
+	ASSERT_EQ(0, _squares[0]->get_Row());
+	ASSERT_EQ(0, _squares[0]->get_Column());
+	BlankSquare* square = dynamic_cast<BlankSquare*>(_squares[0]);
+	ASSERT_TRUE(NULL != square);
 }
