@@ -21,15 +21,12 @@ ELSE()
 ENDIF()
 	
 INCLUDE_DIRECTORIES(. 
-#	${PROJECT_SOURCE_DIR}/dependency/include
 	${PROJECT_SOURCE_DIR}/MineGame_Lib
 	${PROJECT_SOURCE_DIR}/mUI)
 
-SET(DEPENDENCY_LIBS mUI gtest gtest_main MineGame_Lib gmockd)
+SET(DEPENDENCY_LIBS mUI gtest gtest_main MineGame_Lib gmock)
 
 LINK_DIRECTORIES(
-#	${PROJECT_SOURCE_DIR}/dependency/lib/gtest
-#	${PROJECT_SOURCE_DIR}/dependency/lib/gmock
 )
 
 SET(SRC_FILES "")

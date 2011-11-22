@@ -8,7 +8,7 @@ if (WIN32)
 			)
 
 	find_path(GTEST_LIBRARY_DIR 
-			NAMES gtest.lib gtest_main.lib
+			NAMES gtest gtest_main
 			HINTS
 			"${CMAKE_SOURCE_DIR}/dependency/lib/gtest"
 			)
