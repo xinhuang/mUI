@@ -37,3 +37,4 @@ TEST_F(MineSquareTest, Uncover_Typical)
 
 	ASSERT_EQ(SquareState::Boomed, mineSquare.get_State());
 }
+

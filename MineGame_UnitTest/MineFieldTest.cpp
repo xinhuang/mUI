@@ -7,6 +7,8 @@
 #include <ISquare.h>
 #undef private
 
+#include "mocks/ISquareMock.h"
+
 class MineFieldTest : public testing::Test
 {
 public:
@@ -48,4 +50,18 @@ TEST_F(MineFieldTest, Size_Typical)
 TEST_F(MineFieldTest, MineTotal_Typical)
 {
 	ASSERT_EQ(_game->get_MineTotal(), _mineField->get_MineTotal());
+}
+
+TEST_F(MineFieldTest, SquareAt_Typical)
+{
+	for (int r = 0; r < _mineField->get_Size().Width; ++r)
+	{
+		for (int c = 0; c < _mineField->get_Size().Height; ++c)
+		{
+			ISquare* square = _mineField->SquareAt(r, c);
+			ASSERT_TRUE(NULL != square);
+			ASSERT_EQ(r, square->get_Row());
+			ASSERT_EQ(c, square->get_Column());
+		}
+	}
 }

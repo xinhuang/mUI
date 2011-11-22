@@ -26,12 +26,13 @@ TEST_F(BlankSquareTest, Constructor_Typical)
 	delete blankSquare;
 }
 
-TEST_F(BlankSquareTest, Uncover_Typical)
-{
-	MineFieldMock mineField;
-	BlankSquare blankSquare(NULL, &mineField, 0, 0);
-
-	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
-
-	blankSquare.Uncover();
-}
+// TODO: (BlankSquareTest, Uncover_Typical)
+//TEST_F(BlankSquareTest, Uncover_Typical)
+//{
+//	MineFieldMock mineField;
+//	BlankSquare blankSquare(NULL, &mineField, 0, 0);
+//
+//	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
+//
+//	blankSquare.Uncover();
+//}
