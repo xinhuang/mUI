@@ -29,7 +29,7 @@ TEST_F(StringTest, Constructor_WhenConstructUsingWcharArray)
 {
 	const wchar_t* init_wstring = L"ArbitraryString";
 	wchar_t check_for_const[128];
-	wcscpy(check_for_const, init_wstring);
+	wcsncpy_s(check_for_const, init_wstring, sizeof(check_for_const)/sizeof(check_for_const[0]));
 	
 	string_ = new String(init_wstring);
 
