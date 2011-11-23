@@ -75,3 +75,65 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1NoMine)
 	BlankSquare* square = dynamic_cast<BlankSquare*>(_squares[0]);
 	ASSERT_TRUE(NULL != square);
 }
+
+TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal1)
+{
+	MGame game;
+	game.set_MineFieldHeight(1);
+	game.set_MineFieldWidth(1);
+	game.set_MineTotal(1);
+	MineField mineField(&game);
+
+	vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+
+	ASSERT_EQ(1, map.size());
+	ASSERT_EQ(true, map[0]);
+}
+
+TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal0)
+{
+	MGame game;
+	game.set_MineFieldHeight(1);
+	game.set_MineFieldWidth(1);
+	game.set_MineTotal(0);
+	MineField mineField(&game);
+
+	vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+
+	ASSERT_EQ(1, map.size());
+	ASSERT_EQ(false, map[0]);
+}
+
+TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField2x1MineTotal1)
+{
+	MGame game;
+	game.set_MineFieldHeight(2);
+	game.set_MineFieldWidth(1);
+	game.set_MineTotal(1);
+	MineField mineField(&game);
+	
+	vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+
+	ASSERT_EQ(2, map.size());
+	ASSERT_NE(map[0], map[1]);
+}
+
+TEST_F(SquareFactoryTest, GenerateMineFieldMap_MultipleTimesMineField2x1MineTotal1)
+{
+	MGame game;
+	game.set_MineFieldHeight(2);
+	game.set_MineFieldWidth(1);
+	game.set_MineTotal(1);
+	MineField mineField(&game);
+	
+	vector<bool> firstMap = _factory->GenerateMineFieldMap(mineField);
+	for (int i = 0; i < 30; ++i)
+	{
+		vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+
+		if (firstMap[0] != map[0])
+			return;
+	}
+
+	ASSERT_TRUE(false);
+}
