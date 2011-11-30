@@ -1,5 +1,7 @@
 #include <gtest\gtest.h>
+
 #include <mUI.h>
+using mUI::System::ArgumentException;
 
 #define private public
 #include <MGame.h>
@@ -24,6 +26,16 @@ public:
 	{
 		delete _mineField;
 		delete _game;
+	}
+
+	int get_ArbitraryRowIndex() const
+	{
+		return static_cast<int>(_mineField->get_Size().Width * 0.8);
+	}
+
+	int get_ArbitraryColumnIndex() const
+	{
+		return static_cast<int>(_mineField->get_Size().Height * 0.7);
 	}
 
 protected:
@@ -63,5 +75,148 @@ TEST_F(MineFieldTest, SquareAt_Typical)
 			ASSERT_EQ(r, square->get_Row());
 			ASSERT_EQ(c, square->get_Column());
 		}
+	}
+}
+
+TEST_F(MineFieldTest, get_RowFromIndex_Typical)
+{
+	int r = get_ArbitraryRowIndex();
+	int c = get_ArbitraryColumnIndex();
+	int i = r * _mineField->get_Size().Width + c;
+
+	ASSERT_EQ(r, _mineField->get_RowFromIndex(i));
+}
+
+TEST_F(MineFieldTest, get_RowFromIndex_WhenIndexTooLarge)
+{
+	int r = _mineField->get_Size().Width;
+	int c = get_ArbitraryColumnIndex();
+	int i = r * _mineField->get_Size().Width + c;
+
+	try
+	{
+		_mineField->get_RowFromIndex(i);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_RowFromIndex_WhenIndexTooSmall)
+{
+	try
+	{
+		_mineField->get_RowFromIndex(-1);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_ColumnFromIndex_Typical)
+{
+	int r = get_ArbitraryRowIndex();
+	int c = get_ArbitraryColumnIndex();
+	int i = r * _mineField->get_Size().Width + c;
+
+	ASSERT_EQ(c, _mineField->get_ColumnFromIndex(i));
+}
+
+TEST_F(MineFieldTest, get_ColumnFromIndex_WhenIndexTooLarge)
+{
+	int r = _mineField->get_Size().Width;
+	int c = _mineField->get_Size().Height;
+	int i = r * _mineField->get_Size().Width + c;
+
+	try
+	{
+		_mineField->get_ColumnFromIndex(i);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_ColumnFromIndex_WhenIndexTooSmall)
+{
+	try
+	{
+		_mineField->get_ColumnFromIndex(-1);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_Index_Typical)
+{
+	int r = get_ArbitraryRowIndex();
+	int c = get_ArbitraryColumnIndex();
+	int i = r * _mineField->get_Size().Width + c;
+
+	ASSERT_EQ(i, _mineField->get_Index(r, c));
+}
+
+TEST_F(MineFieldTest, get_Index_WhenColumnTooLarge)
+{
+	int r = get_ArbitraryRowIndex();
+	int c = _mineField->get_Size().Height + 1;
+
+	try
+	{
+		_mineField->get_Index(r, c);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_Index_WhenColumnTooSmall)
+{
+	int r = get_ArbitraryRowIndex();
+	int c = -1;
+
+	try
+	{
+		_mineField->get_Index(r, c);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_Index_WhenRowTooLarge)
+{
+	int r = _mineField->get_Size().Width + 1;
+	int c = get_ArbitraryColumnIndex();
+
+	try
+	{
+		_mineField->get_Index(r, c);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
+	}
+}
+
+TEST_F(MineFieldTest, get_Index_WhenRowTooSmall)
+{
+	int r = -1;
+	int c = get_ArbitraryColumnIndex();
+
+	try
+	{
+		_mineField->get_Index(r, c);
+		ASSERT_TRUE(FALSE);
+	}
+	catch (const ArgumentException&)
+	{
 	}
 }

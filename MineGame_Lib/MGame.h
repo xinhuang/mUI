@@ -22,12 +22,12 @@ public:
 	void NewGame();
 	void Uncover(int rowIndex, int columnIndex);
 
-	virtual void Lose() {}
+	virtual void Lose();
 
 private:
 	Size _MineFieldSize;
 	int _MineTotal;
-	MineField* _MineField;
+	MineField* _mineField;
 };
 
 #endif // __MGAME_H__

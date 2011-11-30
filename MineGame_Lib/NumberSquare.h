@@ -10,14 +10,14 @@ class NumberSquare : public AbstractSquare
 {
 	typedef AbstractSquare base;
 public:
-	NumberSquare(MGame* game, MineField* mineField, int row, int column, int neighborMineTotal);
+	NumberSquare(MGame* game, MineField* mineField, int row, int column);
 
 	virtual void Uncover();
 
-	int get_NeighborMineTotal() const;
+	int get_Number() const;
 
 private:
-	int _neighborMineTotal;
+	mutable int _number;
 };
 
 #endif // __NUMBERSQUARE_H__

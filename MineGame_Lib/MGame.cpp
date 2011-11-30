@@ -4,13 +4,14 @@
 #include <mUI.h>
 
 MGame::MGame()
-	: _MineField(NULL)
+	: _mineField(NULL)
 {
+	_mineField = new MineField(this);
 }
 
 MGame::~MGame()
 {
-	delete _MineField;
+	delete _mineField;
 }
 
 const Size& MGame::get_MineFieldSize() const
@@ -40,10 +41,14 @@ int MGame::get_MineTotal() const
 	
 void MGame::NewGame()
 {
-	delete _MineField;
-	_MineField = new MineField(this);
+	_mineField->Refresh();
 }
 
 void MGame::Uncover(int rowIndex, int columnIndex)
 {
+}
+
+void MGame::Lose()
+{
+
 }

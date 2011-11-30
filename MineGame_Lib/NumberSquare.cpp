@@ -1,20 +1,21 @@
 #include "NumberSquare.h"
 
 #include <mUI.h>
-
 using namespace mUI::System;
 
-NumberSquare::NumberSquare(MGame* game, MineField* mineField, int row, int column, int neighborMineTotal)
+#include "MineField.h"
+
+NumberSquare::NumberSquare(MGame* game, MineField* mineField, int row, int column)
 	: base(game, mineField, row, column)
-	, _neighborMineTotal(neighborMineTotal)
+	, _number(-1)
 {
-	if (neighborMineTotal <= 0 || neighborMineTotal > 8)
-		throw ArgumentException();
 }
 
-int NumberSquare::get_NeighborMineTotal() const
+int NumberSquare::get_Number() const
 {
-	return _neighborMineTotal;
+	if (_number == -1)
+		_number = get_MineField()->get_NeighborMineTotal(this);
+	return _number;
 }
 
 void NumberSquare::Uncover()

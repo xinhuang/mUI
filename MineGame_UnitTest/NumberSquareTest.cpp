@@ -1,5 +1,9 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+using ::testing::Return;
+
 #include <mUI.h>
+using namespace mUI::System;
 
 #define private public
 #define protected public
@@ -9,7 +13,8 @@
 #undef protected
 #undef private
 
-using namespace mUI::System;
+#include "mocks/MineFieldMock.h"
+
 
 class NumberSquareTest : public testing::Test
 {
@@ -33,42 +38,17 @@ protected:
 
 TEST_F(NumberSquareTest, Constructor_Typical)
 {
-	NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0, 2);
+	NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0);
 
 	ASSERT_TRUE(NULL != numberSquare);
 	ASSERT_EQ(SquareState::Covered, numberSquare->get_State());
-	ASSERT_EQ(2, numberSquare->get_NeighborMineTotal());
 
 	delete numberSquare;
 }
 
-TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooBig)
-{
-	try
-	{
-		NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0, 9);
-		ASSERT_TRUE(false);
-	}
-	catch(const ArgumentException&)
-	{
-	}
-}
-
-TEST_F(NumberSquareTest, Constructor_NeighborMineTotalTooSmall)
-{
-	try
-	{
-		NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0, 0);
-		ASSERT_TRUE(false);
-	}
-	catch(const ArgumentException&)
-	{
-	}
-}
-
 TEST_F(NumberSquareTest, Uncover_Typical)
 {
-	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
+	NumberSquare numberSquare(NULL, NULL, 0, 0);
 
 	numberSquare.Uncover();
 
@@ -77,7 +57,7 @@ TEST_F(NumberSquareTest, Uncover_Typical)
 
 TEST_F(NumberSquareTest, Uncover_WhenFlagged)
 {
-	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
+	NumberSquare numberSquare(NULL, NULL, 0, 0);
 	numberSquare.ToggleFlag();
 
 	numberSquare.Uncover();
@@ -87,7 +67,7 @@ TEST_F(NumberSquareTest, Uncover_WhenFlagged)
 
 TEST_F(NumberSquareTest, Uncover_WhenQuestionMark)
 {
-	NumberSquare numberSquare(NULL, NULL, 0, 0, 2);
+	NumberSquare numberSquare(NULL, NULL, 0, 0);
 	numberSquare.ToggleFlag();
 	numberSquare.ToggleFlag();
 
@@ -95,3 +75,15 @@ TEST_F(NumberSquareTest, Uncover_WhenQuestionMark)
 
 	ASSERT_EQ(SquareState::Uncovered, numberSquare.get_State());
 }
+
+//TEST_F(NumberSquareTest, get_Number_Typical)
+//{
+//	int arbitraryNeighborMineTotal = 3;
+//	MineFieldMock mineField;
+//	NumberSquare numberSquare(NULL, &mineField, 0, 0);
+//	EXPECT_CALL(mineField, get_NeighborMineTotal(&numberSquare))
+//		.Times(1)
+//		.WillOnce(Return(arbitraryNeighborMineTotal));
+//
+//	ASSERT_EQ(arbitraryNeighborMineTotal, numberSquare.get_Number());
+//}

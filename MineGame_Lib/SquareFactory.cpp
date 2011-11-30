@@ -5,29 +5,35 @@
 #include "MineSquare.h"
 #include "MineField.h"
 
+#include <algorithm>
+using std::swap;
+
 #include <mUI.h>
 using mUI::System::Random;
-
-int SquareFactory::GetArrayIndexFromRowColumn(int r, int c, int rowWidth)
-{
-	return r * rowWidth + c;
-}
+using mUI::System::Drawing::Point;
 
 vector<ISquare*> SquareFactory::CreateSquares(MGame* game, MineField* mineField)
 {
-	vector<ISquare*> squares;
-	vector<bool> mineFieldMap = GenerateMineFieldMap(*mineField);
-	const Size& mineFieldSize = mineField->get_Size();
+	const Size& size = mineField->get_Size();
+	vector<ISquare*> squares(size.Width * size.Height, NULL);
 
-	for (int r = 0; r < mineFieldSize.Width; ++r)
+	const vector<bool> fieldMap = GenerateMineFieldMap(*mineField);
+
+	for (size_t i = 0; i < squares.size(); ++i)
 	{
-		for (int c = 0; c < mineFieldSize.Height; ++c)
+		if (fieldMap[i])
 		{
-			int i = GetArrayIndexFromRowColumn(r, c, mineFieldSize.Width);
-			if (mineFieldMap[i])
-				squares.push_back(new MineSquare(game, mineField, r, c));
+			squares[i] = new MineSquare(game, mineField, 
+				mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
+		}
+		else
+		{
+			if (HasAdjacentMine(fieldMap, mineField->get_Size(), i))
+				squares[i] = new NumberSquare(game, mineField, 
+					mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
 			else
-				squares.push_back(new BlankSquare(game, mineField, r, c));
+				squares[i] = new BlankSquare(game, mineField, 
+					mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
 		}
 	}
 
@@ -52,11 +58,69 @@ vector<bool> SquareFactory::GenerateMineFieldMap(const MineField& mineField)
 
 	for (size_t i = 0; i < map.size(); ++i)
 	{
-		int swapIndex = _random.Next(0, map.size());
+		int swapIndex = _random.Next(map.size());
 		bool tmp = map[i];
 		map[i] = map[swapIndex];
 		map[swapIndex] = tmp;
 	}
 
 	return map;
+}
+
+bool SquareFactory::HasAdjacentMine( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return IsMineUp(fieldMap, fieldSize, i) || IsMineDown(fieldMap, fieldSize, i) 
+		|| IsMineLeft(fieldMap, fieldSize, i) || IsMineRight(fieldMap, fieldSize, i)
+		|| IsMineUpRight(fieldMap, fieldSize, i) || IsMineDownRight(fieldMap, fieldSize, i) 
+		|| IsMineUpLeft(fieldMap, fieldSize, i) || IsMineDownLeft(fieldMap, fieldSize, i);
+}
+
+bool SquareFactory::IsMineUp( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	int r = MineField::get_RowFromIndex(fieldSize, i);
+	int c = MineField::get_ColumnFromIndex(fieldSize, i);
+	if (r == 0)
+	{
+		return false;
+	}
+	else
+	{
+		int i = MineField::get_Index(fieldSize, r - 1, c);
+		return fieldMap[i];
+	}
+}
+
+bool SquareFactory::IsMineDown( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
+}
+
+bool SquareFactory::IsMineLeft( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
+}
+
+bool SquareFactory::IsMineRight( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
+}
+
+bool SquareFactory::IsMineUpRight( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
+}
+
+bool SquareFactory::IsMineDownRight( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
+}
+
+bool SquareFactory::IsMineUpLeft( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
+}
+
+bool SquareFactory::IsMineDownLeft( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+{
+	return false;
 }

@@ -49,3 +49,13 @@ MineField* AbstractSquare::get_MineField()
 {
 	return _mineField;
 }
+
+const MGame* AbstractSquare::get_Game() const
+{
+	return _game;
+}
+
+const MineField* AbstractSquare::get_MineField() const
+{
+	return _mineField;
+}

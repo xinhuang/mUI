@@ -33,10 +33,7 @@ protected:
 
 TEST_F(MGameTest, Constructor_Typical)
 {
-	MGame* game = new MGame();
-
-	ASSERT_TRUE(NULL != game);
-	delete game;
+	ASSERT_TRUE(NULL != _game);
 }
 
 TEST_F(MGameTest, NewGame_Typical)
@@ -51,7 +48,7 @@ TEST_F(MGameTest, NewGame_Typical)
 
 	_game->NewGame();
 
-	ASSERT_TRUE(_game->_MineField != NULL);
-	ASSERT_EQ(arbitrarySize, _game->_MineField->get_Size());
-	ASSERT_EQ(arbitraryMineTotal, _game->_MineField->get_MineTotal());
+	ASSERT_TRUE(_game->_mineField != NULL);
+	ASSERT_EQ(arbitrarySize, _game->_mineField->get_Size());
+	ASSERT_EQ(arbitraryMineTotal, _game->_mineField->get_MineTotal());
 }

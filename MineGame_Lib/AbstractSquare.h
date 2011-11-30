@@ -20,6 +20,8 @@ protected:
 	void set_State(SquareState::Enum state);
 	MGame* get_Game();
 	MineField* get_MineField();
+	const MGame* get_Game() const;
+	const MineField* get_MineField() const;
 
 private:
 	SquareState::Enum _state;

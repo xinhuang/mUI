@@ -137,3 +137,29 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MultipleTimesMineField2x1MineTota
 
 	ASSERT_TRUE(false);
 }
+
+TEST_F(SquareFactoryTest, CreateSquares_MineField2x1MineTotal1)
+{
+	MGame game;
+	game.set_MineFieldHeight(2);
+	game.set_MineFieldWidth(1);
+	game.set_MineTotal(1);
+	MineField mineField(&game);
+	
+	_squares = _factory->CreateSquares(&game, &mineField);
+
+	NumberSquare* numberSquare = dynamic_cast<NumberSquare*>(_squares[0]);
+	if (numberSquare == NULL)
+		numberSquare = dynamic_cast<NumberSquare*>(_squares[1]);
+
+	ASSERT_TRUE(NULL != numberSquare);
+	ASSERT_EQ(1, numberSquare->get_Number());
+}
+
+TEST_F(SquareFactoryTest, IsMineUp_WhenTrue)
+{
+	vector<bool> fieldMap(8, false);
+	fieldMap[1] = true;
+	
+	ASSERT_TRUE(_factory->IsMineUp(fieldMap, Size(3, 3), 4));
+}
