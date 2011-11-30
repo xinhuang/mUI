@@ -20,6 +20,8 @@ public:
 	virtual void SetUp()
 	{
 		_factory = new SquareFactory();
+		_fieldMap.resize(8, false);
+		_fieldSize = Size(3, 3);
 	}
 
 	virtual void TearDown()
@@ -34,6 +36,9 @@ public:
 protected:
 	SquareFactory* _factory;
 	vector<ISquare*> _squares;
+	vector<bool> _fieldMap;
+	static const int _middleSquareIndex = 4;
+	Size _fieldSize;
 };
 
 TEST_F(SquareFactoryTest, Constructor_Typical)
@@ -158,8 +163,17 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField2x1MineTotal1)
 
 TEST_F(SquareFactoryTest, IsMineUp_WhenTrue)
 {
-	vector<bool> fieldMap(8, false);
-	fieldMap[1] = true;
-	
-	ASSERT_TRUE(_factory->IsMineUp(fieldMap, Size(3, 3), 4));
+	_fieldMap[1] = true;
+
+	ASSERT_TRUE(_factory->IsMineUp(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineUp_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineUp(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineUp_WhenNoUpSquare)
+{
+	ASSERT_FALSE(_factory->IsMineUp(_fieldMap, _fieldSize, 1));
 }

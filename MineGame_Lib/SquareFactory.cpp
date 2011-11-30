@@ -75,52 +75,45 @@ bool SquareFactory::HasAdjacentMine( const vector<bool>& fieldMap, const Size& f
 		|| IsMineUpLeft(fieldMap, fieldSize, i) || IsMineDownLeft(fieldMap, fieldSize, i);
 }
 
-bool SquareFactory::IsMineUp( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineUp( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	int r = MineField::get_RowFromIndex(fieldSize, i);
-	int c = MineField::get_ColumnFromIndex(fieldSize, i);
-	if (r == 0)
-	{
+	if (i < fieldSize.Width)
 		return false;
-	}
-	else
-	{
-		int i = MineField::get_Index(fieldSize, r - 1, c);
-		return fieldMap[i];
-	}
+
+	return fieldMap[i - fieldSize.Width];
 }
 
-bool SquareFactory::IsMineDown( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineDown( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }
 
-bool SquareFactory::IsMineLeft( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }
 
-bool SquareFactory::IsMineRight( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }
 
-bool SquareFactory::IsMineUpRight( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineUpRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }
 
-bool SquareFactory::IsMineDownRight( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineDownRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }
 
-bool SquareFactory::IsMineUpLeft( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineUpLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }
 
-bool SquareFactory::IsMineDownLeft( const vector<bool>& fieldMap, const Size& fieldSize, size_t i )
+bool SquareFactory::IsMineDownLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
 	return false;
 }

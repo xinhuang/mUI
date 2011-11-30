@@ -78,13 +78,15 @@ TEST_F(MineFieldTest, SquareAt_Typical)
 	}
 }
 
-TEST_F(MineFieldTest, get_RowFromIndex_Typical)
+TEST_F(MineFieldTest, get_RowFromIndex_UpLeft)
 {
-	int r = get_ArbitraryRowIndex();
-	int c = get_ArbitraryColumnIndex();
-	int i = r * _mineField->get_Size().Width + c;
+	const Size& fieldSize = _mineField->get_Size();
+	int maxIndex = _mineField->get_IndexMax();
 
-	ASSERT_EQ(r, _mineField->get_RowFromIndex(i));
+	ASSERT_EQ(0, _mineField->get_RowFromIndex(0));
+	ASSERT_EQ(0, _mineField->get_RowFromIndex(1));
+	ASSERT_EQ(fieldSize.Height - 1, _mineField->get_RowFromIndex(maxIndex - 1));
+	ASSERT_EQ(fieldSize.Height - 1, _mineField->get_RowFromIndex(maxIndex - fieldSize.Width));
 }
 
 TEST_F(MineFieldTest, get_RowFromIndex_WhenIndexTooLarge)
