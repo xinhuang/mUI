@@ -25,6 +25,7 @@ public:
 		_game->set_MineTotal(_arbitraryMineTotal);
 		_mineField = _game->get_MineField();
 	}
+
 	void TearDown()
 	{
 		delete _game;
@@ -207,7 +208,7 @@ TEST_F(MineFieldTest, get_Index_WhenYTooSmall)
 	ASSERT_EQ(i, _mineField->get_Index(x, y));
 }
 
-TEST_F(MineFieldTest, get_AdjacentMineTotal_Mines8)
+TEST_F(MineFieldTest, get_AdjacentMineTotal_When8Mines)
 {
 	SquareFactory* oldFactory = _mineField->get_SquareFactory();
 	SquareFactoryFake newFactory(vector<bool>(9, true));
@@ -220,7 +221,7 @@ TEST_F(MineFieldTest, get_AdjacentMineTotal_Mines8)
 	_mineField->set_SquareFactory(oldFactory);
 }
 
-TEST_F(MineFieldTest, get_AdjacentMineTotal_Mines0)
+TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenNoMine)
 {
 	SquareFactory* oldFactory = _mineField->get_SquareFactory();
 	vector<bool> fieldMap(9, false);
