@@ -296,3 +296,25 @@ TEST_F(SquareFactoryTest, IsMineDownLeft_WhenNoDownLeftSquare)
 {
 	ASSERT_FALSE(_factory->IsMineDownLeft(_fieldMap, _fieldSize, 6));
 }
+
+TEST_F(SquareFactoryTest, IsMine_WhenTrue)
+{
+	_fieldMap[2] = true;
+
+	ASSERT_TRUE(_factory->IsMine(_fieldMap, 2));
+}
+
+TEST_F(SquareFactoryTest, IsMine_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMine(_fieldMap, 2));
+}
+
+TEST_F(SquareFactoryTest, IsMine_WhenIndexTooLarge)
+{
+	ASSERT_FALSE(_factory->IsMine(_fieldMap, _fieldMap.size()));
+}
+
+TEST_F(SquareFactoryTest, IsMine_WhenIndexTooSmall)
+{
+	ASSERT_FALSE(_factory->IsMine(_fieldMap, -1));
+}
