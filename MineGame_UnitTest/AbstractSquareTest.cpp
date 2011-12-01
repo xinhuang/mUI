@@ -41,8 +41,8 @@ TEST_F(AbstractSquareTest, Constructor_Typical)
 {
 	ASSERT_TRUE(NULL != _abstractSquare);
 	ASSERT_EQ(SquareState::Covered, _abstractSquare->get_State());
-	ASSERT_EQ(ABITRARY_ROW, _abstractSquare->get_Row());
-	ASSERT_EQ(ABITRARY_COLUMN, _abstractSquare->get_Column());
+	ASSERT_EQ(ABITRARY_ROW, _abstractSquare->get_Y());
+	ASSERT_EQ(ABITRARY_COLUMN, _abstractSquare->get_X());
 	ASSERT_EQ(Point(ABITRARY_ROW, ABITRARY_COLUMN), _abstractSquare->get_Location());
 }
 

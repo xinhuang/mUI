@@ -24,17 +24,17 @@ MineField::~MineField()
 
 const Size& MineField::get_Size() const
 {
-	return _game->get_MineFieldSize();
+	return _size;
 }
 
 int MineField::get_MineTotal() const
 {
-	return _game->get_MineTotal();
+	return _mineTotal;
 }
 
-ISquare* MineField::SquareAt(int row, int column)
+ISquare* MineField::SquareAt(int x, int y)
 {
-	return _squares.at(row * get_Size().Width + column);
+	return _squares.at(x * get_Size().Width + y);
 }
 
 SquareFactory* MineField::get_SquareFactory()
@@ -53,24 +53,24 @@ void MineField::Refresh()
 	_squares = _squareFactory->CreateSquares(_game, this);
 }
 
-int MineField::get_RowFromIndex( int i )
+int MineField::get_YFromIndex( int i )
 {
-	return get_RowFromIndex(get_Size(), i);
+	return get_YFromIndex(get_Size(), i);
 }
 
-int MineField::get_RowFromIndex( const Size& size, int i )
+int MineField::get_YFromIndex( const Size& size, int i )
 {
 	if (i >= get_IndexMax(size) || i < 0)
 		throw ArgumentException();
 	return i / size.Width;
 }
 
-int MineField::get_ColumnFromIndex( int i ) const
+int MineField::get_XFromIndex( int i ) const
 {
-	return get_ColumnFromIndex(get_Size(), i);
+	return get_XFromIndex(get_Size(), i);
 }
 
-int MineField::get_ColumnFromIndex( const Size& size, int i )
+int MineField::get_XFromIndex( const Size& size, int i )
 {
 	if (i >= get_IndexMax(size) || i < 0)
 		throw ArgumentException();
@@ -87,17 +87,19 @@ int MineField::get_IndexMax( const Size& size )
 	return size.Width * size.Height;
 }
 
-int MineField::get_Index( int row, int column ) const
+int MineField::get_Index( int x, int y ) const
 {
-	return get_Index(get_Size(), row, column);
+	return get_Index(get_Size(), x, y);
 }
 
-int MineField::get_Index( const Size& size, int row, int column )
+int MineField::get_Index( const Size& size, int x, int y )
 {
-	if (row >= size.Height || row < 0 
-		|| column >= size.Width || column < 0)
-		throw ArgumentException();
-	return row * size.Width + column;
+	return y * size.Width + x;
+}
+
+int MineField::get_Index( const Point& location ) const
+{
+	return get_Index(location.X, location.Y);
 }
 
 void MineField::ClearFields()
@@ -110,4 +112,37 @@ void MineField::ClearFields()
 int MineField::get_NeighborMineTotal( const ISquare* square ) const
 {
 	return 1;
+}
+
+bool MineField::IsMineInUpSquare( const Point& location ) const
+{
+	int i = get_Index(location.X, location.Y - 1);
+	return IsMineAt(i);
+}
+
+void MineField::set_Size( const Size& size )
+{
+	_size = size;
+}
+
+void MineField::set_Width( int width )
+{
+	_size.Width = width;
+}
+
+void MineField::set_Height( int height )
+{
+	_size.Height = height;
+}
+
+void MineField::set_MineTotal( int mineTotal )
+{
+	_mineTotal = mineTotal;
+}
+
+bool MineField::IsMineAt( int i ) const
+{
+	if (i < 0 || static_cast<size_t>(i) >= _squares.size())
+		return false;
+	return _squares[i]->HasMine();
 }

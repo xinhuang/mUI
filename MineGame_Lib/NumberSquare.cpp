@@ -5,8 +5,8 @@ using namespace mUI::System;
 
 #include "MineField.h"
 
-NumberSquare::NumberSquare(MGame* game, MineField* mineField, int row, int column)
-	: base(game, mineField, Point(row, column))
+NumberSquare::NumberSquare(MGame* game, MineField* mineField, int x, int y)
+	: base(game, mineField, Point(x, y))
 	, _number(-1)
 {
 }

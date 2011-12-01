@@ -12,8 +12,8 @@ public:
 	AbstractSquare(MGame* game, MineField* mineField, const Point& location);
 
 	virtual SquareState::Enum get_State() const;
-	virtual int get_Row() const { return _location.X; }
-	virtual int get_Column() const { return _location.Y; }
+	virtual int get_X() const { return _location.X; }
+	virtual int get_Y() const { return _location.Y; }
 	virtual const Point& get_Location() const { return _location; }
 	virtual void ToggleFlag();
 	virtual bool HasMine() const { return false; }

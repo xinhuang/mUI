@@ -6,15 +6,17 @@
 class SquareFactoryFake : public SquareFactory
 {
 public:
-	virtual vector<ISquare*> CreateSquares(MGame* game, MineField* mineField)
+	SquareFactoryFake()	{}
+	SquareFactoryFake(const vector<bool>& presetMap) : _presetMap(presetMap)
+	{}
+
+	virtual vector<bool> GenerateMineFieldMap(const Size& fieldSize, int mineTotal)
 	{
-		return vector<ISquare*>();
+		return _presetMap;
 	}
 
-	virtual vector<bool> GenerateMineFieldMap(const MineField& mineField)
-	{
-		return vector<bool>();
-	}
+private:
+	vector<bool> _presetMap;
 };
 
 #endif	// __SQUAREFACTORYFAKE_H__

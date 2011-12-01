@@ -19,32 +19,39 @@ public:
 
 	void ClearFields();
 	const Size& get_Size() const;
+	void set_Size(const Size& size);
 	int get_MineTotal() const;
+	void set_MineTotal(int mineTotal);
 
-	ISquare* SquareAt(int row, int column);
+	ISquare* SquareAt(int x, int y);
 	virtual void UncoverNeighborSquares(const ISquare& square) {}
 	virtual int get_NeighborMineTotal(const ISquare* square) const;
 	void Refresh();
 
-
 	int get_IndexMax() const;
-	int get_Index(int row, int column) const;
-	int get_RowFromIndex( int i );
-	int get_ColumnFromIndex(int i) const;
+	int get_Index(int x, int y) const;
+	int get_Index(const Point& location) const;
+	int get_YFromIndex( int i );
+	int get_XFromIndex(int i) const;
 	
 	static int get_IndexMax(const Size& size);
-	static int get_Index(const Size& fieldSize, int row, int column);
-	static int get_RowFromIndex(const Size& size, int i);
-	static int get_ColumnFromIndex(const Size& size, int i);
+	static int get_Index(const Size& fieldSize, int x, int y);
+	static int get_YFromIndex(const Size& size, int i);
+	static int get_XFromIndex(const Size& size, int i);
 
-protected:
+	bool IsMineInUpSquare(const Point& location) const;
+
+	bool IsMineAt( int i ) const;
 	SquareFactory* get_SquareFactory();
 	void set_SquareFactory(SquareFactory* squareFactory);
-
+	void set_Width( int width );
+	void set_Height( int height );
 private:
 	MGame* _game;
 	vector<ISquare*> _squares;
 	SquareFactory* _squareFactory;
+	Size _size;
+	int _mineTotal;
 };
 
 #endif // __MINEFIELD_H__

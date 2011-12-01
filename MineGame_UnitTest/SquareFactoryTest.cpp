@@ -52,13 +52,13 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1AllMine)
 	game.set_MineFieldWidth(1);
 	game.set_MineFieldHeight(1);
 	game.set_MineTotal(1);
-	MineField mineField(&game);
+	MineField& mineField(*game.get_MineField());
 	
 	_squares = _factory->CreateSquares(&game, &mineField);
 
 	ASSERT_EQ(1, _squares.size());
-	ASSERT_EQ(0, _squares[0]->get_Row());
-	ASSERT_EQ(0, _squares[0]->get_Column());
+	ASSERT_EQ(0, _squares[0]->get_Y());
+	ASSERT_EQ(0, _squares[0]->get_X());
 	MineSquare* square = dynamic_cast<MineSquare*>(_squares[0]);
 	ASSERT_TRUE(NULL != square);
 }
@@ -69,13 +69,13 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1NoMine)
 	game.set_MineFieldWidth(1);
 	game.set_MineFieldHeight(1);
 	game.set_MineTotal(0);
-	MineField mineField(&game);
+	MineField& mineField(*game.get_MineField());
 	
 	_squares = _factory->CreateSquares(&game, &mineField);
 
 	ASSERT_EQ(1, _squares.size());
-	ASSERT_EQ(0, _squares[0]->get_Row());
-	ASSERT_EQ(0, _squares[0]->get_Column());
+	ASSERT_EQ(0, _squares[0]->get_Y());
+	ASSERT_EQ(0, _squares[0]->get_X());
 	BlankSquare* square = dynamic_cast<BlankSquare*>(_squares[0]);
 	ASSERT_TRUE(NULL != square);
 }
@@ -86,7 +86,7 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal1)
 	game.set_MineFieldHeight(1);
 	game.set_MineFieldWidth(1);
 	game.set_MineTotal(1);
-	MineField mineField(&game);
+	MineField& mineField(*game.get_MineField());
 
 	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
 														mineField.get_MineTotal());
@@ -97,14 +97,7 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal1)
 
 TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal0)
 {
-	MGame game;
-	game.set_MineFieldHeight(1);
-	game.set_MineFieldWidth(1);
-	game.set_MineTotal(0);
-	MineField mineField(&game);
-
-	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
-														mineField.get_MineTotal());
+	vector<bool> map = _factory->GenerateMineFieldMap(Size(1, 1), 0);
 
 	ASSERT_EQ(1, map.size());
 	ASSERT_EQ(false, map[0]);
@@ -112,33 +105,18 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal0)
 
 TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField2x1MineTotal1)
 {
-	MGame game;
-	game.set_MineFieldHeight(2);
-	game.set_MineFieldWidth(1);
-	game.set_MineTotal(1);
-	MineField mineField(&game);
-	
-	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
-														mineField.get_MineTotal());
+	vector<bool> map = _factory->GenerateMineFieldMap(Size(2, 1), 1);
 
 	ASSERT_EQ(2, map.size());
 	ASSERT_NE(map[0], map[1]);
 }
 
 TEST_F(SquareFactoryTest, GenerateMineFieldMap_MultipleTimesMineField2x1MineTotal1)
-{
-	MGame game;
-	game.set_MineFieldHeight(2);
-	game.set_MineFieldWidth(1);
-	game.set_MineTotal(1);
-	MineField mineField(&game);
-	
-	vector<bool> firstMap = _factory->GenerateMineFieldMap(mineField.get_Size(), 
-															mineField.get_MineTotal());
+{	
+	vector<bool> firstMap = _factory->GenerateMineFieldMap(Size(2, 1), 1);
 	for (int i = 0; i < 30; ++i)
 	{
-		vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
-															mineField.get_MineTotal());
+		vector<bool> map = _factory->GenerateMineFieldMap(Size(2, 1), 1);
 
 		if (firstMap[0] != map[0])
 			return;
@@ -150,10 +128,9 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MultipleTimesMineField2x1MineTota
 TEST_F(SquareFactoryTest, CreateSquares_MineField2x1MineTotal1)
 {
 	MGame game;
-	game.set_MineFieldHeight(2);
-	game.set_MineFieldWidth(1);
-	game.set_MineTotal(1);
-	MineField mineField(&game);
+	MineField& mineField(*game.get_MineField());
+	mineField.set_Size(Size(2, 1));
+	mineField.set_MineTotal(1);
 	
 	_squares = _factory->CreateSquares(&game, &mineField);
 
@@ -173,7 +150,7 @@ TEST_F(SquareFactoryTest, CreateSquares_SameAsFieldMap)
 	game.set_MineFieldHeight(fieldSize.Height);
 	game.set_MineFieldWidth(fieldSize.Width);
 	game.set_MineTotal(mineTotal);
-	MineField mineField(&game);
+	MineField& mineField(*game.get_MineField());
 	vector<bool> fieldMap = _factory->GenerateMineFieldMap(fieldSize, mineTotal);
 
 	_squares = _factory->CreateSquaresUsingFieldMap(&game, &mineField, fieldMap);
