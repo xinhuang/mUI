@@ -20,7 +20,7 @@ public:
 	virtual void SetUp()
 	{
 		_factory = new SquareFactory();
-		_fieldMap.resize(8, false);
+		_fieldMap.resize(9, false);
 		_fieldSize = Size(3, 3);
 	}
 
@@ -176,4 +176,123 @@ TEST_F(SquareFactoryTest, IsMineUp_WhenFalse)
 TEST_F(SquareFactoryTest, IsMineUp_WhenNoUpSquare)
 {
 	ASSERT_FALSE(_factory->IsMineUp(_fieldMap, _fieldSize, 1));
+}
+
+TEST_F(SquareFactoryTest, IsMineDown_WhenTrue)
+{
+	_fieldMap[7] = true;
+
+	ASSERT_TRUE(_factory->IsMineDown(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineDown_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineDown(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineDown_WhenNoDownSquare)
+{
+	ASSERT_FALSE(_factory->IsMineDown(_fieldMap, _fieldSize, 7));
+}
+
+TEST_F(SquareFactoryTest, IsMineLeft_WhenTrue)
+{
+	_fieldMap[3] = true;
+
+	ASSERT_TRUE(_factory->IsMineLeft(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineLeft_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineLeft(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineLeft_WhenNoLeftSquare)
+{
+	ASSERT_FALSE(_factory->IsMineLeft(_fieldMap, _fieldSize, 0));
+}
+
+TEST_F(SquareFactoryTest, IsMineRight_WhenTrue)
+{
+	_fieldMap[5] = true;
+
+	ASSERT_TRUE(_factory->IsMineRight(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineRight_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineRight(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineRight_WhenNoRightSquare)
+{
+	ASSERT_FALSE(_factory->IsMineRight(_fieldMap, _fieldSize, 2));
+}
+
+TEST_F(SquareFactoryTest, IsMineUpRight_WhenTrue)
+{
+	_fieldMap[0] = true;
+
+	ASSERT_TRUE(_factory->IsMineUpRight(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineUpRight_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineUpRight(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineUpRight_WhenNoUpRightSquare)
+{
+	ASSERT_FALSE(_factory->IsMineUpRight(_fieldMap, _fieldSize, 0));
+}
+
+TEST_F(SquareFactoryTest, IsMineUpLeft_WhenTrue)
+{
+	_fieldMap[2] = true;
+
+	ASSERT_TRUE(_factory->IsMineUpLeft(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineUpLeft_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineUpLeft(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineUpLeft_WhenNoUpLeftSquare)
+{
+	ASSERT_FALSE(_factory->IsMineUpLeft(_fieldMap, _fieldSize, 2));
+}
+
+TEST_F(SquareFactoryTest, IsMineDownRight_WhenTrue)
+{
+	_fieldMap[8] = true;
+
+	ASSERT_TRUE(_factory->IsMineDownRight(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineDownRight_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineDownRight(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineDownRight_WhenNoDownRightSquare)
+{
+	ASSERT_FALSE(_factory->IsMineDownRight(_fieldMap, _fieldSize, 8));
+}
+
+TEST_F(SquareFactoryTest, IsMineDownLeft_WhenTrue)
+{
+	_fieldMap[6] = true;
+
+	ASSERT_TRUE(_factory->IsMineDownLeft(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineDownLeft_WhenFalse)
+{
+	ASSERT_FALSE(_factory->IsMineDownLeft(_fieldMap, _fieldSize, _middleSquareIndex));
+}
+
+TEST_F(SquareFactoryTest, IsMineDownLeft_WhenNoDownLeftSquare)
+{
+	ASSERT_FALSE(_factory->IsMineDownLeft(_fieldMap, _fieldSize, 6));
 }

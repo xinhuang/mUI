@@ -77,43 +77,49 @@ bool SquareFactory::HasAdjacentMine( const vector<bool>& fieldMap, const Size& f
 
 bool SquareFactory::IsMineUp( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	if (i < fieldSize.Width)
-		return false;
-
-	return fieldMap[i - fieldSize.Width];
+	return IsMine(fieldMap, i - fieldSize.Width);
 }
 
 bool SquareFactory::IsMineDown( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return false;
+	return IsMine(fieldMap, i + fieldSize.Width);
 }
 
 bool SquareFactory::IsMineLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return false;
+	return IsMine(fieldMap, --i);
 }
 
 bool SquareFactory::IsMineRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return false;
+	return IsMine(fieldMap, ++i);
 }
 
 bool SquareFactory::IsMineUpRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return false;
+	return IsMine(fieldMap, i - fieldSize.Width - 1);
 }
 
 bool SquareFactory::IsMineDownRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return false;
+	return IsMine(fieldMap, i + fieldSize.Width + 1);
 }
 
 bool SquareFactory::IsMineUpLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return false;
+	return IsMine(fieldMap, i - fieldSize.Width + 1);
 }
 
 bool SquareFactory::IsMineDownLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
+	return IsMine(fieldMap, i + fieldSize.Width - 1);
+}
+
+bool SquareFactory::IsMine( const vector<bool> &fieldMap, int i )
+{
+	if (i < 0)
+		return false;
+	if (static_cast<size_t>(i) < fieldMap.size())
+		return fieldMap[i];
 	return false;
 }

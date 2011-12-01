@@ -2,7 +2,8 @@
 #define __ISQUARE_H__
 
 namespace SquareState{
-	enum Enum{
+	enum Enum
+	{
 		Uncovered,
 		Covered,
 		Boomed,
