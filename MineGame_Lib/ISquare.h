@@ -21,8 +21,8 @@ public:
 	virtual ~ISquare() {};
 
 	virtual SquareState::Enum get_State() const = 0;
-	virtual int get_Row() const = 0;
-	virtual int get_Column() const = 0;
+	virtual int get_X() const = 0;
+	virtual int get_Y() const = 0;
 
 	virtual void Uncover() = 0;
 	virtual void ToggleFlag() = 0;

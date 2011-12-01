@@ -10,7 +10,7 @@ class NumberSquare : public AbstractSquare
 {
 	typedef AbstractSquare base;
 public:
-	NumberSquare(MGame* game, MineField* mineField, int row, int column);
+	NumberSquare(MGame* game, MineField* mineField, int x, int y);
 
 	virtual void Uncover();
 

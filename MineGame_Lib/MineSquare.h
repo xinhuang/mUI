@@ -9,7 +9,7 @@ class MineSquare : public AbstractSquare
 {
 	typedef AbstractSquare base;
 public:
-	MineSquare(MGame* game, MineField* mineField, int row, int column);
+	MineSquare(MGame* game, MineField* mineField, int x, int y);
 
 	virtual void Uncover();
 	virtual bool HasMine() const { return true; }

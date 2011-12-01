@@ -20,13 +20,11 @@ public:
 	int get_MineTotal() const;
 
 	void NewGame();
-	void Uncover(int rowIndex, int columnIndex);
+	void Uncover(int x, int y);
 
 	virtual void Lose();
-
+	MineField* get_MineField();
 private:
-	Size _MineFieldSize;
-	int _MineTotal;
 	MineField* _mineField;
 };
 

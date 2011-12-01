@@ -18,7 +18,7 @@ public:
 	void SetUp()
 	{
 		_mineSquare = new MineSquare(NULL, NULL, 
-			ABITRARY_ROW, ABITRARY_COLUMN);
+			ABITRARY_X, ABITRARY_Y);
 	}
 
 	void TearDown()
@@ -28,7 +28,7 @@ public:
 
 protected:
 	MineSquare* _mineSquare;
-	static const int ABITRARY_ROW = 27, ABITRARY_COLUMN = 43;
+	static const int ABITRARY_Y = 27, ABITRARY_X = 43;
 };
 
 TEST_F(MineSquareTest, Constructor_Typical)

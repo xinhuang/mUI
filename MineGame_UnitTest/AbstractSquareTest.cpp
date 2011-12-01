@@ -24,7 +24,7 @@ public:
 	void SetUp()
 	{
 		_abstractSquare = new AbstractSquareFake(NULL, NULL, 
-			ABITRARY_ROW, ABITRARY_COLUMN);
+			ABITRARY_X, ABITRARY_Y);
 	}
 
 	void TearDown()
@@ -34,16 +34,16 @@ public:
 
 protected:
 	AbstractSquare* _abstractSquare;
-	static const int ABITRARY_ROW = 27, ABITRARY_COLUMN = 43;
+	static const int ABITRARY_Y = 27, ABITRARY_X = 43;
 };
 
 TEST_F(AbstractSquareTest, Constructor_Typical)
 {
 	ASSERT_TRUE(NULL != _abstractSquare);
 	ASSERT_EQ(SquareState::Covered, _abstractSquare->get_State());
-	ASSERT_EQ(ABITRARY_ROW, _abstractSquare->get_Row());
-	ASSERT_EQ(ABITRARY_COLUMN, _abstractSquare->get_Column());
-	ASSERT_EQ(Point(ABITRARY_ROW, ABITRARY_COLUMN), _abstractSquare->get_Location());
+	ASSERT_EQ(ABITRARY_Y, _abstractSquare->get_Y());
+	ASSERT_EQ(ABITRARY_X, _abstractSquare->get_X());
+	ASSERT_EQ(Point(ABITRARY_X, ABITRARY_Y), _abstractSquare->get_Location());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Once)

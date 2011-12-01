@@ -9,7 +9,7 @@ class BlankSquare : public AbstractSquare
 {
 	typedef AbstractSquare base;
 public:
-	BlankSquare(MGame* game, MineField* mineField, int row, int column);
+	BlankSquare(MGame* game, MineField* mineField, int x, int y);
 
 	virtual void Uncover();
 };

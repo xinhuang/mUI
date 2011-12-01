@@ -29,16 +29,16 @@ vector<ISquare*> SquareFactory::CreateSquaresUsingFieldMap( MGame* game,
 		if (fieldMap[i])
 		{
 			squares[i] = new MineSquare(game, mineField, 
-				mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
+				mineField->get_YFromIndex(i), mineField->get_XFromIndex(i));
 		}
 		else
 		{
 			if (HasAdjacentMine(fieldMap, mineField->get_Size(), i))
 				squares[i] = new NumberSquare(game, mineField, 
-				mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
+				mineField->get_YFromIndex(i), mineField->get_XFromIndex(i));
 			else
 				squares[i] = new BlankSquare(game, mineField, 
-				mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
+				mineField->get_YFromIndex(i), mineField->get_XFromIndex(i));
 		}
 	}
 	return squares;
