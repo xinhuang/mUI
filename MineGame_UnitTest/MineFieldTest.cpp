@@ -66,6 +66,7 @@ TEST_F(MineFieldTest, MineTotal_Typical)
 
 TEST_F(MineFieldTest, SquareAt_Typical)
 {
+	_mineField->Refresh();
 	for (int r = 0; r < _mineField->get_Size().Width; ++r)
 	{
 		for (int c = 0; c < _mineField->get_Size().Height; ++c)

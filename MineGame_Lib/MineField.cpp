@@ -12,14 +12,12 @@ MineField::MineField(MGame* game)
 	, _squareFactory(NULL)
 {
 	set_SquareFactory(new SquareFactory());
-	_squares = _squareFactory->CreateSquares(game, this);
 }
 
 MineField::~MineField()
 {
-	for (size_t i = 0; i < _squares.size(); ++i)
-		delete _squares[i];
-	_squares.clear();
+	ClearFields();
+
 
 	delete _squareFactory;
 	_squareFactory = NULL;
@@ -52,6 +50,8 @@ void MineField::set_SquareFactory( SquareFactory* squareFactory )
 
 void MineField::Refresh()
 {
+	ClearFields();
+	_squares = _squareFactory->CreateSquares(_MGame, this);
 }
 
 int MineField::get_RowFromIndex( int i )
@@ -99,4 +99,11 @@ int MineField::get_Index( const Size& size, int row, int column )
 		|| column >= size.Width || column < 0)
 		throw ArgumentException();
 	return row * size.Width + column;
+}
+
+void MineField::ClearFields()
+{
+	for (size_t i = 0; i < _squares.size(); ++i)
+		delete _squares[i];
+	_squares.clear();
 }

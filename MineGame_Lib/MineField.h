@@ -17,6 +17,7 @@ public:
 	MineField(MGame* game);
 	virtual ~MineField();
 
+	void ClearFields();
 	const Size& get_Size() const;
 	int get_MineTotal() const;
 
