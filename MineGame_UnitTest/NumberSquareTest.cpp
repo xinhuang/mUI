@@ -76,14 +76,14 @@ TEST_F(NumberSquareTest, Uncover_WhenQuestionMark)
 	ASSERT_EQ(SquareState::Uncovered, numberSquare.get_State());
 }
 
-//TEST_F(NumberSquareTest, get_Number_Typical)
-//{
-//	int arbitraryNeighborMineTotal = 3;
-//	MineFieldMock mineField;
-//	NumberSquare numberSquare(NULL, &mineField, 0, 0);
-//	EXPECT_CALL(mineField, get_NeighborMineTotal(&numberSquare))
-//		.Times(1)
-//		.WillOnce(Return(arbitraryNeighborMineTotal));
-//
-//	ASSERT_EQ(arbitraryNeighborMineTotal, numberSquare.get_Number());
-//}
+TEST_F(NumberSquareTest, get_Number_Typical)
+{
+	int arbitraryNeighborMineTotal = 3;
+	MineFieldMock mineField;
+	NumberSquare numberSquare(NULL, &mineField, 0, 0);
+	EXPECT_CALL(mineField, get_NeighborMineTotal(&numberSquare))
+		.Times(1)
+		.WillOnce(Return(arbitraryNeighborMineTotal));
+
+	ASSERT_EQ(arbitraryNeighborMineTotal, numberSquare.get_Number());
+}

@@ -18,7 +18,6 @@ MineField::~MineField()
 {
 	ClearFields();
 
-
 	delete _squareFactory;
 	_squareFactory = NULL;
 }
