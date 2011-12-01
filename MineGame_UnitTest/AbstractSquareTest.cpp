@@ -12,7 +12,7 @@ class AbstractSquareFake : public AbstractSquare
 	typedef AbstractSquare base;
 public:
 	AbstractSquareFake(MGame* game, MineField* mineField, int row, int column)
-		: base(game, mineField, row, column)
+		: base(game, mineField, Point(row, column))
 	{
 	}
 	virtual void Uncover() {}
@@ -43,6 +43,7 @@ TEST_F(AbstractSquareTest, Constructor_Typical)
 	ASSERT_EQ(SquareState::Covered, _abstractSquare->get_State());
 	ASSERT_EQ(ABITRARY_ROW, _abstractSquare->get_Row());
 	ASSERT_EQ(ABITRARY_COLUMN, _abstractSquare->get_Column());
+	ASSERT_EQ(Point(ABITRARY_ROW, ABITRARY_COLUMN), _abstractSquare->get_Location());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Once)

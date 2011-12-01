@@ -3,7 +3,7 @@
 #include "MineField.h"
 
 BlankSquare::BlankSquare(MGame* game, MineField* mineField, int row, int column)
-	: base(game, mineField, row, column)
+	: base(game, mineField, Point(row, column))
 {
 }
 

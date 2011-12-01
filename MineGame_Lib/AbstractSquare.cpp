@@ -1,11 +1,10 @@
 #include "AbstractSquare.h"
 
-AbstractSquare::AbstractSquare(MGame* game, MineField* mineField, int row, int column)
+AbstractSquare::AbstractSquare(MGame* game, MineField* mineField, const Point& location)
 	: _state(SquareState::Covered)
 	, _game(game)
 	, _mineField(mineField)
-	, _row(row)
-	, _column(column)
+	, _location(location)
 {
 }
 

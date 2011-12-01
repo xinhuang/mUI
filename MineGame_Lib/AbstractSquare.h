@@ -9,11 +9,12 @@ class MineField;
 class AbstractSquare : public ISquare
 {
 public:
-	AbstractSquare(MGame* game, MineField* mineField, int row, int column);
+	AbstractSquare(MGame* game, MineField* mineField, const Point& location);
 
 	virtual SquareState::Enum get_State() const;
-	virtual int get_Row() const { return _row; }
-	virtual int get_Column() const { return _column; }
+	virtual int get_Row() const { return _location.X; }
+	virtual int get_Column() const { return _location.Y; }
+	virtual const Point& get_Location() const { return _location; }
 	virtual void ToggleFlag();
 	virtual bool HasMine() const { return false; }
 
@@ -26,7 +27,7 @@ protected:
 
 private:
 	SquareState::Enum _state;
-	int _row, _column;
+	const Point _location;
 	MGame* _game;
 	MineField* _mineField;
 };

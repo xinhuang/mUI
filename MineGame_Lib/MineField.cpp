@@ -106,3 +106,8 @@ void MineField::ClearFields()
 		delete _squares[i];
 	_squares.clear();
 }
+
+int MineField::get_NeighborMineTotal( const ISquare* square ) const
+{
+	return 1;
+}

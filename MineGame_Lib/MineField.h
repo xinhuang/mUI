@@ -23,7 +23,7 @@ public:
 
 	ISquare* SquareAt(int row, int column);
 	virtual void UncoverNeighborSquares(const ISquare& square) {}
-	virtual int get_NeighborMineTotal(const ISquare* square) const { return 1; }
+	virtual int get_NeighborMineTotal(const ISquare* square) const;
 	void Refresh();
 
 
