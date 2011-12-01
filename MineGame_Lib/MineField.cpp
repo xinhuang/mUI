@@ -8,7 +8,7 @@ using mUI::System::ArgumentException;
 #include "SquareFactory.h"
 
 MineField::MineField(MGame* game)
-	: _MGame(game)
+	: _game(game)
 	, _squareFactory(NULL)
 {
 	set_SquareFactory(new SquareFactory());
@@ -25,12 +25,12 @@ MineField::~MineField()
 
 const Size& MineField::get_Size() const
 {
-	return _MGame->get_MineFieldSize();
+	return _game->get_MineFieldSize();
 }
 
 int MineField::get_MineTotal() const
 {
-	return _MGame->get_MineTotal();
+	return _game->get_MineTotal();
 }
 
 ISquare* MineField::SquareAt(int row, int column)
@@ -51,7 +51,7 @@ void MineField::set_SquareFactory( SquareFactory* squareFactory )
 void MineField::Refresh()
 {
 	ClearFields();
-	_squares = _squareFactory->CreateSquares(_MGame, this);
+	_squares = _squareFactory->CreateSquares(_game, this);
 }
 
 int MineField::get_RowFromIndex( int i )

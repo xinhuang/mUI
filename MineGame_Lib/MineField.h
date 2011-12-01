@@ -42,7 +42,7 @@ protected:
 	void set_SquareFactory(SquareFactory* squareFactory);
 
 private:
-	MGame* _MGame;
+	MGame* _game;
 	vector<ISquare*> _squares;
 	SquareFactory* _squareFactory;
 };
