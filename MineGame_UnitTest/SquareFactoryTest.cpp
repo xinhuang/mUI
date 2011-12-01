@@ -63,7 +63,6 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1AllMine)
 	ASSERT_TRUE(NULL != square);
 }
 
-
 TEST_F(SquareFactoryTest, CreateSquares_MineField1x1NoMine)
 {
 	MGame game;

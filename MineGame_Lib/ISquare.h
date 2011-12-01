@@ -23,6 +23,7 @@ public:
 
 	virtual void Uncover() = 0;
 	virtual void ToggleFlag() = 0;
+	virtual bool HasMine() const = 0;
 };
 
 #endif // __ISQUARE_H__

@@ -12,6 +12,7 @@ public:
 	MineSquare(MGame* game, MineField* mineField, int row, int column);
 
 	virtual void Uncover();
+	virtual bool HasMine() const { return true; }
 
 private:
 	MGame* _game;

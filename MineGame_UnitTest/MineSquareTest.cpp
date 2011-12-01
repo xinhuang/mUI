@@ -15,15 +15,26 @@ using ::testing::_;
 class MineSquareTest : public testing::Test
 {
 public:
+	void SetUp()
+	{
+		_mineSquare = new MineSquare(NULL, NULL, 
+			ABITRARY_ROW, ABITRARY_COLUMN);
+	}
+
+	void TearDown()
+	{
+		delete _mineSquare;
+	}
+
+protected:
+	MineSquare* _mineSquare;
+	static const int ABITRARY_ROW = 27, ABITRARY_COLUMN = 43;
 };
 
 TEST_F(MineSquareTest, Constructor_Typical)
 {
-	MineSquare* mineSquare = new MineSquare(NULL, NULL, 0, 0);
-
-	ASSERT_TRUE(NULL != mineSquare);
-	ASSERT_EQ(SquareState::Covered, mineSquare->get_State());
-	delete mineSquare;
+	ASSERT_TRUE(NULL != _mineSquare);
+	ASSERT_EQ(SquareState::Covered, _mineSquare->get_State());
 }
 
 TEST_F(MineSquareTest, Uncover_Typical)
@@ -36,5 +47,10 @@ TEST_F(MineSquareTest, Uncover_Typical)
 	mineSquare.Uncover();
 
 	ASSERT_EQ(SquareState::Boomed, mineSquare.get_State());
+}
+
+TEST_F(MineSquareTest, HasMine_Typical)
+{
+	ASSERT_TRUE(_mineSquare->HasMine());
 }
 

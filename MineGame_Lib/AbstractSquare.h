@@ -15,6 +15,7 @@ public:
 	virtual int get_Row() const { return _row; }
 	virtual int get_Column() const { return _column; }
 	virtual void ToggleFlag();
+	virtual bool HasMine() const { return false; }
 
 protected:
 	void set_State(SquareState::Enum state);

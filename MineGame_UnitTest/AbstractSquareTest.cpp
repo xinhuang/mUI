@@ -21,62 +21,55 @@ public:
 class AbstractSquareTest : public testing::Test
 {
 public:
+	void SetUp()
+	{
+		_abstractSquare = new AbstractSquareFake(NULL, NULL, 
+			ABITRARY_ROW, ABITRARY_COLUMN);
+	}
+
+	void TearDown()
+	{
+		delete _abstractSquare;
+	}
 
 protected:
+	AbstractSquare* _abstractSquare;
+	static const int ABITRARY_ROW = 27, ABITRARY_COLUMN = 43;
 };
 
 TEST_F(AbstractSquareTest, Constructor_Typical)
 {
-	int arbitraryRow = 27, arbitraryColumn = 43;
-	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
-											arbitraryRow, arbitraryColumn);
-
-	ASSERT_TRUE(NULL != abstractSquare);
-	ASSERT_EQ(SquareState::Covered, abstractSquare->get_State());
-	ASSERT_EQ(arbitraryRow, abstractSquare->get_Row());
-	ASSERT_EQ(arbitraryColumn, abstractSquare->get_Column());
-
-	delete abstractSquare;
+	ASSERT_TRUE(NULL != _abstractSquare);
+	ASSERT_EQ(SquareState::Covered, _abstractSquare->get_State());
+	ASSERT_EQ(ABITRARY_ROW, _abstractSquare->get_Row());
+	ASSERT_EQ(ABITRARY_COLUMN, _abstractSquare->get_Column());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Once)
 {
-	int arbitraryRow = 27, arbitraryColumn = 43;
-	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
-											arbitraryRow, arbitraryColumn);
-
-	abstractSquare->ToggleFlag();
+	_abstractSquare->ToggleFlag();
 	
-	ASSERT_EQ(SquareState::Flagged, abstractSquare->get_State());
-
-	delete abstractSquare;
+	ASSERT_EQ(SquareState::Flagged, _abstractSquare->get_State());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Twice)
 {
-	int arbitraryRow = 27, arbitraryColumn = 43;
-	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
-											arbitraryRow, arbitraryColumn);
+	_abstractSquare->ToggleFlag();
+	_abstractSquare->ToggleFlag();
 	
-	abstractSquare->ToggleFlag();
-	abstractSquare->ToggleFlag();
-	
-	ASSERT_EQ(SquareState::QuestionMark, abstractSquare->get_State());
-
-	delete abstractSquare;
+	ASSERT_EQ(SquareState::QuestionMark, _abstractSquare->get_State());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_ThreeTimes)
 {
-	int arbitraryRow = 27, arbitraryColumn = 43;
-	AbstractSquare* abstractSquare = new AbstractSquareFake(NULL, NULL, 
-											arbitraryRow, arbitraryColumn);
+	_abstractSquare->ToggleFlag();
+	_abstractSquare->ToggleFlag();
+	_abstractSquare->ToggleFlag();
 	
-	abstractSquare->ToggleFlag();
-	abstractSquare->ToggleFlag();
-	abstractSquare->ToggleFlag();
-	
-	ASSERT_EQ(SquareState::Uncovered, abstractSquare->get_State());
+	ASSERT_EQ(SquareState::Uncovered, _abstractSquare->get_State());
+}
 
-	delete abstractSquare;
+TEST_F(AbstractSquareTest, HasMine_Typical)
+{
+	ASSERT_FALSE(_abstractSquare->HasMine());
 }
