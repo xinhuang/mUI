@@ -207,7 +207,7 @@ TEST_F(MineFieldTest, get_Index_WhenYTooSmall)
 	ASSERT_EQ(i, _mineField->get_Index(x, y));
 }
 
-TEST_F(MineFieldTest, HasMineInUpSquare_WhenTrue)
+TEST_F(MineFieldTest, get_AdjacentMineTotal_Mines8)
 {
 	SquareFactory* oldFactory = _mineField->get_SquareFactory();
 	SquareFactoryFake newFactory(vector<bool>(9, true));
@@ -215,58 +215,41 @@ TEST_F(MineFieldTest, HasMineInUpSquare_WhenTrue)
 	_mineField->set_Size(Size(3, 3));
 	_mineField->Refresh();
 
-	for (int x = 0; x < 3; ++x)
-	{
-		for (int y = 1; y < 3; ++y)
-		{
-			ASSERT_TRUE(_mineField->IsMineInUpSquare(Point(x, y)));
-		}
-	}
+	ASSERT_EQ(8, _mineField->get_AdjacentMineTotal(Point(1, 1)));
 
 	_mineField->set_SquareFactory(oldFactory);
 }
 
-TEST_F(MineFieldTest, HasMineInUpSquare_WhenFalse)
+TEST_F(MineFieldTest, get_AdjacentMineTotal_Mines0)
 {
 	SquareFactory* oldFactory = _mineField->get_SquareFactory();
-	SquareFactoryFake newFactory(vector<bool>(9, false));
+	vector<bool> fieldMap(9, false);
+	fieldMap[4] = true;
+	SquareFactoryFake newFactory(fieldMap);
 	_mineField->set_SquareFactory(&newFactory);
 	_mineField->set_Size(Size(3, 3));
 	_mineField->Refresh();
 
-	for (int x = 0; x < 3; ++x)
-	{
-		for (int y = 1; y < 3; ++y)
-		{
-			ASSERT_FALSE(_mineField->IsMineInUpSquare(Point(x, y)));
-		}
-	}
+	ASSERT_EQ(0, _mineField->get_AdjacentMineTotal(Point(1, 1)));
 
 	_mineField->set_SquareFactory(oldFactory);
 }
 
-TEST_F(MineFieldTest, HasMineInUpSquare_WhenIndexTooSmall)
+TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenMinesAtFourCorner)
 {
 	SquareFactory* oldFactory = _mineField->get_SquareFactory();
-	SquareFactoryFake newFactory(vector<bool>(9, true));
+	vector<bool> fieldMap(9, false);
+	fieldMap[4] = true;
+	fieldMap[0] = true;
+	fieldMap[2] = true;
+	fieldMap[6] = true;
+	fieldMap[8] = true;
+	SquareFactoryFake newFactory(fieldMap);
 	_mineField->set_SquareFactory(&newFactory);
 	_mineField->set_Size(Size(3, 3));
 	_mineField->Refresh();
 
-	ASSERT_FALSE(_mineField->IsMineInUpSquare(Point(0, -1)));
-
-	_mineField->set_SquareFactory(oldFactory);
-}
-
-TEST_F(MineFieldTest, HasMineInUpSquare_WhenIndexTooLarge)
-{
-	SquareFactory* oldFactory = _mineField->get_SquareFactory();
-	SquareFactoryFake newFactory(vector<bool>(9, true));
-	_mineField->set_SquareFactory(&newFactory);
-	_mineField->set_Size(Size(3, 3));
-	_mineField->Refresh();
-
-	ASSERT_FALSE(_mineField->IsMineInUpSquare(Point(99, 99)));
+	ASSERT_EQ(4, _mineField->get_AdjacentMineTotal(Point(1, 1)));
 
 	_mineField->set_SquareFactory(oldFactory);
 }

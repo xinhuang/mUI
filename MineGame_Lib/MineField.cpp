@@ -146,3 +146,22 @@ bool MineField::IsMineAt( int i ) const
 		return false;
 	return _squares[i]->HasMine();
 }
+
+int MineField::get_AdjacentMineTotal( const Point& location ) const
+{
+	int n = 0;
+	int x = location.X, y = location.Y;
+
+	n += IsMineAt(get_Index(x - 1, y - 1)) ? 1 : 0;
+	n += IsMineAt(get_Index(x - 1, y)) ? 1 : 0;
+	n += IsMineAt(get_Index(x - 1, y + 1)) ? 1 : 0;
+
+	n += IsMineAt(get_Index(x, y - 1)) ? 1 : 0;
+	n += IsMineAt(get_Index(x, y + 1)) ? 1 : 0;
+
+	n += IsMineAt(get_Index(x + 1, y - 1)) ? 1 : 0;
+	n += IsMineAt(get_Index(x + 1, y)) ? 1 : 0;
+	n += IsMineAt(get_Index(x + 1, y + 1)) ? 1 : 0;
+
+	return n;
+}

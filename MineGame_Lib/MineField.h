@@ -39,6 +39,8 @@ public:
 	static int get_YFromIndex(const Size& size, int i);
 	static int get_XFromIndex(const Size& size, int i);
 
+	int get_AdjacentMineTotal(const Point& location) const;
+
 	bool IsMineInUpSquare(const Point& location) const;
 
 	bool IsMineAt( int i ) const;
