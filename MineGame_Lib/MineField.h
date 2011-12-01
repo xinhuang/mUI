@@ -41,9 +41,9 @@ public:
 
 	int get_AdjacentMineTotal(const Point& location) const;
 
-	bool IsMineInUpSquare(const Point& location) const;
-
 	bool IsMineAt( int i ) const;
+	bool IsMineAt(int x, int y) const;
+
 	SquareFactory* get_SquareFactory();
 	void set_SquareFactory(SquareFactory* squareFactory);
 	void set_Width( int width );

@@ -176,36 +176,32 @@ TEST_F(MineFieldTest, get_Index_WhenXTooLarge)
 {
 	int y = get_ArbitraryY();
 	int x = _mineField->get_Size().Height + 1;
-	int i = get_IndexFrom2D(_mineField->get_Size(), x, y);
 
-	ASSERT_EQ(i, _mineField->get_Index(x, y));
+	ASSERT_EQ(-1, _mineField->get_Index(x, y));
 }
 
 TEST_F(MineFieldTest, get_Index_WhenXTooSmall)
 {
 	int y = get_ArbitraryY();
 	int x = -1;
-	int i = get_IndexFrom2D(_mineField->get_Size(), x, y);
 
-	ASSERT_EQ(i, _mineField->get_Index(x, y));
+	ASSERT_EQ(-1, _mineField->get_Index(x, y));
 }
 
 TEST_F(MineFieldTest, get_Index_WhenYTooLarge)
 {
 	int y = _mineField->get_Size().Width + 1;
 	int x = get_ArbitraryX();
-	int i = get_IndexFrom2D(_mineField->get_Size(), x, y);
 
-	ASSERT_EQ(i, _mineField->get_Index(x, y));
+	ASSERT_EQ(-1, _mineField->get_Index(x, y));
 }
 
 TEST_F(MineFieldTest, get_Index_WhenYTooSmall)
 {
 	int y = -1;
 	int x = get_ArbitraryX();
-	int i = get_IndexFrom2D(_mineField->get_Size(), x, y);
 
-	ASSERT_EQ(i, _mineField->get_Index(x, y));
+	ASSERT_EQ(-1, _mineField->get_Index(x, y));
 }
 
 TEST_F(MineFieldTest, get_AdjacentMineTotal_When8Mines)
@@ -251,6 +247,20 @@ TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenMinesAtFourCorner)
 	_mineField->Refresh();
 
 	ASSERT_EQ(4, _mineField->get_AdjacentMineTotal(Point(1, 1)));
+
+	_mineField->set_SquareFactory(oldFactory);
+}
+
+TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenSquareIsAtBoundary)
+{
+	SquareFactory* oldFactory = _mineField->get_SquareFactory();
+	vector<bool> fieldMap(9, true);
+	SquareFactoryFake newFactory(fieldMap);
+	_mineField->set_SquareFactory(&newFactory);
+	_mineField->set_Size(Size(3, 3));
+	_mineField->Refresh();
+
+	ASSERT_EQ(3, _mineField->get_AdjacentMineTotal(Point(2, 2)));
 
 	_mineField->set_SquareFactory(oldFactory);
 }

@@ -94,7 +94,9 @@ int MineField::get_Index( int x, int y ) const
 
 int MineField::get_Index( const Size& size, int x, int y )
 {
-	return y * size.Width + x;
+	if (x >= 0 && x < size.Width && y >= 0 && y < size.Height)
+		return y * size.Width + x;
+	return -1;
 }
 
 int MineField::get_Index( const Point& location ) const
@@ -112,12 +114,6 @@ void MineField::ClearFields()
 int MineField::get_NeighborMineTotal( const ISquare* square ) const
 {
 	return 1;
-}
-
-bool MineField::IsMineInUpSquare( const Point& location ) const
-{
-	int i = get_Index(location.X, location.Y - 1);
-	return IsMineAt(i);
 }
 
 void MineField::set_Size( const Size& size )
@@ -147,21 +143,26 @@ bool MineField::IsMineAt( int i ) const
 	return _squares[i]->HasMine();
 }
 
+bool MineField::IsMineAt( int x, int y ) const
+{
+	return IsMineAt(get_Index(x, y));
+}
+
 int MineField::get_AdjacentMineTotal( const Point& location ) const
 {
 	int n = 0;
 	int x = location.X, y = location.Y;
 
-	n += IsMineAt(get_Index(x - 1, y - 1)) ? 1 : 0;
-	n += IsMineAt(get_Index(x - 1, y)) ? 1 : 0;
-	n += IsMineAt(get_Index(x - 1, y + 1)) ? 1 : 0;
+	n += IsMineAt(x - 1, y - 1) ? 1 : 0;
+	n += IsMineAt(x - 1, y) ? 1 : 0;
+	n += IsMineAt(x - 1, y + 1) ? 1 : 0;
 
-	n += IsMineAt(get_Index(x, y - 1)) ? 1 : 0;
-	n += IsMineAt(get_Index(x, y + 1)) ? 1 : 0;
+	n += IsMineAt(x, y - 1) ? 1 : 0;
+	n += IsMineAt(x, y + 1) ? 1 : 0;
 
-	n += IsMineAt(get_Index(x + 1, y - 1)) ? 1 : 0;
-	n += IsMineAt(get_Index(x + 1, y)) ? 1 : 0;
-	n += IsMineAt(get_Index(x + 1, y + 1)) ? 1 : 0;
+	n += IsMineAt(x + 1, y - 1) ? 1 : 0;
+	n += IsMineAt(x + 1, y) ? 1 : 0;
+	n += IsMineAt(x + 1, y + 1) ? 1 : 0;
 
 	return n;
 }
