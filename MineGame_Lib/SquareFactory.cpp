@@ -14,11 +14,16 @@ using mUI::System::Drawing::Point;
 
 vector<ISquare*> SquareFactory::CreateSquares(MGame* game, MineField* mineField)
 {
+	const vector<bool> fieldMap = GenerateMineFieldMap(mineField->get_Size(), 
+														mineField->get_MineTotal());
+	return CreateSquaresUsingFieldMap(game, mineField, fieldMap);
+}
+
+vector<ISquare*> SquareFactory::CreateSquaresUsingFieldMap( MGame* game, 
+	MineField* mineField, const vector<bool>& fieldMap )
+{
 	const Size& size = mineField->get_Size();
 	vector<ISquare*> squares(size.Width * size.Height, NULL);
-
-	const vector<bool> fieldMap = GenerateMineFieldMap(*mineField);
-
 	for (size_t i = 0; i < squares.size(); ++i)
 	{
 		if (fieldMap[i])
@@ -30,24 +35,22 @@ vector<ISquare*> SquareFactory::CreateSquares(MGame* game, MineField* mineField)
 		{
 			if (HasAdjacentMine(fieldMap, mineField->get_Size(), i))
 				squares[i] = new NumberSquare(game, mineField, 
-					mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
+				mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
 			else
 				squares[i] = new BlankSquare(game, mineField, 
-					mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
+				mineField->get_RowFromIndex(i), mineField->get_ColumnFromIndex(i));
 		}
 	}
-
 	return squares;
 }
 
-vector<bool> SquareFactory::GenerateMineFieldMap(const MineField& mineField)
+vector<bool> SquareFactory::GenerateMineFieldMap( const Size& fieldSize, int mineTotal )
 {
 	vector<bool> map;
-	int mineTotal = mineField.get_MineTotal();
 	
-	for (int r = 0; r < mineField.get_Size().Width; ++r)
+	for (int r = 0; r < fieldSize.Width; ++r)
 	{
-		for (int c = 0; c < mineField.get_Size().Height; ++c)
+		for (int c = 0; c < fieldSize.Height; ++c)
 		{
 			if (mineTotal-- > 0)
 				map.push_back(true);

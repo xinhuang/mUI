@@ -88,7 +88,8 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal1)
 	game.set_MineTotal(1);
 	MineField mineField(&game);
 
-	vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
+														mineField.get_MineTotal());
 
 	ASSERT_EQ(1, map.size());
 	ASSERT_EQ(true, map[0]);
@@ -102,7 +103,8 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal0)
 	game.set_MineTotal(0);
 	MineField mineField(&game);
 
-	vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
+														mineField.get_MineTotal());
 
 	ASSERT_EQ(1, map.size());
 	ASSERT_EQ(false, map[0]);
@@ -116,7 +118,8 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField2x1MineTotal1)
 	game.set_MineTotal(1);
 	MineField mineField(&game);
 	
-	vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
+														mineField.get_MineTotal());
 
 	ASSERT_EQ(2, map.size());
 	ASSERT_NE(map[0], map[1]);
@@ -130,10 +133,12 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MultipleTimesMineField2x1MineTota
 	game.set_MineTotal(1);
 	MineField mineField(&game);
 	
-	vector<bool> firstMap = _factory->GenerateMineFieldMap(mineField);
+	vector<bool> firstMap = _factory->GenerateMineFieldMap(mineField.get_Size(), 
+															mineField.get_MineTotal());
 	for (int i = 0; i < 30; ++i)
 	{
-		vector<bool> map = _factory->GenerateMineFieldMap(mineField);
+		vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
+															mineField.get_MineTotal());
 
 		if (firstMap[0] != map[0])
 			return;
@@ -158,6 +163,26 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField2x1MineTotal1)
 
 	ASSERT_TRUE(NULL != numberSquare);
 	ASSERT_EQ(1, numberSquare->get_Number());
+}
+
+TEST_F(SquareFactoryTest, CreateSquares_SameAsFieldMap)
+{
+	Size fieldSize(10, 10);
+	int mineTotal = 35;
+	MGame game;
+	game.set_MineFieldHeight(fieldSize.Height);
+	game.set_MineFieldWidth(fieldSize.Width);
+	game.set_MineTotal(mineTotal);
+	MineField mineField(&game);
+	vector<bool> fieldMap = _factory->GenerateMineFieldMap(fieldSize, mineTotal);
+
+	_squares = _factory->CreateSquaresUsingFieldMap(&game, &mineField, fieldMap);
+
+	ASSERT_EQ(fieldMap.size(), _squares.size());
+	for (size_t i = 0; i < fieldMap.size(); ++i)
+	{
+		ASSERT_EQ(fieldMap[i], _squares[i]->HasMine());
+	}
 }
 
 TEST_F(SquareFactoryTest, IsMineUp_WhenTrue)

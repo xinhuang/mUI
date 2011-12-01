@@ -16,7 +16,9 @@ class SquareFactory
 {
 public:
 	virtual vector<ISquare*> CreateSquares(MGame* game, MineField* mineField);
-	virtual vector<bool> GenerateMineFieldMap(const MineField& mineField);
+	virtual vector<bool> GenerateMineFieldMap(const Size& fieldSize, int mineTotal);
+
+	static vector<ISquare*> CreateSquaresUsingFieldMap(MGame* game, MineField* mineField, const vector<bool>& fieldMap);
 
 	static bool HasAdjacentMine(const vector<bool>& squareMap, const Size& fieldSize, size_t i);
 
