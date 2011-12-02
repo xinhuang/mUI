@@ -314,8 +314,9 @@ IntPtr Thread::get_Handle()
 bool Thread::Init()
 {
 	tcb_slot_ = Thread::AllocateDataSlot();
+	assert(tcb_slot_ != INVALID_LOCAL_DATA_STORAGE);
 	Thread::_MakeTCB();
-	return AllocateTCBSlot();
+	return true;
 }
 
 }}}

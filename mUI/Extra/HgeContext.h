@@ -21,7 +21,7 @@ public:
 
 	bool get_Windowed() const
 	{
-		return false;
+		return true;
 	}
 
 	int get_ScreenBpp() const { return 32; }
@@ -29,7 +29,7 @@ public:
 	bool get_DontSuspent() const { return true; }
 	bool get_HideMouse() const { return false; }
 	const String& get_Title() const { return String::Empty; }
-	const Size& get_Size() const { return Size::Empty; }
+	const Size get_Size() const { return Size(400, 300); }
 };
 
 }}

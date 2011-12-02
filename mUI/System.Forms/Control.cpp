@@ -32,6 +32,7 @@ Control::Control(void) :
 
 Control::~Control(void)
 {
+	SuspendLayout();
 	FormManager::get_Instance().UnregisterControl(*this);
 
 	delete background_image_;
@@ -40,6 +41,7 @@ Control::~Control(void)
 	Control* parent = get_Parent();
 	if (parent != NULL)
 		parent->Controls.Remove(*this);
+	ResumeLayout();
 }
 
 void Control::OnPaint( PaintEventArgs* e )
@@ -464,11 +466,16 @@ void Control::PerformLayout( Control* affected_control, const String& affected_p
 	}
 	else
 	{
-		for (size_t i = 0; i < layout_queue_.size(); ++i)
+		//for (size_t i = 0; i < layout_queue_.size(); ++i)
+		//{
+		//	OnLayout(&layout_queue_[i]);
+		//}
+		//layout_queue_.clear();
+		while (!layout_queue_.empty())
 		{
-			OnLayout(&layout_queue_[i]);
+			OnLayout(&layout_queue_[0]);
+			layout_queue_.erase(layout_queue_.begin());
 		}
-		layout_queue_.clear();
 		OnLayout(&e);
 	}
 }

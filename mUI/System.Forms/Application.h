@@ -30,6 +30,8 @@ using std::deque;
 
 #include <Windows.h>
 
+class HGE;
+
 // ------------------------------------------------------------
 
 namespace mUI{ namespace System{  namespace Drawing{
@@ -89,6 +91,7 @@ private:
 	bool			_disposing;
 
 	HgeContext		_hgeContext;
+	HGE* _hge;
 
 	static Application _application;
 };

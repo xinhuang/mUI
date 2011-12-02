@@ -76,11 +76,6 @@ protected:
 
 	static bool Init();
 	static void _MakeTCB();
-	static bool AllocateTCBSlot()
-	{
-		tcb_slot_ = Thread::AllocateDataSlot();
-		return tcb_slot_ != INVALID_LOCAL_DATA_STORAGE;
-	}
 
 	static void DisposeTCBForMainThread();
 	static void ThreadEntry(void* param);

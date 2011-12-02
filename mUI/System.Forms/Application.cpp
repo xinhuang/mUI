@@ -67,7 +67,7 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 
 bool Application::DoEvents()
 {
-	bool ret = true;
+	bool ret = false;
 	if (!_application.IsDisposing() && _application._frame != NULL)
 	{
 		PHGE hge;
@@ -222,6 +222,7 @@ bool Application::PrivateInitialize()
 
 void Application::StartHge( const HgeContext &context )
 {
+	_application._hge = ::hgeCreate(HGE_VERSION);
 	PHGE hge;
 	hge->System_SetState(HGE_LOGFILE, context.get_LogFile().ToANSI().c_str());
 	hge->System_SetState(HGE_FRAMEFUNC, PrivateInitialize);
@@ -256,17 +257,10 @@ void Application::Run( Form* form )
 	const String& title = form->get_Text();
 
 	PHGE hge;
-	hge->System_SetState(HGE_FRAMEFUNC, NULL);
+	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 	hge->System_SetState(HGE_TITLE, title.ToANSI().c_str());
 
-	if (hge->System_Initiate())
-	{
-		hge->System_Start();
-	}
-	else
-	{
-		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
-	}
+	hge->System_Start();
 }
 
 }}}

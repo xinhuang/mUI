@@ -2,7 +2,7 @@
 #define __MAINFORM_H__
 
 #include <mUI.h>
-using mUI::System::Forms;
+using mUI::System::Forms::Form;
 
 class MainForm : public Form
 {
