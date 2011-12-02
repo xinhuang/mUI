@@ -41,7 +41,7 @@ public:
 	static void Dispose();
 	static FormManager& get_Instance();
 
-	void set_MainFrame(Form& form);
+	void set_RootForm(Form& form);
 
 	void Render();
 	void DoEvents();

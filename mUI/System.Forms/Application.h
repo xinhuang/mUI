@@ -54,9 +54,10 @@ class FORMS_ENTRY Application
 {
 public:
 	static void Run(Frame* frame);
+	static void Run(Form* form);
 	static bool DoEvents();
 
-	static void set_HgeContext(const HgeContext& context);
+	static void StartHge(const HgeContext& context);
 
 protected:
 
@@ -64,10 +65,13 @@ protected:
 	static bool InitFunc();
 	static bool FrameFunc();
 	static bool RenderFunc();
+	static bool PrivateInitialize();
 
 	// Clean Up
 	void Dispose();
 	void OnFormClose( void* sender, EventArgs* e );
+
+	void InitializeWindow();
 
 private:
 	Application();
@@ -80,8 +84,11 @@ private:
 	HWND			_hwnd;
 	Frame*			_frame;
 	WNDPROC			_prevWndProc;
+
 	bool			_initializing;
 	bool			_disposing;
+
+	HgeContext		_hgeContext;
 
 	static Application _application;
 };

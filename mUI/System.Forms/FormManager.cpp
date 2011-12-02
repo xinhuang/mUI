@@ -15,7 +15,7 @@ FormManager& FormManager::get_Instance()
 	return *instance_;
 }
 
-void FormManager::set_MainFrame( Form& form )
+void FormManager::set_RootForm( Form& form )
 {
 	mainframe_ = form.get_Handle();
 	focused_control_ = mainframe_;

@@ -68,7 +68,7 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 bool Application::DoEvents()
 {
 	bool ret = true;
-	if (!_application.IsDisposing())
+	if (!_application.IsDisposing() && _application._frame != NULL)
 	{
 		PHGE hge;
 		ret = _application._frame->LogicTick(hge->Timer_GetDelta());
@@ -99,7 +99,7 @@ bool Application::DoEvents()
 void Application::Run( Frame* frame )
 {
 	assert(frame != NULL);
-	FormManager::get_Instance().set_MainFrame(*frame);
+	FormManager::get_Instance().set_RootForm(*frame);
 
 	_application._frame = frame;
 	frame->Closed += EventHandler<>(_application, &Application::OnFormClose);
@@ -111,7 +111,7 @@ void Application::Run( Frame* frame )
 	hge->System_SetState(HGE_LOGFILE, "mai.log");
 	hge->System_SetState(HGE_FRAMEFUNC, InitFunc);
 	hge->System_SetState(HGE_RENDERFUNC, RenderFunc);
-	hge->System_SetState(HGE_TITLE, frame->get_Text().ToANSI().c_str());
+	hge->System_SetState(HGE_TITLE, title.ToANSI().c_str());
 
 	hge->System_SetState(HGE_WINDOWED, true);
 	hge->System_SetState(HGE_SCREENWIDTH, size.Width);
@@ -183,8 +183,11 @@ bool Application::InitFunc()
 
 	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 
-	_application._frame->Initialize();
-	_application._frame->Show();
+	if (_application._frame != NULL)
+	{
+		_application._frame->Initialize();
+		_application._frame->Show();
+	}
 
 	return FrameFunc();
 }
@@ -198,9 +201,72 @@ bool Application::IsDisposing() const
 	return _disposing;
 }
 
-void Application::set_HgeContext( const HgeContext& context )
+void Application::InitializeWindow()
 {
+	bool ret = Drawing::Initialize();
+	assert(ret);
 
+	PHGE hge;
+	HWND hwnd = hge->System_GetState(HGE_HWND);
+	assert(hwnd && hwnd != INVALID_HANDLE_VALUE);
+	_prevWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
+
+	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
+}
+
+bool Application::PrivateInitialize()
+{
+	_application.InitializeWindow();
+	return true;	// Force quite hge loop. Later re-enter via Run(form)
+}
+
+void Application::StartHge( const HgeContext &context )
+{
+	PHGE hge;
+	hge->System_SetState(HGE_LOGFILE, context.get_LogFile().ToANSI().c_str());
+	hge->System_SetState(HGE_FRAMEFUNC, PrivateInitialize);
+	hge->System_SetState(HGE_RENDERFUNC, RenderFunc);
+	hge->System_SetState(HGE_TITLE, context.get_Title().ToANSI().c_str());
+
+	hge->System_SetState(HGE_WINDOWED, context.get_Windowed());
+	hge->System_SetState(HGE_SCREENWIDTH, context.get_Size().Width);
+	hge->System_SetState(HGE_SCREENHEIGHT, context.get_Size().Height);
+	hge->System_SetState(HGE_SCREENBPP, context.get_ScreenBpp());
+
+	hge->System_SetState(HGE_FPS, context.get_Fps());
+	hge->System_SetState(HGE_DONTSUSPEND, context.get_DontSuspent());
+	hge->System_SetState(HGE_HIDEMOUSE, context.get_HideMouse());
+
+	if (hge->System_Initiate())
+	{
+		hge->System_Start();
+	}
+	else
+	{
+		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+	}
+}
+
+void Application::Run( Form* form )
+{
+	FormManager::get_Instance().set_RootForm(*form);
+
+	form->Closed += EventHandler<>(_application, &Application::OnFormClose);
+
+	const String& title = form->get_Text();
+
+	PHGE hge;
+	hge->System_SetState(HGE_FRAMEFUNC, NULL);
+	hge->System_SetState(HGE_TITLE, title.ToANSI().c_str());
+
+	if (hge->System_Initiate())
+	{
+		hge->System_Start();
+	}
+	else
+	{
+		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+	}
 }
 
 }}}
