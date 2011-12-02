@@ -1,10 +1,10 @@
-#include <gtest\gtest.h>
+#include <gtest/gtest.h>
 #include <mUI.h>
 
 #define private public
-#include <MGame.h>
-#include <MineField.h>
-#include <ISquare.h>
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/ISquare.h>
 #undef private
 
 class MGameTest : public testing::Test

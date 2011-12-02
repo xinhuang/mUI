@@ -4,13 +4,12 @@
 #include <gmock/gmock.h>
 using ::testing::_;
 
-#include <MGame.h>
-#include <MineField.h>
-#include <SquareFactory.h>
-#include <ISquare.h>
-#include <MineSquare.h>
-#include <BlankSquare.h>
-#include <NumberSquare.h>
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/SquareFactory.h>
+#include <Presenter/MineSquare.h>
+#include <Presenter/BlankSquare.h>
+#include <Presenter/NumberSquare.h>
 
 #include "mocks/MineFieldMock.h"
 

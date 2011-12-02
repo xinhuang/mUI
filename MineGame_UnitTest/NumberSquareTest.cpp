@@ -7,9 +7,9 @@ using namespace mUI::System;
 
 #define private public
 #define protected public
-#	include <MGame.h>
-#	include <MineField.h>
-#	include <NumberSquare.h>
+#	include <Presenter/MGame.h>
+#	include <Presenter/MineField.h>
+#	include <Presenter/NumberSquare.h>
 #undef protected
 #undef private
 

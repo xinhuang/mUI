@@ -1,10 +1,10 @@
 #ifndef __MINEFIELDMOCK_H__
 #define __MINEFIELDMOCK_H__
 
-#include <MineField.h>
 #include <gmock/gmock.h>
 
-#include <ISquare.h>
+#include <Presenter/ISquare.h>
+#include <Presenter/MineField.h>
 
 class SquareFactory;
 

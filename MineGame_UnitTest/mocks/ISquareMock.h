@@ -1,8 +1,9 @@
 #ifndef __MGAMEMOCK_H__
 #define __MGAMEMOCK_H__
 
-#include <ISquare.h>
 #include <gmock/gmock.h>
+
+#include <Presenter/ISquare.h>
 
 class ISquareMock : public ISquare
 {

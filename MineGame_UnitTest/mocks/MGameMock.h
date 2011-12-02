@@ -1,8 +1,9 @@
 #ifndef __MGAMEMOCK_H__
 #define __MGAMEMOCK_H__
 
-#include <MGame.h>
 #include <gmock/gmock.h>
+
+#include <Presenter/MGame.h>
 
 class MGameMock : public MGame
 {

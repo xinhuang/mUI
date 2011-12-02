@@ -1,7 +1,7 @@
 #ifndef __SQUAREFACTORYFAKE_H__
 #define __SQUAREFACTORYFAKE_H__
 
-#include <SquareFactory.h>
+#include <Presenter/SquareFactory.h>
 
 class SquareFactoryFake : public SquareFactory
 {

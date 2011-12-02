@@ -5,9 +5,9 @@
 using ::testing::_;
 
 #define private public
-#	include <MGame.h>
-#	include <MineField.h>
-#	include <MineSquare.h>
+#	include <Presenter/MGame.h>
+#	include <Presenter/MineField.h>
+#	include <Presenter/MineSquare.h>
 #undef private
 
 #include "mocks/MGameMock.h"

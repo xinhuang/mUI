@@ -4,9 +4,9 @@
 using mUI::System::ArgumentException;
 
 #define private public
-#include <MGame.h>
-#include <MineField.h>
-#include <ISquare.h>
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/ISquare.h>
 #undef private
 
 #include "mocks/SquareFactoryFake.h"

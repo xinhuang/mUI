@@ -5,9 +5,9 @@
 using ::testing::_;
 
 #define private public
-#include <MGame.h>
-#include <MineField.h>
-#include <BlankSquare.h>
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/BlankSquare.h>
 #undef private
 
 #include "mocks/MineFieldMock.h"
