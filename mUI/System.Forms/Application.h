@@ -72,13 +72,13 @@ private:
 
 	bool IsDisposing() const;
 private:
-	HWND			hwnd_;
-	Frame			*frame_;
-	WNDPROC			prev_wnd_proc_;
-	bool			initializing_;
-	bool			disposing_;
+	HWND			_hwnd;
+	Frame*			_frame;
+	WNDPROC			_prevWndProc;
+	bool			_initializing;
+	bool			_disposing;
 
-	static Application application_;
+	static Application _application;
 };
 
 #if defined(_MSC_VER)

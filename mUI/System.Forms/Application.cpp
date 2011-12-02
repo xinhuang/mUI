@@ -21,10 +21,10 @@ using mUI::System::Drawing::HGEDrawing::PHGE;
 
 namespace mUI{ namespace System{  namespace Forms{
 
-Application Application::application_;
+Application Application::_application;
 
 Application::Application() : 
-	initializing_(true), disposing_(false)
+	_initializing(true), _disposing(false)
 {
 	bool ret = Threading::Init();
 	assert(ret);
@@ -35,8 +35,8 @@ Application::Application() :
 
 LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-	if (application_.IsDisposing())
-		return CallWindowProc(application_.prev_wnd_proc_, hWnd, message, wParam, lParam);
+	if (_application.IsDisposing())
+		return CallWindowProc(_application._prevWndProc, hWnd, message, wParam, lParam);
 
 	if (message >= WM_MOUSEFIRST && message <= WM_MOUSELAST)
 		FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
@@ -51,7 +51,7 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 
 		case WM_DESTROY:
 			PostQuitMessage(0);
-			application_.Dispose();
+			_application.Dispose();
 			break;
 
 		case WM_ACTIVATE:
@@ -62,16 +62,16 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 			break;
 		}
 	}
-	return CallWindowProc(application_.prev_wnd_proc_, hWnd, message, wParam, lParam);
+	return CallWindowProc(_application._prevWndProc, hWnd, message, wParam, lParam);
 }
 
 bool Application::DoEvents()
 {
 	bool ret = true;
-	if (!application_.IsDisposing())
+	if (!_application.IsDisposing())
 	{
 		PHGE hge;
-		ret = application_.frame_->LogicTick(hge->Timer_GetDelta());
+		ret = _application._frame->LogicTick(hge->Timer_GetDelta());
 	}
 
 	MSG msg;
@@ -91,7 +91,7 @@ bool Application::DoEvents()
 	FormManager::get_Instance().DoEvents();
 
 	if (ret)
-		application_.Dispose();
+		_application.Dispose();
 
 	return ret;
 }
@@ -101,8 +101,8 @@ void Application::Run( Frame* frame )
 	assert(frame != NULL);
 	FormManager::get_Instance().set_MainFrame(*frame);
 
-	application_.frame_ = frame;
-	frame->Closed += EventHandler<>(application_, &Application::OnFormClose);
+	_application._frame = frame;
+	frame->Closed += EventHandler<>(_application, &Application::OnFormClose);
 
 	const String& title = frame->get_Text();
 	const Drawing::Size& size = frame->get_Size();
@@ -143,9 +143,9 @@ void Application::Dispose()
 	if (IsDisposing())
 		return;
 
-	disposing_ = true;
+	_disposing = true;
 
-	frame_ = NULL;
+	_frame = NULL;
 	FormManager::get_Instance().Dispose();
 	Threading::Dispose();
 	Drawing::Dispose();
@@ -156,7 +156,7 @@ void Application::Dispose()
 
 bool Application::FrameFunc()
 {
-	return application_.DoEvents();
+	return _application.DoEvents();
 }
 
 bool Application::RenderFunc()
@@ -179,12 +179,12 @@ bool Application::InitFunc()
 
 	HWND hwnd = hge->System_GetState(HGE_HWND);
 	assert(hwnd && hwnd != INVALID_HANDLE_VALUE);
-	application_.prev_wnd_proc_ = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
+	_application._prevWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
 
 	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 
-	application_.frame_->Initialize();
-	application_.frame_->Show();
+	_application._frame->Initialize();
+	_application._frame->Show();
 
 	return FrameFunc();
 }
@@ -195,7 +195,7 @@ Application::~Application()
 
 bool Application::IsDisposing() const
 {
-	return disposing_;
+	return _disposing;
 }
 
 }}}
