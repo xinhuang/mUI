@@ -1,10 +1,10 @@
-#include <gtest\gtest.h>
+#include <gtest/gtest.h>
 #include <mUI.h>
 
 #define private public
-#include <MGame.h>
-#include <MineField.h>
-#include <AbstractSquare.h>
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/AbstractSquare.h>
 #undef private
 
 class AbstractSquareFake : public AbstractSquare
