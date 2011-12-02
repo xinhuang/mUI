@@ -10,7 +10,9 @@ SET(DIR_WITH_SRC .
 	System.Drawing 
 	System.Drawing/Internals
 	System.Forms 
-	System.Threading)
+	System.Threading
+	Extra
+)
 	
 INCLUDE_DIRECTORIES(. 
 	${PROJECT_SOURCE_DIR}/HGE/include 

@@ -20,6 +20,9 @@
 #include <System/System.h>
 using mUI::System::EventArgs;
 
+#include <Extra/Extra.h>
+using mUI::Extra::HgeContext;
+
 #include "Export.h"
 
 #include <deque>
@@ -52,6 +55,8 @@ class FORMS_ENTRY Application
 public:
 	static void Run(Frame* frame);
 	static bool DoEvents();
+
+	static void set_HgeContext(const HgeContext& context);
 
 protected:
 

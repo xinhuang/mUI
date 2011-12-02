@@ -198,4 +198,9 @@ bool Application::IsDisposing() const
 	return _disposing;
 }
 
+void Application::set_HgeContext( const HgeContext& context )
+{
+
+}
+
 }}}

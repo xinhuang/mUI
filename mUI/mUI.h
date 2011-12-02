@@ -7,5 +7,7 @@
 #include "./System.Drawing/Drawing.h"
 #include "./System.Forms/Forms.h"
 
+#include "./Extra/Extra.h"
+
 
 #endif // __MUI_H__
