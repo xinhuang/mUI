@@ -10,11 +10,13 @@
 class AbstractSquareFake : public AbstractSquare
 {
 	typedef AbstractSquare base;
+
 public:
 	AbstractSquareFake(MGame* game, MineField* mineField, int row, int column)
 		: base(game, mineField, Point(row, column))
 	{
 	}
+
 	virtual void Uncover() {}
 };
 
