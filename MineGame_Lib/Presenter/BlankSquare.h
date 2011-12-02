@@ -1,7 +1,7 @@
 #ifndef __BLANKSQUARE_H__
 #define __BLANKSQUARE_H__
 
-#include <AbstractSquare.h>
+#include "AbstractSquare.h"
 
 class MGame;
 

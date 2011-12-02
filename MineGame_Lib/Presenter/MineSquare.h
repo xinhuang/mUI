@@ -1,7 +1,7 @@
 #ifndef __MINESQUARE_H__
 #define __MINESQUARE_H__
 
-#include <AbstractSquare.h>
+#include "AbstractSquare.h"
 
 class MGame;
 

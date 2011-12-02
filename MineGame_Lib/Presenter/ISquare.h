@@ -4,16 +4,7 @@
 #include <mUI.h>
 using mUI::System::Drawing::Point;
 
-namespace SquareState{
-	enum Enum
-	{
-		Uncovered,
-		Covered,
-		Boomed,
-		Flagged,
-		QuestionMark,
-	};
-};
+#include "SquareState.h"
 
 class ISquare
 {
