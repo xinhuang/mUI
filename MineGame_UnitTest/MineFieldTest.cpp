@@ -1,4 +1,4 @@
-#include <gtest\gtest.h>
+#include <gtest/gtest.h>
 
 #include <mUI.h>
 using mUI::System::ArgumentException;
