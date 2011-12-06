@@ -20,7 +20,15 @@ INCLUDE_DIRECTORIES(.
 	
 SET(IGNORED_LIBS "libc.lib")
 
-SET(DEPENDENCY_LIBS Pal HGE hgehelp freetype245_D)
+find_package(freetype2 245)
+if (FT2_FOUND)
+	include_directories(${FT2_INCLUDE_DIR})
+	link_directories(${FT2_LIBRARY_DIR})
+else ()
+	message(FATAL_ERROR "Unable to find FreeType2")
+endif ()
+
+SET(DEPENDENCY_LIBS Pal HGE hgehelp freetype245MT_D)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/dependency/freetype2/include)
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/dependency/freetype2/lib
 	${PROJECT_SOURCE_DIR}/dependency/hge/lib/vc)
