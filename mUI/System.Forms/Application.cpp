@@ -26,7 +26,7 @@ namespace mUI{ namespace System{  namespace Forms{
 Application Application::_application;
 
 Application::Application() : 
-	_initializing(true), _disposing(false)
+	_initializing(true), _disposing(false), _disposed(false)
 {
 	bool ret = Threading::Init();
 	assert(ret);
@@ -35,7 +35,6 @@ Application::Application() :
 	srand(static_cast<unsigned int>(time(NULL)));
 }
 
-//LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam )
 {
 	if (_application.IsDisposing())
@@ -153,7 +152,7 @@ void Application::OnFormClose( void* sender, EventArgs* e )
 
 void Application::Dispose()
 {
-	if (IsDisposing())
+	if (IsDisposing() && !_disposed)
 		return;
 
 	_disposing = true;
@@ -165,6 +164,9 @@ void Application::Dispose()
 
 	PHGE hge;
 	hge->System_Shutdown();
+
+	_disposing = false;
+	_disposed = true;
 }
 
 bool Application::FrameFunc()
@@ -207,6 +209,7 @@ bool Application::InitFunc()
 
 Application::~Application()
 {
+	Dispose();
 }
 
 bool Application::IsDisposing() const

@@ -89,6 +89,7 @@ private:
 
 	bool			_initializing;
 	bool			_disposing;
+	bool			_disposed;
 
 	HgeContext		_hgeContext;
 	HGE* _hge;
