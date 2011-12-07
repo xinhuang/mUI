@@ -17,16 +17,31 @@ struct Thread::ThreadControlBlock : public Lockable				// Lock this if nessesary
 	ThreadPriority Priority;			// TODO:
 	ThreadStart ThreadStart;
 	size_t ReferenceCount;
+
+	static ThreadControlBlock* Release( ThreadControlBlock* tcb ) 
+	{
+		{
+			AutoLock lock(*tcb);
+			--tcb->ReferenceCount;
+		}
+
+		if (tcb->ReferenceCount == 0)
+		{
+			delete tcb;
+			tcb = NULL;
+		}
+		return tcb;
+	}
 };
 
 // ------------------------------------------------------- //
 
-size_t Thread::foreground_thread_count_ = 0;		// Using Interlocked method to access
-LocalDataStoreSlot Thread::tcb_slot_ = INVALID_LOCAL_DATA_STORAGE;
+size_t Thread::_foregroundThreadCount = 0;		// Using Interlocked method to access
+LocalDataStoreSlot Thread::_tcbSlot = INVALID_LOCAL_DATA_STORAGE;
 
-Thread::Thread( const ThreadStart& thread_start ) : tcb_(NULL)
+Thread::Thread( const ThreadStart& thread_start ) : _tcb(NULL)
 {
-	thread_start_ = thread_start;
+	_threadStart = thread_start;
 }
 
 Thread::Thread( const Thread& thread )
@@ -38,13 +53,13 @@ Thread& Thread::operator=( const Thread& thread )
 {
 	this->Dispose();
 
-	if (thread.tcb_ != NULL)
+	if (thread._tcb != NULL)
 	{
-		AutoLock lock(*thread.tcb_);
-		this->tcb_ = thread.tcb_;
-		++this->tcb_->ReferenceCount;
+		AutoLock lock(*thread._tcb);
+		this->_tcb = thread._tcb;
+		++this->_tcb->ReferenceCount;
 	}
-	this->thread_start_ = thread.thread_start_;
+	this->_threadStart = thread._threadStart;
 
 	return *this;
 }
@@ -85,9 +100,9 @@ void Thread::ThreadEntry( void* param )
 {
 	ThreadControlBlock* tcb = reinterpret_cast<ThreadControlBlock*>(param);
 	assert(tcb != NULL);
-	bool is_foreground = !tcb->IsBackground;
+	bool isForeground = !tcb->IsBackground;
 
-	LocalDataStoreSlot slot = tcb_slot_;
+	LocalDataStoreSlot slot = _tcbSlot;
 	Thread::SetData(slot, &tcb);
 
 	{
@@ -97,8 +112,8 @@ void Thread::ThreadEntry( void* param )
         tcb->Handle = get_Handle();
 	}
 
-	if (is_foreground)
-		Interlocked::Increment(foreground_thread_count_);
+	if (isForeground)
+		Interlocked::Increment(_foregroundThreadCount);
 
 	try
 	{
@@ -120,22 +135,22 @@ void Thread::ThreadEntry( void* param )
 		tcb = NULL;
 	}
 
-	if (is_foreground)
-		Interlocked::Decrement(foreground_thread_count_);
+	if (isForeground)
+		Interlocked::Decrement(_foregroundThreadCount);
 
 	Pal::EndThread();
 }
 
 void Thread::Start()
 {
-	tcb_ = new ThreadControlBlock();
-	tcb_->IsAlive = false;
-	tcb_->IsBackground = false;
-	tcb_->IsThreadPoolThread = false;
-	tcb_->ReferenceCount = 2;
-	tcb_->ThreadStart = thread_start_;
-    tcb_->Handle = INVALID_VALUE;
-	Pal::BeginThread(ThreadEntry, 0, tcb_);
+	_tcb = new ThreadControlBlock();
+	_tcb->IsAlive = false;
+	_tcb->IsBackground = false;
+	_tcb->IsThreadPoolThread = false;
+	_tcb->ReferenceCount = 2;
+	_tcb->ThreadStart = _threadStart;
+    _tcb->Handle = INVALID_VALUE;
+	Pal::BeginThread(ThreadEntry, 0, _tcb);
 }
 
 void Thread::Sleep( unsigned int milliseconds )
@@ -145,45 +160,45 @@ void Thread::Sleep( unsigned int milliseconds )
 
 bool Thread::IsAlive() const
 {
-	if (tcb_ == NULL)
+	if (_tcb == NULL)
 		return false;
-	return tcb_->IsAlive;
+	return _tcb->IsAlive;
 }
 
 bool Thread::IsBackground() const
 {
-	assert(tcb_ != NULL);
-	return tcb_->IsBackground;
+	assert(_tcb != NULL);
+	return _tcb->IsBackground;
 }
 
 bool Thread::IsThreadPoolThread() const
 {
-	assert(tcb_ != NULL);
-	return tcb_->IsThreadPoolThread;
+	assert(_tcb != NULL);
+	return _tcb->IsThreadPoolThread;
 }
 
-mUI::System::Threading::ThreadPriority Thread::Priority() const
+ThreadPriority Thread::Priority() const
 {
-	assert(tcb_ != NULL);
-	return tcb_->Priority;
+	assert(_tcb != NULL);
+	return _tcb->Priority;
 }
 
 void Thread::Abort()
 {
-	if (tcb_ == NULL)
+	if (_tcb == NULL)
 		return;
 
-	AutoLock lock(*tcb_);
-	if (tcb_->IsAlive)
+	AutoLock lock(*_tcb);
+	if (_tcb->IsAlive)
 	{
-		IntPtr h = tcb_->Handle;
+		IntPtr h = _tcb->Handle;
 		assert(h != NULL && "Invalid Handle");
 		bool tret = Pal::TerminateThread(h, -1) == TRUE;
 		assert(tret && "TherminateThread failed!");
 
-		--tcb_->ReferenceCount;
-		if (!tcb_->IsBackground)
-			Interlocked::Decrement(foreground_thread_count_);
+		if (!_tcb->IsBackground)
+			Interlocked::Decrement(_foregroundThreadCount);
+		delete _tcb;
 	}
 	else
 	{
@@ -198,16 +213,16 @@ void Thread::Join()
 
 bool Thread::Join( int miliseconds )
 {
-	if (tcb_ == NULL)
+	if (_tcb == NULL)
 		return true;
 
 	{
-		AutoLock lock(*tcb_);
-		if (!tcb_->IsAlive)
+		AutoLock lock(*_tcb);
+		if (!_tcb->IsAlive)
 			return true;
 	}
 
-	HANDLE h = tcb_->Handle;
+	HANDLE h = _tcb->Handle;
 	assert(h != NULL && "Invalid Handle!");
 	bool ret = WaitForSingleObject(h, miliseconds) == WAIT_OBJECT_0;
 
@@ -222,23 +237,21 @@ void Thread::SpinWait( int iterations )
 
 Thread Thread::CurrentThread()
 {
-	LocalDataStoreSlot slot = tcb_slot_;
+	LocalDataStoreSlot slot = _tcbSlot;
 	Thread thread;
-	thread.tcb_ = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
-	if (thread.tcb_ == NULL)
-	{
-		_MakeTCB();
-		thread.tcb_ = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
-	}
-	assert(thread.tcb_ != NULL);
-	AutoLock lock(thread.tcb_);
-	++thread.tcb_->ReferenceCount;
+	thread._tcb = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
+	if (thread._tcb == NULL)
+		thread._tcb = MakeTckForCurrentThread();
+	
+	assert(thread._tcb != NULL);
+	AutoLock lock(thread._tcb);
+	++thread._tcb->ReferenceCount;
 	return thread;
 }
 
-void Thread::_MakeTCB()
+Thread::ThreadControlBlock* Thread::MakeTckForCurrentThread()
 {
-	LocalDataStoreSlot slot = tcb_slot_;
+	LocalDataStoreSlot slot = _tcbSlot;
 	ThreadControlBlock* tcb = new ThreadControlBlock();
 	assert(tcb != NULL);
 	assert(Thread::GetData(slot) == NULL);
@@ -278,11 +291,13 @@ void Thread::_MakeTCB()
 		}
 		break;
 	}
+
+	return tcb;
 }
 
 void Thread::DisposeTCBForMainThread()
 {
-	LocalDataStoreSlot slot = tcb_slot_;
+	LocalDataStoreSlot slot = _tcbSlot;
 	ThreadControlBlock* tcb = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
 	assert(tcb != NULL);
 	delete tcb;
@@ -291,15 +306,15 @@ void Thread::DisposeTCBForMainThread()
 
 void Thread::Dispose()
 {
-	if (tcb_ != NULL)
+	if (_tcb != NULL)
 	{
-		AutoLock lock(*tcb_);
-		--tcb_->ReferenceCount;
-		if (tcb_->ReferenceCount > 0)
+		AutoLock lock(*_tcb);
+		--_tcb->ReferenceCount;
+		if (_tcb->ReferenceCount > 0)
 			return;						// Still in use, don't delete.
-		::CloseHandle(tcb_->Handle);
+		::CloseHandle(_tcb->Handle);
 	}
-	delete tcb_;
+	delete _tcb;
 }
 
 IntPtr Thread::get_Handle()
@@ -313,9 +328,9 @@ IntPtr Thread::get_Handle()
 
 bool Thread::Init()
 {
-	tcb_slot_ = Thread::AllocateDataSlot();
-	assert(tcb_slot_ != INVALID_LOCAL_DATA_STORAGE);
-	Thread::_MakeTCB();
+	_tcbSlot = Thread::AllocateDataSlot();
+	assert(_tcbSlot != INVALID_LOCAL_DATA_STORAGE);
+	Thread::MakeTckForCurrentThread();
 	return true;
 }
 

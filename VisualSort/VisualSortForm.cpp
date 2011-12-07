@@ -87,4 +87,7 @@ void VisualSortForm::Dispose()
 	{
 		Application::DoEvents();
 	}
+
+	delete worker_;
+	worker_ = NULL;
 }

@@ -38,7 +38,7 @@ const LocalDataStoreSlot INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalData
 class THREADING_ENTRY Thread
 {
 public:
-	Thread() : tcb_(NULL) {}
+	Thread() : _tcb(NULL) {}
 
 	Thread(const Thread& thread);
 	Thread& operator=(const Thread& thread);
@@ -74,8 +74,11 @@ protected:
 	friend bool THREADING_ENTRY Init();
 	friend void THREADING_ENTRY Dispose();
 
+	struct ThreadControlBlock;
+	ThreadControlBlock* _tcb;
+
 	static bool Init();
-	static void _MakeTCB();
+	static ThreadControlBlock* MakeTckForCurrentThread();
 
 	static void DisposeTCBForMainThread();
 	static void ThreadEntry(void* param);
@@ -83,13 +86,10 @@ protected:
 	void Dispose();
 
 private:
-	ThreadStart thread_start_;
+	ThreadStart _threadStart;
 
-	struct ThreadControlBlock;
-	ThreadControlBlock* tcb_;
-
-	static size_t foreground_thread_count_;
-	static LocalDataStoreSlot tcb_slot_;
+	static size_t _foregroundThreadCount;
+	static LocalDataStoreSlot _tcbSlot;
 
 	static IntPtr get_Handle();
 };
