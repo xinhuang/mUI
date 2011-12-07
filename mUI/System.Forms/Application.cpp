@@ -264,6 +264,7 @@ void Application::StartHge( const HgeContext &context )
 void Application::Run( Form* form )
 {
 	FormManager::get_Instance().set_RootForm(*form);
+	form->Show();
 
 	form->Closed += EventHandler<>(_application, &Application::OnFormClose);
 

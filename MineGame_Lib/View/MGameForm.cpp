@@ -21,10 +21,8 @@ void MGameForm::OnPaint( PaintEventArgs* e )
 {
 	Graphics& g = e->Graphics;
 
-	SolidBrush normal_brush(SystemColors::Control);
-	SolidBrush highlight_brush(Color::Silver);
-	SolidBrush dark_brush(Color::Grey);
+	SolidBrush bgBrush(SystemColors::Control);
 
 	Rectangle rect = get_ClientRectangle();
-	e->Graphics.FillRectangle(dark_brush, rect);
+	e->Graphics.FillRectangle(bgBrush, rect);
 }
