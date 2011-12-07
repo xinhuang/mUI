@@ -5,6 +5,8 @@
 #include <tchar.h>
 #include <ctime>
 
+#include <Windows.h>
+
 #include <System.Threading/Threading.h>
 
 #include <System.Drawing/Drawing.h>
@@ -33,10 +35,16 @@ Application::Application() :
 	srand(static_cast<unsigned int>(time(NULL)));
 }
 
-LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+//LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam )
 {
 	if (_application.IsDisposing())
-		return CallWindowProc(_application._prevWndProc, hWnd, message, wParam, lParam);
+		return reinterpret_cast<IntPtr>(CallWindowProc(
+			reinterpret_cast<WNDPROC>(_application._prevWndProc), 
+			reinterpret_cast<HWND>(hWnd), 
+			message, 
+			reinterpret_cast<WPARAM>(wParam), 
+			reinterpret_cast<WPARAM>(lParam)));
 
 	if (message >= WM_MOUSEFIRST && message <= WM_MOUSELAST)
 		FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
@@ -62,7 +70,12 @@ LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam
 			break;
 		}
 	}
-	return CallWindowProc(_application._prevWndProc, hWnd, message, wParam, lParam);
+	return reinterpret_cast<IntPtr>(CallWindowProc(
+		reinterpret_cast<WNDPROC>(_application._prevWndProc), 
+		reinterpret_cast<HWND>(hWnd), 
+		message, 
+		reinterpret_cast<WPARAM>(wParam), 
+		reinterpret_cast<LPARAM>(lParam)));
 }
 
 bool Application::DoEvents()
@@ -179,7 +192,7 @@ bool Application::InitFunc()
 
 	HWND hwnd = hge->System_GetState(HGE_HWND);
 	assert(hwnd && hwnd != INVALID_HANDLE_VALUE);
-	_application._prevWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
+	_application._prevWndProc = reinterpret_cast<wndproc_t>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
 
 	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 
@@ -209,7 +222,7 @@ void Application::InitializeWindow()
 	PHGE hge;
 	HWND hwnd = hge->System_GetState(HGE_HWND);
 	assert(hwnd && hwnd != INVALID_HANDLE_VALUE);
-	_prevWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
+	_prevWndProc = reinterpret_cast<wndproc_t>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
 
 	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 }

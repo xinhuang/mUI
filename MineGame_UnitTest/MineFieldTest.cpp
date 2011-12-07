@@ -107,7 +107,7 @@ TEST_F(MineFieldTest, get_YFromIndex_WhenIndexTooLarge)
 	try
 	{
 		_mineField->get_YFromIndex(i);
-		ASSERT_TRUE(FALSE);
+		ASSERT_TRUE(false);
 	}
 	catch (const ArgumentException&)
 	{
@@ -119,7 +119,7 @@ TEST_F(MineFieldTest, get_YFromIndex_WhenIndexTooSmall)
 	try
 	{
 		_mineField->get_YFromIndex(-1);
-		ASSERT_TRUE(FALSE);
+		ASSERT_TRUE(false);
 	}
 	catch (const ArgumentException&)
 	{
@@ -144,7 +144,7 @@ TEST_F(MineFieldTest, get_XFromIndex_WhenIndexTooLarge)
 	try
 	{
 		_mineField->get_XFromIndex(i);
-		ASSERT_TRUE(FALSE);
+		ASSERT_TRUE(false);
 	}
 	catch (const ArgumentException&)
 	{
@@ -156,7 +156,7 @@ TEST_F(MineFieldTest, get_XFromIndex_WhenIndexTooSmall)
 	try
 	{
 		_mineField->get_XFromIndex(-1);
-		ASSERT_TRUE(FALSE);
+		ASSERT_TRUE(false);
 	}
 	catch (const ArgumentException&)
 	{

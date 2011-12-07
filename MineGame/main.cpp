@@ -1,12 +1,13 @@
-#include <View/MainForm.h>
+#include <View/MGameForm.h>
 #include <mUI.h>
 using namespace mUI::System::Forms;
+#include <Windows.h>
 
 int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPSTR lpCmdLine, __in int nShowCmd )
 {
 	mUI::Extra::HgeContext context;
 	Application::StartHge(context);
-	Application::Run(new MainForm());
+	Application::Run(new MGameForm());
 
 	return EXIT_SUCCESS;
 }

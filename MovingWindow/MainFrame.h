@@ -20,6 +20,9 @@ using namespace mUI::System;
 using namespace mUI::System::Forms;
 using namespace mUI::System::Drawing;
 
+#include <vector>
+using namespace std;
+
 class MovingForm;
 class InfoForm;
 
@@ -37,6 +40,7 @@ private:
 
 	void AddForm();
 	void RemoveForm();
+
 private:
 	vector<MovingForm*> forms_;
 	InfoForm* infoform_;

@@ -18,8 +18,6 @@
 
 #include <System/System.h>
 
-#include <Windows.h>
-
 #include <deque>
 #include <map>
 using namespace std;
@@ -60,8 +58,8 @@ public:
 	Control* ControlAt(const Point& pt);
 	static Point DeleteMe_GetControlFrameCoord(const Control& control);
 
-	void RaiseMouseEvent(UINT message, WPARAM wParam, LPARAM lParam);
-	void RaiseKeyboardEvent(UINT message, WPARAM wParam, LPARAM lParam);
+	void RaiseMouseEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
+	void RaiseKeyboardEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
 
 	void OnFrameActivated();
 	void OnFrameDeactivated();

@@ -28,8 +28,6 @@ using mUI::Extra::HgeContext;
 #include <deque>
 using std::deque;
 
-#include <Windows.h>
-
 class HGE;
 
 // ------------------------------------------------------------
@@ -79,13 +77,15 @@ private:
 	Application();
 	~Application();
 
-	static LRESULT CALLBACK Application::ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
+	//static LRESULT CALLBACK ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
+	static IntPtr __stdcall ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam );
+	typedef IntPtr (__stdcall *wndproc_t)(IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam);
 
 	bool IsDisposing() const;
 private:
-	HWND			_hwnd;
+	IntPtr			_hwnd;
 	Frame*			_frame;
-	WNDPROC			_prevWndProc;
+	wndproc_t			_prevWndProc;
 
 	bool			_initializing;
 	bool			_disposing;

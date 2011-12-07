@@ -1,4 +1,5 @@
 ﻿#include "Thread.h"
+#include <Windows.h>
 
 #include "AutoLock.h"
 #include "Interlocked.h"

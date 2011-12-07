@@ -37,6 +37,7 @@ class Rectangle;
 class DRAWING_ENTRY Graphics
 {
 public:
+	Graphics() {}
 	virtual ~Graphics() {}
 
 	virtual void DrawLine(Pen& pen, const Point& pt1, const Point& pt2) = 0;
@@ -58,6 +59,9 @@ public:
 	virtual void DrawString(const String& s, const Font& font, Brush& brush, const PointF& pt) = 0;
 
 	virtual SizeF MeasureString(const String& text, const Font& font) = 0;
+
+private:
+	Graphics(const Graphics&) {}
 };
 
 }}}

@@ -6,7 +6,7 @@
 class View
 {
 public:
-	virtual void set_SquareState(const Location& location, SquareState state) = 0;
+	virtual void set_SquareState(const Point& location, SquareState::Enum state) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
 };
 

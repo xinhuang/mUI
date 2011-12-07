@@ -1,6 +1,5 @@
 ﻿#include "MainFrame.h"
 
-#include "PHGE.h"
 #include "MovingForm.h"
 #include "InfoForm.h"
 
@@ -11,7 +10,7 @@ MainFrame::MainFrame()
 
 int MainFrame::get_Fps() const
 {
-	return HGEFPS_UNLIMITED;
+	return 0;
 }
 
 bool MainFrame::Initialize()
@@ -47,9 +46,8 @@ void MainFrame::MainFrame_OnKeyPress( void* sender, KeyPressEventArgs* e )
 
 bool MainFrame::LogicTick( float delta )
 {
-	PHGE hge;
-	int sw = hge->System_GetState(HGE_SCREENWIDTH);
-	int sh = hge->System_GetState(HGE_SCREENHEIGHT);
+	int sw = get_Size().Width;
+	int sh = get_Size().Height;
 	for (size_t i = 0; i < forms_.size(); ++i)
 	{
 		MovingForm& form = *forms_[i];
@@ -83,9 +81,8 @@ void MainFrame::RemoveForm()
 void MainFrame::AddForm()
 {
 	MovingForm* form = new MovingForm();
-	PHGE hge;
-	int sw = hge->System_GetState(HGE_SCREENWIDTH);
-	int sh = hge->System_GetState(HGE_SCREENHEIGHT);
+	int sw = get_Size().Width;
+	int sh = get_Size().Height;
 
 	Random random;
 	Point loc;

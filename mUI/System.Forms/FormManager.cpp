@@ -1,4 +1,5 @@
 ﻿#include "FormManager.h"
+#include <Windows.h>
 
 #include "Form.h"
 #include "Control.h"
@@ -132,7 +133,7 @@ Point FormManager::DeleteMe_GetControlFrameCoord( const Control& control )
 	return coord;
 }
 
-void FormManager::RaiseMouseEvent( UINT message, WPARAM wParam, LPARAM lParam )
+void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr lParam )
 {
 	int16_t x = LOWORD(lParam), y = HIWORD(lParam);
 	Point pt(x, y);
@@ -278,7 +279,7 @@ void FormManager::RaiseMouseEvent( UINT message, WPARAM wParam, LPARAM lParam )
 	}
 }
 
-void FormManager::RaiseKeyboardEvent( UINT message, WPARAM wParam, LPARAM lParam )
+void FormManager::RaiseKeyboardEvent( unsigned int message, IntPtr wParam, IntPtr lParam )
 {
 	switch (message)
 	{
@@ -290,7 +291,7 @@ void FormManager::RaiseKeyboardEvent( UINT message, WPARAM wParam, LPARAM lParam
 
 	case WM_CHAR:
 		{
-			KeyPressEventArgs e(wParam);
+			KeyPressEventArgs e(reinterpret_cast<char>(wParam));
 			Control* ctrl = FromHandle(focused_control_);
 			while (ctrl != NULL && ctrl->get_Handle() != mainframe_)
 			{

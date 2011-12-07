@@ -21,7 +21,6 @@
 #include <System/System.h>
 
 #include "ThreadPriority.h"
-#include <Windows.h>
 
 namespace mUI{ namespace System{  namespace Forms{
 	class Application;
@@ -33,7 +32,7 @@ typedef Delegate<void> ThreadStart;
 typedef Delegate<void, void*> ParameterizedThreadStart;
 
 typedef IntPtr LocalDataStoreSlot;
-const LocalDataStoreSlot INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalDataStoreSlot>(TLS_OUT_OF_INDEXES);
+const LocalDataStoreSlot INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalDataStoreSlot>(-1);
 
 class THREADING_ENTRY Thread
 {
