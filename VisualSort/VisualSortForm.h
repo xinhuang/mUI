@@ -42,10 +42,10 @@ protected:
 	virtual void OnPaint(void* sender, PaintEventArgs* e);
 
 private:
-	TitleBar* titlebar_;
-	Thread* worker_;
-	vector<int> array_;
-	vector<Color> color_;
+	TitleBar* _titleBar;
+	Thread* _worker;
+	vector<int> _array;
+	vector<Color> _color;
 };
 
 #endif 

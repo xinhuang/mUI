@@ -9,14 +9,14 @@ using namespace mUI::System;
 
 #include "TitleBar.h"
 
-VisualSortForm::VisualSortForm(void) : worker_(NULL)
+VisualSortForm::VisualSortForm(void) : _worker(NULL)
 {
 	set_Size(Drawing::Size(500, 400));
 	set_Location(Point(100, 100));
 
-	titlebar_ = new TitleBar();
-	titlebar_->set_Size(Size(this->get_Size().Width - 2, 20));
-	Controls.Add(*titlebar_);
+	_titleBar = new TitleBar();
+	_titleBar->set_Size(Size(this->get_Size().Width - 2, 20));
+	Controls.Add(*_titleBar);
 
 	Paint += PaintEventHandler(this, &VisualSortForm::OnPaint);
 }
@@ -28,34 +28,34 @@ VisualSortForm::~VisualSortForm(void)
 
 void VisualSortForm::OnPaint( void* sender, PaintEventArgs* e )
 {
-	if (array_.size() == 0)
+	if (_array.size() == 0)
 		return;
 
 	Drawing::Size size = get_ClientSize();
-	size.Height -= titlebar_->get_Size().Height;
-	int max = array_.front();
-	for (size_t i = 1; i < array_.size(); ++i)
+	size.Height -= _titleBar->get_Size().Height;
+	int max = _array.front();
+	for (size_t i = 1; i < _array.size(); ++i)
 	{
-		if (max < array_[i])
-			max = array_[i];
+		if (max < _array[i])
+			max = _array[i];
 	}
 
-	int unit_width = size.Width / array_.size();
-	int unit_height = size.Height / max;
+	int unitWidth = size.Width / _array.size();
+	int unitHeight = size.Height / max;
 
 	Graphics& g = e->Graphics;
-	for (size_t i = 0; i < array_.size(); ++i)
+	for (size_t i = 0; i < _array.size(); ++i)
 	{
-		SolidBrush brush(color_[i]);
-		g.FillRectangle(brush, i * unit_width + 5, 
-			size.Height - array_[i] * unit_height + titlebar_->get_Size().Height, 
-			unit_width - 10, array_[i] * unit_height);
+		SolidBrush brush(_color[i]);
+		g.FillRectangle(brush, i * unitWidth + 5, 
+			size.Height - _array[i] * unitHeight + _titleBar->get_Size().Height, 
+			unitWidth - 10, _array[i] * unitHeight);
 	}
 }
 
 void VisualSortForm::set_Fixed( size_t i )
 {
-	color_.at(i) = Color::Red;
+	_color.at(i) = Color::Red;
 }
 
 void VisualSortForm::Swap( size_t a, size_t b )
@@ -63,31 +63,31 @@ void VisualSortForm::Swap( size_t a, size_t b )
 	if (get_InvokeRequired())
 		Invoke(Delegate<>(this, &VisualSortForm::Swap, a, b));
 	else
-		swap(array_.at(a), array_.at(b));
+		swap(_array.at(a), _array.at(b));
 }
 
 void VisualSortForm::BeginSort( vector<int>& array )
 {
-	array_ = array;
-	color_.clear();
-	color_.resize(array_.size(), Color::Grey);
-	if (worker_ != NULL)
-		worker_->Join();
-	delete worker_;
-	worker_ = new Thread(ThreadStart(this, &VisualSortForm::Sort, array_));
-	worker_->Start();
+	_array = array;
+	_color.clear();
+	_color.resize(_array.size(), Color::Grey);
+	if (_worker != NULL)
+		_worker->Join();
+	delete _worker;
+	_worker = new Thread(ThreadStart(this, &VisualSortForm::Sort, _array));
+	_worker->Start();
 }
 
 void VisualSortForm::Dispose()
 {
-	if (worker_ == NULL)
+	if (_worker == NULL)
 		return;
 
-	while (!worker_->Join(100))
+	while (!_worker->Join(100))
 	{
 		Application::DoEvents();
 	}
 
-	delete worker_;
-	worker_ = NULL;
+	delete _worker;
+	_worker = NULL;
 }
