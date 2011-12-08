@@ -3,6 +3,9 @@
 
 #include "../Presenter/ISquare.h"
 
+#include <mUI.h>
+using mUI::System::Drawing::Point;
+
 class View
 {
 public:

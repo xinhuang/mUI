@@ -7,12 +7,15 @@
 #include <Presenter/ISquare.h>
 #undef private
 
+#include <mocks/ViewMock.h>
+
 class MGameTest : public testing::Test
 {
 public:
 	void SetUp()
 	{
-		_game = new MGame();
+		_viewMock = new ViewMock();
+		_game = new MGame(_viewMock);
 	}
 
 	void TearDown()
@@ -23,6 +26,7 @@ public:
 
 protected:
 	MGame* _game;
+	ViewMock* _viewMock;
 };
 
 TEST_F(MGameTest, Constructor_Typical)
@@ -47,5 +51,8 @@ TEST_F(MGameTest, NewGame_Typical)
 
 TEST_F(MGameTest, Uncover_OnMineSquare)
 {
+	_game->set_MineFieldWidth(1);
+	_game->set_MineFieldHeight(1);
+	_game->set_MineTotal(1);
 
 }

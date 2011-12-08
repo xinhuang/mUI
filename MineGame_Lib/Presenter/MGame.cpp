@@ -3,7 +3,7 @@
 
 #include <mUI.h>
 
-MGame::MGame()
+MGame::MGame(View* view)
 	: _mineField(NULL)
 {
 	_mineField = new MineField(this);

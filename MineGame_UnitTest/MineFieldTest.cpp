@@ -10,16 +10,15 @@ using mUI::System::ArgumentException;
 #undef private
 
 #include "mocks/SquareFactoryFake.h"
-
 #include "mocks/ISquareMock.h"
+#include "mocks/ViewMock.h"
 
-bool get_IndexFrom2D();
 class MineFieldTest : public testing::Test
 {
 public:
 	void SetUp()
 	{
-		_game = new MGame();
+		_game = new MGame(new ViewMock());
 		_game->set_MineFieldHeight(_arbitraryHeight);
 		_game->set_MineFieldWidth(_arbitraryWidth);
 		_game->set_MineTotal(_arbitraryMineTotal);

@@ -12,6 +12,7 @@ using ::testing::_;
 #include <Presenter/NumberSquare.h>
 
 #include "mocks/MineFieldMock.h"
+#include "mocks/ViewMock.h"
 
 class SquareFactoryTest : public testing::Test
 {
@@ -21,6 +22,7 @@ public:
 		_factory = new SquareFactory();
 		_fieldMap.resize(9, false);
 		_fieldSize = Size(3, 3);
+		_game = new MGame(new ViewMock());
 	}
 
 	virtual void TearDown()
@@ -30,9 +32,12 @@ public:
 		for(size_t i = 0; i < _squares.size(); ++i)
 			delete _squares[i];
 		_squares.clear();
+		delete _game;
+		_game = NULL;
 	}
 
 protected:
+	MGame* _game;
 	SquareFactory* _factory;
 	vector<ISquare*> _squares;
 	vector<bool> _fieldMap;
@@ -47,13 +52,12 @@ TEST_F(SquareFactoryTest, Constructor_Typical)
 
 TEST_F(SquareFactoryTest, CreateSquares_MineField1x1AllMine)
 {
-	MGame game;
-	game.set_MineFieldWidth(1);
-	game.set_MineFieldHeight(1);
-	game.set_MineTotal(1);
-	MineField& mineField(*game.get_MineField());
+	_game->set_MineFieldWidth(1);
+	_game->set_MineFieldHeight(1);
+	_game->set_MineTotal(1);
+	MineField& mineField(*_game->get_MineField());
 	
-	_squares = _factory->CreateSquares(&game, &mineField);
+	_squares = _factory->CreateSquares(_game, &mineField);
 
 	ASSERT_EQ(1, _squares.size());
 	ASSERT_EQ(0, _squares[0]->get_Y());
@@ -64,13 +68,12 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1AllMine)
 
 TEST_F(SquareFactoryTest, CreateSquares_MineField1x1NoMine)
 {
-	MGame game;
-	game.set_MineFieldWidth(1);
-	game.set_MineFieldHeight(1);
-	game.set_MineTotal(0);
-	MineField& mineField(*game.get_MineField());
+	_game->set_MineFieldWidth(1);
+	_game->set_MineFieldHeight(1);
+	_game->set_MineTotal(0);
+	MineField& mineField(*_game->get_MineField());
 	
-	_squares = _factory->CreateSquares(&game, &mineField);
+	_squares = _factory->CreateSquares(_game, &mineField);
 
 	ASSERT_EQ(1, _squares.size());
 	ASSERT_EQ(0, _squares[0]->get_Y());
@@ -81,11 +84,10 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField1x1NoMine)
 
 TEST_F(SquareFactoryTest, GenerateMineFieldMap_MineField1x1MineTotal1)
 {
-	MGame game;
-	game.set_MineFieldHeight(1);
-	game.set_MineFieldWidth(1);
-	game.set_MineTotal(1);
-	MineField& mineField(*game.get_MineField());
+	_game->set_MineFieldHeight(1);
+	_game->set_MineFieldWidth(1);
+	_game->set_MineTotal(1);
+	MineField& mineField(*_game->get_MineField());
 
 	vector<bool> map = _factory->GenerateMineFieldMap(mineField.get_Size(), 
 														mineField.get_MineTotal());
@@ -126,12 +128,11 @@ TEST_F(SquareFactoryTest, GenerateMineFieldMap_MultipleTimesMineField2x1MineTota
 
 TEST_F(SquareFactoryTest, CreateSquares_MineField2x1MineTotal1)
 {
-	MGame game;
-	MineField& mineField(*game.get_MineField());
+	MineField& mineField(*_game->get_MineField());
 	mineField.set_Size(Size(2, 1));
 	mineField.set_MineTotal(1);
 	
-	_squares = _factory->CreateSquares(&game, &mineField);
+	_squares = _factory->CreateSquares(_game, &mineField);
 
 	NumberSquare* numberSquare = dynamic_cast<NumberSquare*>(_squares[0]);
 	if (numberSquare == NULL)
@@ -145,14 +146,13 @@ TEST_F(SquareFactoryTest, CreateSquares_SameAsFieldMap)
 {
 	Size fieldSize(10, 10);
 	int mineTotal = 35;
-	MGame game;
-	game.set_MineFieldHeight(fieldSize.Height);
-	game.set_MineFieldWidth(fieldSize.Width);
-	game.set_MineTotal(mineTotal);
-	MineField& mineField(*game.get_MineField());
+	_game->set_MineFieldHeight(fieldSize.Height);
+	_game->set_MineFieldWidth(fieldSize.Width);
+	_game->set_MineTotal(mineTotal);
+	MineField& mineField(*_game->get_MineField());
 	vector<bool> fieldMap = _factory->GenerateMineFieldMap(fieldSize, mineTotal);
 
-	_squares = _factory->CreateSquaresUsingFieldMap(&game, &mineField, fieldMap);
+	_squares = _factory->CreateSquaresUsingFieldMap(_game, &mineField, fieldMap);
 
 	ASSERT_EQ(fieldMap.size(), _squares.size());
 	for (size_t i = 0; i < fieldMap.size(); ++i)

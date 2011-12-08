@@ -14,14 +14,14 @@ using namespace mUI::System;
 #undef private
 
 #include "mocks/MineFieldMock.h"
-
+#include "mocks/ViewMock.h"
 
 class NumberSquareTest : public testing::Test
 {
 public:
 	void SetUp()
 	{
-		_game = new MGame();
+		_game = new MGame(new ViewMock());
 		_mineField = new MineField(_game);
 	}
 

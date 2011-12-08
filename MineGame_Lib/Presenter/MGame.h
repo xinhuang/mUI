@@ -6,11 +6,12 @@
 using mUI::System::Drawing::Size;
 
 class MineField;
+class View;
 
 class MGame
 {
 public:
-	MGame();
+	MGame(View* view);
 	virtual ~MGame();
 
 	void set_MineFieldWidth(int width);
@@ -26,6 +27,7 @@ public:
 	MineField* get_MineField();
 private:
 	MineField* _mineField;
+	View* _view;
 };
 
 #endif // __MGAME_H__
