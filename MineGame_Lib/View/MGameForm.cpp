@@ -7,7 +7,7 @@ MGameForm::MGameForm()
 	set_Text(L"Mine Game v0.1");
 }
 
-void MGameForm::set_SquareState( const Point& location, SquareState::Enum state )
+void MGameForm::set_SquareState( const Point& location, SquareState::Enum state, IntPtr param )
 {
 
 }

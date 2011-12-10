@@ -8,7 +8,7 @@
 class ViewMock : public View
 {
 public:
-	MOCK_METHOD2(set_SquareState, void(const Point& location, SquareState::Enum state));
+	MOCK_METHOD3(set_SquareState, void(const Point& location, SquareState::Enum state, IntPtr param));
 	MOCK_METHOD1(set_RemainingMineTotal, void(int));
 };
 

@@ -4,12 +4,14 @@
 #include "../Presenter/ISquare.h"
 
 #include <mUI.h>
-using mUI::System::Drawing::Point;
+using namespace mUI;
+using namespace mUI::System;
+using namespace mUI::System::Drawing;
 
 class View
 {
 public:
-	virtual void set_SquareState(const Point& location, SquareState::Enum state) = 0;
+	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
 };
 

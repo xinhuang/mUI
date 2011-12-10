@@ -14,7 +14,7 @@ class MGameForm : public Form, public View
 public:
 	MGameForm();
 
-	virtual void set_SquareState(const Point& location, SquareState::Enum state);
+	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param);
 	virtual void set_RemainingMineTotal(int remainingTotal);
 
 protected:
