@@ -51,12 +51,15 @@ private:
 class View
 {
 public:
+    virtual ~View() {}
+
     EventHandler<> NewGame;
     EventHandler<FieldSizeChangedEventArgs*> FieldSizeChanged;
     EventHandler<MineTotalChangedEventArgs*> MineTotalChanged;
     EventHandler<SquareEventArgs*> UncoverSquare;
     EventHandler<SquareEventArgs*> ToggleFlagSquare;
 
+    virtual void CreateSquares(const Size& size) = 0;
 	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
 };

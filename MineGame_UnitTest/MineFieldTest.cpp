@@ -16,7 +16,8 @@ class MineFieldTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_game = new MGame(new ViewMock());
+        _view = new ViewMock();
+		_game = new MGame(_view);
 		_game->set_MineFieldHeight(_arbitraryHeight);
 		_game->set_MineFieldWidth(_arbitraryWidth);
 		_game->set_MineTotal(_arbitraryMineTotal);
@@ -26,6 +27,7 @@ public:
 	void TearDown()
 	{
 		delete _game;
+        delete _view;
 	}
 
 	int get_IndexFrom2D(const Size& size, int x, int y)
@@ -49,6 +51,7 @@ protected:
 	static const int _arbitraryWidth = 20;
 	MGame* _game;
 	MineField* _mineField;
+    ViewMock* _view;
 };
 
 TEST_F(MineFieldTest, Constructor_Typical)

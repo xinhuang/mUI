@@ -12,19 +12,19 @@ class MGameTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_viewMock = new ViewMock();
-		_game = new MGame(_viewMock);
+		_view = new ViewMock();
+		_game = new MGame(_view);
 	}
 
 	void TearDown()
 	{
 		delete _game;
-		_game = NULL;
+        delete _view;
 	}
 
 protected:
 	MGame* _game;
-	ViewMock* _viewMock;
+	ViewMock* _view;
 };
 
 TEST_F(MGameTest, Constructor_Typical)
@@ -39,6 +39,7 @@ TEST_F(MGameTest, NewGame_Typical)
 	_game->set_MineFieldWidth(arbitrarySize.Width);
 	_game->set_MineFieldHeight(arbitrarySize.Height);
 	_game->set_MineTotal(arbitraryMineTotal);
+    EXPECT_CALL(*_view, CreateSquares(arbitrarySize)).Times(1);
 
 	_game->NewGame();
 

@@ -37,7 +37,8 @@ TEST_F(MineSquareTest, Constructor_Typical)
 
 TEST_F(MineSquareTest, Uncover_Typical)
 {
-	MGameMock game;
+    ViewMock view;
+	MGameMock game(&view);
 	MineSquare mineSquare(&game, NULL, 0, 0);
 	
 	EXPECT_CALL(game, Lose()).Times(1);

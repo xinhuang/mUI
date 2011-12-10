@@ -10,9 +10,10 @@
 class MGameMock : public MGame
 {
 public:
-	MGameMock() : MGame(new ViewMock()) {}
+    MGameMock(View* view) : MGame(view) {}
 
 	MOCK_METHOD0(Lose, void());
+
 };
 
 #endif // __MGAMEMOCK_H__

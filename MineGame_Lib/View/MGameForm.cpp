@@ -1,6 +1,7 @@
 #include "MGameForm.h"
 
 #include "../Presenter/MGame.h"
+#include "SquareControl.h"
 
 using namespace mUI::System::Drawing;
 
@@ -43,4 +44,29 @@ void MGameForm::OnFieldSizeChanged( void* sender, FieldSizeChangedEventArgs* e )
 void MGameForm::OnMineTotalChanged( void* sender, MineTotalChangedEventArgs* e )
 {
     MineTotalChanged(this, e);
+}
+
+void MGameForm::DisposeSquares()
+{
+    for (vector<SquareControl*>::const_iterator iter = _squareStates.begin();
+        iter != _squareStates.end(); ++iter)
+    {
+        delete *iter;
+    }
+    _squareStates.clear();
+}
+
+MGameForm::~MGameForm()
+{
+    DisposeSquares();
+}
+
+void MGameForm::CreateSquares( const Size& size )
+{
+    size_t total = size.Width * size.Height;
+    for (size_t i = 0; i < total; ++i)
+    {
+        _squareStates.push_back(new SquareControl());
+        Controls.Add(*_squareStates[i]);
+    }
 }

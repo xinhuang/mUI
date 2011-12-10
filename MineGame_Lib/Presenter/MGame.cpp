@@ -6,6 +6,7 @@
 
 MGame::MGame(View* view)
 	: _mineField(NULL)
+    , _view(view)
 {
 	_mineField = new MineField(this);
     view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
@@ -45,7 +46,8 @@ int MGame::get_MineTotal() const
 	
 void MGame::NewGame()
 {
-	_mineField->Refresh();
+    _mineField->Refresh();
+    _view->CreateSquares(_mineField->get_Size());
 }
 
 void MGame::Uncover(int x, int y)
