@@ -25,9 +25,9 @@ public:
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 
-    virtual void OnNewGame(void* sender, EventArgs* e);
-    virtual void OnFieldSizeChanged(void* sender, FieldSizeChangedEventArgs* e);
-    virtual void OnMineTotalChanged(void* sender, MineTotalChangedEventArgs* e);
+    virtual void OnNewGame(EventArgs* e);
+    virtual void OnFieldSizeChanged(FieldSizeChangedEventArgs* e);
+    virtual void OnMineTotalChanged(MineTotalChangedEventArgs* e);
 
     void DisposeSquares();
 

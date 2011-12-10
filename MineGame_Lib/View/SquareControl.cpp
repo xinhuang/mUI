@@ -5,21 +5,21 @@ SquareControl::SquareControl()
 {
     String imageResources[ImageIndex::Max] = 
     {
-        L"boom.png",
-        L"coverred.png",
-        L"flag.png",
-        L"flag_1.png",
-        L"flag_2.png",
-        L"flag_3.png",
-        L"flag_4.png",
-        L"flag_5.png",
-        L"flag_6.png",
-        L"flag_7.png",
-        L"flag_8.png",
-        L"flat.png",
-        L"mine.png",
-        L"question.png",
-        L"wrong.png",
+        L"res/boom.png",
+        L"res/coverred.png",
+        L"res/flag.png",
+        L"res/flag_1.png",
+        L"res/flag_2.png",
+        L"res/flag_3.png",
+        L"res/flag_4.png",
+        L"res/flag_5.png",
+        L"res/flag_6.png",
+        L"res/flag_7.png",
+        L"res/flag_8.png",
+        L"res/flat.png",
+        L"res/mine.png",
+        L"res/question.png",
+        L"res/wrong.png",
     };
 
     for (int i = 0; i < sizeof(imageResources) / sizeof(imageResources[0]); ++i)
