@@ -24,7 +24,7 @@
 namespace mUI{ namespace System{
 
 template<typename TEventArgs = EventArgs*>
-class SYSTEM_ENTRY EventHandler : public Delegate<void, void*, TEventArgs>
+class EventHandler : public Delegate<void, void*, TEventArgs>
 {
 public:
 	EventHandler() {}
@@ -41,6 +41,9 @@ public:
 		Add(*c, f);
 	}
 };
+
+template
+class SYSTEM_ENTRY EventHandler<EventArgs*>;
 
 }}
 

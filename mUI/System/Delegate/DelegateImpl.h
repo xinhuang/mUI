@@ -19,7 +19,7 @@
 namespace mUI{ namespace System{
 
 template <TPL_RET_ARGLIST>
-class SYSTEM_ENTRY Delegate
+class Delegate
 #ifndef DELEGATE_ROOT
     <RET_ARGLIST>
 #endif
@@ -181,7 +181,7 @@ public:
 	}
 
 
-	Delegate& operator=(const Delegate<TRet>& delegate)
+	Delegate& operator=(const Delegate<RET_ARGLIST>& delegate)
 	{
 		RemoveAll();
 		Add(delegate);

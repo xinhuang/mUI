@@ -21,7 +21,7 @@ namespace mUI{ namespace System{
 	// -----------------------------------------------------------
 	// No Argument
 	template <typename TRet>
-	class SYSTEM_ENTRY Delegate<TRet>
+	class Delegate<TRet>
 	{
 	public:
 		typedef vector<TRet> ReturnType;

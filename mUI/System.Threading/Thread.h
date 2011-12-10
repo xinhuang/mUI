@@ -22,6 +22,11 @@
 
 #include "ThreadPriority.h"
 
+#if defined(_MSC_VER)
+#	pragma warning(push)
+#	pragma warning(disable : 4251)
+#endif
+
 namespace mUI{ namespace System{  namespace Forms{
 	class Application;
 }}}
@@ -29,7 +34,6 @@ namespace mUI{ namespace System{  namespace Forms{
 namespace mUI{ namespace System{  namespace Threading{
 
 typedef Delegate<void> ThreadStart;
-typedef Delegate<void, void*> ParameterizedThreadStart;
 
 typedef IntPtr LocalDataStoreSlot;
 const LocalDataStoreSlot INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalDataStoreSlot>(-1);
@@ -94,5 +98,9 @@ private:
 };
 
 }}}
+
+#if defined(_MSC_VER)
+#	pragma warning(pop)
+#endif
 
 #endif // __THREAD_H__
