@@ -246,6 +246,7 @@ void Application::StartHge( const HgeContext &context )
 	hge->System_SetState(HGE_TITLE, context.get_Title().ToANSI().c_str());
 
 	hge->System_SetState(HGE_WINDOWED, context.get_Windowed());
+    _application._windowSize = context.get_Size();
 	hge->System_SetState(HGE_SCREENWIDTH, context.get_Size().Width);
 	hge->System_SetState(HGE_SCREENHEIGHT, context.get_Size().Height);
 	hge->System_SetState(HGE_SCREENBPP, context.get_ScreenBpp());
@@ -278,6 +279,11 @@ void Application::Run( Form* form )
 	hge->System_SetState(HGE_TITLE, title.ToANSI().c_str());
 
 	hge->System_Start();
+}
+
+const Size& Application::get_Size()
+{
+    return _application._windowSize;
 }
 
 }}}

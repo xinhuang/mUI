@@ -14,7 +14,6 @@ Form::Form() : topmost_(false)
 {
 	FormManager::get_Instance().RegisterForm(*this);
 	InitializeComponent();
-	//BeginInvoke(MethodInvoker(this, &Form::OnLoad, &EventArgs::Empty));
 }
 
 Form::~Form(void)
@@ -48,7 +47,6 @@ void Form::OnPaint( PaintEventArgs* e )
 
 			int caption_height = SystemInformation::GetCaptionHeight();
 			SolidBrush brush(Color::Grey);
-			//g.FillRectangle(brush, 1, 1, get_Size().Width - border_size * 2, caption_height - border_size);
 		}
 	}
 }

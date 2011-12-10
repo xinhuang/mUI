@@ -59,6 +59,8 @@ public:
 
 	static void StartHge(const HgeContext& context);
 
+    static const Size& get_Size();
+
 protected:
 
 	// HGE functions
@@ -85,7 +87,7 @@ private:
 private:
 	IntPtr			_hwnd;
 	Frame*			_frame;
-	wndproc_t			_prevWndProc;
+	wndproc_t		_prevWndProc;
 
 	bool			_initializing;
 	bool			_disposing;
@@ -93,6 +95,8 @@ private:
 
 	HgeContext		_hgeContext;
 	HGE* _hge;
+
+    Size            _windowSize;
 
 	static Application _application;
 };

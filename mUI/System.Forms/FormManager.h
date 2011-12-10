@@ -40,6 +40,7 @@ public:
 	static FormManager& get_Instance();
 
 	void set_RootForm(Form& form);
+    Form* get_RootForm();
 
 	void Render();
 	void DoEvents();

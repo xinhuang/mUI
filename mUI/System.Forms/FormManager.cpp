@@ -414,4 +414,9 @@ FormManager::~FormManager()
 
 }
 
+Form* FormManager::get_RootForm()
+{
+    return reinterpret_cast<Form*>(Control::FromHandle(mainframe_));
+}
+
 }}}
