@@ -1,11 +1,9 @@
 #include <gtest/gtest.h>
 #include <mUI.h>
 
-#define private public
 #include <Presenter/MGame.h>
 #include <Presenter/MineField.h>
 #include <Presenter/ISquare.h>
-#undef private
 
 #include <mocks/ViewMock.h>
 
@@ -44,9 +42,9 @@ TEST_F(MGameTest, NewGame_Typical)
 
 	_game->NewGame();
 
-	ASSERT_TRUE(_game->_mineField != NULL);
-	ASSERT_EQ(arbitrarySize, _game->_mineField->get_Size());
-	ASSERT_EQ(arbitraryMineTotal, _game->_mineField->get_MineTotal());
+	ASSERT_TRUE(_game->get_MineField() != NULL);
+	ASSERT_EQ(arbitrarySize, _game->get_MineField()->get_Size());
+	ASSERT_EQ(arbitraryMineTotal, _game->get_MineField()->get_MineTotal());
 }
 
 TEST_F(MGameTest, Uncover_OnMineSquare)

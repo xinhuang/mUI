@@ -5,13 +5,9 @@ using ::testing::Return;
 #include <mUI.h>
 using namespace mUI::System;
 
-#define private public
-#define protected public
-#	include <Presenter/MGame.h>
-#	include <Presenter/MineField.h>
-#	include <Presenter/NumberSquare.h>
-#undef protected
-#undef private
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/NumberSquare.h>
 
 #include "mocks/MineFieldMock.h"
 #include "mocks/ViewMock.h"

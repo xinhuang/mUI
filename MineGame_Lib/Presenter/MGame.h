@@ -7,6 +7,8 @@ using mUI::System::Drawing::Size;
 
 class MineField;
 class View;
+class MineTotalChangedEventArgs;
+class FieldSizeChangedEventArgs;
 
 class MGame
 {
@@ -25,6 +27,12 @@ public:
 
 	virtual void Lose();
 	MineField* get_MineField();
+
+protected:
+    virtual void OnNewGame(void* sender, EventArgs* e);
+    virtual void OnFieldSizeChanged(void* sender, FieldSizeChangedEventArgs* e);
+    virtual void OnMineTotalChanged(void* sender, MineTotalChangedEventArgs* e);
+
 private:
 	MineField* _mineField;
 	View* _view;

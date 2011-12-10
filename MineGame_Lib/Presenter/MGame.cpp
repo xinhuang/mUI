@@ -2,11 +2,15 @@
 #include "MineField.h"
 
 #include <mUI.h>
+#include "../View/View.h"
 
 MGame::MGame(View* view)
 	: _mineField(NULL)
 {
 	_mineField = new MineField(this);
+    view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
+    view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
+    view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
 }
 
 MGame::~MGame()
@@ -56,4 +60,20 @@ void MGame::Lose()
 MineField* MGame::get_MineField()
 {
 	return _mineField;
+}
+
+void MGame::OnNewGame( void* sender, EventArgs* e )
+{
+    NewGame();
+}
+
+void MGame::OnFieldSizeChanged( void* sender, FieldSizeChangedEventArgs* e )
+{
+    set_MineFieldHeight(e->get_Size().Height);
+    set_MineFieldWidth(e->get_Size().Width);
+}
+
+void MGame::OnMineTotalChanged( void* sender, MineTotalChangedEventArgs* e )
+{
+    set_MineTotal(e->get_MineTotal());
 }

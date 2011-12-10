@@ -4,11 +4,9 @@
 #include <gmock/gmock.h>
 using ::testing::_;
 
-#define private public
-#	include <Presenter/MGame.h>
-#	include <Presenter/MineField.h>
-#	include <Presenter/MineSquare.h>
-#undef private
+#include <Presenter/MGame.h>
+#include <Presenter/MineField.h>
+#include <Presenter/MineSquare.h>
 
 #include "mocks/MGameMock.h"
 

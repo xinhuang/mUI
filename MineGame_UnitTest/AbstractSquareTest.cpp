@@ -1,11 +1,9 @@
 #include <gtest/gtest.h>
 #include <mUI.h>
 
-#define private public
 #include <Presenter/MGame.h>
 #include <Presenter/MineField.h>
 #include <Presenter/AbstractSquare.h>
-#undef private
 
 class AbstractSquareFake : public AbstractSquare
 {

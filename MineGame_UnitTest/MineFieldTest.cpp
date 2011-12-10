@@ -3,11 +3,9 @@
 #include <mUI.h>
 using mUI::System::ArgumentException;
 
-#define private public
 #include <Presenter/MGame.h>
 #include <Presenter/MineField.h>
 #include <Presenter/ISquare.h>
-#undef private
 
 #include "mocks/SquareFactoryFake.h"
 #include "mocks/ISquareMock.h"

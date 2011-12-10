@@ -23,6 +23,11 @@ public:
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 
+    virtual void OnNewGame(void* sender, EventArgs* e);
+    virtual void OnFieldSizeChanged(void* sender, FieldSizeChangedEventArgs* e);
+    virtual void OnMineTotalChanged(void* sender, MineTotalChangedEventArgs* e);
+
+
 private:
 	vector<SquareControl*> _squareStates;
     MGame* _game;

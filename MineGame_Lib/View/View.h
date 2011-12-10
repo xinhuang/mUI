@@ -22,12 +22,38 @@ private:
     const Point _location;
 };
 
+class FieldSizeChangedEventArgs : public EventArgs
+{
+public:
+    FieldSizeChangedEventArgs(const Size& size)
+        : _size(size)
+    {}
+
+    const Size& get_Size() const { return _size; }
+
+private:
+    const Size _size;
+};
+
+class MineTotalChangedEventArgs : public EventArgs
+{
+public:
+    MineTotalChangedEventArgs(int mineTotal)
+        : _mineTotal(mineTotal)
+    {}
+
+    int get_MineTotal() const { return _mineTotal; }
+
+private:
+    const int _mineTotal;
+};
+
 class View
 {
 public:
     EventHandler<> NewGame;
-    EventHandler<> FieldSizeChanged;
-    EventHandler<> MineTotalChanged;
+    EventHandler<FieldSizeChangedEventArgs*> FieldSizeChanged;
+    EventHandler<MineTotalChangedEventArgs*> MineTotalChanged;
     EventHandler<SquareEventArgs*> UncoverSquare;
     EventHandler<SquareEventArgs*> ToggleFlagSquare;
 
