@@ -22,7 +22,8 @@ public:
 		_factory = new SquareFactory();
 		_fieldMap.resize(9, false);
 		_fieldSize = Size(3, 3);
-		_game = new MGame(new ViewMock());
+		_view = new ViewMock();
+		_game = new MGame(_view);
 	}
 
 	virtual void TearDown()
@@ -34,6 +35,7 @@ public:
 		_squares.clear();
 		delete _game;
 		_game = NULL;
+		delete _view;
 	}
 
 protected:
@@ -43,6 +45,7 @@ protected:
 	vector<bool> _fieldMap;
 	static const int _middleSquareIndex = 4;
 	Size _fieldSize;
+	View* _view;
 };
 
 TEST_F(SquareFactoryTest, Constructor_Typical)

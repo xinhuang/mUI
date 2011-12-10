@@ -17,7 +17,8 @@ class NumberSquareTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_game = new MGame(new ViewMock());
+		_view = new ViewMock();
+		_game = new MGame(_view);
 		_mineField = new MineField(_game);
 	}
 
@@ -25,11 +26,13 @@ public:
 	{
 		delete _game;
 		delete _mineField;
+		delete _view;
 	}
 
 protected:
 	MGame* _game;
 	MineField* _mineField;
+	View* _view;
 };
 
 TEST_F(NumberSquareTest, Constructor_Typical)
