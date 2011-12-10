@@ -150,6 +150,7 @@ void Form::OnLoad( EventArgs* e )
 
 Point Form::PointToScreen( Point pt ) const
 {
+    pt += get_Location();
 	switch (get_FormBorderStyle())
 	{
 	case FormBorderStyle::None:
@@ -160,13 +161,7 @@ Point Form::PointToScreen( Point pt ) const
 		pt.Y += SystemInformation::GetBorderSize()/* + SystemInformation::GetCaptionHeight()*/;
 		break;
 	}
-	pt += get_Location();
 	return pt;
-}
-
-Graphics* Form::CreateGraphics()
-{
-	return Drawing::CreateGraphics(Drawing::Rectangle(get_Location(), get_Size()));
 }
 
 Form* Form::get_ActiveForm()

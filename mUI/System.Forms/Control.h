@@ -97,11 +97,11 @@ public:
 	EventHandler<>			LostFocus;			// TODO:
 
 	// -------------------------------------------------------//
-	Control(void);
-	virtual ~Control(void);
+	Control();
+	virtual ~Control();
 
 	// -------------------------------------------------------//
-	virtual Graphics* CreateGraphics();
+	Graphics* CreateGraphics();
 
 	void Refresh();
 	void Invalidate() {}

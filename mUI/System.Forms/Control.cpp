@@ -18,7 +18,7 @@ namespace mUI{ namespace System{  namespace Forms{
 // warning C4355: 'this' : used in base member initializer list
 #pragma warning(disable: 4355)
 
-Control::Control(void) : 
+Control::Control() : 
 	parent_(NULL), Controls(*this), visibility_(false), 
 	back_color_(SystemColors::Control), background_image_(NULL),
 	background_image_layout_(ImageLayout::None),
@@ -30,7 +30,7 @@ Control::Control(void) :
 
 #pragma warning(default: 4355)
 
-Control::~Control(void)
+Control::~Control()
 {
 	SuspendLayout();
 	FormManager::get_Instance().UnregisterControl(*this);
@@ -499,10 +499,7 @@ Drawing::Rectangle Control::get_ClientRectangle() const
 Point Control::PointToScreen( Point pt ) const
 {
 	pt += get_Location();
-	if (get_Parent() != NULL)
-		return get_Parent()->PointToScreen(pt);
-	else
-		return pt;
+	return get_Parent()->PointToScreen(pt);
 }
 
 Drawing::Rectangle Control::RectangleToScreen( Drawing::Rectangle rect ) const

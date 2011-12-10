@@ -50,7 +50,6 @@ public:
 	virtual void Close();
 
 	virtual Point PointToScreen(Point pt) const;
-	virtual Graphics* CreateGraphics();
 
 	const FormBorderStyle& get_FormBorderStyle() const;
 	void set_FormBorderStyle(const FormBorderStyle& style);
@@ -71,8 +70,6 @@ protected:
 	virtual void OnActivated			( EventArgs* e );
 	virtual void OnDeactivate			( EventArgs* e );
 	virtual void OnBorderStyleChanged	( EventArgs* e );
-
-// ------------------------------------------------------ //
 
 private:
 	bool			topmost_;

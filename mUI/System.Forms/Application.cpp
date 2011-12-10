@@ -152,7 +152,7 @@ void Application::OnFormClose( void* sender, EventArgs* e )
 
 void Application::Dispose()
 {
-	if (IsDisposing() && !_disposed)
+	if (IsDisposing() || _disposed)
 		return;
 
 	_disposing = true;
