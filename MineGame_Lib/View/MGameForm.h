@@ -9,19 +9,23 @@ using namespace mUI::System::Forms;
 #include <vector>
 using std::vector;
 
+class SquareControl;
+class MGame;
+
 class MGameForm : public Form, public View
 {
 public:
 	MGameForm();
 
-	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param);
-	virtual void set_RemainingMineTotal(int remainingTotal);
+    virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param);
+    virtual void set_RemainingMineTotal(int remainingTotal);
 
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 
 private:
-	vector<SquareState::Enum> _squareStates;
+	vector<SquareControl*> _squareStates;
+    MGame* _game;
 };
 
 #endif // __MAINFORM_H__

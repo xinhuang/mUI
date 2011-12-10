@@ -28,6 +28,7 @@ class SYSTEM_ENTRY EventHandler : public Delegate<void, void*, TEventArgs>
 {
 public:
 	EventHandler() {}
+    virtual ~EventHandler() {}
 
 	template<typename TClass, typename TClassF>
 	EventHandler(TClass& c, void (TClassF::*f)(void*, TEventArgs))
