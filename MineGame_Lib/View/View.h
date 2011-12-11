@@ -2,25 +2,13 @@
 #define __VIEW_H__
 
 #include "../Presenter/ISquare.h"
+#include "SquareEventArgs.h"
 
 #include <mUI.h>
 using namespace mUI;
 using namespace mUI::System;
 using namespace mUI::System::Drawing;
 
-class SquareEventArgs : public EventArgs
-{
-public:
-    SquareEventArgs(const Point& location) 
-        : _location(location)
-    {
-    }
-
-    const Point& get_Location() const { return _location; }
-
-private:
-    const Point _location;
-};
 
 class FieldSizeChangedEventArgs : public EventArgs
 {
@@ -48,6 +36,14 @@ private:
     const int _mineTotal;
 };
 
+class ISquareView
+{
+public:
+	virtual ~ISquareView() {}
+	virtual void set_State(SquareState::Enum state, IntPtr param) = 0;
+	virtual const Point& get_Location() const = 0;
+};
+
 class View
 {
 public:
@@ -60,7 +56,6 @@ public:
     EventHandler<SquareEventArgs*> ToggleFlagSquare;
 
     virtual void CreateSquares(const Size& size) = 0;
-	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
 };
 

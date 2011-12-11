@@ -1,9 +1,10 @@
 #include "SquareControl.h"
 
-SquareControl::SquareControl()
+SquareControl::SquareControl(int x, int y)
     : _imageIndex(ImageIndex::Coverred)
+	, _location(x, y)
 {
-    String imageResources[ImageIndex::Max] = 
+    const wchar_t* imageResources[ImageIndex::Max] = 
     {
         L"res/boom.png",
         L"res/coverred.png",
@@ -27,7 +28,7 @@ SquareControl::SquareControl()
         _imageList.push_back(Image::FromFile(imageResources[i]));
     }
 
-    set_Size(Size(16, 16));
+    set_Size(get_ImageSize());
 }
 
 SquareControl::~SquareControl()
@@ -43,5 +44,10 @@ void SquareControl::OnPaint( PaintEventArgs* e )
     Graphics& g = e->Graphics;
 
     g.DrawImage(*_imageList.at(_imageIndex), Point::Empty);
+}
+
+const Size& SquareControl::get_ImageSize()
+{
+	static Size size(16, 16); return size;
 }
 

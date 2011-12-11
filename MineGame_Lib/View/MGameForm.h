@@ -19,7 +19,11 @@ public:
     virtual ~MGameForm();
 
     virtual void CreateSquares(const Size& size);
-    virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param);
+
+	MGameForm& Center();
+	MGameForm& Resize( const Size& size );
+
+	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param);
     virtual void set_RemainingMineTotal(int remainingTotal);
 
 protected:
@@ -30,7 +34,7 @@ protected:
     virtual void OnMineTotalChanged(MineTotalChangedEventArgs* e);
 
     void DisposeSquares();
-
+	void OnSquareControlClick(void* sender, MouseEventArgs* e);
 
 private:
 	vector<SquareControl*> _squareStates;

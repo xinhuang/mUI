@@ -11,10 +11,7 @@ String::String( const wchar_t* value )
 	if (value == NULL)
 		return;
 
-	for (const wchar_t* p = value; *p != 0; ++p)
-	{
-		*this += *p;
-	}
+	*this = value;
 }
 
 String& String::operator=( const wchar_t* value )

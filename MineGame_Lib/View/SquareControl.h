@@ -6,11 +6,18 @@ using namespace mUI::System;
 using namespace mUI::System::Forms;
 using namespace mUI::System::Drawing;
 
-class SquareControl : public Control
+#include "View.h"
+
+class SquareControl : public Control, public ISquareView
 {
 public:
-    SquareControl();
+    SquareControl(int x, int y);
     virtual ~SquareControl();
+
+	static const Size& get_ImageSize();
+
+	virtual void set_State(SquareState::Enum state, IntPtr param) {}
+	virtual const Point& get_Location() const { return _location; }
 
 protected:
     virtual void OnPaint( PaintEventArgs* e );
@@ -18,6 +25,7 @@ protected:
 private:
     size_t _currentIndex;
     vector<Image*> _imageList;
+	const Point _location;
 
     struct ImageIndex{ enum Enum
     {

@@ -38,6 +38,18 @@ public:
 	{
 		return !(*this == rhs);
 	}
+	friend Size operator+(const Size& lhs, const Size& rhs)
+	{
+		return Size(lhs.Width + rhs.Width, lhs.Height + rhs.Height);
+	}
+	friend Size operator*(const Size& lhs, const Size& rhs)
+	{
+		return Size(lhs.Width * rhs.Width, lhs.Height * rhs.Height);
+	}
+	friend Size operator/(const Size& lhs, const Size& rhs)
+	{
+		return Size(lhs.Width / rhs.Width, lhs.Height / rhs.Height);
+	}
 
 	static const Size Empty;
 };

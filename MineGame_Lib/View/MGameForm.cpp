@@ -17,7 +17,6 @@ MGameForm::MGameForm()
 
 void MGameForm::set_SquareState( const Point& location, SquareState::Enum state, IntPtr param )
 {
-
 }
 
 void MGameForm::set_RemainingMineTotal( int remainingTotal )
@@ -62,16 +61,35 @@ MGameForm::~MGameForm()
 
 void MGameForm::CreateSquares( const Size& size )
 {
-    size_t total = size.Width * size.Height;
+	this->Resize(size)
+		.Center();
+
     for (int x = 0; x < size.Width; ++x)
     {
         for (int y = 0; y < size.Height; ++y)
         {
-            SquareControl* square = new SquareControl();
+            SquareControl* square = new SquareControl(x, y);
             _squareStates.push_back(square);
             Controls.Add(*square);
-            square->set_Location(Point(x * square->get_Size().Width, y * square->get_Size().Height));
+            square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
+				y * SquareControl::get_ImageSize().Height));
             square->Show();
         }
     }
 }
+
+MGameForm& MGameForm::Resize( const Size& size )
+{
+	set_Size(size * SquareControl::get_ImageSize());
+	return *this;
+}
+
+MGameForm& MGameForm::Center()
+{
+	int x = (Application::get_Size().Width - get_Size().Width) / 2;
+	int y = (Application::get_Size().Height - get_Size().Height) / 2;
+	set_Location(Point(x, y));
+
+	return *this;
+}
+
