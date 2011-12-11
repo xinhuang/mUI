@@ -37,6 +37,11 @@ ISquare* MineField::SquareAt(int x, int y)
 	return _squares.at(x * get_Size().Width + y);
 }
 
+ISquare* MineField::SquareAt(const Point& location)
+{
+	return SquareAt(location.X, location.Y);
+}
+
 SquareFactory* MineField::get_SquareFactory()
 {
 	return _squareFactory;

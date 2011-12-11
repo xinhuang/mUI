@@ -44,6 +44,7 @@ public:
 	virtual const Point& get_Location() const = 0;
 };
 
+typedef EventHandler<SquareEventArgs*> SquareEventHandler;
 class View
 {
 public:
@@ -52,8 +53,8 @@ public:
     EventHandler<> NewGame;
     EventHandler<FieldSizeChangedEventArgs*> FieldSizeChanged;
     EventHandler<MineTotalChangedEventArgs*> MineTotalChanged;
-    EventHandler<SquareEventArgs*> UncoverSquare;
-    EventHandler<SquareEventArgs*> ToggleFlagSquare;
+    SquareEventHandler SquareUncovered;
+    SquareEventHandler ToggleFlagSquare;
 
     virtual void CreateSquares(const Size& size) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;

@@ -24,6 +24,7 @@ public:
 	void set_MineTotal(int mineTotal);
 
 	ISquare* SquareAt(int x, int y);
+	ISquare* SquareAt(const Point& location);
 	virtual void UncoverNeighborSquares(const ISquare& square) {}
 	virtual int get_NeighborMineTotal(const ISquare* square) const;
 	void Refresh();

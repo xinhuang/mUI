@@ -68,7 +68,7 @@ void MGameForm::CreateSquares( const Size& size )
     {
         for (int y = 0; y < size.Height; ++y)
         {
-            SquareControl* square = new SquareControl(x, y);
+            SquareControl* square = new SquareControl(this, x, y);
             _squareStates.push_back(square);
             Controls.Add(*square);
             square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
@@ -91,5 +91,16 @@ MGameForm& MGameForm::Center()
 	set_Location(Point(x, y));
 
 	return *this;
+}
+
+void MGameForm::OnSquareUncovered( SquareEventArgs* e )
+{
+	SquareUncovered(this, e);
+}
+
+void MGameForm::Uncover( SquareControl* squareControl )
+{
+	SquareEventArgs e(squareControl);
+	OnSquareUncovered(&e);
 }
 

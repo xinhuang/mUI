@@ -8,24 +8,28 @@ using namespace mUI::System::Drawing;
 
 #include "View.h"
 
+class MGameForm;
+
 class SquareControl : public Control, public ISquareView
 {
 public:
-    SquareControl(int x, int y);
+    SquareControl(MGameForm* form, int x, int y);
     virtual ~SquareControl();
 
 	static const Size& get_ImageSize();
 
-	virtual void set_State(SquareState::Enum state, IntPtr param) {}
+	virtual void set_State(SquareState::Enum state, IntPtr param);
 	virtual const Point& get_Location() const { return _location; }
 
 protected:
     virtual void OnPaint( PaintEventArgs* e );
+	virtual void OnMouseClick( MouseEventArgs* e );
 
 private:
     size_t _currentIndex;
     vector<Image*> _imageList;
 	const Point _location;
+	MGameForm* _gameForm;
 
     struct ImageIndex{ enum Enum
     {

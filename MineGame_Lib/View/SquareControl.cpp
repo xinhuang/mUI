@@ -1,10 +1,13 @@
 #include "SquareControl.h"
 
-SquareControl::SquareControl(int x, int y)
+#include "MGameForm.h"
+
+SquareControl::SquareControl(MGameForm* form, int x, int y)
     : _imageIndex(ImageIndex::Coverred)
 	, _location(x, y)
+	, _gameForm(form)
 {
-    const wchar_t* imageResources[ImageIndex::Max] = 
+    const static wchar_t* imageResources[ImageIndex::Max] = 
     {
         L"res/boom.png",
         L"res/coverred.png",
@@ -49,5 +52,26 @@ void SquareControl::OnPaint( PaintEventArgs* e )
 const Size& SquareControl::get_ImageSize()
 {
 	static Size size(16, 16); return size;
+}
+
+void SquareControl::OnMouseClick( MouseEventArgs* e )
+{
+	if (e->Button == MouseButtons::Left)
+	{
+		_gameForm->Uncover(this);
+	}
+}
+
+void SquareControl::set_State( SquareState::Enum state, IntPtr param )
+{
+	switch (state)
+	{
+	case SquareState::Uncovered:
+		_imageIndex = ImageIndex::Empty;
+		break;
+	case SquareState::Boom:
+		_imageIndex = ImageIndex::Boom;
+		break;
+	}
 }
 

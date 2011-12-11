@@ -9,9 +9,10 @@ MGame::MGame(View* view)
     , _view(view)
 {
 	_mineField = new MineField(this);
-    view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
-    view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
-    view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
+    _view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
+    _view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
+    _view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
+	_view->SquareUncovered += SquareEventHandler(this, &MGame::OnSquareUncovered);
 }
 
 MGame::~MGame()
@@ -78,4 +79,13 @@ void MGame::OnFieldSizeChanged( void* sender, FieldSizeChangedEventArgs* e )
 void MGame::OnMineTotalChanged( void* sender, MineTotalChangedEventArgs* e )
 {
     set_MineTotal(e->get_MineTotal());
+}
+
+void MGame::OnSquareUncovered( void* sender, SquareEventArgs* e )
+{
+	ISquareView* squareView = e->get_SquareView();
+	const Point& location = squareView->get_Location();
+	ISquare* square = _mineField->SquareAt(location);
+	square->Uncover();
+	squareView->set_State(square->get_State(), 0);
 }

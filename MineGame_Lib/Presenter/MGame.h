@@ -9,6 +9,7 @@ class MineField;
 class View;
 class MineTotalChangedEventArgs;
 class FieldSizeChangedEventArgs;
+class SquareEventArgs;
 
 class MGame
 {
@@ -32,6 +33,7 @@ protected:
     virtual void OnNewGame(void* sender, EventArgs* e);
     virtual void OnFieldSizeChanged(void* sender, FieldSizeChangedEventArgs* e);
     virtual void OnMineTotalChanged(void* sender, MineTotalChangedEventArgs* e);
+	virtual void OnSquareUncovered(void* sender, SquareEventArgs* e);
 
 private:
 	MineField* _mineField;

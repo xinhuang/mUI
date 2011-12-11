@@ -6,7 +6,7 @@ namespace SquareState{
 	{
 		Uncovered,
 		Covered,
-		Boomed,
+		Boom,
 		Flagged,
 		QuestionMark,
 	};

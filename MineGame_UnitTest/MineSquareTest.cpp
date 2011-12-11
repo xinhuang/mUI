@@ -45,7 +45,7 @@ TEST_F(MineSquareTest, Uncover_Typical)
 
 	mineSquare.Uncover();
 
-	ASSERT_EQ(SquareState::Boomed, mineSquare.get_State());
+	ASSERT_EQ(SquareState::Boom, mineSquare.get_State());
 }
 
 TEST_F(MineSquareTest, HasMine_Typical)
