@@ -18,17 +18,17 @@ public:
 	void SetUp()
 	{
 		_view = new ViewMock();
-		_game = new MGame(_view);
+		_sut = new MGame(_view);
 		_factoryMock = new SquareFactoryMock();
 
-		_mineField = _game->get_MineField();
+		_mineField = _sut->get_MineField();
 		_oldFactory = _mineField->get_SquareFactory();
 	}
 
 	void TearDown()
 	{
 		_mineField->set_SquareFactory(_oldFactory);
-		delete _game;
+		delete _sut;
         delete _view;
 		delete _factoryMock;
 	}
@@ -51,7 +51,7 @@ protected:
 	}
 
 protected:
-	MGame* _game;
+	MGame* _sut;
 	ViewMock* _view;
 	SquareFactoryMock* _factoryMock;
 
@@ -61,7 +61,7 @@ protected:
 
 TEST_F(MGameTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _game);
+	ASSERT_TRUE(NULL != _sut);
 }
 
 TEST_F(MGameTest, NewGame_Typical)
@@ -69,13 +69,13 @@ TEST_F(MGameTest, NewGame_Typical)
 	Size arbitrarySize(3, 2);
 	int arbitraryMineTotal = 2;
 	int squareTotal = arbitrarySize.Width * arbitrarySize.Height;
-	_game->set_MineFieldWidth(arbitrarySize.Width);
-	_game->set_MineFieldHeight(arbitrarySize.Height);
-	_game->set_MineTotal(arbitraryMineTotal);
+	_sut->set_MineFieldWidth(arbitrarySize.Width);
+	_sut->set_MineFieldHeight(arbitrarySize.Height);
+	_sut->set_MineTotal(arbitraryMineTotal);
 	ReplaceFactoryUsingMock();
 	ISquareViewMock squareViewMock;
 	vector<ISquare*> squares = CreateSquareMocks(&squareViewMock, squareTotal);
-	EXPECT_CALL(*_factoryMock, CreateSquares(_game, _mineField))
+	EXPECT_CALL(*_factoryMock, CreateSquares(_sut, _mineField))
 		.Times(1)
 		.WillOnce(Return(squares));
 	vector<ISquareView*> squareViews(squareTotal, &squareViewMock);
@@ -83,17 +83,17 @@ TEST_F(MGameTest, NewGame_Typical)
 		.Times(1)
 		.WillOnce(Return(squareViews));
 
-	_game->NewGame();
+	_sut->NewGame();
 
-	ASSERT_TRUE(_game->get_MineField() != NULL);
-	ASSERT_EQ(arbitrarySize, _game->get_MineField()->get_Size());
-	ASSERT_EQ(arbitraryMineTotal, _game->get_MineField()->get_MineTotal());
+	ASSERT_TRUE(_sut->get_MineField() != NULL);
+	ASSERT_EQ(arbitrarySize, _sut->get_MineField()->get_Size());
+	ASSERT_EQ(arbitraryMineTotal, _sut->get_MineField()->get_MineTotal());
 }
 
 TEST_F(MGameTest, Uncover_OnMineSquare)
 {
-	_game->set_MineFieldWidth(1);
-	_game->set_MineFieldHeight(1);
-	_game->set_MineTotal(1);
+	_sut->set_MineFieldWidth(1);
+	_sut->set_MineFieldHeight(1);
+	_sut->set_MineTotal(1);
 
 }

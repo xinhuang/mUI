@@ -29,19 +29,19 @@ class AbstractSquareTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_abstractSquare = new AbstractSquareFake(NULL, NULL, 
+		_sut = new AbstractSquareFake(NULL, NULL, 
 			ABITRARY_X, ABITRARY_Y);
 		_view = new SquareViewMock();
 	}
 
 	void TearDown()
 	{
-		delete _abstractSquare;
+		delete _sut;
 		delete _view;
 	}
 
 protected:
-	AbstractSquare* _abstractSquare;
+	AbstractSquare* _sut;
 	SquareViewMock* _view;
 
 	static const int ABITRARY_Y = 27, ABITRARY_X = 43;
@@ -49,47 +49,47 @@ protected:
 
 TEST_F(AbstractSquareTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _abstractSquare);
-	ASSERT_EQ(SquareState::Covered, _abstractSquare->get_State());
-	ASSERT_EQ(ABITRARY_Y, _abstractSquare->get_Y());
-	ASSERT_EQ(ABITRARY_X, _abstractSquare->get_X());
-	ASSERT_EQ(Point(ABITRARY_X, ABITRARY_Y), _abstractSquare->get_Location());
+	ASSERT_TRUE(NULL != _sut);
+	ASSERT_EQ(SquareState::Covered, _sut->get_State());
+	ASSERT_EQ(ABITRARY_Y, _sut->get_Y());
+	ASSERT_EQ(ABITRARY_X, _sut->get_X());
+	ASSERT_EQ(Point(ABITRARY_X, ABITRARY_Y), _sut->get_Location());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Once)
 {
-	_abstractSquare->ToggleFlag();
+	_sut->ToggleFlag();
 	
-	ASSERT_EQ(SquareState::Flagged, _abstractSquare->get_State());
+	ASSERT_EQ(SquareState::Flagged, _sut->get_State());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Twice)
 {
-	_abstractSquare->ToggleFlag();
-	_abstractSquare->ToggleFlag();
+	_sut->ToggleFlag();
+	_sut->ToggleFlag();
 	
-	ASSERT_EQ(SquareState::QuestionMark, _abstractSquare->get_State());
+	ASSERT_EQ(SquareState::QuestionMark, _sut->get_State());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_ThreeTimes)
 {
-	_abstractSquare->ToggleFlag();
-	_abstractSquare->ToggleFlag();
-	_abstractSquare->ToggleFlag();
+	_sut->ToggleFlag();
+	_sut->ToggleFlag();
+	_sut->ToggleFlag();
 	
-	ASSERT_EQ(SquareState::Uncovered, _abstractSquare->get_State());
+	ASSERT_EQ(SquareState::Uncovered, _sut->get_State());
 }
 
 TEST_F(AbstractSquareTest, HasMine_Typical)
 {
-	ASSERT_FALSE(_abstractSquare->HasMine());
+	ASSERT_FALSE(_sut->HasMine());
 }
 
 TEST_F(AbstractSquareTest, SetState_Typical)
 {
-	_abstractSquare->Bind(_view);
+	_sut->Bind(_view);
 	EXPECT_CALL(*_view, set_State(SquareState::Uncovered)).Times(1);
 
-	static_cast<AbstractSquareFake*>(_abstractSquare)->
+	static_cast<AbstractSquareFake*>(_sut)->
 		set_State(SquareState::Uncovered);
 }

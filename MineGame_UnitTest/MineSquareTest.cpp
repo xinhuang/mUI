@@ -15,24 +15,24 @@ class MineSquareTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_mineSquare = new MineSquare(NULL, NULL, 
+		_sut = new MineSquare(NULL, NULL, 
 			ABITRARY_X, ABITRARY_Y);
 	}
 
 	void TearDown()
 	{
-		delete _mineSquare;
+		delete _sut;
 	}
 
 protected:
-	MineSquare* _mineSquare;
+	MineSquare* _sut;
 	static const int ABITRARY_Y = 27, ABITRARY_X = 43;
 };
 
 TEST_F(MineSquareTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _mineSquare);
-	ASSERT_EQ(SquareState::Covered, _mineSquare->get_State());
+	ASSERT_TRUE(NULL != _sut);
+	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 }
 
 TEST_F(MineSquareTest, Uncover_Typical)
@@ -50,6 +50,6 @@ TEST_F(MineSquareTest, Uncover_Typical)
 
 TEST_F(MineSquareTest, HasMine_Typical)
 {
-	ASSERT_TRUE(_mineSquare->HasMine());
+	ASSERT_TRUE(_sut->HasMine());
 }
 
