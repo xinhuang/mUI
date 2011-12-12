@@ -25,6 +25,7 @@ public:
 
 	ISquare* SquareAt(int x, int y);
 	ISquare* SquareAt(const Point& location);
+	ISquare* SquareAt(size_t i);
 	virtual void UncoverNeighborSquares(const ISquare& square) {}
 	virtual int get_NeighborMineTotal(const ISquare* square) const;
 	void Refresh();

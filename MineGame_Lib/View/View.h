@@ -40,7 +40,7 @@ class ISquareView
 {
 public:
 	virtual ~ISquareView() {}
-	virtual void set_State(SquareState::Enum state, IntPtr param) = 0;
+	virtual void set_State(SquareState::Enum state) = 0;
 	virtual const Point& get_Location() const = 0;
 };
 
@@ -56,7 +56,7 @@ public:
     SquareEventHandler SquareUncovered;
     SquareEventHandler ToggleFlagSquare;
 
-    virtual void CreateSquares(const Size& size) = 0;
+	virtual vector<ISquareView*> CreateSquares(const Size& size) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
 };
 

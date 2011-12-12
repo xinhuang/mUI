@@ -46,7 +46,7 @@ void MGameForm::OnMineTotalChanged( MineTotalChangedEventArgs* e )
 
 void MGameForm::DisposeSquares()
 {
-    for (vector<SquareControl*>::const_iterator iter = _squareStates.begin();
+    for (vector<ISquareView*>::const_iterator iter = _squareStates.begin();
         iter != _squareStates.end(); ++iter)
     {
         delete *iter;
@@ -59,23 +59,24 @@ MGameForm::~MGameForm()
     DisposeSquares();
 }
 
-void MGameForm::CreateSquares( const Size& size )
+vector<ISquareView*> MGameForm::CreateSquares( const Size& size )
 {
 	this->Resize(size)
 		.Center();
 
-    for (int x = 0; x < size.Width; ++x)
-    {
-        for (int y = 0; y < size.Height; ++y)
-        {
-            SquareControl* square = new SquareControl(this, x, y);
-            _squareStates.push_back(square);
-            Controls.Add(*square);
-            square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
+	for (int y = 0; y < size.Height; ++y)
+	{
+		for (int x = 0; x < size.Width; ++x)
+		{
+			SquareControl* square = new SquareControl(this, x, y);
+			_squareStates.push_back(square);
+			Controls.Add(*square);
+			square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
 				y * SquareControl::get_ImageSize().Height));
-            square->Show();
-        }
+			square->Show();
+		}
     }
+	return _squareStates;
 }
 
 MGameForm& MGameForm::Resize( const Size& size )

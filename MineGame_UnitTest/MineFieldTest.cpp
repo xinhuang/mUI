@@ -7,8 +7,7 @@ using mUI::System::ArgumentException;
 #include <Presenter/MineField.h>
 #include <Presenter/ISquare.h>
 
-#include "mocks/SquareFactoryFake.h"
-#include "mocks/ISquareMock.h"
+#include "mocks/SquareFactoryMock.h"
 #include "mocks/ViewMock.h"
 
 class MineFieldTest : public testing::Test
@@ -37,17 +36,17 @@ public:
 
 	int get_ArbitraryY() const
 	{
-		return static_cast<int>(_mineField->get_Size().Width * 0.8);
+		return static_cast<int>(_mineField->get_Size().Height * 0.8);
 	}
 
 	int get_ArbitraryX() const
 	{
-		return static_cast<int>(_mineField->get_Size().Height * 0.7);
+		return static_cast<int>(_mineField->get_Size().Width * 0.7);
 	}
 
 protected:
 	static const int _arbitraryMineTotal = 20;
-	static const int _arbitraryHeight = 20;
+	static const int _arbitraryHeight = 70;
 	static const int _arbitraryWidth = 20;
 	MGame* _game;
 	MineField* _mineField;
@@ -75,14 +74,14 @@ TEST_F(MineFieldTest, MineTotal_Typical)
 TEST_F(MineFieldTest, SquareAt_Typical)
 {
 	_mineField->Refresh();
-	for (int r = 0; r < _mineField->get_Size().Width; ++r)
+	for (int y = 0; y < _mineField->get_Size().Height; ++y)
 	{
-		for (int c = 0; c < _mineField->get_Size().Height; ++c)
+		for (int x = 0; x < _mineField->get_Size().Width; ++x)
 		{
-			ISquare* square = _mineField->SquareAt(r, c);
+			ISquare* square = _mineField->SquareAt(x, y);
 			ASSERT_TRUE(NULL != square);
-			ASSERT_EQ(r, square->get_X());
-			ASSERT_EQ(c, square->get_Y());
+			ASSERT_EQ(x, square->get_X());
+			ASSERT_EQ(y, square->get_Y());
 		}
 	}
 }
@@ -100,9 +99,9 @@ TEST_F(MineFieldTest, get_YFromIndex_UpLeft)
 
 TEST_F(MineFieldTest, get_YFromIndex_WhenIndexTooLarge)
 {
-	int r = _mineField->get_Size().Width;
-	int c = get_ArbitraryX();
-	int i = r * _mineField->get_Size().Width + c;
+	int y = _mineField->get_Size().Height;
+	int x = get_ArbitraryX();
+	int i = y * _mineField->get_Size().Width + x;
 
 	try
 	{
@@ -128,18 +127,18 @@ TEST_F(MineFieldTest, get_YFromIndex_WhenIndexTooSmall)
 
 TEST_F(MineFieldTest, get_XFromIndex_Typical)
 {
-	int r = get_ArbitraryY();
-	int c = get_ArbitraryX();
-	int i = r * _mineField->get_Size().Width + c;
+	int y = get_ArbitraryY();
+	int x = get_ArbitraryX();
+	int i = y * _mineField->get_Size().Width + x;
 
-	ASSERT_EQ(c, _mineField->get_XFromIndex(i));
+	ASSERT_EQ(x, _mineField->get_XFromIndex(i));
 }
 
 TEST_F(MineFieldTest, get_XFromIndex_WhenIndexTooLarge)
 {
-	int r = _mineField->get_Size().Width;
-	int c = _mineField->get_Size().Height;
-	int i = r * _mineField->get_Size().Width + c;
+	int y = _mineField->get_Size().Height;
+	int x = _mineField->get_Size().Width;
+	int i = y * _mineField->get_Size().Width + x;
 
 	try
 	{
@@ -175,7 +174,7 @@ TEST_F(MineFieldTest, get_Index_Typical)
 TEST_F(MineFieldTest, get_Index_WhenXTooLarge)
 {
 	int y = get_ArbitraryY();
-	int x = _mineField->get_Size().Height + 1;
+	int x = _mineField->get_Size().Width + 1;
 
 	ASSERT_EQ(-1, _mineField->get_Index(x, y));
 }
@@ -190,7 +189,7 @@ TEST_F(MineFieldTest, get_Index_WhenXTooSmall)
 
 TEST_F(MineFieldTest, get_Index_WhenYTooLarge)
 {
-	int y = _mineField->get_Size().Width + 1;
+	int y = _mineField->get_Size().Height + 1;
 	int x = get_ArbitraryX();
 
 	ASSERT_EQ(-1, _mineField->get_Index(x, y));

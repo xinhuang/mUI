@@ -6,6 +6,8 @@ using mUI::System::Drawing::Point;
 
 #include "SquareState.h"
 
+class ISquareView;
+
 class ISquare
 {
 public:
@@ -20,6 +22,8 @@ public:
 	virtual bool HasMine() const = 0;
 
 	virtual const Point& get_Location() const = 0;
+
+	virtual void Bind(ISquareView* view) = 0;
 };
 
 #endif // __ISQUARE_H__

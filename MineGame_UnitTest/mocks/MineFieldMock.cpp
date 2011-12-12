@@ -1,6 +1,6 @@
 #include "MineFieldMock.h"
 
-#include "SquareFactoryFake.h"
+#include "SquareFactoryMock.h"
 
 MineFieldMock::MineFieldMock()
 	: base(NULL)

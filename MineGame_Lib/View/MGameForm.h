@@ -18,7 +18,7 @@ public:
 	MGameForm();
     virtual ~MGameForm();
 
-    virtual void CreateSquares(const Size& size);
+    virtual vector<ISquareView*> CreateSquares(const Size& size);
 
 	MGameForm& Center();
 	MGameForm& Resize( const Size& size );
@@ -40,7 +40,7 @@ protected:
 	void OnSquareControlClick(void* sender, MouseEventArgs* e);
 
 private:
-	vector<SquareControl*> _squareStates;
+	vector<ISquareView*> _squareStates;
     MGame* _game;
 };
 

@@ -18,7 +18,7 @@ public:
 
 	static const Size& get_ImageSize();
 
-	virtual void set_State(SquareState::Enum state, IntPtr param);
+	virtual void set_State(SquareState::Enum state);
 	virtual const Point& get_Location() const { return _location; }
 
 protected:

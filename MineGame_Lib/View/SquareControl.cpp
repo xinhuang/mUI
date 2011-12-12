@@ -62,7 +62,7 @@ void SquareControl::OnMouseClick( MouseEventArgs* e )
 	}
 }
 
-void SquareControl::set_State( SquareState::Enum state, IntPtr param )
+void SquareControl::set_State( SquareState::Enum state )
 {
 	switch (state)
 	{
