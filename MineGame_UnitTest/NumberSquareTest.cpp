@@ -19,7 +19,8 @@ public:
 	{
 		_view = new ViewMock();
 		_game = new MGame(_view);
-		_mineField = new MineField(_game);
+		_mineField = new MineFieldMock();
+		_sut = new NumberSquare(_game, _mineField, 0, 0);
 	}
 
 	void TearDown()
@@ -27,62 +28,54 @@ public:
 		delete _game;
 		delete _mineField;
 		delete _view;
+		delete _sut;
 	}
 
 protected:
+	NumberSquare* _sut;
 	MGame* _game;
-	MineField* _mineField;
+	MineFieldMock* _mineField;
 	View* _view;
 };
 
 TEST_F(NumberSquareTest, Constructor_Typical)
 {
-	NumberSquare* numberSquare = new NumberSquare(_game, _mineField, 0, 0);
-
-	ASSERT_TRUE(NULL != numberSquare);
-	ASSERT_EQ(SquareState::Covered, numberSquare->get_State());
-
-	delete numberSquare;
+	ASSERT_TRUE(NULL != _sut);
+	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 }
 
 TEST_F(NumberSquareTest, Uncover_Typical)
 {
-	NumberSquare numberSquare(NULL, NULL, 0, 0);
+	_sut->Uncover();
 
-	numberSquare.Uncover();
-
-	ASSERT_EQ(SquareState::Uncovered, numberSquare.get_State());
+	ASSERT_EQ(SquareState::Uncovered, _sut->get_State());
 }
 
 TEST_F(NumberSquareTest, Uncover_WhenFlagged)
 {
-	NumberSquare numberSquare(NULL, NULL, 0, 0);
-	numberSquare.ToggleFlag();
+	_sut->ToggleFlag();
 
-	numberSquare.Uncover();
+	_sut->Uncover();
 
-	ASSERT_EQ(SquareState::Flagged, numberSquare.get_State());
+	ASSERT_EQ(SquareState::Flagged, _sut->get_State());
 }
 
 TEST_F(NumberSquareTest, Uncover_WhenQuestionMark)
 {
-	NumberSquare numberSquare(NULL, NULL, 0, 0);
-	numberSquare.ToggleFlag();
-	numberSquare.ToggleFlag();
+	_sut->ToggleFlag();
+	_sut->ToggleFlag();
 
-	numberSquare.Uncover();
+	_sut->Uncover();
 
-	ASSERT_EQ(SquareState::Uncovered, numberSquare.get_State());
+	ASSERT_EQ(SquareState::Uncovered, _sut->get_State());
 }
 
 TEST_F(NumberSquareTest, get_Number_Typical)
 {
 	int arbitraryNeighborMineTotal = 3;
-	MineFieldMock mineField;
-	NumberSquare numberSquare(NULL, &mineField, 0, 0);
-	EXPECT_CALL(mineField, get_NeighborMineTotal(&numberSquare))
+	EXPECT_CALL(*_mineField, get_NeighborMineTotal(_sut))
 		.Times(1)
 		.WillOnce(Return(arbitraryNeighborMineTotal));
 
-	ASSERT_EQ(arbitraryNeighborMineTotal, numberSquare.get_Number());
+	ASSERT_EQ(arbitraryNeighborMineTotal, _sut->get_Number());
 }
