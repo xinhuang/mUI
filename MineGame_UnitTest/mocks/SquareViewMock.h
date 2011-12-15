@@ -8,7 +8,8 @@
 class SquareViewMock : public ISquareView
 {
 public:
-	MOCK_METHOD1(set_State, void(SquareState::Enum state));
+	MOCK_METHOD1(set_State, void(SquareState::Enum));
+	MOCK_METHOD1(set_Number, void(int));
 	MOCK_CONST_METHOD0(get_Location, const Point&());
 };
 

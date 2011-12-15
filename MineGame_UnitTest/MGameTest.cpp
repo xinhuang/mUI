@@ -8,7 +8,7 @@ using ::testing::Return;
 #include <Presenter/ISquare.h>
 
 #include <mocks/ViewMock.h>
-#include <mocks/ISquareViewMock.h>
+#include <mocks/SquareViewMock.h>
 #include <mocks/ISquareMock.h>
 #include <mocks/SquareFactoryMock.h>
 
@@ -73,7 +73,7 @@ TEST_F(MGameTest, NewGame_Typical)
 	_sut->set_MineFieldHeight(arbitrarySize.Height);
 	_sut->set_MineTotal(arbitraryMineTotal);
 	ReplaceFactoryUsingMock();
-	ISquareViewMock squareViewMock;
+	SquareViewMock squareViewMock;
 	vector<ISquare*> squares = CreateSquareMocks(&squareViewMock, squareTotal);
 	EXPECT_CALL(*_factoryMock, CreateSquares(_sut, _mineField))
 		.Times(1)

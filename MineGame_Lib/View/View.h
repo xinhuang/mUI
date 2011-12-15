@@ -41,6 +41,7 @@ class ISquareView
 public:
 	virtual ~ISquareView() {}
 	virtual void set_State(SquareState::Enum state) = 0;
+	virtual void set_Number(int value) = 0;
 	virtual const Point& get_Location() const = 0;
 };
 

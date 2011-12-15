@@ -10,8 +10,10 @@ MGameForm::MGameForm()
 	set_Text(L"Mine Game v0.1");
     _game = new MGame(this);
 
-    FieldSizeChangedEventArgs e(Size(16, 16));
+    FieldSizeChangedEventArgs e(Size(10, 10));
     OnFieldSizeChanged(&e);
+	MineTotalChangedEventArgs mineTotalChanged(20);
+	OnMineTotalChanged(&mineTotalChanged);
     OnNewGame(&EventArgs::Empty);
 }
 

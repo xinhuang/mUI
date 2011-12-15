@@ -15,7 +15,7 @@ public:
 	virtual void Uncover();
 
 	int get_Number() const;
-
+	void UpdateView();
 private:
 	mutable int _number;
 };

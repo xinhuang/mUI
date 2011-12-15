@@ -11,6 +11,7 @@ using namespace mUI::System;
 
 #include "mocks/MineFieldMock.h"
 #include "mocks/ViewMock.h"
+#include "mocks/SquareViewMock.h"
 
 class NumberSquareTest : public testing::Test
 {
@@ -21,6 +22,7 @@ public:
 		_game = new MGame(_view);
 		_mineField = new MineFieldMock();
 		_sut = new NumberSquare(_game, _mineField, 0, 0);
+		_squareView = new SquareViewMock();
 	}
 
 	void TearDown()
@@ -29,6 +31,7 @@ public:
 		delete _mineField;
 		delete _view;
 		delete _sut;
+		delete _squareView;
 	}
 
 protected:
@@ -36,6 +39,7 @@ protected:
 	MGame* _game;
 	MineFieldMock* _mineField;
 	View* _view;
+	SquareViewMock* _squareView;
 };
 
 TEST_F(NumberSquareTest, Constructor_Typical)
@@ -46,6 +50,13 @@ TEST_F(NumberSquareTest, Constructor_Typical)
 
 TEST_F(NumberSquareTest, Uncover_Typical)
 {
+	EXPECT_CALL(*_mineField, get_NeighborMineTotal(_sut))
+		.Times(1)
+		.WillOnce(Return(3));
+	EXPECT_CALL(*_squareView, set_State(SquareState::Uncovered)).Times(1);
+	EXPECT_CALL(*_squareView, set_Number(3)).Times(1);
+	_sut->Bind(_squareView);
+
 	_sut->Uncover();
 
 	ASSERT_EQ(SquareState::Uncovered, _sut->get_State());

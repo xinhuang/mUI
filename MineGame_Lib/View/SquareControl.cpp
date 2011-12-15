@@ -75,3 +75,8 @@ void SquareControl::set_State( SquareState::Enum state )
 	}
 }
 
+void SquareControl::set_Number( int value )
+{
+	_imageIndex = static_cast<ImageIndex::Enum>(value + ImageIndex::Number1 - 1);
+}
+
