@@ -123,7 +123,7 @@ void MineField::ClearFields()
 	_squares.clear();
 }
 
-int MineField::get_NeighborMineTotal( const ISquare* square ) const
+int MineField::get_AdjacentMineTotal( const ISquare* square ) const
 {
 	return 1;
 }

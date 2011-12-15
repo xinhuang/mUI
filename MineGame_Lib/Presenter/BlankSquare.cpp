@@ -9,6 +9,6 @@ BlankSquare::BlankSquare(MGame* game, MineField* mineField, int x, int y)
 
 void BlankSquare::Uncover()
 {
-	get_MineField()->UncoverNeighborSquares(*this);
+	get_MineField()->UncoverAdjacentSquares(*this);
 	set_State(SquareState::Uncovered);
 }

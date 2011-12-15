@@ -50,7 +50,7 @@ TEST_F(NumberSquareTest, Constructor_Typical)
 
 TEST_F(NumberSquareTest, Uncover_Typical)
 {
-	EXPECT_CALL(*_mineField, get_NeighborMineTotal(_sut))
+	EXPECT_CALL(*_mineField, get_AdjacentMineTotal(_sut))
 		.Times(1)
 		.WillOnce(Return(3));
 	EXPECT_CALL(*_squareView, set_State(SquareState::Uncovered)).Times(1);
@@ -84,7 +84,7 @@ TEST_F(NumberSquareTest, Uncover_WhenQuestionMark)
 TEST_F(NumberSquareTest, get_Number_Typical)
 {
 	int arbitraryNeighborMineTotal = 3;
-	EXPECT_CALL(*_mineField, get_NeighborMineTotal(_sut))
+	EXPECT_CALL(*_mineField, get_AdjacentMineTotal(_sut))
 		.Times(1)
 		.WillOnce(Return(arbitraryNeighborMineTotal));
 

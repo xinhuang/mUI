@@ -31,7 +31,7 @@ TEST_F(BlankSquareTest, Uncover_Typical)
 	SquareViewMock squareViewMock;
 	BlankSquare blankSquare(NULL, &mineField, 0, 0);
 	blankSquare.Bind(&squareViewMock);
-	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
+	EXPECT_CALL(mineField, UncoverAdjacentSquares(_)).Times(1);
 	EXPECT_CALL(squareViewMock, set_State(SquareState::Uncovered)).Times(1);
 
 	blankSquare.Uncover();
