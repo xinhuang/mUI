@@ -9,6 +9,7 @@ using ::testing::_;
 #include <Presenter/BlankSquare.h>
 
 #include "mocks/MineFieldMock.h"
+#include "mocks/SquareViewMock.h"
 
 class BlankSquareTest : public testing::Test
 {
@@ -24,13 +25,14 @@ TEST_F(BlankSquareTest, Constructor_Typical)
 	delete blankSquare;
 }
 
-// TODO: (BlankSquareTest, Uncover_Typical)
-//TEST_F(BlankSquareTest, Uncover_Typical)
-//{
-//	MineFieldMock mineField;
-//	BlankSquare blankSquare(NULL, &mineField, 0, 0);
-//
-//	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
-//
-//	blankSquare.Uncover();
-//}
+TEST_F(BlankSquareTest, Uncover_Typical)
+{
+	MineFieldMock mineField;
+	SquareViewMock squareViewMock;
+	BlankSquare blankSquare(NULL, &mineField, 0, 0);
+	blankSquare.Bind(&squareViewMock);
+	EXPECT_CALL(mineField, UncoverNeighborSquares(_)).Times(1);
+	EXPECT_CALL(squareViewMock, set_State(SquareState::Uncovered)).Times(1);
+
+	blankSquare.Uncover();
+}
