@@ -26,7 +26,7 @@ public:
 	ISquare* SquareAt(int x, int y);
 	ISquare* SquareAt(const Point& location);
 	ISquare* SquareAt(size_t i);
-	virtual void UncoverAdjacentSquares(const ISquare& square) {}
+	virtual void UncoverAdjacent(const ISquare& square) {}
 	virtual int get_AdjacentMineTotal(const ISquare* square) const;
 	void Refresh();
 
