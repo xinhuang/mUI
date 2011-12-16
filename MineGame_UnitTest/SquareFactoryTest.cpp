@@ -138,11 +138,15 @@ TEST_F(SquareFactoryTest, CreateSquares_MineField2x1MineTotal1)
 	_squares = _sut->CreateSquares(_game, &mineField);
 
 	NumberSquare* numberSquare = dynamic_cast<NumberSquare*>(_squares[0]);
+	MineSquare* mineSquare = dynamic_cast<MineSquare*>(_squares[1]);
 	if (numberSquare == NULL)
+	{
 		numberSquare = dynamic_cast<NumberSquare*>(_squares[1]);
+		mineSquare = dynamic_cast<MineSquare*>(_squares[0]);
+	}
 
 	ASSERT_TRUE(NULL != numberSquare);
-	ASSERT_EQ(1, numberSquare->get_Number());
+	ASSERT_TRUE(NULL != mineSquare);
 }
 
 TEST_F(SquareFactoryTest, CreateSquares_SameAsFieldMap)

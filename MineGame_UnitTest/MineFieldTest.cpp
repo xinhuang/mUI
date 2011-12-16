@@ -258,8 +258,25 @@ TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenSquareIsAtBoundary)
 	_sut->set_SquareFactory(&newFactory);
 	_sut->set_Size(Size(3, 3));
 	_sut->Refresh();
+	_sut->set_SquareFactory(oldFactory);
 
 	ASSERT_EQ(3, _sut->get_AdjacentMineTotal(Point(2, 2)));
+}
 
+TEST_F(MineFieldTest, UncoverAdjacent_Typical)
+{
+	SquareFactory* oldFactory = _sut->get_SquareFactory();
+	vector<bool> fieldMap(9, false);
+	SquareFactoryFake newFactory(fieldMap);
+	_sut->set_SquareFactory(&newFactory);
+	_sut->set_Size(Size(3, 3));
+	_sut->Refresh();
 	_sut->set_SquareFactory(oldFactory);
+
+	_sut->UncoverAdjacent(Point(1, 1));
+
+	for (int i = 0; i < 9; ++i)
+	{
+		ASSERT_EQ(SquareState::Uncovered, _sut->SquareAt(i)->get_State());
+	}
 }

@@ -26,7 +26,7 @@ public:
 	ISquare* SquareAt(int x, int y);
 	ISquare* SquareAt(const Point& location);
 	ISquare* SquareAt(size_t i);
-	virtual void UncoverAdjacent(const ISquare& square) {}
+	virtual void UncoverAdjacent(const Point& location);
 	void Refresh();
 
 	int get_IndexMax() const;
@@ -40,7 +40,7 @@ public:
 	static int get_YFromIndex(const Size& size, int i);
 	static int get_XFromIndex(const Size& size, int i);
 
-	int get_AdjacentMineTotal(const Point& location) const;
+	virtual int get_AdjacentMineTotal(const Point& location) const;
 
 	bool IsMineAt( int i ) const;
 	bool IsMineAt(int x, int y) const;
@@ -49,7 +49,7 @@ public:
 	void set_SquareFactory(SquareFactory* squareFactory);
 	void set_Width( int width );
 	void set_Height( int height );
-
+	void TryUncover( int x, int y );
 private:
 	MGame* _game;
 	vector<ISquare*> _squares;

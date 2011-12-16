@@ -14,8 +14,8 @@ class MineFieldMock : public MineField
 public:
 	MineFieldMock();
 
-	MOCK_METHOD1(UncoverAdjacent, void(const ISquare&));
-	MOCK_CONST_METHOD1(get_AdjacentMineTotal, int(const ISquare*));
+	MOCK_METHOD1(UncoverAdjacent, void(const Point&));
+	MOCK_CONST_METHOD1(get_AdjacentMineTotal, int(const Point&));
 };
 
 #endif // __MINEFIELDMOCK_H__

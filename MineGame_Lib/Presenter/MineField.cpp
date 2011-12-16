@@ -173,3 +173,25 @@ int MineField::get_AdjacentMineTotal( const Point& location ) const
 
 	return n;
 }
+
+void MineField::UncoverAdjacent( const Point& location )
+{
+	TryUncover(location.X - 1, location.Y - 1);
+	TryUncover(location.X - 1, location.Y);
+	TryUncover(location.X - 1, location.Y + 1);
+
+	TryUncover(location.X, location.Y - 1);
+	TryUncover(location.X, location.Y + 1);
+
+	TryUncover(location.X + 1, location.Y - 1);
+	TryUncover(location.X + 1, location.Y);
+	TryUncover(location.X + 1, location.Y + 1);
+}
+
+void MineField::TryUncover( int x, int y )
+{
+	if (x < 0 || x >= get_Size().Width || y < 0 || y >= get_Size().Height)
+		return;
+	if (!IsMineAt(x, y) && SquareAt(x, y)->get_State() == SquareState::Covered)
+		SquareAt(x, y)->Uncover();
+}
