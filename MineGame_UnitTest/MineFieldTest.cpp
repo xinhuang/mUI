@@ -280,3 +280,23 @@ TEST_F(MineFieldTest, UncoverAdjacent_Typical)
 		ASSERT_EQ(SquareState::Uncovered, _sut->SquareAt(i)->get_State());
 	}
 }
+
+TEST_F(MineFieldTest, UncoverAdjacent_WhenOneMine)
+{
+	SquareFactory* oldFactory = _sut->get_SquareFactory();
+	vector<bool> fieldMap(9, false);
+	fieldMap[0] = true;
+	SquareFactoryFake newFactory(fieldMap);
+	_sut->set_SquareFactory(&newFactory);
+	_sut->set_Size(Size(3, 3));
+	_sut->Refresh();
+	_sut->set_SquareFactory(oldFactory);
+
+	_sut->UncoverAdjacent(Point(1, 1));
+
+	ASSERT_EQ(SquareState::Covered, _sut->SquareAt(0)->get_State());
+	for (int i = 1; i < 9; ++i)
+	{
+		ASSERT_EQ(SquareState::Uncovered, _sut->SquareAt(i)->get_State());
+	}
+}
