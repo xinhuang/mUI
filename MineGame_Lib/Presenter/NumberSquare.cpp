@@ -15,7 +15,7 @@ NumberSquare::NumberSquare(MGame* game, MineField* mineField, int x, int y)
 int NumberSquare::get_Number() const
 {
 	if (_number == -1)
-		_number = get_MineField()->get_AdjacentMineTotal(this);
+		_number = get_MineField()->get_AdjacentMineTotal(this->get_Location());
 	return _number;
 }
 

@@ -123,11 +123,6 @@ void MineField::ClearFields()
 	_squares.clear();
 }
 
-int MineField::get_AdjacentMineTotal( const ISquare* square ) const
-{
-	return 1;
-}
-
 void MineField::set_Size( const Size& size )
 {
 	_size = size;
