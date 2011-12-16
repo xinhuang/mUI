@@ -100,7 +100,7 @@ bool SquareFactory::IsMineRight( const vector<bool>& fieldMap, const Size& field
 
 bool SquareFactory::IsMineUpRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return IsMine(fieldMap, i - fieldSize.Width - 1);
+	return IsMine(fieldMap, i - fieldSize.Width + 1);
 }
 
 bool SquareFactory::IsMineDownRight( const vector<bool>& fieldMap, const Size& fieldSize, int i )
@@ -110,7 +110,7 @@ bool SquareFactory::IsMineDownRight( const vector<bool>& fieldMap, const Size& f
 
 bool SquareFactory::IsMineUpLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )
 {
-	return IsMine(fieldMap, i - fieldSize.Width + 1);
+	return IsMine(fieldMap, i - fieldSize.Width - 1);
 }
 
 bool SquareFactory::IsMineDownLeft( const vector<bool>& fieldMap, const Size& fieldSize, int i )

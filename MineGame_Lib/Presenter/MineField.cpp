@@ -192,6 +192,6 @@ void MineField::TryUncover( int x, int y )
 {
 	if (x < 0 || x >= get_Size().Width || y < 0 || y >= get_Size().Height)
 		return;
-	if (!IsMineAt(x, y) && SquareAt(x, y)->get_State() == SquareState::Covered)
+	if (SquareAt(x, y)->get_State() == SquareState::Covered)
 		SquareAt(x, y)->Uncover();
 }
