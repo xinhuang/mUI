@@ -50,7 +50,7 @@ namespace SquareViewState
 		Number7,
 		Number8,
 		Mine,
-		Boom,
+		Boomed,
 		Flagged,
 		Questioned,
 		Wrong,

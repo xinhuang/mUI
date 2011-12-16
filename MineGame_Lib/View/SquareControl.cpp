@@ -69,7 +69,7 @@ void SquareControl::set_State( SquareViewState::Enum state )
 	case SquareState::Uncovered:
 		_imageIndex = ImageIndex::Empty;
 		break;
-	case SquareState::Boom:
+	case SquareState::Boomed:
 		_imageIndex = ImageIndex::Boom;
 		break;
 	}
