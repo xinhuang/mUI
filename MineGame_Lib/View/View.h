@@ -9,7 +9,6 @@ using namespace mUI;
 using namespace mUI::System;
 using namespace mUI::System::Drawing;
 
-
 class FieldSizeChangedEventArgs : public EventArgs
 {
 public:
@@ -36,12 +35,34 @@ private:
     const int _mineTotal;
 };
 
+namespace SquareViewState
+{
+	enum Enum
+	{
+		Covered,
+		Blank,
+		Number1,
+		Number2,
+		Number3,
+		Number4,
+		Number5,
+		Number6,
+		Number7,
+		Number8,
+		Mine,
+		Boom,
+		Flagged,
+		Questioned,
+		Wrong,
+		Max
+	};
+}
+
 class ISquareView
 {
 public:
 	virtual ~ISquareView() {}
-	virtual void set_State(SquareState::Enum state) = 0;
-	virtual void set_Number(int value) = 0;
+	virtual void set_State(SquareViewState::Enum state) = 0;
 	virtual const Point& get_Location() const = 0;
 };
 

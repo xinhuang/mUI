@@ -11,4 +11,5 @@ void BlankSquare::Uncover()
 {
 	get_MineField()->UncoverAdjacent(*this);
 	set_State(SquareState::Uncovered);
+	set_ViewState(SquareViewState::Blank);
 }

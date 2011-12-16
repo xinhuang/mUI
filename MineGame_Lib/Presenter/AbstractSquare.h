@@ -2,6 +2,7 @@
 #define __ABSTRACTORSQUARE_H__
 
 #include "ISquare.h"
+#include "../View/View.h"
 
 class MGame;
 class MineField;
@@ -26,6 +27,8 @@ protected:
 	const MGame* get_Game() const;
 	const MineField* get_MineField() const;
 	ISquareView* get_View();
+
+	void set_ViewState( SquareViewState::Enum state );
 
 private:
 	SquareState::Enum _state;

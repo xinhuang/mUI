@@ -18,8 +18,6 @@ SquareState::Enum AbstractSquare::get_State() const
 void AbstractSquare::set_State(SquareState::Enum state)
 {
 	_state = state;
-	if (_view != 0)
-		_view->set_State(_state);
 }
 
 void AbstractSquare::ToggleFlag()
@@ -71,4 +69,12 @@ void AbstractSquare::Bind( ISquareView* view )
 ISquareView* AbstractSquare::get_View()
 {
 	return _view;
+}
+
+void AbstractSquare::set_ViewState( SquareViewState::Enum state )
+{
+	if (_view != 0)
+	{
+		_view->set_State(state);
+	}
 }

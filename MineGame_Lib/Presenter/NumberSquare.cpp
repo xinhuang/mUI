@@ -29,9 +29,6 @@ void NumberSquare::Uncover()
 
 void NumberSquare::UpdateView()
 {
-	ISquareView* view = get_View();
-	if (view == 0)
-		return;
-
-	view->set_Number(get_Number());
+	int newState = SquareViewState::Number1 + get_Number() - 1;
+	set_ViewState(static_cast<SquareViewState::Enum>(newState));
 }

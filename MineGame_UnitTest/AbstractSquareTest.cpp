@@ -84,12 +84,3 @@ TEST_F(AbstractSquareTest, HasMine_Typical)
 {
 	ASSERT_FALSE(_sut->HasMine());
 }
-
-TEST_F(AbstractSquareTest, SetState_Typical)
-{
-	_sut->Bind(_view);
-	EXPECT_CALL(*_view, set_State(SquareState::Uncovered)).Times(1);
-
-	static_cast<AbstractSquareFake*>(_sut)->
-		set_State(SquareState::Uncovered);
-}
