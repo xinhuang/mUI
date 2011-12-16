@@ -3,15 +3,14 @@
 #include "MGameForm.h"
 
 SquareControl::SquareControl(MGameForm* form, int x, int y)
-    : _imageIndex(ImageIndex::Coverred)
+    : _imageIndex(SquareViewState::Covered)
 	, _location(x, y)
 	, _gameForm(form)
 {
-    const static wchar_t* imageResources[ImageIndex::Max] = 
-    {
-        L"res/boom.png",
-        L"res/coverred.png",
-        L"res/flag.png",
+    const static wchar_t* imageResources[SquareViewState::Max] = 
+	{
+		L"res/coverred.png",
+		L"res/flat.png",
         L"res/flag_1.png",
         L"res/flag_2.png",
         L"res/flag_3.png",
@@ -20,8 +19,9 @@ SquareControl::SquareControl(MGameForm* form, int x, int y)
         L"res/flag_6.png",
         L"res/flag_7.png",
         L"res/flag_8.png",
-        L"res/flat.png",
-        L"res/mine.png",
+		L"res/mine.png",
+		L"res/boom.png",
+		L"res/flag.png",
         L"res/question.png",
         L"res/wrong.png",
     };
@@ -64,19 +64,5 @@ void SquareControl::OnMouseClick( MouseEventArgs* e )
 
 void SquareControl::set_State( SquareViewState::Enum state )
 {
-	switch (state)
-	{
-	case SquareState::Uncovered:
-		_imageIndex = ImageIndex::Empty;
-		break;
-	case SquareState::Boomed:
-		_imageIndex = ImageIndex::Boom;
-		break;
-	}
+	_imageIndex = state;
 }
-
-void SquareControl::set_Number( int value )
-{
-	_imageIndex = static_cast<ImageIndex::Enum>(value + ImageIndex::Number1 - 1);
-}
-

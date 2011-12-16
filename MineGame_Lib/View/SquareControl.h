@@ -19,7 +19,6 @@ public:
 	static const Size& get_ImageSize();
 
 	virtual void set_State(SquareViewState::Enum state);
-	virtual void set_Number(int value);
 	virtual const Point& get_Location() const { return _location; }
 
 protected:
@@ -31,27 +30,7 @@ private:
     vector<Image*> _imageList;
 	const Point _location;
 	MGameForm* _gameForm;
-
-    struct ImageIndex{ enum Enum
-    {
-        Boom,
-        Coverred,
-        Flagged,
-        Number1,
-        Number2,
-        Number3,
-        Number4,
-        Number5,
-        Number6,
-        Number7,
-        Number8,
-        Empty,
-        Mine,
-        Question,
-        Wrong,
-        Max
-    };};
-    ImageIndex::Enum _imageIndex;
+    SquareViewState::Enum _imageIndex;
 };
 
 #endif // __SQUARECONTROL_H__
