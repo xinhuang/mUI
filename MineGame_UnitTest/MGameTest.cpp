@@ -5,6 +5,7 @@ using ::testing::_;
 
 #include <Presenter/MGame.h>
 #include <Presenter/MineField.h>
+#include <Presenter/MineSquare.h>
 #include <Presenter/ISquare.h>
 
 #include <mocks/ViewMock.h>
@@ -109,8 +110,14 @@ TEST_F(MGameTest, Lose_Typical)
 
 	_sut->Lose();
 
+	ASSERT_TRUE(_sut->IsLost());
 	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
 	{
-		ASSERT_NE(SquareState::Covered, _mineField->SquareAt(i)->get_State());
+		if (SquareState::Uncovered == _mineField->SquareAt(i)->get_State())
+		{
+			ISquare* square = _mineField->SquareAt(i);
+			ASSERT_EQ(typeid(MineSquare), typeid(square));
+			ASSERT_NE(SquareState::Boomed, square->get_State());
+		}
 	}
 }

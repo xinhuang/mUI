@@ -4,6 +4,8 @@
 using namespace mUI::System;
 
 #include "MineField.h"
+#include "MGame.h"
+
 #include "../View/View.h"
 
 NumberSquare::NumberSquare(MGame* game, MineField* mineField, int x, int y)
@@ -21,6 +23,8 @@ int NumberSquare::get_Number() const
 
 void NumberSquare::Uncover()
 {
+	if (get_Game()->IsLost())
+		return;
 	if (get_State() == SquareState::Flagged)
 		return;
 	set_State(SquareState::Uncovered);

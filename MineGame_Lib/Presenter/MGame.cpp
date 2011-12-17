@@ -102,3 +102,8 @@ void MGame::OnSquareUncovered( void* sender, SquareEventArgs* e )
 	ISquare* square = _mineField->SquareAt(location);
 	square->Uncover();
 }
+
+bool MGame::IsLost() const
+{
+	return _lost;
+}

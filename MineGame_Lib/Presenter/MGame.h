@@ -27,6 +27,7 @@ public:
 	void Uncover(int x, int y);
 
 	virtual void Lose();
+	bool IsLost() const;
 	MineField* get_MineField();
 
 protected:
