@@ -70,7 +70,9 @@ void MGame::Lose()
 	_lost = true;
 	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
 	{
-		_mineField->SquareAt(i)->Uncover();
+		ISquare* square = _mineField->SquareAt(i);
+		if (square->get_State() == SquareState::Covered)
+			square->Uncover();
 	}
 }
 
