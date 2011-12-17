@@ -31,14 +31,13 @@ public:
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 
-    virtual void OnNewGame(EventArgs* e);
+	virtual	void OnSquareToggleFlag( SquareEventArgs* e );
+	virtual void OnSquareUncovered( SquareEventArgs* e );
     virtual void OnFieldSizeChanged(FieldSizeChangedEventArgs* e);
     virtual void OnMineTotalChanged(MineTotalChangedEventArgs* e);
-	virtual void OnSquareUncovered( SquareEventArgs* e );
-	virtual	void OnSquareToggleFlag( SquareEventArgs* e );
+    virtual void OnNewGame(EventArgs* e);
 
     void DisposeSquares();
-	void OnSquareControlClick(void* sender, MouseEventArgs* e);
 
 private:
 	vector<ISquareView*> _squareStates;
