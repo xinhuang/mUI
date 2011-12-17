@@ -7,6 +7,7 @@
 MGame::MGame(View* view)
 	: _mineField(NULL)
     , _view(view)
+	, _lost(false)
 {
 	_mineField = new MineField(this);
     _view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
@@ -48,7 +49,7 @@ int MGame::get_MineTotal() const
 void MGame::NewGame()
 {
     _mineField->Refresh();
-    vector<ISquareView*>& squareViews = _view->CreateSquares(_mineField->get_Size());
+    vector<ISquareView*> squareViews = _view->CreateSquares(_mineField->get_Size());
 	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
 	{
 		ISquare* square = _mineField->SquareAt(i);
@@ -63,7 +64,14 @@ void MGame::Uncover(int x, int y)
 
 void MGame::Lose()
 {
+	if (_lost)
+		return;
 
+	_lost = true;
+	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
+	{
+		_mineField->SquareAt(i)->Uncover();
+	}
 }
 
 MineField* MGame::get_MineField()

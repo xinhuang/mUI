@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 using ::testing::Return;
-#include <mUI.h>
+using ::testing::_;
 
 #include <Presenter/MGame.h>
 #include <Presenter/MineField.h>
@@ -96,4 +96,21 @@ TEST_F(MGameTest, Uncover_OnMineSquare)
 	_sut->set_MineFieldHeight(1);
 	_sut->set_MineTotal(1);
 
+}
+
+TEST_F(MGameTest, Lose_Typical)
+{
+	_sut->set_MineFieldHeight(20);
+	_sut->set_MineFieldWidth(20);
+	_sut->set_MineTotal(20);
+	EXPECT_CALL(*_view, CreateSquares(_))
+		.WillOnce(Return(vector<ISquareView*>(20*20, NULL)));
+	_sut->NewGame();
+
+	_sut->Lose();
+
+	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
+	{
+		ASSERT_NE(SquareState::Covered, _mineField->SquareAt(i)->get_State());
+	}
 }

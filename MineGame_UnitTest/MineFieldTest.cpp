@@ -310,7 +310,7 @@ TEST_F(MineFieldTest, UncoverAdjacent_WhenOneMine)
 	_sut->Refresh();
 	_sut->set_SquareFactory(oldFactory);
 
-	_sut->UncoverAdjacent(Point(1, 1));
+	_sut->UncoverAdjacent(Point(2, 2));
 
 	ASSERT_EQ(SquareState::Covered, _sut->SquareAt(0)->get_State());
 	for (int i = 1; i < 9; ++i)

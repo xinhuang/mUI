@@ -38,6 +38,7 @@ protected:
 private:
 	MineField* _mineField;
 	View* _view;
+	bool _lost;
 };
 
 #endif // __MGAME_H__

@@ -238,7 +238,7 @@ TEST_F(SquareFactoryTest, IsMineRight_WhenNoRightSquare)
 
 TEST_F(SquareFactoryTest, IsMineUpRight_WhenTrue)
 {
-	_fieldMap[0] = true;
+	_fieldMap[2] = true;
 
 	ASSERT_TRUE(_sut->IsMineUpRight(_fieldMap, _fieldSize, _middleSquareIndex));
 }
@@ -255,7 +255,7 @@ TEST_F(SquareFactoryTest, IsMineUpRight_WhenNoUpRightSquare)
 
 TEST_F(SquareFactoryTest, IsMineUpLeft_WhenTrue)
 {
-	_fieldMap[2] = true;
+	_fieldMap[0] = true;
 
 	ASSERT_TRUE(_sut->IsMineUpLeft(_fieldMap, _fieldSize, _middleSquareIndex));
 }
