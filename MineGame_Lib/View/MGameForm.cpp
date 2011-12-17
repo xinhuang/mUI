@@ -17,10 +17,6 @@ MGameForm::MGameForm()
     OnNewGame(&EventArgs::Empty);
 }
 
-void MGameForm::set_SquareState( const Point& location, SquareState::Enum state, IntPtr param )
-{
-}
-
 void MGameForm::set_RemainingMineTotal( int remainingTotal )
 {
 
@@ -101,9 +97,20 @@ void MGameForm::OnSquareUncovered( SquareEventArgs* e )
 	SquareUncovered(this, e);
 }
 
-void MGameForm::Uncover( SquareControl* squareControl )
+void MGameForm::Uncover( ISquareView* squareView )
 {
-	SquareEventArgs e(squareControl);
+	SquareEventArgs e(squareView);
 	OnSquareUncovered(&e);
+}
+
+void MGameForm::ToggleFlag( ISquareView* squareView )
+{
+	SquareEventArgs e(squareView);
+	OnSquareToggleFlag(&e);
+}
+
+void MGameForm::OnSquareToggleFlag( SquareEventArgs* e )
+{
+	SquareToggleFlag(this, e);
 }
 

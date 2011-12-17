@@ -23,10 +23,10 @@ public:
 	MGameForm& Center();
 	MGameForm& Resize( const Size& size );
 
-	virtual void set_SquareState(const Point& location, SquareState::Enum state, IntPtr param);
     virtual void set_RemainingMineTotal(int remainingTotal);
 
-	void Uncover(SquareControl* squareControl);
+	void Uncover(ISquareView* squareView);
+	void ToggleFlag( ISquareView* squareView );
 
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
@@ -35,6 +35,7 @@ protected:
     virtual void OnFieldSizeChanged(FieldSizeChangedEventArgs* e);
     virtual void OnMineTotalChanged(MineTotalChangedEventArgs* e);
 	virtual void OnSquareUncovered( SquareEventArgs* e );
+	virtual	void OnSquareToggleFlag( SquareEventArgs* e );
 
     void DisposeSquares();
 	void OnSquareControlClick(void* sender, MouseEventArgs* e);

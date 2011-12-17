@@ -1,5 +1,8 @@
 #include "AbstractSquare.h"
+
 #include "../View/View.h"
+
+#include "MGame.h"
 
 AbstractSquare::AbstractSquare(MGame* game, MineField* mineField, const Point& location)
 	: _state(SquareState::Covered)
@@ -22,18 +25,24 @@ void AbstractSquare::set_State(SquareState::Enum state)
 
 void AbstractSquare::ToggleFlag()
 {
+	if (get_Game()->IsLost())
+		return;
+
 	switch (get_State())
 	{
 	case SquareState::Covered:
 		set_State(SquareState::Flagged);
+		set_ViewState(SquareViewState::Flagged);
 		break;
 
 	case SquareState::Flagged:
-		set_State(SquareState::QuestionMark);
+		set_State(SquareState::Questioned);
+		set_ViewState(SquareViewState::Questioned);
 		break;
 
-	case SquareState::QuestionMark:
-		set_State(SquareState::Uncovered);
+	case SquareState::Questioned:
+		set_State(SquareState::Covered);
+		set_ViewState(SquareViewState::Covered);
 		break;
 
 	default:

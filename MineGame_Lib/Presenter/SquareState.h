@@ -8,7 +8,7 @@ namespace SquareState{
 		Covered,
 		Boomed,
 		Flagged,
-		QuestionMark,
+		Questioned,
 	};
 };
 

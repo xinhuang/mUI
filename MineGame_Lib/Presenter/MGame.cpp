@@ -14,6 +14,7 @@ MGame::MGame(View* view)
     _view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
     _view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
 	_view->SquareUncovered += SquareEventHandler(this, &MGame::OnSquareUncovered);
+	_view->SquareToggleFlag += SquareEventHandler(this, &MGame::OnSquareToggleFlag);
 }
 
 MGame::~MGame()
@@ -108,4 +109,12 @@ void MGame::OnSquareUncovered( void* sender, SquareEventArgs* e )
 bool MGame::IsLost() const
 {
 	return _lost;
+}
+
+void MGame::OnSquareToggleFlag( void* sender, SquareEventArgs* e )
+{
+	ISquareView* squareView = e->get_SquareView();
+	const Point& location = squareView->get_Location();
+	ISquare* square = _mineField->SquareAt(location);
+	square->ToggleFlag();
 }

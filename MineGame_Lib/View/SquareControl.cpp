@@ -56,9 +56,15 @@ const Size& SquareControl::get_ImageSize()
 
 void SquareControl::OnMouseClick( MouseEventArgs* e )
 {
-	if (e->Button == MouseButtons::Left)
+	switch (e->Button)
 	{
+	case MouseButtons::Left:
 		_gameForm->Uncover(this);
+		break;
+
+	case MouseButtons::Right:
+		_gameForm->ToggleFlag(this);
+		break;
 	}
 }
 

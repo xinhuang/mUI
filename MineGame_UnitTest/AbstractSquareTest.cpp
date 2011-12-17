@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+using ::testing::Return;
 
 #include <mUI.h>
 
@@ -8,6 +9,8 @@
 #include <Presenter/AbstractSquare.h>
 
 #include "mocks/SquareViewMock.h"
+#include "mocks/ViewMock.h"
+#include "mocks/MGameMock.h"
 
 class AbstractSquareFake : public AbstractSquare
 {
@@ -29,20 +32,27 @@ class AbstractSquareTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_sut = new AbstractSquareFake(NULL, NULL, 
+		_view = new ViewMock();
+		_game = new MGameMock(_view);
+		_sut = new AbstractSquareFake(_game, NULL, 
 			ABITRARY_X, ABITRARY_Y);
-		_view = new SquareViewMock();
+		_squareView = new SquareViewMock();
+		_sut->Bind(_squareView);
 	}
 
 	void TearDown()
 	{
 		delete _sut;
+		delete _squareView;
+		delete _game;
 		delete _view;
 	}
 
 protected:
 	AbstractSquare* _sut;
-	SquareViewMock* _view;
+	SquareViewMock* _squareView;
+	MGameMock* _game;
+	ViewMock* _view;
 
 	static const int ABITRARY_Y = 27, ABITRARY_X = 43;
 };
@@ -58,26 +68,44 @@ TEST_F(AbstractSquareTest, Constructor_Typical)
 
 TEST_F(AbstractSquareTest, ToggleFlag_Once)
 {
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Flagged)).Times(1);
+
 	_sut->ToggleFlag();
-	
+
 	ASSERT_EQ(SquareState::Flagged, _sut->get_State());
+}
+
+TEST_F(AbstractSquareTest, ToggleFlag_OnceWhenLost)
+{
+	EXPECT_CALL(*_game, IsLost()).Times(1).WillOnce(Return(true));
+
+	_sut->ToggleFlag();
+
+	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_Twice)
 {
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Flagged)).Times(1);
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Questioned)).Times(1);
+
 	_sut->ToggleFlag();
 	_sut->ToggleFlag();
 	
-	ASSERT_EQ(SquareState::QuestionMark, _sut->get_State());
+	ASSERT_EQ(SquareState::Questioned, _sut->get_State());
 }
 
 TEST_F(AbstractSquareTest, ToggleFlag_ThreeTimes)
 {
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Flagged)).Times(1);
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Questioned)).Times(1);
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Covered)).Times(1);
+
 	_sut->ToggleFlag();
 	_sut->ToggleFlag();
 	_sut->ToggleFlag();
 	
-	ASSERT_EQ(SquareState::Uncovered, _sut->get_State());
+	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 }
 
 TEST_F(AbstractSquareTest, HasMine_Typical)

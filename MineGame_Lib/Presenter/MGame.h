@@ -27,7 +27,7 @@ public:
 	void Uncover(int x, int y);
 
 	virtual void Lose();
-	bool IsLost() const;
+	virtual bool IsLost() const;
 	MineField* get_MineField();
 
 protected:
@@ -35,6 +35,7 @@ protected:
     virtual void OnFieldSizeChanged(void* sender, FieldSizeChangedEventArgs* e);
     virtual void OnMineTotalChanged(void* sender, MineTotalChangedEventArgs* e);
 	virtual void OnSquareUncovered(void* sender, SquareEventArgs* e);
+	virtual void OnSquareToggleFlag(void* sender, SquareEventArgs* e);
 
 private:
 	MineField* _mineField;

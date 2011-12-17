@@ -24,7 +24,7 @@ public:
     EventHandler<FieldSizeChangedEventArgs*> FieldSizeChanged;
     EventHandler<MineTotalChangedEventArgs*> MineTotalChanged;
     SquareEventHandler SquareUncovered;
-    SquareEventHandler ToggleFlagSquare;
+    SquareEventHandler SquareToggleFlag;
 
 	virtual vector<ISquareView*> CreateSquares(const Size& size) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;

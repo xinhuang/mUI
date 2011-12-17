@@ -13,7 +13,7 @@ public:
     MGameMock(View* view) : MGame(view) {}
 
 	MOCK_METHOD0(Lose, void());
-
+	MOCK_CONST_METHOD0(IsLost, bool());
 };
 
 #endif // __MGAMEMOCK_H__
