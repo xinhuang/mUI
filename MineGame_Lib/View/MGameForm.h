@@ -16,12 +16,13 @@ class MGameForm : public Form, public View
 {
 public:
 	MGameForm();
-    virtual ~MGameForm();
 
-    virtual vector<ISquareView*> CreateSquares(const Size& size);
+	virtual ~MGameForm();
+
+	virtual vector<ISquareView*> CreateSquares(const Size& fieldSize);
 
 	MGameForm& Center();
-	MGameForm& Resize( const Size& size );
+	MGameForm& Resize( const Size& fieldSize );
 
     virtual void set_RemainingMineTotal(int remainingTotal);
 
@@ -29,19 +30,18 @@ public:
 	void ToggleFlag( ISquareView* squareView );
 
 protected:
-	virtual void OnPaint( PaintEventArgs* e );
-
 	virtual	void OnSquareToggleFlag( SquareEventArgs* e );
 	virtual void OnSquareUncovered( SquareEventArgs* e );
     virtual void OnFieldSizeChanged(FieldSizeChangedEventArgs* e);
     virtual void OnMineTotalChanged(MineTotalChangedEventArgs* e);
     virtual void OnNewGame(EventArgs* e);
 
-    void DisposeSquares();
-
+	void DisposeSquares();
+	void InitializeComponents();
+	void OnGameButtonClicked(void* sender, EventArgs* e);
 private:
-	vector<ISquareView*> _squareStates;
-    MGame* _game;
+	struct Data;
+	Data *_data;
 };
 
 #endif // __MAINFORM_H__

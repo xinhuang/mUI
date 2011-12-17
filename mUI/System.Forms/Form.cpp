@@ -54,7 +54,6 @@ void Form::OnPaint( PaintEventArgs* e )
 void Form::InitializeComponent()
 {
 	set_Size(Drawing::Size(default_width, default_height));
-	set_FormBorderStyle(FormBorderStyle::FixedSingle);			// TODO: Default should be Sizable
 }
 
 void Form::OnEnter( EventArgs* e )

@@ -5,11 +5,10 @@
 #include "../View/View.h"
 
 MGame::MGame(View* view)
-	: _mineField(NULL)
+	: _mineField(new MineField(this))
     , _view(view)
 	, _lost(false)
 {
-	_mineField = new MineField(this);
     _view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
     _view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
     _view->NewGame += EventHandler<>(this, &MGame::OnNewGame);

@@ -53,8 +53,8 @@ TEST_F(NumberSquareTest, Uncover_Typical)
 	EXPECT_CALL(*_mineField, get_AdjacentMineTotal(_sut->get_Location()))
 		.Times(1)
 		.WillOnce(Return(3));
-	EXPECT_CALL(*_squareView, set_State(SquareViewState::Number3)).Times(1);
 	_sut->Bind(_squareView);
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Number3)).Times(1);
 
 	_sut->Uncover();
 

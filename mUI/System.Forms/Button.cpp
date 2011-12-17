@@ -8,12 +8,12 @@ namespace mUI{ namespace System{  namespace Forms{
 
 Button::Button()
 {
-	normal_color_ = Color::Black;
-	pressed_color_ = Color::Silver;
-	state_ = Normal;
+	_normalColor = Color::Black;
+	_pressedColor = Color::Silver;
+	_state = Normal;
 	for (size_t i = 0; i < StateMax; ++i)
 	{
-		state_images_[i] = NULL;
+		_stateImages[i] = NULL;
 	}
 }
 
@@ -25,65 +25,65 @@ void Button::OnMouseUp( MouseEventArgs* e )
 
 	if (Drawing::Rectangle(Point::Empty, get_Size()).Contains(e->Location))
 	{
-		if (state_ & Pressed)
+		if (_state & Pressed)
 		{
 			OnClick(&EventArgs::Empty);
 		}
-		state_ = Hover;
+		_state = Hover;
 	}
 	else
 	{
-		state_ = Normal;
+		_state = Normal;
 	}
 }
 
 void Button::OnMouseHover( EventArgs* e )
 {
 	Control::OnMouseHover(e);
-	state_ = static_cast<State>(state_ | Hover);
+	_state = static_cast<State>(_state | Hover);
 }
 
 void Button::OnMouseLeave( EventArgs* e )
 {
 	Control::OnMouseLeave(e);
-	state_ = static_cast<State>(state_ & ~Hover);
+	_state = static_cast<State>(_state & ~Hover);
 }
 
 void Button::OnMouseDown( MouseEventArgs* e )
 {
 	Control::OnMouseDown(e);
 	if (e->Button == MouseButtons::Left)
-		state_ = static_cast<State>(state_ | Pressed);
+		_state = static_cast<State>(_state | Pressed);
 }
 
 void Button::OnMouseEnter( EventArgs* e )
 {
 	Control::OnMouseEnter(e);
-	state_ = static_cast<State>(state_ | Hover);
+	_state = static_cast<State>(_state | Hover);
 }
 
 void Button::OnPaint( PaintEventArgs* e )
 {
-	if (state_ == Hover)
+	if (_state == Hover)
 	{
 		set_BackColor(SystemColors::ButtonHighlight);
-		Image* image = state_images_[Hover];
+		Image* image = _stateImages[Hover];
 		if (image == NULL)
-			image = state_images_[Normal];
+			image = _stateImages[Normal];
 		set_BackgroundImage(image, false);
 	}	
-	else if (state_ == HoverPressed)
+	else if (_state == HoverPressed)
 	{
 		set_BackColor(SystemColors::ButtonShadow);
-		Image* image = state_images_[Pressed];
+		Image* image = _stateImages[Pressed];
 		if (image == NULL)
-			image = state_images_[Normal];
+			image = _stateImages[Normal];
 		set_BackgroundImage(image, false);
 	}
 	else
 	{
 		set_BackColor(SystemColors::ButtonFace);
-		set_BackgroundImage(state_images_[Normal], false);
+		set_BackgroundImage(_stateImages[Normal], false);
 	}
 
 	ButtonBase::OnPaint(e);
@@ -103,17 +103,17 @@ void Button::OnMouseMove( MouseEventArgs* e )
 
 	if (!Drawing::Rectangle(Point::Empty, get_Size()).Contains(e->Location))
 	{
-		state_ = static_cast<State>(state_ & ~Hover);
+		_state = static_cast<State>(_state & ~Hover);
 	}
 	else
 	{
-		state_ = static_cast<State>(state_ | Hover);
+		_state = static_cast<State>(_state | Hover);
 	}
 }
 
 void Button::OnLeave( EventArgs* e )
 {
-	state_ = Normal;
+	_state = Normal;
 }
 
 void Button::set_NormalImage( const String& image )
@@ -133,11 +133,11 @@ void Button::set_PressedImage( const String& image )
 
 void Button::set_StateImage( State s, const String& image )
 {
-	if (state_images_[s] != NULL)
+	if (_stateImages[s] != NULL)
 	{
-		delete state_images_[s];
+		delete _stateImages[s];
 	}
-	state_images_[s] = Image::FromFile(image);
+	_stateImages[s] = Image::FromFile(image);
 }
 
 Button::~Button()
@@ -145,8 +145,8 @@ Button::~Button()
 	set_BackgroundImage(NULL, false);
 	for (size_t i = 0; i < StateMax; ++i)
 	{
-		delete state_images_[i];
-		state_images_[i] = NULL;
+		delete _stateImages[i];
+		_stateImages[i] = NULL;
 	}
 }
 

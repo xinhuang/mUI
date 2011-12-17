@@ -112,3 +112,10 @@ TEST_F(AbstractSquareTest, HasMine_Typical)
 {
 	ASSERT_FALSE(_sut->HasMine());
 }
+
+TEST_F(AbstractSquareTest, Bind_Typical)
+{
+	EXPECT_CALL(*_squareView, set_State(SquareViewState::Covered)).Times(1);
+
+	_sut->Bind(_squareView);
+}

@@ -5,26 +5,36 @@
 
 using namespace mUI::System::Drawing;
 
-MGameForm::MGameForm()
+struct MGameForm::Data
 {
-	set_Text(L"Mine Game v0.1");
-    _game = new MGame(this);
+	vector<ISquareView*> squareStates;
+	MGame* game;
+	Button gameButton;
+};
 
-    FieldSizeChangedEventArgs e(Size(10, 10));
-    OnFieldSizeChanged(&e);
+MGameForm::MGameForm() : _data(new Data())
+{
+    _data->game = new MGame(this);
+
+	InitializeComponents();
+
+	FieldSizeChangedEventArgs e(Size(10, 10));
+	OnFieldSizeChanged(&e);
 	MineTotalChangedEventArgs mineTotalChanged(20);
 	OnMineTotalChanged(&mineTotalChanged);
-    OnNewGame(&EventArgs::Empty);
+	OnNewGame(&EventArgs::Empty);
+}
+
+MGameForm::~MGameForm()
+{
+	delete _data->game;
+	DisposeSquares();
+	delete _data;
 }
 
 void MGameForm::set_RemainingMineTotal( int remainingTotal )
 {
 
-}
-
-void MGameForm::OnPaint( PaintEventArgs* e )
-{
-    Form::OnPaint(e);
 }
 
 void MGameForm::OnNewGame( EventArgs* e )
@@ -44,42 +54,45 @@ void MGameForm::OnMineTotalChanged( MineTotalChangedEventArgs* e )
 
 void MGameForm::DisposeSquares()
 {
-    for (vector<ISquareView*>::const_iterator iter = _squareStates.begin();
-        iter != _squareStates.end(); ++iter)
+    for (vector<ISquareView*>::const_iterator iter = _data->squareStates.begin();
+        iter != _data->squareStates.end(); ++iter)
     {
         delete *iter;
     }
-    _squareStates.clear();
+    _data->squareStates.clear();
 }
 
-MGameForm::~MGameForm()
+vector<ISquareView*> MGameForm::CreateSquares( const Size& fieldSize )
 {
-    DisposeSquares();
-}
-
-vector<ISquareView*> MGameForm::CreateSquares( const Size& size )
-{
-	this->Resize(size)
+	DisposeSquares();
+	this->Resize(fieldSize)
 		.Center();
 
-	for (int y = 0; y < size.Height; ++y)
+	Point squareUpperLeft(0, 35);
+
+	for (int y = 0; y < fieldSize.Height; ++y)
 	{
-		for (int x = 0; x < size.Width; ++x)
+		for (int x = 0; x < fieldSize.Width; ++x)
 		{
 			SquareControl* square = new SquareControl(this, x, y);
-			_squareStates.push_back(square);
+			_data->squareStates.push_back(square);
 			Controls.Add(*square);
 			square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
-				y * SquareControl::get_ImageSize().Height));
+				y * SquareControl::get_ImageSize().Height)  + squareUpperLeft);
 			square->Show();
 		}
     }
-	return _squareStates;
+	return _data->squareStates;
 }
 
-MGameForm& MGameForm::Resize( const Size& size )
+MGameForm& MGameForm::Resize( const Size& fieldSize )
 {
-	set_Size(size * SquareControl::get_ImageSize());
+	Size newSize = fieldSize * SquareControl::get_ImageSize();
+	newSize.Height += 24 + 10;
+	set_Size(newSize);
+	_data->gameButton.set_Location(
+		Point((newSize.Width - _data->gameButton.get_Size().Width) / 2, 
+		5));
 	return *this;
 }
 
@@ -114,3 +127,18 @@ void MGameForm::OnSquareToggleFlag( SquareEventArgs* e )
 	SquareToggleFlag(this, e);
 }
 
+void MGameForm::InitializeComponents()
+{
+	set_Text(L"Mine Game v0.1");
+	_data->gameButton.set_NormalImage(L"res/smile.png");
+	_data->gameButton.set_PressedImage(L"res/smile_pressed.png");
+	_data->gameButton.set_Size(Size(24, 24));
+	_data->gameButton.Show();
+	_data->gameButton.Click += EventHandler<>(this, &MGameForm::OnGameButtonClicked);
+	Controls.Add(_data->gameButton);
+}
+
+void MGameForm::OnGameButtonClicked(void* sender, EventArgs* e)
+{
+	OnNewGame(&EventArgs::Empty);
+}

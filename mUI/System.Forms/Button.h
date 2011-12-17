@@ -52,19 +52,19 @@ protected:
 private:
 	enum State
 	{
-		Normal		= 0,
-		Hover		= 1,
-		Pressed		= 2,
-		StateMax	= 3,
-		HoverPressed = Hover | Pressed,
+		Normal			= 0,
+		Hover			= 1,
+		Pressed			= 2,
+		StateMax		= 3,
+		HoverPressed	= Hover | Pressed,
 	};
 	void set_StateImage( State s, const String& image );
 
 private:
-	Color normal_color_;
-	Color pressed_color_;
-	State state_;
-	Drawing::Image *state_images_[StateMax];
+	Color _normalColor;
+	Color _pressedColor;
+	State _state;
+	Drawing::Image *_stateImages[StateMax];
 };
 
 }}}

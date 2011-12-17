@@ -73,6 +73,8 @@ const MineField* AbstractSquare::get_MineField() const
 void AbstractSquare::Bind( ISquareView* view )
 {
 	_view = view;
+	if (_view != 0)
+		_view->set_State(SquareViewState::Covered);
 }
 
 ISquareView* AbstractSquare::get_View()
