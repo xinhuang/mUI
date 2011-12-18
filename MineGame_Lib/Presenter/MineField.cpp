@@ -213,7 +213,6 @@ MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mine
 _shuffle:
     Shuffle(fieldMap);
 
-
     return fieldMap;
 }
 

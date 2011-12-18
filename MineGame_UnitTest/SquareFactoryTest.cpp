@@ -24,6 +24,7 @@ public:
 		_fieldSize = Size(3, 3);
 		_view = new ViewMock();
 		_game = new MGame(_view);
+        _mineField = _game->get_MineField();
 	}
 
 	virtual void TearDown()
@@ -66,6 +67,7 @@ protected:
 	static const int _middleSquareIndex = 4;
 	Size _fieldSize;
 	View* _view;
+    MineField* _mineField;
 };
 
 TEST_F(SquareFactoryTest, Constructor_Typical)
@@ -356,4 +358,14 @@ TEST_F(SquareFactoryTest, HasAdjacentMine_Typical)
 
         ASSERT_EQ(expectedResult, _sut->HasAdjacentMine(fieldMap, Size(3, 3), 4));
     }
+}
+
+TEST_F(SquareFactoryTest, CreateSquares_When1x1Mine0)
+{
+    MineField::FieldMap fieldMap(1, vector<bool>(1));
+
+    vector<ISquare*> squares = _sut->CreateSquares(_game, _mineField, fieldMap);
+
+    ASSERT_EQ(1, squares.size());
+    ASSERT_EQ(typeid(BlankSquare), typeid(*squares[0]));
 }

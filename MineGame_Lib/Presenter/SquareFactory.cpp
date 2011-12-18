@@ -19,6 +19,19 @@ vector<ISquare*> SquareFactory::CreateSquares(MGame* game, MineField* mineField)
 	return CreateSquaresUsingFieldMap(game, mineField, fieldMap);
 }
 
+vector<ISquare*> SquareFactory::CreateSquares( MGame* game, MineField* mineField, const MineField::FieldMap& fieldMap )
+{
+    vector<ISquare*> squares;
+    for (size_t x = 0; x < fieldMap.size(); ++x)
+    {
+        for (size_t y = 0; y < fieldMap.size(); ++y)
+        {
+            squares.push_back(new BlankSquare(game, mineField, x, y));
+        }
+    }
+    return squares;
+}
+
 vector<ISquare*> SquareFactory::CreateSquaresUsingFieldMap( MGame* game, 
 	MineField* mineField, const vector<bool>& fieldMap )
 {

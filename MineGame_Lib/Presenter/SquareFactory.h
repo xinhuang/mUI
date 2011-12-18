@@ -9,12 +9,13 @@ using mUI::System::Random;
 using mUI::System::Drawing::Point;
 
 class MGame;
-class MineField;
 class ISquare;
+#include "MineField.h"
 
 class SquareFactory
 {
 public:
+    virtual vector<ISquare*> CreateSquares(MGame* game, MineField* mineField, const MineField::FieldMap& fieldMap);
 	virtual vector<ISquare*> CreateSquares(MGame* game, MineField* mineField);
 	virtual vector<bool> GenerateMineFieldMap(const Size& fieldSize, int mineTotal);
 
