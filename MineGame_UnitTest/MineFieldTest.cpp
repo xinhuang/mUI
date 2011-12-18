@@ -407,3 +407,21 @@ TEST_F(MineFieldTest, GenerateFieldMap_When10x10Mine37)
     VerifyFieldMapSize(fieldMap, arbitrarySize);
     VerifyFieldMapMineTotal(fieldMap, arbitraryMineTotal);
 }
+
+TEST_F(MineFieldTest, GenerateFieldMap_WhenManyTimesCheckRandomness)
+{
+    int arbitraryMineTotal = 37;
+    Size arbitrarySize(10, 10);
+
+    MineField::FieldMap firstMap = 
+        _sut->GenerateFieldMap(arbitrarySize, arbitraryMineTotal);
+
+    for (int i = 0; i < 10; ++i)
+    {
+        MineField::FieldMap otherMap = 
+            _sut->GenerateFieldMap(arbitrarySize, arbitraryMineTotal);
+        if (otherMap != firstMap)
+            return;
+    }
+    ASSERT_FALSE(true);
+}

@@ -196,7 +196,7 @@ void MineField::TryUncover( int x, int y )
 		SquareAt(x, y)->Uncover();
 }
 
-MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mineTotal ) const
+MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mineTotal ) 
 {
     FieldMap fieldMap(fieldSize.Width, vector<bool>(fieldSize.Height, false));
 
@@ -205,11 +205,27 @@ MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mine
         for (int y = 0; y < fieldSize.Height; ++y)
         {
             if (mineTotal-- <= 0)
-                goto _end;
+                goto _shuffle;
             fieldMap[x][y] = true;
         }
     }
 
-_end:
+_shuffle:
+    Shuffle(fieldMap);
+
+
     return fieldMap;
+}
+
+void MineField::Shuffle( FieldMap &fieldMap )
+{
+    for (size_t x = 0; x < fieldMap.size(); ++x)
+    {
+        for (size_t y = 0; y < fieldMap[x].size(); ++y)
+        {
+            int nextX = _rand.Next(fieldMap.size());
+            int nextY = _rand.Next(fieldMap[x].size());
+            swap(fieldMap[x][y], fieldMap[nextX][nextY]);
+        }
+    }
 }

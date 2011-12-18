@@ -3,6 +3,7 @@
 
 #include <mUI.h>
 using mUI::System::Drawing::Size;
+using mUI::System::Random;
 
 #include <vector>
 using std::vector;
@@ -52,7 +53,10 @@ public:
 	void TryUncover( int x, int y );
 
     typedef vector<vector<bool>> FieldMap;
-    FieldMap GenerateFieldMap(const Size& fieldSize, int mineTotal) const;
+    FieldMap GenerateFieldMap(const Size& fieldSize, int mineTotal);
+
+private:
+    void Shuffle( FieldMap &fieldMap );
 
 private:
 	MGame* _game;
@@ -60,6 +64,7 @@ private:
 	SquareFactory* _squareFactory;
 	Size _size;
 	int _mineTotal;
+    Random _rand;
 };
 
 #endif // __MINEFIELD_H__
