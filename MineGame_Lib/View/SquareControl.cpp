@@ -2,10 +2,9 @@
 
 #include "MGameForm.h"
 
-SquareControl::SquareControl(MGameForm* form, int x, int y)
+SquareControl::SquareControl(int x, int y)
     : _imageIndex(SquareViewState::Covered)
-	, _location(x, y)
-	, _gameForm(form)
+	, _coordinates(x, y)
 {
     const static wchar_t* imageResources[SquareViewState::Max] = 
 	{
@@ -56,14 +55,15 @@ const Size& SquareControl::get_ImageSize()
 
 void SquareControl::OnMouseClick( MouseEventArgs* e )
 {
+	MGameForm* form = static_cast<MGameForm*>(get_Parent());
 	switch (e->Button)
 	{
 	case MouseButtons::Left:
-		_gameForm->Uncover(this);
+		form->Uncover(this);
 		break;
 
 	case MouseButtons::Right:
-		_gameForm->ToggleFlag(this);
+		form->ToggleFlag(this);
 		break;
 	}
 }
@@ -71,4 +71,10 @@ void SquareControl::OnMouseClick( MouseEventArgs* e )
 void SquareControl::set_State( SquareViewState::Enum state )
 {
 	_imageIndex = state;
+}
+
+void SquareControl::set_Coordinates( int x, int y )
+{
+	_coordinates.X = x;
+	_coordinates.Y = y;
 }

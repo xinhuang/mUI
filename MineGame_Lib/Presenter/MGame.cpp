@@ -48,6 +48,7 @@ int MGame::get_MineTotal() const
 	
 void MGame::NewGame()
 {
+	_lost = false;
     _mineField->Refresh();
     vector<ISquareView*> squareViews = _view->CreateSquares(_mineField->get_Size());
 	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
@@ -100,7 +101,7 @@ void MGame::OnMineTotalChanged( void* sender, MineTotalChangedEventArgs* e )
 void MGame::OnSquareUncovered( void* sender, SquareEventArgs* e )
 {
 	ISquareView* squareView = e->get_SquareView();
-	const Point& location = squareView->get_Location();
+	const Point& location = squareView->get_Coordinates();
 	ISquare* square = _mineField->SquareAt(location);
 	square->Uncover();
 }
@@ -113,7 +114,7 @@ bool MGame::IsLost() const
 void MGame::OnSquareToggleFlag( void* sender, SquareEventArgs* e )
 {
 	ISquareView* squareView = e->get_SquareView();
-	const Point& location = squareView->get_Location();
+	const Point& location = squareView->get_Coordinates();
 	ISquare* square = _mineField->SquareAt(location);
 	square->ToggleFlag();
 }

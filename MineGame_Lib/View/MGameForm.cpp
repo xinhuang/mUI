@@ -7,7 +7,7 @@ using namespace mUI::System::Drawing;
 
 struct MGameForm::Data
 {
-	vector<ISquareView*> squareStates;
+	vector<ISquareView*> squareViews;
 	MGame* game;
 	Button gameButton;
 };
@@ -54,12 +54,12 @@ void MGameForm::OnMineTotalChanged( MineTotalChangedEventArgs* e )
 
 void MGameForm::DisposeSquares()
 {
-    for (vector<ISquareView*>::const_iterator iter = _data->squareStates.begin();
-        iter != _data->squareStates.end(); ++iter)
+    for (vector<ISquareView*>::const_iterator iter = _data->squareViews.begin();
+        iter != _data->squareViews.end(); ++iter)
     {
         delete *iter;
     }
-    _data->squareStates.clear();
+    _data->squareViews.clear();
 }
 
 vector<ISquareView*> MGameForm::CreateSquares( const Size& fieldSize )
@@ -74,15 +74,15 @@ vector<ISquareView*> MGameForm::CreateSquares( const Size& fieldSize )
 	{
 		for (int x = 0; x < fieldSize.Width; ++x)
 		{
-			SquareControl* square = new SquareControl(this, x, y);
-			_data->squareStates.push_back(square);
+			SquareControl* square = new SquareControl(x, y);
+			_data->squareViews.push_back(square);
 			Controls.Add(*square);
 			square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
 				y * SquareControl::get_ImageSize().Height)  + squareUpperLeft);
 			square->Show();
 		}
     }
-	return _data->squareStates;
+	return _data->squareViews;
 }
 
 MGameForm& MGameForm::Resize( const Size& fieldSize )
