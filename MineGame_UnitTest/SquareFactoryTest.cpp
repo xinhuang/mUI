@@ -402,3 +402,16 @@ TEST_F(SquareFactoryTest, CreateSquares_When1x2Mine1)
     ASSERT_EQ(typeid(NumberSquare), typeid(*squares[0]));
     ASSERT_EQ(typeid(MineSquare), typeid(*squares[1]));
 }
+
+TEST_F(SquareFactoryTest, CreateSquares_When1x3Mine1)
+{
+    MineField::FieldMap fieldMap(1, vector<bool>(3));
+    fieldMap[0][0] = true;
+
+    vector<ISquare*> squares = _sut->CreateSquares(_game, _mineField, fieldMap);
+
+    ASSERT_EQ(3, squares.size());
+    ASSERT_EQ(typeid(MineSquare), typeid(*squares[0]));
+    ASSERT_EQ(typeid(NumberSquare), typeid(*squares[1]));
+    ASSERT_EQ(typeid(BlankSquare), typeid(*squares[2]));
+}
