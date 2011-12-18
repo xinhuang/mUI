@@ -39,6 +39,10 @@ public:
 	{
 		return Point(X + rhs.X, Y + rhs.Y);
 	}
+	Point operator *(const Point& rhs) const
+	{
+		return Point(X * rhs.X, Y * rhs.Y);
+	}
 
 	Point& operator -=(const Point& rhs)
 	{

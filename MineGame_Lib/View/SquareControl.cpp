@@ -2,9 +2,8 @@
 
 #include "MGameForm.h"
 
-SquareControl::SquareControl(int x, int y)
+SquareControl::SquareControl()
     : _imageIndex(SquareViewState::Covered)
-	, _coordinates(x, y)
 {
     const static wchar_t* imageResources[SquareViewState::Max] = 
 	{
@@ -73,8 +72,11 @@ void SquareControl::set_State( SquareViewState::Enum state )
 	_imageIndex = state;
 }
 
-void SquareControl::set_Coordinates( int x, int y )
+void SquareControl::set_Coordinates(const Point& coord)
 {
-	_coordinates.X = x;
-	_coordinates.Y = y;
+	_coordinates = coord;
+	Point location = get_Location();
+	location.X += coord.X * get_ImageSize().Width;
+	location.Y += coord.Y * get_ImageSize().Height;
+	set_Location(location);
 }

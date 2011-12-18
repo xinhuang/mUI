@@ -10,6 +10,7 @@ class SquareViewMock : public ISquareView
 public:
 	MOCK_METHOD1(set_State, void(SquareViewState::Enum));
 	MOCK_CONST_METHOD0(get_Coordinates, const Point&());
+	MOCK_METHOD1(set_Coordinates, void(const Point&));
 };
 
 #endif // __SQUAREVIEWMOCK_H__

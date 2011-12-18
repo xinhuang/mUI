@@ -13,14 +13,14 @@ class MGameForm;
 class SquareControl : public Control, public ISquareView
 {
 public:
-    SquareControl(int x, int y);
+    SquareControl();
     virtual ~SquareControl();
 
 	static const Size& get_ImageSize();
 
 	virtual void set_State(SquareViewState::Enum state);
 	virtual const Point& get_Coordinates() const { return _coordinates; }
-	virtual void set_Coordinates(int x, int y);
+	virtual void set_Coordinates(const Point& coord);
 
 protected:
     virtual void OnPaint( PaintEventArgs* e );

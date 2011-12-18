@@ -64,24 +64,30 @@ void MGameForm::DisposeSquares()
 
 vector<ISquareView*> MGameForm::CreateSquares( const Size& fieldSize )
 {
-	DisposeSquares();
 	this->Resize(fieldSize)
 		.Center();
 
-	Point squareUpperLeft(0, 35);
-
-	for (int y = 0; y < fieldSize.Height; ++y)
+	while (fieldSize.Width * fieldSize.Height < static_cast<int>(_data->squareViews.size()))
 	{
-		for (int x = 0; x < fieldSize.Width; ++x)
-		{
-			SquareControl* square = new SquareControl(x, y);
-			_data->squareViews.push_back(square);
-			Controls.Add(*square);
-			square->set_Location(Point(x * SquareControl::get_ImageSize().Width, 
-				y * SquareControl::get_ImageSize().Height)  + squareUpperLeft);
-			square->Show();
-		}
-    }
+		delete _data->squareViews.back();
+		_data->squareViews.pop_back();
+	}
+
+	Point fieldUpperLeft(0, 35);
+	for (int i = _data->squareViews.size(); i < fieldSize.Width * fieldSize.Height; ++i)
+	{
+		SquareControl* square = new SquareControl();
+		_data->squareViews.push_back(square);
+		Controls.Add(*square);
+		square->Show();
+	}
+
+	for (size_t i = 0; i < _data->squareViews.size(); ++i)
+	{
+		SquareControl* square = static_cast<SquareControl*>(_data->squareViews[i]);
+		square->set_Location(fieldUpperLeft);
+	}
+
 	return _data->squareViews;
 }
 
