@@ -36,7 +36,27 @@ public:
 		delete _game;
 		_game = NULL;
 		delete _view;
-	}
+    }
+
+    vector<bool> CreateFieldMap( int value, int total ) 
+    {
+        vector<bool> fieldMap(total, false);
+        for (int i = 0; i < total; ++i)
+        {
+            fieldMap[i] = (value & (1 << i)) != 0;
+        }
+        return fieldMap;
+    }
+
+    bool HasElementTrue( const vector<bool>& fieldMap ) 
+    {
+        for (size_t i = 0; i < fieldMap.size(); ++i)
+        {
+            if (fieldMap[i])
+                return true;
+        }
+        return false;
+    }
 
 protected:
 	MGame* _game;
@@ -324,4 +344,16 @@ TEST_F(SquareFactoryTest, IsMine_WhenIndexTooLarge)
 TEST_F(SquareFactoryTest, IsMine_WhenIndexTooSmall)
 {
 	ASSERT_FALSE(_sut->IsMine(_fieldMap, -1));
+}
+
+TEST_F(SquareFactoryTest, HasAdjacentMine_Typical)
+{
+    for (int i = 0; i < (1 << 9) - 1; ++i)
+    {
+        vector<bool> fieldMap = CreateFieldMap(i, 9);
+        fieldMap[4] = false;
+        bool expectedResult = HasElementTrue(fieldMap);
+
+        ASSERT_EQ(expectedResult, _sut->HasAdjacentMine(fieldMap, Size(3, 3), 4));
+    }
 }

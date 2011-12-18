@@ -33,6 +33,7 @@ void NumberSquare::Uncover()
 
 void NumberSquare::UpdateView()
 {
-	int newState = SquareViewState::Number1 + get_Number() - 1;
-	set_ViewState(static_cast<SquareViewState::Enum>(newState));
+	SquareViewState::Enum newState = static_cast<SquareViewState::Enum>(
+        SquareViewState::Number1 + get_Number() - 1);
+	set_ViewState(newState);
 }

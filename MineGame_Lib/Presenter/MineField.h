@@ -50,6 +50,9 @@ public:
 	void set_Width( int width );
 	void set_Height( int height );
 	void TryUncover( int x, int y );
+
+    vector<vector<bool>> GenerateFieldMap(const Size& fieldSize, int mineTotal) const;
+
 private:
 	MGame* _game;
 	vector<ISquare*> _squares;

@@ -195,3 +195,10 @@ void MineField::TryUncover( int x, int y )
 	if (SquareAt(x, y)->get_State() == SquareState::Covered)
 		SquareAt(x, y)->Uncover();
 }
+
+vector<vector<bool>> MineField::GenerateFieldMap( const Size& fieldSize, int mineTotal ) const
+{
+    vector<vector<bool>> fieldMap(fieldSize.Width, vector<bool>(1));
+
+    return fieldMap;
+}

@@ -318,3 +318,13 @@ TEST_F(MineFieldTest, UncoverAdjacent_WhenOneMine)
 		ASSERT_EQ(SquareState::Uncovered, _sut->SquareAt(i)->get_State());
 	}
 }
+
+TEST_F(MineFieldTest, GenerateFieldMap_When1x1NoMine)
+{
+    vector<vector<bool>> fieldMap = 
+        _sut->GenerateFieldMap(Size(1, 1), 0);
+
+    ASSERT_EQ(1, fieldMap.size());
+    ASSERT_EQ(1, fieldMap[0].size());
+    ASSERT_FALSE(fieldMap[0][0]);
+}
