@@ -33,12 +33,36 @@ vector<ISquare*> SquareFactory::CreateSquares( MGame* game, MineField* mineField
             }
             else
             {
-                square = new BlankSquare(game, mineField, x, y);
+                if (HasAdjacentMine(fieldMap, x, y))
+                    square = new NumberSquare(game, mineField, x, y);
+                else
+                    square = new BlankSquare(game, mineField, x, y);
             }
             squares.push_back(square);
         }
     }
     return squares;
+}
+
+bool SquareFactory::HasAdjacentMine( const MineField::FieldMap& squareMap, int x, int y )
+{
+    return HasMine(squareMap, x - 1,    y - 1)
+        || HasMine(squareMap, x - 1,    y)
+        || HasMine(squareMap, x - 1,    y + 1)
+        || HasMine(squareMap, x,        y - 1)
+        || HasMine(squareMap, x,        y + 1)
+        || HasMine(squareMap, x + 1,    y - 1)
+        || HasMine(squareMap, x + 1,    y)
+        || HasMine(squareMap, x + 1,    y + 1);
+}
+
+bool SquareFactory::HasMine( const MineField::FieldMap& squareMap, size_t x, size_t y )
+{
+    if (x < 0 || x >= squareMap.size())
+        return false;
+    if (y < 0 || y >= squareMap[x].size())
+        return false;
+    return squareMap[x][y];
 }
 
 vector<ISquare*> SquareFactory::CreateSquaresUsingFieldMap( MGame* game, 

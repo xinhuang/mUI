@@ -16,13 +16,15 @@ class SquareFactory
 {
 public:
     virtual vector<ISquare*> CreateSquares(MGame* game, MineField* mineField, const MineField::FieldMap& fieldMap);
+    bool HasAdjacentMine(const MineField::FieldMap& squareMap, int x, int y);
+    bool HasMine( const MineField::FieldMap& squareMap, size_t x, size_t y );
+
 	virtual vector<ISquare*> CreateSquares(MGame* game, MineField* mineField);
 	virtual vector<bool> GenerateMineFieldMap(const Size& fieldSize, int mineTotal);
 
 	virtual vector<ISquare*> CreateSquaresUsingFieldMap(MGame* game, MineField* mineField, const vector<bool>& fieldMap);
 
 	static bool HasAdjacentMine(const vector<bool>& squareMap, const Size& fieldSize, size_t i);
-
 	static bool IsMineUp		(const vector<bool>& fieldMap, const Size& fieldSize, int i);
 
 	static bool IsMine( const vector<bool> &fieldMap, int i );
@@ -33,7 +35,6 @@ public:
 	static bool IsMineDownRight	(const vector<bool>& fieldMap, const Size& fieldSize, int i);
 	static bool IsMineUpLeft	(const vector<bool>& fieldMap, const Size& fieldSize, int i);
 	static bool IsMineDownLeft	(const vector<bool>& fieldMap, const Size& fieldSize, int i);
-
 private:
 	Random _random;
 };
