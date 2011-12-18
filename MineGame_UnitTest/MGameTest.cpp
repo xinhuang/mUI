@@ -76,7 +76,7 @@ TEST_F(MGameTest, NewGame_Typical)
 	ReplaceFactoryUsingMock();
 	SquareViewMock squareViewMock;
 	vector<ISquare*> squares = CreateSquareMocks(&squareViewMock, squareTotal);
-	EXPECT_CALL(*_factoryMock, CreateSquares(_sut, _mineField))
+	EXPECT_CALL(*_factoryMock, CreateSquares(_sut, _mineField, _))
 		.Times(1)
 		.WillOnce(Return(squares));
 	vector<ISquareView*> squareViews(squareTotal, &squareViewMock);

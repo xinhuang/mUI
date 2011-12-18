@@ -62,7 +62,7 @@ void MineField::set_SquareFactory( SquareFactory* squareFactory )
 void MineField::Refresh()
 {
 	ClearFields();
-	_squares = _squareFactory->CreateSquares(_game, this);
+	_squares = _squareFactory->CreateSquares(_game, this, GenerateFieldMap(_size, _mineTotal));
 }
 
 int MineField::get_YFromIndex( int i )
@@ -198,7 +198,7 @@ void MineField::TryUncover( int x, int y )
 
 MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mineTotal ) 
 {
-    FieldMap fieldMap(fieldSize.Width, vector<bool>(fieldSize.Height, false));
+    FieldMap fieldMap(fieldSize.Height, vector<bool>(fieldSize.Width, false));
 
     for (int x = 0; x < fieldSize.Width; ++x)
     {
@@ -206,7 +206,7 @@ MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mine
         {
             if (mineTotal-- <= 0)
                 goto _shuffle;
-            fieldMap[x][y] = true;
+            fieldMap[y][x] = true;
         }
     }
 
@@ -218,13 +218,13 @@ _shuffle:
 
 void MineField::Shuffle( FieldMap &fieldMap )
 {
-    for (size_t x = 0; x < fieldMap.size(); ++x)
+    for (size_t y = 0; y < fieldMap.size(); ++y)
     {
-        for (size_t y = 0; y < fieldMap[x].size(); ++y)
+        for (size_t x = 0; x < fieldMap[y].size(); ++x)
         {
-            int nextX = _rand.Next(fieldMap.size());
-            int nextY = _rand.Next(fieldMap[x].size());
-            swap(fieldMap[x][y], fieldMap[nextX][nextY]);
+            int nextX = _rand.Next(fieldMap[y].size());
+            int nextY = _rand.Next(fieldMap.size());
+            swap(fieldMap[y][x], fieldMap[nextY][nextX]);
         }
     }
 }

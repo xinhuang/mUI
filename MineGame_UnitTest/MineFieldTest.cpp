@@ -1,4 +1,7 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+using ::testing::_;
+using ::testing::Return;
 
 #include <mUI.h>
 using mUI::System::ArgumentException;
@@ -66,6 +69,13 @@ public:
         ASSERT_EQ(expectedMineTotal, mineTotal);
     }
 
+    MineField::FieldMap MakeFourCornerMinesFieldMap() 
+    {
+        MineField::FieldMap fieldMap(3, vector<bool>(3));
+        fieldMap[0][0] = fieldMap[0][2] = fieldMap[2][0] = fieldMap[2][2] = true;
+        return fieldMap;
+    }
+
 protected:
 	static const int _arbitraryMineTotal = 20;
 	static const int _arbitraryHeight = 70;
@@ -95,11 +105,11 @@ TEST_F(MineFieldTest, MineTotal_Typical)
 
 TEST_F(MineFieldTest, SquareAt_Typical)
 {
-	_sut->Refresh();
-	for (int y = 0; y < _sut->get_Size().Height; ++y)
-	{
-		for (int x = 0; x < _sut->get_Size().Width; ++x)
-		{
+    _sut->Refresh();
+    for (int y = 0; y < _sut->get_Size().Height; ++y)
+    {
+        for (int x = 0; x < _sut->get_Size().Width; ++x)
+	    {
 			ISquare* square = _sut->SquareAt(x, y);
 			ASSERT_TRUE(NULL != square);
 			ASSERT_EQ(x, square->get_X());
@@ -108,15 +118,15 @@ TEST_F(MineFieldTest, SquareAt_Typical)
 	}
 }
 
-TEST_F(MineFieldTest, get_YFromIndex_UpLeft)
+TEST_F(MineFieldTest, get_YFromIndex_Typical)
 {
 	const Size& fieldSize = _sut->get_Size();
 	int maxIndex = _sut->get_IndexMax();
 
 	ASSERT_EQ(0, _sut->get_YFromIndex(0));
-	ASSERT_EQ(0, _sut->get_YFromIndex(1));
+	ASSERT_EQ(1, _sut->get_YFromIndex(fieldSize.Width));
+	ASSERT_EQ(fieldSize.Height - 2, _sut->get_YFromIndex(maxIndex - 1 - fieldSize.Width));
 	ASSERT_EQ(fieldSize.Height - 1, _sut->get_YFromIndex(maxIndex - 1));
-	ASSERT_EQ(fieldSize.Height - 1, _sut->get_YFromIndex(maxIndex - fieldSize.Width));
 }
 
 TEST_F(MineFieldTest, get_YFromIndex_WhenIndexTooLarge)
@@ -149,8 +159,8 @@ TEST_F(MineFieldTest, get_YFromIndex_WhenIndexTooSmall)
 
 TEST_F(MineFieldTest, get_XFromIndex_Typical)
 {
+    int x = get_ArbitraryX();
 	int y = get_ArbitraryY();
-	int x = get_ArbitraryX();
 	int i = y * _sut->get_Size().Width + x;
 
 	ASSERT_EQ(x, _sut->get_XFromIndex(i));
@@ -186,8 +196,8 @@ TEST_F(MineFieldTest, get_XFromIndex_WhenIndexTooSmall)
 
 TEST_F(MineFieldTest, get_Index_Typical)
 {
-	int y = get_ArbitraryY();
 	int x = get_ArbitraryX();
+	int y = get_ArbitraryY();
 	int i = get_IndexFrom2D(_sut->get_Size(), x, y);
 
 	ASSERT_EQ(i, _sut->get_Index(x, y));
@@ -241,10 +251,11 @@ TEST_F(MineFieldTest, get_AdjacentMineTotal_When8Mines)
 TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenNoMine)
 {
 	SquareFactory* oldFactory = _sut->get_SquareFactory();
-	vector<bool> fieldMap(9, false);
-	fieldMap[4] = true;
-	SquareFactoryFake newFactory(fieldMap);
-	_sut->set_SquareFactory(&newFactory);
+	SquareFactoryMock factoryMock;
+	_sut->set_SquareFactory(&factoryMock);
+    vector<ISquare*> squares = oldFactory->CreateSquares(_game, _sut, 
+                                                         MineField::FieldMap(3, vector<bool>(3)));
+    EXPECT_CALL(factoryMock, CreateSquares(_, _, _)).WillOnce(Return(squares));
 	_sut->set_Size(Size(3, 3));
 	_sut->Refresh();
 
@@ -255,15 +266,12 @@ TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenNoMine)
 
 TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenMinesAtFourCorner)
 {
-	SquareFactory* oldFactory = _sut->get_SquareFactory();
-	vector<bool> fieldMap(9, false);
-	fieldMap[4] = true;
-	fieldMap[0] = true;
-	fieldMap[2] = true;
-	fieldMap[6] = true;
-	fieldMap[8] = true;
-	SquareFactoryFake newFactory(fieldMap);
-	_sut->set_SquareFactory(&newFactory);
+    SquareFactory* oldFactory = _sut->get_SquareFactory();
+    SquareFactoryMock factoryMock;
+    MineField::FieldMap fieldMap = MakeFourCornerMinesFieldMap();
+    vector<ISquare*> squares = oldFactory->CreateSquares(_game, _sut, fieldMap);
+    EXPECT_CALL(factoryMock, CreateSquares(_, _, _)).WillOnce(Return(squares));
+    _sut->set_SquareFactory(&factoryMock);
 	_sut->set_Size(Size(3, 3));
 	_sut->Refresh();
 
@@ -288,9 +296,11 @@ TEST_F(MineFieldTest, get_AdjacentMineTotal_WhenSquareIsAtBoundary)
 TEST_F(MineFieldTest, UncoverAdjacent_Typical)
 {
 	SquareFactory* oldFactory = _sut->get_SquareFactory();
-	vector<bool> fieldMap(9, false);
-	SquareFactoryFake newFactory(fieldMap);
-	_sut->set_SquareFactory(&newFactory);
+    MineField::FieldMap fieldMap(3, vector<bool>(3));
+    SquareFactoryMock factoryMock;
+    vector<ISquare*> squares = oldFactory->CreateSquares(_game, _sut, fieldMap);
+    EXPECT_CALL(factoryMock, CreateSquares(_, _, _)).WillOnce(Return(squares));
+	_sut->set_SquareFactory(&factoryMock);
 	_sut->set_Size(Size(3, 3));
 	_sut->Refresh();
 	_sut->set_SquareFactory(oldFactory);
@@ -306,9 +316,11 @@ TEST_F(MineFieldTest, UncoverAdjacent_Typical)
 TEST_F(MineFieldTest, UncoverAdjacent_WhenAtCorner)
 {
 	SquareFactory* oldFactory = _sut->get_SquareFactory();
-	vector<bool> fieldMap(6, false);
-	SquareFactoryFake newFactory(fieldMap);
-	_sut->set_SquareFactory(&newFactory);
+    MineField::FieldMap fieldMap(2, vector<bool>(3));
+    SquareFactoryMock factoryMock;
+    vector<ISquare*> squares = oldFactory->CreateSquares(_game, _sut, fieldMap);
+    EXPECT_CALL(factoryMock, CreateSquares(_, _, _)).WillOnce(Return(squares));
+	_sut->set_SquareFactory(&factoryMock);
 	_sut->set_Size(Size(2, 3));
 	_sut->Refresh();
 	_sut->set_SquareFactory(oldFactory);
@@ -323,11 +335,13 @@ TEST_F(MineFieldTest, UncoverAdjacent_WhenAtCorner)
 
 TEST_F(MineFieldTest, UncoverAdjacent_WhenOneMine)
 {
-	SquareFactory* oldFactory = _sut->get_SquareFactory();
-	vector<bool> fieldMap(9, false);
-	fieldMap[0] = true;
-	SquareFactoryFake newFactory(fieldMap);
-	_sut->set_SquareFactory(&newFactory);
+    SquareFactory* oldFactory = _sut->get_SquareFactory();
+    MineField::FieldMap fieldMap(3, vector<bool>(3));
+    fieldMap[0][0] = true;
+    SquareFactoryMock factoryMock;
+    vector<ISquare*> squares = oldFactory->CreateSquares(_game, _sut, fieldMap);
+    EXPECT_CALL(factoryMock, CreateSquares(_, _, _)).WillOnce(Return(squares));
+	_sut->set_SquareFactory(&factoryMock);
 	_sut->set_Size(Size(3, 3));
 	_sut->Refresh();
 	_sut->set_SquareFactory(oldFactory);
@@ -366,11 +380,10 @@ TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine0)
     MineField::FieldMap fieldMap = 
         _sut->GenerateFieldMap(Size(2, 1), 0);
 
-    ASSERT_EQ(2, fieldMap.size());
-    ASSERT_EQ(1, fieldMap[0].size());
-    ASSERT_EQ(1, fieldMap[1].size());
+    ASSERT_EQ(1, fieldMap.size());
+    ASSERT_EQ(2, fieldMap[0].size());
     ASSERT_FALSE(fieldMap[0][0]);
-    ASSERT_FALSE(fieldMap[1][0]);
+    ASSERT_FALSE(fieldMap[0][1]);
 }
 
 TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine1)
@@ -378,10 +391,9 @@ TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine1)
     MineField::FieldMap fieldMap = 
         _sut->GenerateFieldMap(Size(2, 1), 1);
 
-    ASSERT_EQ(2, fieldMap.size());
-    ASSERT_EQ(1, fieldMap[0].size());
-    ASSERT_EQ(1, fieldMap[1].size());
-    ASSERT_TRUE(fieldMap[0][0] ^ fieldMap[1][0]);
+    ASSERT_EQ(1, fieldMap.size());
+    ASSERT_EQ(2, fieldMap[0].size());
+    ASSERT_TRUE(fieldMap[0][0] ^ fieldMap[0][1]);
 }
 
 TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine2)
@@ -389,11 +401,10 @@ TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine2)
     MineField::FieldMap fieldMap = 
         _sut->GenerateFieldMap(Size(2, 1), 2);
 
-    ASSERT_EQ(2, fieldMap.size());
-    ASSERT_EQ(1, fieldMap[0].size());
-    ASSERT_EQ(1, fieldMap[1].size());
+    ASSERT_EQ(1, fieldMap.size());
+    ASSERT_EQ(2, fieldMap[0].size());
     ASSERT_TRUE(fieldMap[0][0]);
-    ASSERT_TRUE(fieldMap[1][0]);
+    ASSERT_TRUE(fieldMap[0][1]);
 }
 
 TEST_F(MineFieldTest, GenerateFieldMap_When10x10Mine37)

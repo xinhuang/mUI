@@ -24,7 +24,8 @@ private:
 class SquareFactoryMock : public SquareFactory
 {
 public:
-	MOCK_METHOD2(CreateSquares, vector<ISquare*>(MGame* game, MineField* mineField));
+    MOCK_METHOD2(CreateSquares, vector<ISquare*>(MGame* game, MineField* mineField));
+	MOCK_METHOD3(CreateSquares, vector<ISquare*>(MGame* game, MineField* mineField, const MineField::FieldMap&));
 	MOCK_METHOD2(GenerateMineFieldMap, vector<bool>(const Size& fieldSize, 
 		int mineTotal));
 	MOCK_METHOD3(CreateSquaresUsingFieldMap, vector<ISquare*>(MGame* game, 
