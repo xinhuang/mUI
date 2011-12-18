@@ -39,12 +39,16 @@ public:
 		delete _view;
     }
 
-    vector<bool> CreateFieldMap( int value, int total ) 
+    MineField::FieldMap CreateFieldMap(int value, const Size& size) 
     {
-        vector<bool> fieldMap(total, false);
-        for (int i = 0; i < total; ++i)
+        MineField::FieldMap fieldMap(size.Height, vector<bool>(size.Width));
+        for (int y = 0; y < size.Height; ++y)
         {
-            fieldMap[i] = (value & (1 << i)) != 0;
+            for (int x = 0; x < size.Width; ++x)
+            {
+                int i = y * size.Width + x;
+                fieldMap[y][x] = (value & (1 << i)) != 0;
+            }
         }
         return fieldMap;
     }
@@ -129,4 +133,15 @@ TEST_F(SquareFactoryTest, CreateSquares_When1x3Mine1)
     ASSERT_EQ(typeid(MineSquare), typeid(*squares[0]));
     ASSERT_EQ(typeid(NumberSquare), typeid(*squares[1]));
     ASSERT_EQ(typeid(BlankSquare), typeid(*squares[2]));
+}
+
+TEST_F(SquareFactoryTest, HasAdjacentMine_BruteForce)
+{
+    for (int value = 0; value < 0x200; ++value)
+    {
+        MineField::FieldMap fieldMap = CreateFieldMap(value, Size(3, 3));
+        bool expect = (value & 0x1EF) != 0;
+
+        ASSERT_EQ(expect, _sut->HasAdjacentMine(fieldMap, 1, 1));
+    }
 }
