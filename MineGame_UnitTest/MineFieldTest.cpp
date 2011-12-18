@@ -42,7 +42,29 @@ public:
 	int get_ArbitraryX() const
 	{
 		return static_cast<int>(_sut->get_Size().Width * 0.7);
-	}
+    }
+
+    void VerifyFieldMapSize(const MineField::FieldMap& fieldMap, const Size& expectedSize) 
+    {
+        ASSERT_EQ(expectedSize.Width, fieldMap.size());
+        for (size_t i = 0; i < fieldMap.size(); ++i)
+        {
+            ASSERT_EQ(expectedSize.Height, fieldMap[i].size());
+        }
+    }
+
+    void VerifyFieldMapMineTotal(const MineField::FieldMap& fieldMap, int expectedMineTotal) 
+    {
+        int mineTotal = 0;
+        for (size_t x = 0; x < fieldMap.size(); ++x)
+        {
+            for (size_t y = 0; y < fieldMap[x].size(); ++y)
+            {
+                mineTotal += fieldMap[x][y] ? 1 : 0;
+            }
+        }
+        ASSERT_EQ(expectedMineTotal, mineTotal);
+    }
 
 protected:
 	static const int _arbitraryMineTotal = 20;
@@ -319,12 +341,69 @@ TEST_F(MineFieldTest, UncoverAdjacent_WhenOneMine)
 	}
 }
 
-TEST_F(MineFieldTest, GenerateFieldMap_When1x1NoMine)
+TEST_F(MineFieldTest, GenerateFieldMap_When1x1Mine0)
 {
-    vector<vector<bool>> fieldMap = 
+    MineField::FieldMap fieldMap = 
         _sut->GenerateFieldMap(Size(1, 1), 0);
 
     ASSERT_EQ(1, fieldMap.size());
     ASSERT_EQ(1, fieldMap[0].size());
     ASSERT_FALSE(fieldMap[0][0]);
+}
+
+TEST_F(MineFieldTest, GenerateFieldMap_When1x1Mine1)
+{
+    MineField::FieldMap fieldMap = 
+        _sut->GenerateFieldMap(Size(1, 1), 1);
+
+    ASSERT_EQ(1, fieldMap.size());
+    ASSERT_EQ(1, fieldMap[0].size());
+    ASSERT_TRUE(fieldMap[0][0]);
+}
+
+TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine0)
+{
+    MineField::FieldMap fieldMap = 
+        _sut->GenerateFieldMap(Size(2, 1), 0);
+
+    ASSERT_EQ(2, fieldMap.size());
+    ASSERT_EQ(1, fieldMap[0].size());
+    ASSERT_EQ(1, fieldMap[1].size());
+    ASSERT_FALSE(fieldMap[0][0]);
+    ASSERT_FALSE(fieldMap[1][0]);
+}
+
+TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine1)
+{
+    MineField::FieldMap fieldMap = 
+        _sut->GenerateFieldMap(Size(2, 1), 1);
+
+    ASSERT_EQ(2, fieldMap.size());
+    ASSERT_EQ(1, fieldMap[0].size());
+    ASSERT_EQ(1, fieldMap[1].size());
+    ASSERT_TRUE(fieldMap[0][0] ^ fieldMap[1][0]);
+}
+
+TEST_F(MineFieldTest, GenerateFieldMap_When2x1Mine2)
+{
+    MineField::FieldMap fieldMap = 
+        _sut->GenerateFieldMap(Size(2, 1), 2);
+
+    ASSERT_EQ(2, fieldMap.size());
+    ASSERT_EQ(1, fieldMap[0].size());
+    ASSERT_EQ(1, fieldMap[1].size());
+    ASSERT_TRUE(fieldMap[0][0]);
+    ASSERT_TRUE(fieldMap[1][0]);
+}
+
+TEST_F(MineFieldTest, GenerateFieldMap_When10x10Mine37)
+{
+    int arbitraryMineTotal = 37;
+    Size arbitrarySize(10, 10);
+
+    MineField::FieldMap fieldMap = 
+        _sut->GenerateFieldMap(arbitrarySize, arbitraryMineTotal);
+
+    VerifyFieldMapSize(fieldMap, arbitrarySize);
+    VerifyFieldMapMineTotal(fieldMap, arbitraryMineTotal);
 }

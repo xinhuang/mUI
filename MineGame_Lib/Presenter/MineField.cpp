@@ -196,9 +196,20 @@ void MineField::TryUncover( int x, int y )
 		SquareAt(x, y)->Uncover();
 }
 
-vector<vector<bool>> MineField::GenerateFieldMap( const Size& fieldSize, int mineTotal ) const
+MineField::FieldMap MineField::GenerateFieldMap( const Size& fieldSize, int mineTotal ) const
 {
-    vector<vector<bool>> fieldMap(fieldSize.Width, vector<bool>(1));
+    FieldMap fieldMap(fieldSize.Width, vector<bool>(fieldSize.Height, false));
 
+    for (int x = 0; x < fieldSize.Width; ++x)
+    {
+        for (int y = 0; y < fieldSize.Height; ++y)
+        {
+            if (mineTotal-- <= 0)
+                goto _end;
+            fieldMap[x][y] = true;
+        }
+    }
+
+_end:
     return fieldMap;
 }

@@ -51,7 +51,8 @@ public:
 	void set_Height( int height );
 	void TryUncover( int x, int y );
 
-    vector<vector<bool>> GenerateFieldMap(const Size& fieldSize, int mineTotal) const;
+    typedef vector<vector<bool>> FieldMap;
+    FieldMap GenerateFieldMap(const Size& fieldSize, int mineTotal) const;
 
 private:
 	MGame* _game;
