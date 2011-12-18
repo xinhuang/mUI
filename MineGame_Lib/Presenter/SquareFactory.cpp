@@ -24,9 +24,18 @@ vector<ISquare*> SquareFactory::CreateSquares( MGame* game, MineField* mineField
     vector<ISquare*> squares;
     for (size_t x = 0; x < fieldMap.size(); ++x)
     {
-        for (size_t y = 0; y < fieldMap.size(); ++y)
+        for (size_t y = 0; y < fieldMap[x].size(); ++y)
         {
-            squares.push_back(new BlankSquare(game, mineField, x, y));
+            ISquare* square;
+            if (fieldMap[x][y])
+            {
+                square = new MineSquare(game, mineField, x, y);
+            }
+            else
+            {
+                square = new BlankSquare(game, mineField, x, y);
+            }
+            squares.push_back(square);
         }
     }
     return squares;
