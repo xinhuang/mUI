@@ -98,7 +98,7 @@ void MineFieldView::OnSquareMouseDown( MouseEventArgs* e )
 
 void MineFieldView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
 {
-	OnSquareMouseUp(e);
+	SquareMouseUp(this, e);
 }
 
 void MineFieldView::OnSquareMouseUp( MouseEventArgs* e )
