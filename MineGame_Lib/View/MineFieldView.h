@@ -7,7 +7,7 @@ using std::vector;
 #include <mUI.h>
 using namespace mUI::System::Forms;
 
-#include "ISquareView.h"
+#include "View.h"
 
 class MineFieldView : public Control
 {
@@ -18,10 +18,15 @@ public:
 	void CreateSquares(const Size& fieldSize);
 	vector<ISquareView*> get_SquareViews() const;
 
-	void Uncover(ISquareView* squareView);
-	void ToggleFlag(ISquareView* squareView);
+	SquareEventHandler Uncover;
+	SquareEventHandler ToggleFlag;
 
 protected:
+	virtual void OnUncover(SquareEventArgs* e);
+	virtual void OnToggleFlag(SquareEventArgs* e);
+
+	void OnSquareMouseClick(void* sender, MouseEventArgs* e);
+
 	void Resize(const Size& fieldSize);
 
 private:

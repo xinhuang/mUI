@@ -39,6 +39,7 @@ void MineFieldView::CreateSquares(const Size& fieldSize)
 	while (squareTotal > _d->squareViews.size())
 	{
 		SquareView* square = new SquareView();
+		square->MouseClick += MouseEventHandler(this, &MineFieldView::OnSquareMouseClick);
 		_d->squareViews.push_back(square);
 		Controls.Add(*square);
 	}
@@ -57,14 +58,28 @@ void MineFieldView::Resize(const Size& fieldSize)
 	set_Size(newSize);
 }
 
-void MineFieldView::Uncover( ISquareView* squareView )
+void MineFieldView::OnUncover( SquareEventArgs* e )
 {
-	MGameView* parent = static_cast<MGameView*>(get_Parent());
-	parent->Uncover(squareView);
+	Uncover(this, e);
 }
 
-void MineFieldView::ToggleFlag( ISquareView* squareView )
+void MineFieldView::OnToggleFlag( SquareEventArgs* e )
 {
-	MGameView* parent = static_cast<MGameView*>(get_Parent());
-	parent->ToggleFlag(squareView);
+	ToggleFlag(this, e);
+}
+
+void MineFieldView::OnSquareMouseClick( void* sender, MouseEventArgs* e )
+{
+	SquareView* square = static_cast<SquareView*>(sender);
+	SquareEventArgs sea(square);
+	switch (e->Button)
+	{
+	case MouseButtons::Left:
+		OnUncover(&sea);
+		break;
+
+	case MouseButtons::Right:
+		OnToggleFlag(&sea);
+		break;
+	}
 }

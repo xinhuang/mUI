@@ -52,21 +52,6 @@ const Size& SquareView::get_ImageSize()
 	static Size size(16, 16); return size;
 }
 
-void SquareView::OnMouseClick( MouseEventArgs* e )
-{
-	MineFieldView* parent = static_cast<MineFieldView*>(get_Parent());
-	switch (e->Button)
-	{
-	case MouseButtons::Left:
-		parent->Uncover(this);
-		break;
-
-	case MouseButtons::Right:
-		parent->ToggleFlag(this);
-		break;
-	}
-}
-
 void SquareView::set_State( SquareViewState::Enum state )
 {
 	_imageIndex = state;

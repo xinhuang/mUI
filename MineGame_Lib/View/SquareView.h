@@ -24,7 +24,6 @@ public:
 
 protected:
     virtual void OnPaint( PaintEventArgs* e );
-	virtual void OnMouseClick( MouseEventArgs* e );
 
 private:
     size_t _currentIndex;
