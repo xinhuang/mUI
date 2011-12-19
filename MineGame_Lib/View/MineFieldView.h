@@ -20,12 +20,18 @@ public:
 
 	SquareEventHandler Uncover;
 	SquareEventHandler ToggleFlag;
+	EventHandler<MouseEventArgs*> SquareMouseDown;
+	EventHandler<MouseEventArgs*> SquareMouseUp;
 
 protected:
 	virtual void OnUncover(SquareEventArgs* e);
 	virtual void OnToggleFlag(SquareEventArgs* e);
+	virtual void OnSquareMouseDown(MouseEventArgs* e);
+	virtual void OnSquareMouseUp(MouseEventArgs* e);
 
 	void OnSquareMouseClick(void* sender, MouseEventArgs* e);
+	void OnSquareMouseDown(void* sender, MouseEventArgs* e);
+	void OnSquareMouseUp(void* sender, MouseEventArgs* e);
 
 	void Resize(const Size& fieldSize);
 

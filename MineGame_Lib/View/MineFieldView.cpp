@@ -40,6 +40,8 @@ void MineFieldView::CreateSquares(const Size& fieldSize)
 	{
 		SquareView* square = new SquareView();
 		square->MouseClick += MouseEventHandler(this, &MineFieldView::OnSquareMouseClick);
+		square->MouseDown += MouseEventHandler(this, &MineFieldView::OnSquareMouseDown);
+		square->MouseUp += MouseEventHandler(this, &MineFieldView::OnSquareMouseUp);
 		_d->squareViews.push_back(square);
 		Controls.Add(*square);
 	}
@@ -82,4 +84,24 @@ void MineFieldView::OnSquareMouseClick( void* sender, MouseEventArgs* e )
 		OnToggleFlag(&sea);
 		break;
 	}
+}
+
+void MineFieldView::OnSquareMouseDown( void* sender, MouseEventArgs* e )
+{
+	OnSquareMouseDown(e);
+}
+
+void MineFieldView::OnSquareMouseDown( MouseEventArgs* e )
+{
+	SquareMouseDown(this, e);
+}
+
+void MineFieldView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
+{
+	OnSquareMouseUp(e);
+}
+
+void MineFieldView::OnSquareMouseUp( MouseEventArgs* e )
+{
+	SquareMouseUp(this, e);
 }
