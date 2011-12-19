@@ -1,6 +1,6 @@
 #include "MineFieldView.h"
 
-#include "SquareControl.h"
+#include "SquareView.h"
 #include "MGameForm.h"
 
 struct MineFieldView::Data
@@ -38,7 +38,7 @@ void MineFieldView::CreateSquares(const Size& fieldSize)
 
 	while (squareTotal > _d->squareViews.size())
 	{
-		SquareControl* square = new SquareControl();
+		SquareView* square = new SquareView();
 		_d->squareViews.push_back(square);
 		Controls.Add(*square);
 	}
@@ -53,7 +53,7 @@ vector<ISquareView*> MineFieldView::get_SquareViews() const
 
 void MineFieldView::Resize(const Size& fieldSize)
 {
-	Size newSize = fieldSize * SquareControl::get_ImageSize();
+	Size newSize = fieldSize * SquareView::get_ImageSize();
 	set_Size(newSize);
 }
 

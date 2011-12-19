@@ -1,7 +1,7 @@
 #include "MGameForm.h"
 
 #include "../Presenter/MGame.h"
-#include "SquareControl.h"
+#include "SquareView.h"
 #include "MineFieldView.h"
 
 using namespace mUI::System::Drawing;

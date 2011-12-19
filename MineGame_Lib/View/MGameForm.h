@@ -9,7 +9,7 @@ using namespace mUI::System::Forms;
 #include <vector>
 using std::vector;
 
-class SquareControl;
+class SquareView;
 class MGame;
 
 class MGameForm : public Form, public View
