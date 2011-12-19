@@ -8,7 +8,7 @@ using namespace mUI::System::Drawing;
 
 #include "View.h"
 
-class MGameForm;
+class MGameView;
 
 class SquareView : public Control, public ISquareView
 {

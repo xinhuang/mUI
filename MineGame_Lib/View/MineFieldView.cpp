@@ -1,7 +1,7 @@
 #include "MineFieldView.h"
 
 #include "SquareView.h"
-#include "MGameForm.h"
+#include "MGameView.h"
 
 struct MineFieldView::Data
 {
@@ -59,12 +59,12 @@ void MineFieldView::Resize(const Size& fieldSize)
 
 void MineFieldView::Uncover( ISquareView* squareView )
 {
-	MGameForm* parent = static_cast<MGameForm*>(get_Parent());
+	MGameView* parent = static_cast<MGameView*>(get_Parent());
 	parent->Uncover(squareView);
 }
 
 void MineFieldView::ToggleFlag( ISquareView* squareView )
 {
-	MGameForm* parent = static_cast<MGameForm*>(get_Parent());
+	MGameView* parent = static_cast<MGameView*>(get_Parent());
 	parent->ToggleFlag(squareView);
 }

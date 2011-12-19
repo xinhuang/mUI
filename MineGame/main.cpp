@@ -1,4 +1,4 @@
-#include <View/MGameForm.h>
+#include <View/MGameView.h>
 #include <mUI.h>
 using namespace mUI::System::Forms;
 #include <Windows.h>
@@ -7,7 +7,7 @@ int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 {
 	mUI::Extra::HgeContext context;
 	Application::StartHge(context);
-	Application::Run(new MGameForm());
+	Application::Run(new MGameView());
 
 	return EXIT_SUCCESS;
 }
