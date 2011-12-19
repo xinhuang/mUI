@@ -2,14 +2,15 @@
 
 #include "../Presenter/MGame.h"
 #include "SquareControl.h"
+#include "MineFieldView.h"
 
 using namespace mUI::System::Drawing;
 
 struct MGameForm::Data
 {
-	vector<ISquareView*> squareViews;
 	MGame* game;
 	Button gameButton;
+	MineFieldView fieldView;
 };
 
 MGameForm::MGameForm() : _data(new Data())
@@ -28,7 +29,6 @@ MGameForm::MGameForm() : _data(new Data())
 MGameForm::~MGameForm()
 {
 	delete _data->game;
-	DisposeSquares();
 	delete _data;
 }
 
@@ -52,49 +52,19 @@ void MGameForm::OnMineTotalChanged( MineTotalChangedEventArgs* e )
     MineTotalChanged(this, e);
 }
 
-void MGameForm::DisposeSquares()
-{
-    for (vector<ISquareView*>::const_iterator iter = _data->squareViews.begin();
-        iter != _data->squareViews.end(); ++iter)
-    {
-        delete *iter;
-    }
-    _data->squareViews.clear();
-}
-
 vector<ISquareView*> MGameForm::CreateSquares( const Size& fieldSize )
 {
+	_data->fieldView.CreateSquares(fieldSize);
 	this->Resize(fieldSize)
 		.Center();
-
-	while (fieldSize.Width * fieldSize.Height < static_cast<int>(_data->squareViews.size()))
-	{
-		delete _data->squareViews.back();
-		_data->squareViews.pop_back();
-	}
-
-	Point fieldUpperLeft(0, 35);
-	for (int i = _data->squareViews.size(); i < fieldSize.Width * fieldSize.Height; ++i)
-	{
-		SquareControl* square = new SquareControl();
-		_data->squareViews.push_back(square);
-		Controls.Add(*square);
-		square->Show();
-	}
-
-	for (size_t i = 0; i < _data->squareViews.size(); ++i)
-	{
-		SquareControl* square = static_cast<SquareControl*>(_data->squareViews[i]);
-		square->set_Location(fieldUpperLeft);
-	}
-
-	return _data->squareViews;
+	return _data->fieldView.get_SquareViews();
 }
 
 MGameForm& MGameForm::Resize( const Size& fieldSize )
 {
-	Size newSize = fieldSize * SquareControl::get_ImageSize();
+	Size newSize = _data->fieldView.get_Size();
 	newSize.Height += 24 + 10;
+	_data->fieldView.set_Location(Point(0, 34));
 	set_Size(newSize);
 	_data->gameButton.set_Location(
 		Point((newSize.Width - _data->gameButton.get_Size().Width) / 2, 
@@ -142,6 +112,8 @@ void MGameForm::InitializeComponents()
 	_data->gameButton.Show();
 	_data->gameButton.Click += EventHandler<>(this, &MGameForm::OnGameButtonClicked);
 	Controls.Add(_data->gameButton);
+	Controls.Add(_data->fieldView);
+	_data->fieldView.Show();
 }
 
 void MGameForm::OnGameButtonClicked(void* sender, EventArgs* e)

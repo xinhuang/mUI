@@ -30,7 +30,6 @@ private:
     size_t _currentIndex;
     vector<Image*> _imageList;
 	Point _coordinates;
-	MGameForm* _gameForm;
     SquareViewState::Enum _imageIndex;
 };
 

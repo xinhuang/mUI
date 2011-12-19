@@ -1,6 +1,6 @@
 #include "SquareControl.h"
 
-#include "MGameForm.h"
+#include "MineFieldView.h"
 
 SquareControl::SquareControl()
     : _imageIndex(SquareViewState::Covered)
@@ -54,15 +54,15 @@ const Size& SquareControl::get_ImageSize()
 
 void SquareControl::OnMouseClick( MouseEventArgs* e )
 {
-	MGameForm* form = static_cast<MGameForm*>(get_Parent());
+	MineFieldView* parent = static_cast<MineFieldView*>(get_Parent());
 	switch (e->Button)
 	{
 	case MouseButtons::Left:
-		form->Uncover(this);
+		parent->Uncover(this);
 		break;
 
 	case MouseButtons::Right:
-		form->ToggleFlag(this);
+		parent->ToggleFlag(this);
 		break;
 	}
 }
@@ -75,8 +75,8 @@ void SquareControl::set_State( SquareViewState::Enum state )
 void SquareControl::set_Coordinates(const Point& coord)
 {
 	_coordinates = coord;
-	Point location = get_Location();
-	location.X += coord.X * get_ImageSize().Width;
-	location.Y += coord.Y * get_ImageSize().Height;
+	Point location;
+	location.X = coord.X * get_ImageSize().Width;
+	location.Y = coord.Y * get_ImageSize().Height;
 	set_Location(location);
 }

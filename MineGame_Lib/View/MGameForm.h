@@ -36,7 +36,6 @@ protected:
     virtual void OnMineTotalChanged(MineTotalChangedEventArgs* e);
     virtual void OnNewGame(EventArgs* e);
 
-	void DisposeSquares();
 	void InitializeComponents();
 	void OnGameButtonClicked(void* sender, EventArgs* e);
 private:
