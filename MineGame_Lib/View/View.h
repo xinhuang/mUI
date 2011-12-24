@@ -1,14 +1,14 @@
 #ifndef __VIEW_H__
 #define __VIEW_H__
 
-#include "../Presenter/ISquare.h"
-#include "SquareEventArgs.h"
+class ISquare;
 
 #include <mUI.h>
 using namespace mUI;
 using namespace mUI::System;
 using namespace mUI::System::Drawing;
 
+#include "SquareEventArgs.h"
 #include "FieldSizeChangedEventArgs.h"
 #include "MineTotalChangedEventArgs.h"
 #include "ISquareView.h"

@@ -1,5 +1,6 @@
 #include "MGame.h"
 #include "MineField.h"
+#include "ISquare.h"
 
 #include <mUI.h>
 #include "../View/View.h"
