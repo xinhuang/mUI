@@ -17,7 +17,6 @@ struct MGameView::Data
 MGameView::MGameView() : _data(new Data())
 {
     _data->game = new MGame(this);
-	_data->lost = false;
 
 	InitializeComponents();
 
@@ -95,8 +94,8 @@ void MGameView::OnSquareToggleFlag( void* sender, SquareEventArgs* e )
 
 void MGameView::InitializeComponents()
 {
-	set_Text(L"Mine Game v0.1");
-	_data->gameButton.set_NormalImage(L"res/smile.png");
+    set_Text(L"Mine Game v0.1");
+    _data->gameButton.set_NormalImage(L"res/smile.png");
 	_data->gameButton.set_PressedImage(L"res/smile_pressed.png");
 	_data->gameButton.set_Size(Size(24, 24));
 	_data->gameButton.Show();
@@ -118,6 +117,8 @@ void MGameView::OnGameButtonClicked(void* sender, EventArgs* e)
 
 void MGameView::OnSquareMouseDown( void* sender, MouseEventArgs* e )
 {
+    if (_data->lost)
+        return;
 	if (e->Button == MouseButtons::Left)
 	{
 		_data->gameButton.set_NormalImage(L"res/oops.png");
@@ -126,6 +127,8 @@ void MGameView::OnSquareMouseDown( void* sender, MouseEventArgs* e )
 
 void MGameView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
 {
+    if (_data->lost)
+        return;
 	if (e->Button == MouseButtons::Left)
 	{
 		_data->gameButton.set_NormalImage(L"res/smile.png");
@@ -134,5 +137,13 @@ void MGameView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
 
 void MGameView::set_Lost( bool value )
 {
-	_data->lost = value;
+    _data->lost = value;
+    if (_data->lost)
+    {
+        _data->gameButton.set_NormalImage(L"res/xxface.png");
+    }
+    else
+    {
+        _data->gameButton.set_NormalImage(L"res/smile.png");
+    }
 }

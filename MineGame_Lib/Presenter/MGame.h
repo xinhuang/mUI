@@ -37,6 +37,8 @@ protected:
 	virtual void OnSquareUncovered(void* sender, SquareEventArgs* e);
 	virtual void OnSquareToggleFlag(void* sender, SquareEventArgs* e);
 
+    void set_Lost(bool value);
+
 private:
 	MineField* _mineField;
 	View* _view;

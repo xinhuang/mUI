@@ -5,11 +5,12 @@
 #include <mUI.h>
 #include "../View/View.h"
 
+#pragma 
 MGame::MGame(View* view)
-	: _mineField(new MineField(this))
-    , _view(view)
-	, _lost(false)
+	: _view(view)
 {
+    set_Lost(false);
+    _mineField = new MineField(this);
     _view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
     _view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
     _view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
@@ -49,7 +50,7 @@ int MGame::get_MineTotal() const
 	
 void MGame::NewGame()
 {
-	_lost = false;
+	set_Lost(false);
     _mineField->Refresh();
     vector<ISquareView*> squareViews = _view->CreateSquares(_mineField->get_Size());
 	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
@@ -69,7 +70,7 @@ void MGame::Lose()
 	if (_lost)
 		return;
 
-	_lost = true;
+    set_Lost(true);
 	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
 	{
 		ISquare* square = _mineField->SquareAt(i);
@@ -118,4 +119,10 @@ void MGame::OnSquareToggleFlag( void* sender, SquareEventArgs* e )
 	const Point& location = squareView->get_Coordinates();
 	ISquare* square = _mineField->SquareAt(location);
 	square->ToggleFlag();
+}
+
+void MGame::set_Lost( bool value )
+{
+    _lost = value;
+    _view->set_Lost(_lost);
 }
