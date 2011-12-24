@@ -39,16 +39,32 @@ TEST_F(MineSquareTest, Constructor_Typical)
 TEST_F(MineSquareTest, Uncover_Typical)
 {
     ViewMock view;
-	MGameMock game(&view);
-	MineSquare mineSquare(&game, NULL, 0, 0);
-	SquareViewMock squareView;
-	mineSquare.Bind(&squareView);
-	EXPECT_CALL(squareView, set_State(SquareViewState::Boomed)).Times(1);	
-	EXPECT_CALL(game, Lose()).Times(1);
+    MGameMock game(&view);
+    MineSquare mineSquare(&game, NULL, 0, 0);
+    SquareViewMock squareView;
+    mineSquare.Bind(&squareView);
+    EXPECT_CALL(squareView, set_State(SquareViewState::Boomed)).Times(1);	
+    EXPECT_CALL(game, Lose()).Times(1);
 
-	mineSquare.Uncover();
+    mineSquare.Uncover();
 
-	ASSERT_EQ(SquareState::Boomed, mineSquare.get_State());
+    ASSERT_EQ(SquareState::Boomed, mineSquare.get_State());
+}
+
+TEST_F(MineSquareTest, Uncover_WhenMultipleTimes)
+{
+    ViewMock view;
+    MGameMock game(&view);
+    MineSquare mineSquare(&game, NULL, 0, 0);
+    SquareViewMock squareView;
+    mineSquare.Bind(&squareView);
+    EXPECT_CALL(squareView, set_State(SquareViewState::Boomed)).Times(1);	
+    EXPECT_CALL(game, Lose()).Times(1);
+
+    mineSquare.Uncover();
+    mineSquare.Uncover();
+
+    ASSERT_EQ(SquareState::Boomed, mineSquare.get_State());
 }
 
 TEST_F(MineSquareTest, HasMine_Typical)

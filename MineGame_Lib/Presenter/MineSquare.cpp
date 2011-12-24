@@ -9,6 +9,9 @@ MineSquare::MineSquare(MGame* game, MineField* mineField, int x, int y)
 
 void MineSquare::Uncover()
 {
+    if (get_State() != SquareState::Covered)
+        return;
+
 	set_State(SquareState::Boomed);
 
 	if (!get_Game()->IsLost())
