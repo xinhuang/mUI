@@ -5,57 +5,64 @@
 #include <mUI.h>
 #include "../View/View.h"
 
-#pragma 
-MGame::MGame(View* view)
-	: _view(view)
+struct MGame::Data
 {
+    MineField* mineField;
+    View* view;
+    bool lost;
+};
+
+MGame::MGame(View* view)
+	: _d(new Data())
+{
+    _d->view = view;
     set_Lost(false);
-    _mineField = new MineField(this);
-    _view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
-    _view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
-    _view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
-	_view->SquareUncovered += SquareEventHandler(this, &MGame::OnSquareUncovered);
-	_view->SquareToggleFlag += SquareEventHandler(this, &MGame::OnSquareToggleFlag);
+    _d->mineField = new MineField(this);
+    _d->view->FieldSizeChanged += EventHandler<FieldSizeChangedEventArgs*>(this, &MGame::OnFieldSizeChanged);
+    _d->view->MineTotalChanged += EventHandler<MineTotalChangedEventArgs*>(this, &MGame::OnMineTotalChanged);
+    _d->view->NewGame += EventHandler<>(this, &MGame::OnNewGame);
+	_d->view->SquareUncovered += SquareEventHandler(this, &MGame::OnSquareUncovered);
+	_d->view->SquareToggleFlag += SquareEventHandler(this, &MGame::OnSquareToggleFlag);
 }
 
 MGame::~MGame()
 {
-	delete _mineField;
+	delete _d->mineField;
 }
 
 const Size& MGame::get_MineFieldSize() const
 {
-	return _mineField->get_Size();
+	return _d->mineField->get_Size();
 }
 
 void MGame::set_MineFieldWidth(int width)
 {
-	_mineField->set_Width(width);
+	_d->mineField->set_Width(width);
 }
 
 void MGame::set_MineFieldHeight(int height)
 {
-	_mineField->set_Height(height);
+	_d->mineField->set_Height(height);
 }
 
 void MGame::set_MineTotal(int mineTotal)
 {
-	_mineField->set_MineTotal(mineTotal);
+	_d->mineField->set_MineTotal(mineTotal);
 }
 
 int MGame::get_MineTotal() const
 {
-	return _mineField->get_MineTotal();
+	return _d->mineField->get_MineTotal();
 }
 	
 void MGame::NewGame()
 {
 	set_Lost(false);
-    _mineField->Refresh();
-    vector<ISquareView*> squareViews = _view->CreateSquares(_mineField->get_Size());
-	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
+    _d->mineField->Refresh();
+    vector<ISquareView*> squareViews = _d->view->CreateSquares(_d->mineField->get_Size());
+	for (int i = 0; i < _d->mineField->get_IndexMax(); ++i)
 	{
-		ISquare* square = _mineField->SquareAt(i);
+		ISquare* square = _d->mineField->SquareAt(i);
 		ISquareView* view = squareViews[i];
 		square->Bind(view);
 	}
@@ -67,13 +74,13 @@ void MGame::Uncover(int x, int y)
 
 void MGame::Lose()
 {
-	if (_lost)
+	if (_d->lost)
 		return;
 
     set_Lost(true);
-	for (int i = 0; i < _mineField->get_IndexMax(); ++i)
+	for (int i = 0; i < _d->mineField->get_IndexMax(); ++i)
 	{
-		ISquare* square = _mineField->SquareAt(i);
+		ISquare* square = _d->mineField->SquareAt(i);
 		if (square->get_State() == SquareState::Covered)
 			square->Uncover();
 	}
@@ -81,7 +88,7 @@ void MGame::Lose()
 
 MineField* MGame::get_MineField()
 {
-	return _mineField;
+	return _d->mineField;
 }
 
 void MGame::OnNewGame( void* sender, EventArgs* e )
@@ -104,25 +111,25 @@ void MGame::OnSquareUncovered( void* sender, SquareEventArgs* e )
 {
 	ISquareView* squareView = e->get_SquareView();
 	const Point& location = squareView->get_Coordinates();
-	ISquare* square = _mineField->SquareAt(location);
+	ISquare* square = _d->mineField->SquareAt(location);
 	square->Uncover();
 }
 
 bool MGame::IsLost() const
 {
-	return _lost;
+	return _d->lost;
 }
 
 void MGame::OnSquareToggleFlag( void* sender, SquareEventArgs* e )
 {
 	ISquareView* squareView = e->get_SquareView();
 	const Point& location = squareView->get_Coordinates();
-	ISquare* square = _mineField->SquareAt(location);
+	ISquare* square = _d->mineField->SquareAt(location);
 	square->ToggleFlag();
 }
 
 void MGame::set_Lost( bool value )
 {
-    _lost = value;
-    _view->set_Lost(_lost);
+    _d->lost = value;
+    _d->view->set_Lost(_d->lost);
 }

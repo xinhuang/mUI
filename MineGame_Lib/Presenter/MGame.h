@@ -40,9 +40,8 @@ protected:
     void set_Lost(bool value);
 
 private:
-	MineField* _mineField;
-	View* _view;
-	bool _lost;
+    struct Data;
+    Data *_d;
 };
 
 #endif // __MGAME_H__
