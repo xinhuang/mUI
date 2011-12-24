@@ -11,11 +11,13 @@ struct MGameView::Data
 	MGame* game;
 	Button gameButton;
 	MineFieldView fieldView;
+	bool lost;
 };
 
 MGameView::MGameView() : _data(new Data())
 {
     _data->game = new MGame(this);
+	_data->lost = false;
 
 	InitializeComponents();
 
@@ -128,4 +130,9 @@ void MGameView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
 	{
 		_data->gameButton.set_NormalImage(L"res/smile.png");
 	}
+}
+
+void MGameView::set_Lost( bool value )
+{
+	_data->lost = value;
 }

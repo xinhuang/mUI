@@ -28,6 +28,7 @@ public:
 
 	virtual vector<ISquareView*> CreateSquares(const Size& size) = 0;
 	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
+	virtual void set_Lost(bool value) = 0;
 };
 
 #endif // __VIEW_H__
