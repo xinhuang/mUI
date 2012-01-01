@@ -454,6 +454,8 @@ void Control::ResumeLayout()
 
 void Control::ResumeLayout( bool perform_layout )
 {
+	if (suspend_layout_count_ == 0)
+		return;
 	if (suspend_layout_count_ > 0)
 		--suspend_layout_count_;
 	if (perform_layout)

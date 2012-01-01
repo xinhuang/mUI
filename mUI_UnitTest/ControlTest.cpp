@@ -99,6 +99,28 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalse)
 	_sut->Controls.Remove(*_childMock);
 }
 
+TEST_F(ControlTest, ResumeLayout_WhenNoSuspendLayout)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
+	_sut->Controls.Add(*_childMock);
+
+	_sut->ResumeLayout(true);
+
+	_sut->Controls.Remove(*_childMock);
+}
+
+TEST_F(ControlTest, ResumeLayout_WhenSuspendTwiceButResumeOnce)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
+	_sut->SuspendLayout();
+	_sut->SuspendLayout();
+	_sut->Controls.Add(*_childMock);
+
+	_sut->ResumeLayout(true);
+
+	_sut->Controls.Remove(*_childMock);
+}
+
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrueAndAfterPerformLayoutMultipleTimes)
 {
 	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
