@@ -16,15 +16,18 @@ public:
         _sut = new Control();
         _form->Controls.Add(*_sut);
         _aribitraryLocation = Point(33, 47);
+		_childMock = new ControlMock();
     }
 
     void TearDown()
     {
+		delete _childMock;
         delete _form;
     }
 
 protected:
     Control* _sut;
+	ControlMock* _childMock;
     Form* _form;
     Point _aribitraryLocation;
 };
@@ -55,11 +58,21 @@ TEST_F(ControlTest, PointToScreen_WhenNotAtOriginPoint)
 
 TEST_F(ControlTest, OnLayout_Typical)
 {
-	ControlMock childControl;
-	EXPECT_CALL(childControl, OnLayout(_)).Times(2);
-	_sut->Controls.Add(childControl);
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(2);
+	_sut->Controls.Add(*_childMock);
 
 	_sut->PerformLayout();
 
-	_sut->Controls.Remove(childControl);
+	_sut->Controls.Remove(*_childMock);
+}
+
+TEST_F(ControlTest, SuspendLayout_Typical)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
+
+	_sut->SuspendLayout();
+	_sut->Controls.Add(*_childMock);
+	_sut->PerformLayout();
+
+	_sut->Controls.Remove(*_childMock);
 }
