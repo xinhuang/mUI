@@ -4,6 +4,9 @@
 using namespace mUI::System::Forms;
 using namespace mUI::System::Drawing;
 
+#include "mocks/ControlMock.h"
+using ::testing::_;
+
 class ControlTest : public testing::Test
 {
 public:
@@ -48,4 +51,15 @@ TEST_F(ControlTest, PointToScreen_WhenNotAtOriginPoint)
     Point screenPt = _sut->PointToScreen(Point::Empty);
 
     ASSERT_EQ(_aribitraryLocation + _aribitraryLocation, screenPt);
+}
+
+TEST_F(ControlTest, OnLayout_Typical)
+{
+	ControlMock childControl;
+	EXPECT_CALL(childControl, OnLayout(_)).Times(2);
+	_sut->Controls.Add(childControl);
+
+	_sut->PerformLayout();
+
+	_sut->Controls.Remove(childControl);
 }
