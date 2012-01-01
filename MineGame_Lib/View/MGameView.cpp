@@ -55,7 +55,7 @@ void MGameView::OnMineTotalChanged( MineTotalChangedEventArgs* e )
 
 vector<ISquareView*> MGameView::CreateSquares( const Size& fieldSize )
 {
-	_data->fieldView.CreateSquares(fieldSize);
+	_data->fieldView.Initialize(fieldSize);
 	this->Resize(fieldSize)
 		.Center();
 	return _data->fieldView.get_SquareViews();

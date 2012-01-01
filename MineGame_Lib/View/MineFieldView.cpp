@@ -27,37 +27,21 @@ MineFieldView::~MineFieldView()
 	delete _d;
 }
 
-void MineFieldView::CreateSquares(const Size& fieldSize)
+void MineFieldView::Initialize(const Size& fieldSize)
 {
-	size_t squareTotal = fieldSize.Width * fieldSize.Height;
-	while (squareTotal < _d->squareViews.size())
-	{
-		delete _d->squareViews.back();
-		_d->squareViews.pop_back();
-	}
+	SuspendLayout();
 
-	while (squareTotal > _d->squareViews.size())
-	{
-		SquareView* square = new SquareView();
-		square->MouseClick += MouseEventHandler(this, &MineFieldView::OnSquareMouseClick);
-		square->MouseDown += MouseEventHandler(this, &MineFieldView::OnSquareMouseDown);
-		square->MouseUp += MouseEventHandler(this, &MineFieldView::OnSquareMouseUp);
-		_d->squareViews.push_back(square);
-		Controls.Add(*square);
-	}
+	CreateSquares(fieldSize);
 
-	Resize(fieldSize);
+	Size newSize = fieldSize * SquareView::get_ImageSize();
+	set_Size(newSize);
+
+	ResumeLayout(true);
 }
 
 vector<ISquareView*> MineFieldView::get_SquareViews() const
 {
 	return _d->squareViews;
-}
-
-void MineFieldView::Resize(const Size& fieldSize)
-{
-	Size newSize = fieldSize * SquareView::get_ImageSize();
-	set_Size(newSize);
 }
 
 void MineFieldView::OnUncover( SquareEventArgs* e )
@@ -104,4 +88,24 @@ void MineFieldView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
 void MineFieldView::OnSquareMouseUp( MouseEventArgs* e )
 {
 	SquareMouseUp(this, e);
+}
+
+void MineFieldView::CreateSquares( const Size &fieldSize )
+{
+	size_t squareTotal = fieldSize.Width * fieldSize.Height;
+	while (squareTotal < _d->squareViews.size())
+	{
+		delete _d->squareViews.back();
+		_d->squareViews.pop_back();
+	}
+
+	while (squareTotal > _d->squareViews.size())
+	{
+		SquareView* square = new SquareView();
+		square->MouseClick += MouseEventHandler(this, &MineFieldView::OnSquareMouseClick);
+		square->MouseDown += MouseEventHandler(this, &MineFieldView::OnSquareMouseDown);
+		square->MouseUp += MouseEventHandler(this, &MineFieldView::OnSquareMouseUp);
+		_d->squareViews.push_back(square);
+		Controls.Add(*square);
+	}
 }

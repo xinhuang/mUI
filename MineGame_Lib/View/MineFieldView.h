@@ -15,7 +15,8 @@ public:
 	MineFieldView();
 	virtual ~MineFieldView();
 
-	void CreateSquares(const Size& fieldSize);
+	void Initialize(const Size& fieldSize);
+
 	vector<ISquareView*> get_SquareViews() const;
 
 	SquareEventHandler Uncover;
@@ -33,7 +34,7 @@ protected:
 	void OnSquareMouseDown(void* sender, MouseEventArgs* e);
 	void OnSquareMouseUp(void* sender, MouseEventArgs* e);
 
-	void Resize(const Size& fieldSize);
+	void CreateSquares( const Size &fieldSize );
 
 private:
 	struct Data;
