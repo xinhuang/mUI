@@ -449,13 +449,15 @@ void Control::SuspendLayout()
 
 void Control::ResumeLayout()
 {
-	ResumeLayout(true);
+	ResumeLayout(false);
 }
 
 void Control::ResumeLayout( bool perform_layout )
 {
 	if (suspend_layout_count_ > 0)
 		--suspend_layout_count_;
+	if (perform_layout)
+		PerformLayout();
 }
 
 void Control::PerformLayout()
@@ -465,25 +467,11 @@ void Control::PerformLayout()
 
 void Control::PerformLayout( Control* affected_control, const String& affected_property )
 {
-	LayoutEventArgs e(affected_control, affected_property);
 	if (suspend_layout_count_ > 0)
-	{
-		layout_queue_.push_back(e);
-	}
-	else
-	{
-		//for (size_t i = 0; i < layout_queue_.size(); ++i)
-		//{
-		//	OnLayout(&layout_queue_[i]);
-		//}
-		//layout_queue_.clear();
-		while (!layout_queue_.empty())
-		{
-			OnLayout(&layout_queue_[0]);
-			layout_queue_.erase(layout_queue_.begin());
-		}
-		OnLayout(&e);
-	}
+		return;
+
+	LayoutEventArgs e(affected_control, affected_property);
+	OnLayout(&e);
 }
 
 const Size& Control::get_Size() const

@@ -76,3 +76,53 @@ TEST_F(ControlTest, SuspendLayout_Typical)
 
 	_sut->Controls.Remove(*_childMock);
 }
+
+TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrue)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
+	_sut->SuspendLayout();
+	_sut->Controls.Add(*_childMock);
+
+	_sut->ResumeLayout(true);
+
+	_sut->Controls.Remove(*_childMock);
+}
+
+TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalse)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
+	_sut->SuspendLayout();
+	_sut->Controls.Add(*_childMock);
+
+	_sut->ResumeLayout(false);
+
+	_sut->Controls.Remove(*_childMock);
+}
+
+TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrueAndAfterPerformLayoutMultipleTimes)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
+	_sut->SuspendLayout();
+	_sut->Controls.Add(*_childMock);
+
+	_sut->PerformLayout();
+	_sut->PerformLayout();
+	_sut->PerformLayout();
+	_sut->ResumeLayout(true);
+
+	_sut->Controls.Remove(*_childMock);
+}
+
+TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalseAndAfterPerformLayoutMultipleTimes)
+{
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
+	_sut->SuspendLayout();
+	_sut->Controls.Add(*_childMock);
+
+	_sut->PerformLayout();
+	_sut->PerformLayout();
+	_sut->PerformLayout();
+	_sut->ResumeLayout(false);
+
+	_sut->Controls.Remove(*_childMock);
+}
