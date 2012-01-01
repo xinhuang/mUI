@@ -72,15 +72,7 @@ void Control::OnPaint( PaintEventArgs* e )
 void Control::OnLayout( LayoutEventArgs* e )
 {
 	if (suspend_layout_count_ == 0)
-	{
 		Layout(this, e);
-		for (ControlCollection::iterator iter = Controls.begin();
-			iter != Controls.end(); ++iter)
-		{
-			Control* control = *iter;
-			control->OnLayout(e);
-		}
-	}
 }
 
 void Control::OnControlAdded( ControlEventArgs* e )

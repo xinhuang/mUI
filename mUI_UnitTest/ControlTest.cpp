@@ -58,7 +58,7 @@ TEST_F(ControlTest, PointToScreen_WhenNotAtOriginPoint)
 
 TEST_F(ControlTest, OnLayout_Typical)
 {
-	EXPECT_CALL(*_childMock, OnLayout(_)).Times(2);
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
 	_sut->Controls.Add(*_childMock);
 
 	_sut->PerformLayout();
@@ -79,7 +79,7 @@ TEST_F(ControlTest, SuspendLayout_Typical)
 
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrue)
 {
-	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
 	_sut->SuspendLayout();
 	_sut->Controls.Add(*_childMock);
 
@@ -101,7 +101,7 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalse)
 
 TEST_F(ControlTest, ResumeLayout_WhenNoSuspendLayout)
 {
-	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
 	_sut->Controls.Add(*_childMock);
 
 	_sut->ResumeLayout(true);
@@ -123,7 +123,7 @@ TEST_F(ControlTest, ResumeLayout_WhenSuspendTwiceButResumeOnce)
 
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrueAndAfterPerformLayoutMultipleTimes)
 {
-	EXPECT_CALL(*_childMock, OnLayout(_)).Times(1);
+	EXPECT_CALL(*_childMock, OnLayout(_)).Times(0);
 	_sut->SuspendLayout();
 	_sut->Controls.Add(*_childMock);
 
