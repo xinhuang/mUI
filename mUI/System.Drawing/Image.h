@@ -33,8 +33,11 @@ public:
 
 	virtual ~Image() {}
 
-	virtual Drawing::Size Size() const = 0;
+	virtual Drawing::Size get_Size() const = 0;
 	virtual IntPtr GetHowFromImage() const = 0;
+
+	int get_Width() const { return get_Size().Width; }
+	int get_Height() const { return get_Size().Height; }
 
 protected:
 	Image() {}

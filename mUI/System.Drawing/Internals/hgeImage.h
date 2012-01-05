@@ -31,7 +31,7 @@ public:
 
 	virtual ~Image();
 
-	Drawing::Size Size() const;
+	Drawing::Size get_Size() const;
 	virtual IntPtr GetHowFromImage() const;
 
 protected:

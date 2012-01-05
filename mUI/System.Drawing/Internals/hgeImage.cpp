@@ -21,7 +21,7 @@ Image::~Image()
 {
 }
 
-Drawing::Size Image::Size() const
+Drawing::Size Image::get_Size() const
 {
 	PHGE hge;
 	int width = texture_.get_Width();

@@ -181,7 +181,7 @@ void Graphics::DrawRectangle( Pen& pen, int X, int Y, int Width, int Height )
 
 void Graphics::DrawImage( const Drawing::Image& image, Point pt )
 {
-	DrawImage(image, Drawing::Rectangle(pt, image.Size()));
+	DrawImage(image, Drawing::Rectangle(pt, image.get_Size()));
 }
 
 void Graphics::DrawImage( const Drawing::Image& image, const Rectangle& rect )
@@ -193,7 +193,7 @@ void Graphics::DrawImage( const Image& image, int X, int Y, int Width, int Heigh
 {
 	X += offset_.X;
 	Y += offset_.Y;
-	Size size = image.Size();
+	Size size = image.get_Size();
 	if (size.Width == 0 || size.Height == 0)
 		return;
 
