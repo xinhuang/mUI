@@ -37,6 +37,7 @@ using std::map;
 #include "KeyPressEventArgs.h"
 
 #include "ImageLayout.h"
+#include "AnchorStyles.h"
 
 #include <System.Drawing/Drawing.h>
 using mUI::System::Drawing::Color;
@@ -146,6 +147,9 @@ public:
 
 	Control* get_Parent() { return parent_; }
 	const Control* get_Parent() const { return parent_; }
+
+	AnchorStyles::Enum get_AnchorStyles() const { return _anchorStyles; }
+	void set_AnchorStyles(AnchorStyles::Enum value) { _anchorStyles = value; }
 
 	// ---------------------------------------------------------- //
 
@@ -267,6 +271,7 @@ private:
 
 	size_t			suspend_layout_count_;
 	vector<LayoutEventArgs> layout_queue_;
+	AnchorStyles::Enum _anchorStyles;
 };
 
 }}}

@@ -3,6 +3,7 @@
 #include "../Presenter/MGame.h"
 #include "SquareView.h"
 #include "MineFieldView.h"
+#include "NumberLabel.h"
 
 using namespace mUI::System::Drawing;
 
@@ -11,6 +12,7 @@ struct MGameView::Data
 	MGame* game;
 	Button gameButton;
 	MineFieldView fieldView;
+	NumberLabel remainMines;
 	bool lost;
 };
 
@@ -106,8 +108,11 @@ void MGameView::InitializeComponents()
 	_data->fieldView.ToggleFlag += SquareEventHandler(this, &MGameView::OnSquareToggleFlag);
 	_data->fieldView.SquareMouseDown += MouseEventHandler(this, &MGameView::OnSquareMouseDown);
 	_data->fieldView.SquareMouseUp += MouseEventHandler(this, &MGameView::OnSquareMouseUp);
-	Controls.Add(_data->fieldView);
 	_data->fieldView.Show();
+	Controls.Add(_data->fieldView);
+
+	_data->remainMines.Show();
+	Controls.Add(_data->remainMines);
 }
 
 void MGameView::OnGameButtonClicked(void* sender, EventArgs* e)

@@ -17,16 +17,19 @@ public:
         _form->Controls.Add(*_sut);
         _aribitraryLocation = Point(33, 47);
 		_childMock = new ControlMock();
+		_childCtrl = new Control();
     }
 
     void TearDown()
     {
 		delete _childMock;
+		delete _childCtrl;
         delete _form;
     }
 
 protected:
     Control* _sut;
+	Control* _childCtrl;
 	ControlMock* _childMock;
     Form* _form;
     Point _aribitraryLocation;
@@ -35,6 +38,11 @@ protected:
 TEST_F(ControlTest, Contructor_Typical)
 {
     ASSERT_TRUE(NULL != _sut);
+}
+
+TEST_F(ControlTest, Controls_Remove_WhenNotExist)
+{
+	_sut->Controls.Remove(*_childCtrl);
 }
 
 TEST_F(ControlTest, PointToScreen_WhenAtOriginPoint)
@@ -63,7 +71,6 @@ TEST_F(ControlTest, OnLayout_Typical)
 
 	_sut->PerformLayout();
 
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, SuspendLayout_Typical)
@@ -73,8 +80,6 @@ TEST_F(ControlTest, SuspendLayout_Typical)
 	_sut->SuspendLayout();
 	_sut->Controls.Add(*_childMock);
 	_sut->PerformLayout();
-
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrue)
@@ -84,8 +89,6 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrue)
 	_sut->Controls.Add(*_childMock);
 
 	_sut->ResumeLayout(true);
-
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalse)
@@ -95,8 +98,6 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalse)
 	_sut->Controls.Add(*_childMock);
 
 	_sut->ResumeLayout(false);
-
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, ResumeLayout_WhenNoSuspendLayout)
@@ -105,8 +106,6 @@ TEST_F(ControlTest, ResumeLayout_WhenNoSuspendLayout)
 	_sut->Controls.Add(*_childMock);
 
 	_sut->ResumeLayout(true);
-
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, ResumeLayout_WhenSuspendTwiceButResumeOnce)
@@ -117,8 +116,6 @@ TEST_F(ControlTest, ResumeLayout_WhenSuspendTwiceButResumeOnce)
 	_sut->Controls.Add(*_childMock);
 
 	_sut->ResumeLayout(true);
-
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrueAndAfterPerformLayoutMultipleTimes)
@@ -131,8 +128,6 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutTrueAndAfterPerformLayoutMulti
 	_sut->PerformLayout();
 	_sut->PerformLayout();
 	_sut->ResumeLayout(true);
-
-	_sut->Controls.Remove(*_childMock);
 }
 
 TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalseAndAfterPerformLayoutMultipleTimes)
@@ -145,6 +140,4 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalseAndAfterPerformLayoutMult
 	_sut->PerformLayout();
 	_sut->PerformLayout();
 	_sut->ResumeLayout(false);
-
-	_sut->Controls.Remove(*_childMock);
 }

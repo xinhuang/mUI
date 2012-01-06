@@ -538,8 +538,6 @@ void Control::ControlCollection::Add( Control& control )
 
 void Control::ControlCollection::Remove( Control& control )
 {
-	assert(control.parent_ == &outer_class_);
-
 	for (vector<Control*>::iterator iter = controls_.begin();
 		iter != controls_.end(); ++iter)
 	{
