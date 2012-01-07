@@ -40,6 +40,19 @@ String::String( const char* value )
 #pragma warning(pop)
 }
 
+String::String( const std::string& value )
+{
+#pragma warning(push)
+#pragma warning(disable: 4996)
+	*this = value.c_str();
+#pragma warning(pop)
+}
+
+String::String( const std::wstring& value )
+{
+	*this = value.c_str();
+}
+
 String& String::operator=( const char* value )
 {
 	clear();

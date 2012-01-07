@@ -68,6 +68,7 @@ int MGame::get_MineTotal() const
 void MGame::NewGame()
 {
 	_d->flagCount = 0;
+	UpdateRemainMineTotalToView();
 	set_Lost(false);
     _d->mineField->Refresh();
     vector<ISquareView*> squareViews = _d->view->CreateSquares(_d->mineField->get_Size());

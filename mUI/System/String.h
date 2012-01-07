@@ -34,9 +34,11 @@ class SYSTEM_ENTRY String : public std::wstring
 public:
 	String() {}
 
+	String(const std::wstring& value);
 	String(const wchar_t* value);
 	String& operator=(const wchar_t* value);
 
+	DEPRECATED String(const std::string& value);
 	DEPRECATED String(const char* value);
 	DEPRECATED String& operator=(const char* value);
 
