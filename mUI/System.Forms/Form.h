@@ -82,8 +82,6 @@ private:
 	Data* _d;
 
 private:
-	static const int default_width = 800;
-	static const int default_height = 600;
 };
 
 }}}

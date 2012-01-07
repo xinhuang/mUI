@@ -23,6 +23,9 @@ struct Form::Data
 	bool moving;
 	Point mouseDownLocation;
 	FormBorderStyle formBoarderStyle;
+
+	static const int DEFAULT_WIDTH = 800;
+	static const int DEFAULT_HEIGHT = 600;
 };
 
 Form::Form() 
@@ -68,7 +71,7 @@ void Form::OnPaint( PaintEventArgs* e )
 
 void Form::InitializeComponent()
 {
-	set_Size(Drawing::Size(default_width, default_height));
+	set_Size(Drawing::Size(Data::DEFAULT_WIDTH, Data::DEFAULT_HEIGHT));
 }
 
 void Form::OnEnter( EventArgs* e )
