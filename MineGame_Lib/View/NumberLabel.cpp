@@ -6,10 +6,10 @@ struct NumberLabel::Data
 {
 	~Data()
 	{
-		delete image;
 	}
 
 	Image* image;
+	int value;
 };
 
 NumberLabel::NumberLabel()
@@ -23,17 +23,18 @@ NumberLabel::~NumberLabel()
 	delete _d;
 }
 
-void NumberLabel::OnPaint( PaintEventArgs* e )
-{
-	int width = _d->image->get_Width();
-	e->Graphics.DrawImage(*_d->image, Point(0, 0));
-	e->Graphics.DrawImage(*_d->image, Point(width, 0));
-	e->Graphics.DrawImage(*_d->image, Point(width * 2, 0));
-}
-
 void NumberLabel::InitializeComponents()
 {
-	_d->image = Image::FromFile(L"res/na.png");
+	set_Value(0);
+
+	set_BackgroundImage(Image::FromFile(L"res/na.png"));
+	set_BackgroundImageLayout(ImageLayout::Tile);
+}
+
+void NumberLabel::set_Value( int value )
+{
+	_d->value = value;
+	Update();
 }
 
 

@@ -10,10 +10,11 @@ public:
 	NumberLabel();
 	virtual ~NumberLabel();
 
+	void set_Value( int value );
+
 protected:
 	void InitializeComponents();
 
-	virtual void OnPaint( PaintEventArgs* e );
 private:
 	struct Data;
 	Data* _d;

@@ -70,6 +70,7 @@ void Control::OnPaint( PaintEventArgs* e )
 
 	if (get_BackgroundImage() != NULL)
 	{
+		// TODO: Use TextureBrush to do this.
 		switch (get_BackgroundImageLayout())
 		{
 		case ImageLayout::Stretch:
@@ -78,6 +79,25 @@ void Control::OnPaint( PaintEventArgs* e )
 
 		case ImageLayout::None:
 			g.DrawImage(*get_BackgroundImage(), Point::Empty);
+			break;
+
+		case ImageLayout::Tile:
+			{
+				for (int y = 0; y < get_Height();
+					y += get_BackgroundImage()->get_Height())
+				{
+					for (int x = 0; x < get_Width();
+						x += get_BackgroundImage()->get_Width())
+					{
+						g.DrawImage(*get_BackgroundImage(), Point(x, y));
+					}
+				}
+			}
+			break;
+
+		case ImageLayout::Center:
+		case ImageLayout::Zoom:
+			throw new NotImplementedException();
 			break;
 		}
 	}

@@ -56,6 +56,17 @@ public:
 	}
 };
 
+class SYSTEM_ENTRY NotImplementedException : public SystemException
+{
+	typedef SystemException base;
+public:
+	NotImplementedException() {}
+	NotImplementedException(const String& message)
+		: base(message)
+	{
+	}
+};
+
 }}
 
 #endif	// __MUI_EXCEPTION_H__

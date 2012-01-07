@@ -9,6 +9,11 @@ using namespace mUI::System::Drawing;
 
 struct MGameView::Data
 {
+	~Data()
+	{
+		delete game;
+	}
+
 	MGame* game;
 	Button gameButton;
 	MineFieldView fieldView;
@@ -16,9 +21,9 @@ struct MGameView::Data
 	bool lost;
 };
 
-MGameView::MGameView() : _data(new Data())
+MGameView::MGameView() : _d(new Data())
 {
-    _data->game = new MGame(this);
+    _d->game = new MGame(this);
 
 	InitializeComponents();
 
@@ -31,13 +36,12 @@ MGameView::MGameView() : _data(new Data())
 
 MGameView::~MGameView()
 {
-	delete _data->game;
-	delete _data;
+	delete _d;
 }
 
 void MGameView::set_RemainMineTotal( int remainingTotal )
 {
-
+	_d->remainMines.set_Value(remainingTotal);
 }
 
 void MGameView::OnNewGame( EventArgs* e )
@@ -57,20 +61,20 @@ void MGameView::OnMineTotalChanged( MineTotalChangedEventArgs* e )
 
 vector<ISquareView*> MGameView::CreateSquares( const Size& fieldSize )
 {
-	_data->fieldView.Initialize(fieldSize);
+	_d->fieldView.Initialize(fieldSize);
 	this->Resize(fieldSize)
 		.Center();
-	return _data->fieldView.get_SquareViews();
+	return _d->fieldView.get_SquareViews();
 }
 
 MGameView& MGameView::Resize( const Size& fieldSize )
 {
-	Size newSize = _data->fieldView.get_Size();
+	Size newSize = _d->fieldView.get_Size();
 	newSize.Height += 24 + 10;
-	_data->fieldView.set_Location(Point(0, 34));
+	_d->fieldView.set_Location(Point(0, 34));
 	set_Size(newSize);
-	_data->gameButton.set_Location(
-		Point((newSize.Width - _data->gameButton.get_Size().Width) / 2, 
+	_d->gameButton.set_Location(
+		Point((newSize.Width - _d->gameButton.get_Size().Width) / 2, 
 		5));
 	return *this;
 }
@@ -100,25 +104,25 @@ void MGameView::InitializeComponents()
 
     set_Text(L"Mine Game v0.1");
 
-	Controls.Add(_data->gameButton);
-    _data->gameButton.set_NormalImage(L"res/smile.png");
-	_data->gameButton.set_PressedImage(L"res/smile_pressed.png");
-	_data->gameButton.set_Size(Size(24, 24));
-	_data->gameButton.Show();
-	_data->gameButton.Click += EventHandler<>(this, &MGameView::OnGameButtonClicked);
+	Controls.Add(_d->gameButton);
+    _d->gameButton.set_NormalImage(L"res/smile.png");
+	_d->gameButton.set_PressedImage(L"res/smile_pressed.png");
+	_d->gameButton.set_Size(Size(24, 24));
+	_d->gameButton.Show();
+	_d->gameButton.Click += EventHandler<>(this, &MGameView::OnGameButtonClicked);
 
-	Controls.Add(_data->fieldView);
-	_data->fieldView.Uncover += SquareEventHandler(this, &MGameView::OnSquareUncovered);
-	_data->fieldView.ToggleFlag += SquareEventHandler(this, &MGameView::OnSquareToggleFlag);
-	_data->fieldView.SquareMouseDown += MouseEventHandler(this, &MGameView::OnSquareMouseDown);
-	_data->fieldView.SquareMouseUp += MouseEventHandler(this, &MGameView::OnSquareMouseUp);
-	_data->fieldView.Show();
+	Controls.Add(_d->fieldView);
+	_d->fieldView.Uncover += SquareEventHandler(this, &MGameView::OnSquareUncovered);
+	_d->fieldView.ToggleFlag += SquareEventHandler(this, &MGameView::OnSquareToggleFlag);
+	_d->fieldView.SquareMouseDown += MouseEventHandler(this, &MGameView::OnSquareMouseDown);
+	_d->fieldView.SquareMouseUp += MouseEventHandler(this, &MGameView::OnSquareMouseUp);
+	_d->fieldView.Show();
 
-	Controls.Add(_data->remainMines);
-	_data->remainMines.set_Location(Point(5, 5));
-	_data->remainMines.set_Size(Size(39, 24));
-	_data->remainMines.set_AnchorStyles(AnchorStyles::TopLeft);
-	_data->remainMines.Show();
+	Controls.Add(_d->remainMines);
+	_d->remainMines.set_Location(Point(5, 5));
+	_d->remainMines.set_Size(Size(39, 24));
+	_d->remainMines.set_AnchorStyles(AnchorStyles::TopLeft);
+	_d->remainMines.Show();
 
 	ResumeLayout(true);
 }
@@ -130,33 +134,33 @@ void MGameView::OnGameButtonClicked(void* sender, EventArgs* e)
 
 void MGameView::OnSquareMouseDown( void* sender, MouseEventArgs* e )
 {
-    if (_data->lost)
+    if (_d->lost)
         return;
 	if (e->Button == MouseButtons::Left)
 	{
-		_data->gameButton.set_NormalImage(L"res/oops.png");
+		_d->gameButton.set_NormalImage(L"res/oops.png");
 	}
 }
 
 void MGameView::OnSquareMouseUp( void* sender, MouseEventArgs* e )
 {
-    if (_data->lost)
+    if (_d->lost)
         return;
 	if (e->Button == MouseButtons::Left)
 	{
-		_data->gameButton.set_NormalImage(L"res/smile.png");
+		_d->gameButton.set_NormalImage(L"res/smile.png");
 	}
 }
 
 void MGameView::set_Lost( bool value )
 {
-    _data->lost = value;
-    if (_data->lost)
+    _d->lost = value;
+    if (_d->lost)
     {
-        _data->gameButton.set_NormalImage(L"res/xxface.png");
+        _d->gameButton.set_NormalImage(L"res/xxface.png");
     }
     else
     {
-        _data->gameButton.set_NormalImage(L"res/smile.png");
+        _d->gameButton.set_NormalImage(L"res/smile.png");
     }
 }

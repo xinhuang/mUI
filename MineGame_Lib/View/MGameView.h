@@ -42,7 +42,7 @@ protected:
 
 private:
 	struct Data;
-	Data *_data;
+	Data *_d;
 };
 
 #endif // __MAINFORM_H__
