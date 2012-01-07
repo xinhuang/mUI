@@ -19,6 +19,8 @@ struct Control::Data
 {
 	Data()
 		: anchorStyles(AnchorStyles::None)
+		, autoSize(false)
+		, font(NULL)
 	{		
 	}
 
@@ -27,6 +29,8 @@ struct Control::Data
 	{
 		int Top, Bottom, Left, Right;
 	} anchorInfo;
+	bool autoSize;
+	const Font* font;
 };
 
 // warning C4355: 'this' : used in base member initializer list
@@ -628,6 +632,50 @@ void Control::set_Width( int value )
 int Control::get_Width() const
 {
 	return size_.Width;
+}
+
+bool Control::get_AutoSize() const
+{
+	return _d->autoSize;
+}
+
+void Control::set_AutoSize( bool value )
+{
+	if (value != _d->autoSize)
+	{
+		_d->autoSize = value;
+		PerformLayout();
+	}
+}
+
+const Drawing::Font* Control::get_Font() const
+{
+	if (_d->font != NULL)
+		return _d->font;
+
+	const Font* f = GetParentFont();
+	if (f != NULL)
+		return f;
+
+	return get_DefaultFont();
+}
+
+void Control::set_Font( const Drawing::Font& value )
+{
+	_d->font = &value;
+}
+
+const Drawing::Font* Control::GetParentFont() const
+{
+	if (get_Parent() != NULL)
+		return get_Parent()->get_Font();
+	else
+		return NULL;
+}
+
+const Drawing::Font* Control::get_DefaultFont()
+{
+	return SystemFonts::DefaultFont;
 }
 
 // ------------------------------------------------- //

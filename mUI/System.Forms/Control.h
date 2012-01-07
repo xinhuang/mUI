@@ -54,6 +54,7 @@ using mUI::System::Drawing::Graphics;
 
 namespace mUI{ namespace System{  namespace Drawing{
 	class Image;
+	class Font;
 }}}
 
 namespace mUI{ namespace System{  namespace Forms{
@@ -120,6 +121,9 @@ public:
 	const Size& get_Size() const;
 	void set_Size(const Drawing::Size& size);
 
+	bool get_AutoSize() const;
+	void set_AutoSize(bool value);
+
 	void set_Height( int value );
 	int get_Height() const;
 
@@ -137,6 +141,9 @@ public:
 
 	const String& get_Text() const;
 	void set_Text(const String& text);
+
+	const Drawing::Font* get_Font() const;
+	void set_Font(const Drawing::Font& value);
 
 	const Point& get_Location() const;
 	void set_Location(const Point& pt);
@@ -262,6 +269,8 @@ private:
 
 	void SetAnchor( AnchorStyles::Enum value, const Control &container );
 	void Control::PrivateLayout(Control& container, LayoutEventArgs* e);
+	const Drawing::Font* GetParentFont() const;
+	static const Drawing::Font* get_DefaultFont();
 
 private:
 	struct Data;

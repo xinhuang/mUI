@@ -15,6 +15,7 @@
 #include "ImageLayout.h"
 #include "KeyEventArgs.h"
 #include "KeyPressEventArgs.h"
+#include "Label.h"
 #include "MouseButtons.h"
 #include "MouseEventArgs.h"
 #include "PaintEventArgs.h"
