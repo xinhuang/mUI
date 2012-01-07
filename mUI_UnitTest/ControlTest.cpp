@@ -6,6 +6,8 @@ using namespace mUI::System::Drawing;
 
 #include "mocks/ControlMock.h"
 
+void AddChildCtrl();
+
 void DistanceFromChildBottomToParemtBottom();
 
 using ::testing::_;
@@ -37,6 +39,15 @@ public:
 			- child.get_Location().Y 
 			- child.get_Size().Height;
 	}
+
+	void AddChildCtrl(const Rectangle& childBounds)
+	{
+		_childCtrl->set_Location(childBounds.Location);
+		_childCtrl->set_Size(childBounds.Size);
+		_childCtrl->Show();
+		_sut->Controls.Add(*_childCtrl);
+	}
+
 
 protected:
     Control* _sut;
@@ -155,47 +166,38 @@ TEST_F(ControlTest, ResumeLayout_WhenPerformLayoutFalseAndAfterPerformLayoutMult
 
 TEST_F(ControlTest, PerformLayout_WhenAnchorStyleNone)
 {
-	int arbitraryX = 30, arbitraryY = 30;
-	_childCtrl->set_Location(Point(arbitraryX, arbitraryY));
-	_childCtrl->set_Size(Size(10, 10));
-	_childCtrl->Show();
-	_sut->Controls.Add(*_childCtrl);
+	Rectangle arbitraryBounds(30, 30, 10, 10);
+	AddChildCtrl(arbitraryBounds);
 
 	_sut->set_Size(Size(200, 200));
 
-	ASSERT_EQ(arbitraryX, _childCtrl->get_Location().X);
-	ASSERT_EQ(arbitraryY, _childCtrl->get_Location().Y);
+	ASSERT_EQ(arbitraryBounds.Location, _childCtrl->get_Location());
+	ASSERT_EQ(arbitraryBounds.Size, _childCtrl->get_Size());
 }
 
 TEST_F(ControlTest, PerformLayout_WhenAnchorStyleTop)
 {
-	int arbitraryX = 30, arbitraryY = 30;
-	_childCtrl->set_Location(Point(arbitraryX, arbitraryY));
-	_childCtrl->set_Size(Size(10, 10));
-	_childCtrl->Show();
-	_sut->Controls.Add(*_childCtrl);
+	Rectangle arbitraryBounds(30, 30, 10, 10);
+	AddChildCtrl(arbitraryBounds);
 
 	_childCtrl->set_AnchorStyles(AnchorStyles::Top);
 	_sut->set_Size(Size(200, 200));
 
-	ASSERT_EQ(arbitraryX, _childCtrl->get_Location().X);
-	ASSERT_EQ(arbitraryY, _childCtrl->get_Location().Y);
+	ASSERT_EQ(arbitraryBounds.Location, _childCtrl->get_Location());
+	ASSERT_EQ(arbitraryBounds.Size, _childCtrl->get_Size());
 }
 
 TEST_F(ControlTest, PerformLayout_WhenAnchorStyleBottom)
 {
-	int arbitraryX = 30, arbitraryY = 30;
-	_childCtrl->set_Location(Point(arbitraryX, arbitraryY));
-	_childCtrl->set_Size(Size(10, 10));
-	_childCtrl->Show();
-	_sut->Controls.Add(*_childCtrl);
+	Rectangle arbitraryBounds(30, 30, 10, 10);
+	AddChildCtrl(arbitraryBounds);
+
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 
 	_childCtrl->set_AnchorStyles(AnchorStyles::Bottom);
 	_sut->set_Size(Size(200, 200));
 
-	ASSERT_EQ(arbitraryX, _childCtrl->get_Location().X);
-	ASSERT_EQ(10, _childCtrl->get_Size().Width);
-	ASSERT_EQ(10, _childCtrl->get_Size().Height);
+	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
 	ASSERT_EQ(expectDistance, DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl));
+	ASSERT_EQ(arbitraryBounds.Size, _childCtrl->get_Size());
 }
