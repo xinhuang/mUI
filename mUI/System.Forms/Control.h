@@ -139,6 +139,9 @@ public:
 	const Color& get_BackColor() const;
 	void set_BackColor(const Color& color); 
 
+	const Color& get_ForeColor() const;
+	void set_ForeColor(const Color& color);
+
 	const String& get_Text() const;
 	void set_Text(const String& text);
 

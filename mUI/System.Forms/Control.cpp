@@ -31,6 +31,7 @@ struct Control::Data
 	} anchorInfo;
 	bool autoSize;
 	const Font* font;
+	Color foreColor;
 };
 
 // warning C4355: 'this' : used in base member initializer list
@@ -676,6 +677,16 @@ const Drawing::Font* Control::GetParentFont() const
 const Drawing::Font* Control::get_DefaultFont()
 {
 	return SystemFonts::DefaultFont;
+}
+
+const Color& Control::get_ForeColor() const
+{
+	return _d->foreColor;
+}
+
+void Control::set_ForeColor( const Color& color )
+{
+	_d->foreColor = color;
 }
 
 // ------------------------------------------------- //

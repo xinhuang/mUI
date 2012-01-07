@@ -20,14 +20,15 @@ Label::~Label()
 
 void Label::OnPaint( PaintEventArgs* e )
 {
-
+	base::OnPaint(e);
+	e->Graphics.DrawString(get_Text(), *get_Font(), SolidBrush(get_ForeColor()), PointF::Empty);
 }
 
 void Label::set_Text( const String& text )
 {
 	base::set_Text(text);
 	AdjustSize();
-
+	Update();
 }
 
 void Label::AdjustSize()

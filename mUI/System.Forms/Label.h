@@ -17,7 +17,6 @@ public:
 
 	virtual void set_Text(const String& text);
 
-
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 
