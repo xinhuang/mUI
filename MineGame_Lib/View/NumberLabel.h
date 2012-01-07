@@ -15,6 +15,10 @@ public:
 protected:
 	void InitializeComponents();
 
+	virtual void OnPaint( PaintEventArgs* e );
+	int GetDigitsTotal() const;
+	int GetDigit( int i ) const;
+	Point GetDigitPos( int i ) const;
 private:
 	struct Data;
 	Data* _d;
