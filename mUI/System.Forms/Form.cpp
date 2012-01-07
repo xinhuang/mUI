@@ -15,15 +15,18 @@ struct Form::Data
 	Data()
 		: dragMove(false)
 		, moving(false)
+		, topMost(false)
 	{}
 
+	bool topMost;
 	bool dragMove;
 	bool moving;
 	Point mouseDownLocation;
+	FormBorderStyle formBoarderStyle;
 };
 
 Form::Form() 
-	: topmost_(false), _d(new Data())
+	: _d(new Data())
 {
 	FormManager::get_Instance().RegisterForm(*this);
 	InitializeComponent();
@@ -56,12 +59,9 @@ void Form::OnPaint( PaintEventArgs* e )
 	{
 	case FormBorderStyle::FixedSingle:
 		{
-			int border_size = SystemInformation::GetBorderSize();
+			int borderSize = SystemInformation::GetBorderSize();
 			Pen pen(Color::Black);
 			g.DrawRectangle(pen, 1, 1, get_Size().Width - 1, get_Size().Height - 1);
-
-			int caption_height = SystemInformation::GetCaptionHeight();
-			SolidBrush brush(Color::Grey);
 		}
 	}
 }
@@ -97,14 +97,14 @@ void Form::set_FormBorderStyle( const FormBorderStyle& style )
 {
 	if (get_FormBorderStyle() != style)
 	{
-		form_boarder_style_ = style;
+		_d->formBoarderStyle = style;
 		OnBorderStyleChanged(&EventArgs::Empty);
 	}
 }
 
 const FormBorderStyle& Form::get_FormBorderStyle() const
 {
-	return form_boarder_style_;
+	return _d->formBoarderStyle;
 }
 
 void Form::OnBorderStyleChanged( EventArgs* e )
@@ -112,13 +112,9 @@ void Form::OnBorderStyleChanged( EventArgs* e )
 	switch (get_FormBorderStyle())
 	{
 	case FormBorderStyle::None:
-		{
-		}
 		break;
 
 	default:
-		{
-		}
 		break;
 	}
 	BorderStyleChanged(this, e);
@@ -142,7 +138,7 @@ Size Form::get_ClientSize() const
 
 void Form::set_TopMost( bool value )
 {
-	topmost_ = value;
+	_d->topMost = value;
 }
 
 void Form::OnClosed( EventArgs* e )
@@ -211,6 +207,11 @@ void Form::set_DragMove( bool value )
 {
 	_d->dragMove = value;
 	_d->moving = false;
+}
+
+bool Form::get_TopMost() const
+{
+	return _d->topMost;
 }
 
 }}}

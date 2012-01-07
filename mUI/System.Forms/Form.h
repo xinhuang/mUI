@@ -44,7 +44,7 @@ public:
 
 	static Form* get_ActiveForm();
 
-	bool get_TopMost() const { return topmost_; }
+	bool get_TopMost() const;
 	void set_TopMost(bool value);
 
 	bool get_DragMove() const;
@@ -80,8 +80,6 @@ protected:
 private:
 	struct Data;
 	Data* _d;
-	bool			topmost_;
-	FormBorderStyle form_boarder_style_;
 
 private:
 	static const int default_width = 800;
