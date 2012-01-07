@@ -5,19 +5,6 @@ using namespace mUI::System::Drawing;
 
 namespace mUI{ namespace System{  namespace Forms{
 
-struct Label::Data
-{
-};
-
-Label::Label()
-	: _d(new Data())
-{}
-
-Label::~Label()
-{
-	delete _d;
-}
-
 void Label::OnPaint( PaintEventArgs* e )
 {
 	base::OnPaint(e);
@@ -41,6 +28,12 @@ void Label::AdjustSize()
 	Graphics* g = CreateGraphics();
 	Size textSize = g->MeasureString(get_Text(), *get_Font()).ToSize();
 	set_Size(textSize);
+}
+
+void Label::set_AutoSize( bool value )
+{
+	base::set_AutoSize(value);
+	AdjustSize();
 }
 
 }}}

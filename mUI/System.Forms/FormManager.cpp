@@ -419,4 +419,9 @@ Form* FormManager::get_RootForm()
     return reinterpret_cast<Form*>(Control::FromHandle(mainframe_));
 }
 
+Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, const Point& pt )
+{
+	return Point::Empty;
+}
+
 }}}

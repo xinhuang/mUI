@@ -57,6 +57,9 @@ public:
 
 	Form* FormAt(const Point& location);
 	Control* ControlAt(const Point& pt);
+
+	Point MapWindowPoint(IntPtr from, IntPtr to, const Point& pt);
+
 	static Point DeleteMe_GetControlFrameCoord(const Control& control);
 
 	void RaiseMouseEvent(unsigned int message, IntPtr wParam, IntPtr lParam);

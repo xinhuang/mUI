@@ -12,19 +12,13 @@ class FORMS_ENTRY Label : public Control
 	typedef Control base;
 
 public:
-	Label();
-	virtual ~Label();
-
 	virtual void set_Text(const String& text);
+	virtual void set_AutoSize(bool value);
 
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 
 	void AdjustSize();
-
-private:
-	struct Data;
-	Data* _d;
 };
 
 }}}

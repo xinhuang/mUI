@@ -4,6 +4,7 @@
 #include "SquareView.h"
 #include "MineFieldView.h"
 #include "NumberLabel.h"
+#include "ConfigForm.h"
 
 using namespace mUI::System::Drawing;
 
@@ -19,6 +20,7 @@ struct MGameView::Data
 	MineFieldView fieldView;
 	NumberLabel remainMines;
 	bool lost;
+	ConfigForm configForm;
 };
 
 MGameView::MGameView() : _d(new Data())
@@ -126,6 +128,8 @@ void MGameView::InitializeComponents()
 	_d->remainMines.Show();
 
 	ResumeLayout(true);
+
+	_d->configForm.Show();
 }
 
 void MGameView::OnGameButtonClicked(void* sender, EventArgs* e)
