@@ -121,3 +121,11 @@ TEST_F(MGameTest, Lose_Typical)
 		}
 	}
 }
+
+TEST_F(MGameTest, IncFlagCount_Typical)
+{
+	_mineField->set_MineTotal(100);
+	EXPECT_CALL(*_view, set_RemainingMineTotal(99));
+
+	_sut->IncFlagCount();
+}

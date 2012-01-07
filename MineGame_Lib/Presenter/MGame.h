@@ -29,10 +29,13 @@ public:
 	virtual void Lose();
 	virtual bool IsLost() const;
 	virtual void DecFlagCount();
+
 	virtual void IncFlagCount();
 
 	MineField* get_MineField();
 	int get_FlagCount() const;
+
+	void UpdateRemainMineTotalToView();
 
 protected:
     virtual void OnNewGame(void* sender, EventArgs* e);

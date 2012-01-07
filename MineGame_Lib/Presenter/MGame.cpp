@@ -7,6 +7,10 @@
 
 struct MGame::Data
 {
+	Data()
+		: flagCount(0)
+	{
+	}
 	~Data()
 	{
 		delete mineField;
@@ -63,6 +67,7 @@ int MGame::get_MineTotal() const
 	
 void MGame::NewGame()
 {
+	_d->flagCount = 0;
 	set_Lost(false);
     _d->mineField->Refresh();
     vector<ISquareView*> squareViews = _d->view->CreateSquares(_d->mineField->get_Size());
@@ -143,14 +148,21 @@ void MGame::set_Lost( bool value )
 void MGame::DecFlagCount()
 {
 	--_d->flagCount;
+	UpdateRemainMineTotalToView();
 }
 
 void MGame::IncFlagCount()
 {
 	++_d->flagCount;
+	UpdateRemainMineTotalToView();
 }
 
 int MGame::get_FlagCount() const
 {
 	return _d->flagCount;
+}
+
+void MGame::UpdateRemainMineTotalToView()
+{
+	_d->view->set_RemainingMineTotal(_d->mineField->get_MineTotal() - _d->flagCount);
 }
