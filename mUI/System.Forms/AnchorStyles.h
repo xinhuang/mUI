@@ -15,6 +15,7 @@ namespace AnchorStyles
 
 		TopBottom	= Top | Bottom,
 		LeftRight	= Left | Right,
+		All			= TopBottom | LeftRight,
 	};
 }
 
