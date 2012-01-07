@@ -96,6 +96,12 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 			continue;
 		if ((element.get_AnchorStyles() & AnchorStyles::Bottom) != 0)
 		{
+			if ((element.get_AnchorStyles() & AnchorStyles::Top) != 0)
+			{
+				bounds.Size.Height = container.get_Size().Height
+					- element._d->anchorInfo.Top
+					- element._d->anchorInfo.Bottom;
+			}
 			int vertDelta = container.get_Size().Height 
 				- bounds.get_Bottom() 
 				- element._d->anchorInfo.Bottom;
@@ -574,6 +580,26 @@ void Control::set_Bounds( const Drawing::Rectangle& value )
 {
 	set_Location(value.Location);
 	set_Size(value.Size);
+}
+
+void Control::set_Height( int value )
+{
+	size_.Height = value;
+}
+
+int Control::get_Height() const
+{
+	return size_.Height;
+}
+
+void Control::set_Width( int value )
+{
+	size_.Width = value;
+}
+
+int Control::get_Width() const
+{
+	return size_.Width;
 }
 
 // ------------------------------------------------- //

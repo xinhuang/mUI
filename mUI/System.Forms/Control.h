@@ -120,6 +120,12 @@ public:
 	const Size& get_Size() const;
 	void set_Size(const Drawing::Size& size);
 
+	void set_Height( int value );
+	int get_Height() const;
+
+	void set_Width( int value );
+	int get_Width() const;
+
 	Size get_ClientSize() const;
 	Drawing::Rectangle get_ClientRectangle() const;
 
