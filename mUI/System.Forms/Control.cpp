@@ -94,10 +94,6 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 		Rectangle bounds = element.get_Bounds();
 		if (element.get_AnchorStyles() == AnchorStyles::None)
 			continue;
-		if ((element.get_AnchorStyles() & AnchorStyles::Top) != 0)
-		{
-			bounds.set_Top(element._d->anchorInfo.Top);
-		}
 		if ((element.get_AnchorStyles() & AnchorStyles::Bottom) != 0)
 		{
 			int vertDelta = container.get_Size().Height 
