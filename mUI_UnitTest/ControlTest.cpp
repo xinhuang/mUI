@@ -6,6 +6,10 @@ using namespace mUI::System::Drawing;
 
 #include "mocks/ControlMock.h"
 
+bool GetVertAnchorHeight();
+
+bool GetHoriAnchorWidth();
+
 void DistanceFromChildRightToParentRight();
 
 void AddChildCtrl();
@@ -55,6 +59,18 @@ public:
 		return parent.get_Size().Width 
 			- child.get_Location().X 
 			- child.get_Size().Width;
+	}
+
+	int GetHoriAnchorWidth(const Control& container, int newWidth, const Rectangle& bounds)
+	{
+		return newWidth - bounds.Location.X 
+			- (container.get_Width() - bounds.Size.Width - bounds.Location.X);
+	}
+
+	int GetVertAnchorHeight(const Control& container, int newHeight, const Rectangle& bounds)
+	{
+		return newHeight - bounds.Location.Y 
+			- (container.get_Height() - bounds.Size.Height - bounds.Location.Y);
 	}
 
 protected:
@@ -241,8 +257,8 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleTopBottom)
 	Rectangle arbitraryBounds(10, 10, 80, 80);
 	AddChildCtrl(arbitraryBounds);
 	int newHeight = 200;
-	Size expectedSize(arbitraryBounds.Size.Width, newHeight - arbitraryBounds.Location.Y 
-		- (_sut->get_Height() - arbitraryBounds.Size.Height - arbitraryBounds.Location.Y));
+	Size expectedSize(arbitraryBounds.Size.Width, 
+		GetVertAnchorHeight(*_sut, newHeight, arbitraryBounds));
 
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 
@@ -259,8 +275,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleLeftRight)
 	Rectangle arbitraryBounds(10, 10, 80, 80);
 	AddChildCtrl(arbitraryBounds);
 	int newWidth = 200;
-	Size expectedSize(newWidth - arbitraryBounds.Location.X
-		- (_sut->get_Width() - arbitraryBounds.Size.Width - arbitraryBounds.Location.X),
+	Size expectedSize(GetHoriAnchorWidth(*_sut, newWidth, arbitraryBounds),
 		arbitraryBounds.Size.Height);
 
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
@@ -278,10 +293,8 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleAll)
 	Rectangle arbitraryBounds(10, 10, 80, 80);
 	AddChildCtrl(arbitraryBounds);
 	int newWidth = 200, newHeight = 400;
-	Size expectedSize(newWidth - arbitraryBounds.Location.X
-		- (_sut->get_Width() - arbitraryBounds.Size.Width - arbitraryBounds.Location.X),
-		newHeight - arbitraryBounds.Location.Y 
-		- (_sut->get_Height() - arbitraryBounds.Size.Height - arbitraryBounds.Location.Y));
+	Size expectedSize(GetHoriAnchorWidth(*_sut, newWidth, arbitraryBounds),
+		GetVertAnchorHeight(*_sut, newHeight, arbitraryBounds));
 	int expectVertDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 	int expectHoriDistance = DistanceFromChildRightToParentRight(*_sut, *_childCtrl);
 
