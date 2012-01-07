@@ -69,6 +69,7 @@ TEST_F(AbstractSquareTest, Constructor_Typical)
 TEST_F(AbstractSquareTest, ToggleFlag_Once)
 {
 	EXPECT_CALL(*_squareView, set_State(SquareViewState::Flagged)).Times(1);
+	EXPECT_CALL(*_game, IncFlagCount());
 
 	_sut->ToggleFlag();
 
@@ -77,6 +78,7 @@ TEST_F(AbstractSquareTest, ToggleFlag_Once)
 
 TEST_F(AbstractSquareTest, ToggleFlag_OnceWhenLost)
 {
+	EXPECT_CALL(*_game, IncFlagCount()).Times(0);
 	EXPECT_CALL(*_game, IsLost()).Times(1).WillOnce(Return(true));
 
 	_sut->ToggleFlag();
@@ -87,6 +89,8 @@ TEST_F(AbstractSquareTest, ToggleFlag_OnceWhenLost)
 TEST_F(AbstractSquareTest, ToggleFlag_Twice)
 {
 	EXPECT_CALL(*_squareView, set_State(SquareViewState::Flagged)).Times(1);
+	EXPECT_CALL(*_game, IncFlagCount());
+	EXPECT_CALL(*_game, DecFlagCount());
 	EXPECT_CALL(*_squareView, set_State(SquareViewState::Questioned)).Times(1);
 
 	_sut->ToggleFlag();
@@ -98,6 +102,8 @@ TEST_F(AbstractSquareTest, ToggleFlag_Twice)
 TEST_F(AbstractSquareTest, ToggleFlag_ThreeTimes)
 {
 	EXPECT_CALL(*_squareView, set_State(SquareViewState::Flagged)).Times(1);
+	EXPECT_CALL(*_game, IncFlagCount());
+	EXPECT_CALL(*_game, DecFlagCount());
 	EXPECT_CALL(*_squareView, set_State(SquareViewState::Questioned)).Times(1);
 	EXPECT_CALL(*_squareView, set_State(SquareViewState::Covered)).Times(1);
 

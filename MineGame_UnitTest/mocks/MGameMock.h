@@ -14,6 +14,8 @@ public:
 
 	MOCK_METHOD0(Lose, void());
 	MOCK_CONST_METHOD0(IsLost, bool());
+	MOCK_METHOD0(IncFlagCount, void());
+	MOCK_METHOD0(DecFlagCount, void());
 };
 
 #endif // __MGAMEMOCK_H__

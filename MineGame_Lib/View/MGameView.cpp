@@ -96,23 +96,31 @@ void MGameView::OnSquareToggleFlag( void* sender, SquareEventArgs* e )
 
 void MGameView::InitializeComponents()
 {
+	SuspendLayout();
+
     set_Text(L"Mine Game v0.1");
+
+	Controls.Add(_data->gameButton);
     _data->gameButton.set_NormalImage(L"res/smile.png");
 	_data->gameButton.set_PressedImage(L"res/smile_pressed.png");
 	_data->gameButton.set_Size(Size(24, 24));
 	_data->gameButton.Show();
 	_data->gameButton.Click += EventHandler<>(this, &MGameView::OnGameButtonClicked);
-	Controls.Add(_data->gameButton);
 
+	Controls.Add(_data->fieldView);
 	_data->fieldView.Uncover += SquareEventHandler(this, &MGameView::OnSquareUncovered);
 	_data->fieldView.ToggleFlag += SquareEventHandler(this, &MGameView::OnSquareToggleFlag);
 	_data->fieldView.SquareMouseDown += MouseEventHandler(this, &MGameView::OnSquareMouseDown);
 	_data->fieldView.SquareMouseUp += MouseEventHandler(this, &MGameView::OnSquareMouseUp);
 	_data->fieldView.Show();
-	Controls.Add(_data->fieldView);
 
-	_data->remainMines.Show();
 	Controls.Add(_data->remainMines);
+	_data->remainMines.set_Location(Point(5, 5));
+	_data->remainMines.set_Size(Size(39, 24));
+	_data->remainMines.set_AnchorStyles(AnchorStyles::TopLeft);
+	_data->remainMines.Show();
+
+	ResumeLayout(true);
 }
 
 void MGameView::OnGameButtonClicked(void* sender, EventArgs* e)

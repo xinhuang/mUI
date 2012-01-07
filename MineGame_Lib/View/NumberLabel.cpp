@@ -4,12 +4,23 @@ using namespace mUI::System::Drawing;
 
 struct NumberLabel::Data
 {
+	~Data()
+	{
+		delete image;
+	}
+
 	Image* image;
 };
 
 NumberLabel::NumberLabel()
+	: _d(new Data())
 {
 	InitializeComponents();
+}
+
+NumberLabel::~NumberLabel()
+{
+	delete _d;
 }
 
 void NumberLabel::OnPaint( PaintEventArgs* e )

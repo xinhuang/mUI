@@ -8,12 +8,12 @@ class NumberLabel : public Control
 {
 public:
 	NumberLabel();
+	virtual ~NumberLabel();
 
 protected:
 	void InitializeComponents();
 
 	virtual void OnPaint( PaintEventArgs* e );
-
 private:
 	struct Data;
 	Data* _d;

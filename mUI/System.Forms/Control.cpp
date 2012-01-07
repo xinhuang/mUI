@@ -55,7 +55,9 @@ Control::~Control()
 	Control* parent = get_Parent();
 	if (parent != NULL)
 		parent->Controls.Remove(*this);
-	ResumeLayout();
+	ResumeLayout(false);
+
+	delete _d;
 }
 
 void Control::OnPaint( PaintEventArgs* e )

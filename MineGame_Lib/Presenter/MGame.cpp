@@ -7,9 +7,15 @@
 
 struct MGame::Data
 {
+	~Data()
+	{
+		delete mineField;
+	}
+
     MineField* mineField;
     View* view;
     bool lost;
+	int flagCount;
 };
 
 MGame::MGame(View* view)
@@ -27,7 +33,7 @@ MGame::MGame(View* view)
 
 MGame::~MGame()
 {
-	delete _d->mineField;
+	delete _d;
 }
 
 const Size& MGame::get_MineFieldSize() const
@@ -132,4 +138,19 @@ void MGame::set_Lost( bool value )
 {
     _d->lost = value;
     _d->view->set_Lost(_d->lost);
+}
+
+void MGame::DecFlagCount()
+{
+	--_d->flagCount;
+}
+
+void MGame::IncFlagCount()
+{
+	++_d->flagCount;
+}
+
+int MGame::get_FlagCount() const
+{
+	return _d->flagCount;
 }

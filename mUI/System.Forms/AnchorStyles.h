@@ -12,9 +12,15 @@ namespace AnchorStyles
 		Bottom	= 0x02,
 		Left	= 0x04,
 		Right	= 0x08,
-
+		
 		TopBottom	= Top | Bottom,
 		LeftRight	= Left | Right,
+
+		TopLeft		= Top | Left,
+		TopRight	= Top | Right,
+		BottomRight	= Bottom | Right,
+		BottomLeft	= Bottom | Left,
+
 		All			= TopBottom | LeftRight,
 	};
 }

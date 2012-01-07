@@ -20,7 +20,11 @@ SquareState::Enum AbstractSquare::get_State() const
 
 void AbstractSquare::set_State(SquareState::Enum state)
 {
+	if (_state == SquareState::Flagged)
+		get_Game()->DecFlagCount();
 	_state = state;
+	if (_state == SquareState::Flagged)
+		get_Game()->IncFlagCount();
 }
 
 void AbstractSquare::ToggleFlag()
