@@ -42,10 +42,8 @@ public:
 	void set_Location(const Point& value) { Location = value; }
 
 	int get_Top() const { return Location.Y; }
-	void set_Top(int value) { Location.Y = value; }
 
 	int get_Bottom() const { return Location.Y + Size.Height; }
-	void set_Bottom(int value) { Size.Height = value - get_Top(); }
 
 	int get_Left() const { return Location.X; }
 

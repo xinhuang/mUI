@@ -99,7 +99,7 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 			int vertDelta = container.get_Size().Height 
 				- bounds.get_Bottom() 
 				- element._d->anchorInfo.Bottom;
-			bounds.set_Top(bounds.get_Top() + vertDelta);
+			bounds.Location.Y = bounds.get_Top() + vertDelta;
 		}
 		if ((element.get_AnchorStyles() & AnchorStyles::Right) != 0)
 		{
