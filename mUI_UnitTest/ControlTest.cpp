@@ -240,12 +240,14 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleTopBottom)
 {
 	Rectangle arbitraryBounds(10, 10, 80, 80);
 	AddChildCtrl(arbitraryBounds);
-	Size expectedSize(arbitraryBounds.Size.Width, 200 - 10 * 2);
+	int newHeight = 200;
+	Size expectedSize(arbitraryBounds.Size.Width, newHeight - arbitraryBounds.Location.Y 
+		- (_sut->get_Height() - arbitraryBounds.Size.Height - arbitraryBounds.Location.Y));
 
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 
 	_childCtrl->set_AnchorStyles(AnchorStyles::TopBottom);
-	_sut->set_Size(Size(200, 200));
+	_sut->set_Size(Size(333, newHeight));
 
 	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
 	ASSERT_EQ(expectDistance, DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl));
