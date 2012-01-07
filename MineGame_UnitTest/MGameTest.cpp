@@ -129,3 +129,12 @@ TEST_F(MGameTest, IncFlagCount_Typical)
 
 	_sut->IncFlagCount();
 }
+
+TEST_F(MGameTest, DecFlagCount_Typical)
+{
+	_mineField->set_MineTotal(100);
+	_sut->IncFlagCount();
+	EXPECT_CALL(*_view, set_RemainingMineTotal(100));
+
+	_sut->DecFlagCount();
+}
