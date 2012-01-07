@@ -10,7 +10,20 @@ using mUI::System::Drawing::Pen;
 
 namespace mUI{ namespace System{  namespace Forms{
 
-Form::Form() : topmost_(false)
+struct Form::Data
+{
+	Data()
+		: dragMove(false)
+		, moving(false)
+	{}
+
+	bool dragMove;
+	bool moving;
+	Point mouseDownLocation;
+};
+
+Form::Form() 
+	: topmost_(false), _d(new Data())
 {
 	FormManager::get_Instance().RegisterForm(*this);
 	InitializeComponent();
@@ -22,6 +35,8 @@ Form::~Form(void)
 		Hide();
 
 	FormManager::get_Instance().UnregisterForm(*this);
+
+	delete _d;
 }
 
 void Form::Close()
@@ -164,6 +179,38 @@ Point Form::PointToScreen( Point pt ) const
 Form* Form::get_ActiveForm()
 {
 	return FormManager::get_Instance().get_ActiveForm();
+}
+
+void Form::OnMouseDown( MouseEventArgs* e )
+{
+	if (_d->dragMove && e->Button == MouseButtons::Left)
+	{
+		_d->moving = true;
+		_d->mouseDownLocation = e->Location;
+	}
+}
+
+void Form::OnMouseUp( MouseEventArgs* e )
+{
+	if (e->Button == MouseButtons::Left && _d->dragMove)
+		_d->moving = false;
+}
+
+void Form::OnMouseMove( MouseEventArgs* e )
+{
+	if (_d->moving && _d->dragMove)
+		set_Location(get_Location() + e->Location - _d->mouseDownLocation);
+}
+
+bool Form::get_DragMove() const
+{
+	return _d->dragMove;
+}
+
+void Form::set_DragMove( bool value )
+{
+	_d->dragMove = value;
+	_d->moving = false;
 }
 
 }}}

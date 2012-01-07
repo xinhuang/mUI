@@ -47,6 +47,9 @@ public:
 	bool get_TopMost() const { return topmost_; }
 	void set_TopMost(bool value);
 
+	bool get_DragMove() const;
+	void set_DragMove(bool value);
+
 	virtual void Close();
 
 	virtual Point PointToScreen(Point pt) const;
@@ -70,8 +73,13 @@ protected:
 	virtual void OnActivated			( EventArgs* e );
 	virtual void OnDeactivate			( EventArgs* e );
 	virtual void OnBorderStyleChanged	( EventArgs* e );
+	virtual void OnMouseDown			( MouseEventArgs* e );
+	virtual void OnMouseMove			( MouseEventArgs* e );
+	virtual void OnMouseUp				( MouseEventArgs* e );
 
 private:
+	struct Data;
+	Data* _d;
 	bool			topmost_;
 	FormBorderStyle form_boarder_style_;
 

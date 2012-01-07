@@ -103,6 +103,7 @@ void MGameView::InitializeComponents()
 	SuspendLayout();
 
     set_Text(L"Mine Game v0.1");
+	set_DragMove(true);
 
 	Controls.Add(_d->gameButton);
     _d->gameButton.set_NormalImage(L"res/smile.png");
