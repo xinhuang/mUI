@@ -109,6 +109,12 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 		}
 		if ((element.get_AnchorStyles() & AnchorStyles::Right) != 0)
 		{
+			if ((element.get_AnchorStyles() & AnchorStyles::Left) != 0)
+			{
+				bounds.Size.Width = container.get_Size().Width
+					- element._d->anchorInfo.Left
+					- element._d->anchorInfo.Right;
+			}
 			int horiDelta = container.get_Size().Width 
 				- bounds.get_Right() 
 				- element._d->anchorInfo.Right;

@@ -253,3 +253,22 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleTopBottom)
 	ASSERT_EQ(expectDistance, DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl));
 	ASSERT_EQ(expectedSize, _childCtrl->get_Size());
 }
+
+TEST_F(ControlTest, PerformLayout_WhenAnchorStyleLeftRight)
+{
+	Rectangle arbitraryBounds(10, 10, 80, 80);
+	AddChildCtrl(arbitraryBounds);
+	int newWidth = 200;
+	Size expectedSize(newWidth - arbitraryBounds.Location.X
+		- (_sut->get_Width() - arbitraryBounds.Size.Width - arbitraryBounds.Location.X),
+		arbitraryBounds.Size.Height);
+
+	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
+
+	_childCtrl->set_AnchorStyles(AnchorStyles::LeftRight);
+	_sut->set_Size(Size(newWidth, 333));
+
+	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
+	ASSERT_EQ(expectDistance, DistanceFromChildRightToParentRight(*_sut, *_childCtrl));
+	ASSERT_EQ(expectedSize, _childCtrl->get_Size());
+}

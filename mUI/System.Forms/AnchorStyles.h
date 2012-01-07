@@ -14,6 +14,7 @@ namespace AnchorStyles
 		Right	= 0x08,
 
 		TopBottom	= Top | Bottom,
+		LeftRight	= Left | Right,
 	};
 }
 
