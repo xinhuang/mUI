@@ -35,7 +35,7 @@ MGameView::~MGameView()
 	delete _data;
 }
 
-void MGameView::set_RemainingMineTotal( int remainingTotal )
+void MGameView::set_RemainMineTotal( int remainingTotal )
 {
 
 }

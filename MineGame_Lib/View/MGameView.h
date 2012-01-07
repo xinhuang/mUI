@@ -24,7 +24,7 @@ public:
 	MGameView& Center();
 	MGameView& Resize( const Size& fieldSize );
 
-    virtual void set_RemainingMineTotal(int remainingTotal);
+    virtual void set_RemainMineTotal(int remainingTotal);
 	virtual void set_Lost(bool value);
 
 protected:

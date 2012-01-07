@@ -27,7 +27,7 @@ public:
     SquareEventHandler SquareToggleFlag;
 
 	virtual vector<ISquareView*> CreateSquares(const Size& size) = 0;
-	virtual void set_RemainingMineTotal(int remainingTotal) = 0;
+	virtual void set_RemainMineTotal(int remainingTotal) = 0;
 	virtual void set_Lost(bool value) = 0;
 };
 

@@ -164,5 +164,5 @@ int MGame::get_FlagCount() const
 
 void MGame::UpdateRemainMineTotalToView()
 {
-	_d->view->set_RemainingMineTotal(_d->mineField->get_MineTotal() - _d->flagCount);
+	_d->view->set_RemainMineTotal(_d->mineField->get_MineTotal() - _d->flagCount);
 }
