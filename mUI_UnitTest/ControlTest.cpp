@@ -6,6 +6,8 @@ using namespace mUI::System::Drawing;
 
 #include "mocks/ControlMock.h"
 
+void DistanceFromChildRightToParentRight();
+
 void AddChildCtrl();
 
 void DistanceFromChildBottomToParemtBottom();
@@ -48,6 +50,12 @@ public:
 		_sut->Controls.Add(*_childCtrl);
 	}
 
+	int DistanceFromChildRightToParentRight(const Control& parent, const Control& child)
+	{
+		return parent.get_Size().Width 
+			- child.get_Location().X 
+			- child.get_Size().Width;
+	}
 
 protected:
     Control* _sut;
@@ -199,5 +207,31 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleBottom)
 
 	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
 	ASSERT_EQ(expectDistance, DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl));
+	ASSERT_EQ(arbitraryBounds.Size, _childCtrl->get_Size());
+}
+
+TEST_F(ControlTest, PerformLayout_WhenAnchorStyleLeft)
+{
+	Rectangle arbitraryBounds(30, 30, 10, 10);
+	AddChildCtrl(arbitraryBounds);
+
+	_childCtrl->set_AnchorStyles(AnchorStyles::Left);
+	_sut->set_Size(Size(200, 200));
+
+	ASSERT_EQ(arbitraryBounds.Location, _childCtrl->get_Location());
+	ASSERT_EQ(arbitraryBounds.Size, _childCtrl->get_Size());
+}
+
+TEST_F(ControlTest, PerformLayout_WhenAnchorStyleRight)
+{
+	Rectangle arbitraryBounds(30, 30, 10, 10);
+	AddChildCtrl(arbitraryBounds);
+	int expectedDistance = DistanceFromChildRightToParentRight(*_sut, *_childCtrl);
+
+	_childCtrl->set_AnchorStyles(AnchorStyles::Right);
+	_sut->set_Size(Size(200, 200));
+
+	ASSERT_EQ(expectedDistance, DistanceFromChildRightToParentRight(*_sut, *_childCtrl));
+	ASSERT_EQ(arbitraryBounds.Location.Y, _childCtrl->get_Location().Y);
 	ASSERT_EQ(arbitraryBounds.Size, _childCtrl->get_Size());
 }

@@ -101,6 +101,13 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 				- element._d->anchorInfo.Bottom;
 			bounds.set_Top(bounds.get_Top() + vertDelta);
 		}
+		if ((element.get_AnchorStyles() & AnchorStyles::Right) != 0)
+		{
+			int horiDelta = container.get_Size().Width 
+				- bounds.get_Right() 
+				- element._d->anchorInfo.Right;
+			bounds.Location.X += horiDelta;
+		}
 		element.set_Bounds(bounds);
 	}
 }

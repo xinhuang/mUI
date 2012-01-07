@@ -46,6 +46,10 @@ public:
 
 	int get_Bottom() const { return Location.Y + Size.Height; }
 	void set_Bottom(int value) { Size.Height = value - get_Top(); }
+
+	int get_Left() const { return Location.X; }
+
+	int get_Right() const { return Location.X + Size.Width; }
 };
 
 }}}
