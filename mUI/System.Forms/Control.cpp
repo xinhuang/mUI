@@ -15,6 +15,20 @@ using namespace mUI::System::Threading;
 
 namespace mUI{ namespace System{  namespace Forms{
 
+struct Control::Data
+{
+	Data()
+		: anchorStyles(AnchorStyles::None)
+	{		
+	}
+
+	AnchorStyles::Enum anchorStyles;
+	struct AnchorInfo
+	{
+		int Top, Bottom, Left, Right;
+	} anchorInfo;
+};
+
 // warning C4355: 'this' : used in base member initializer list
 #pragma warning(disable: 4355)
 
@@ -22,7 +36,7 @@ Control::Control() :
 	parent_(NULL), Controls(*this), visibility_(false), 
 	back_color_(SystemColors::Control), background_image_(NULL),
 	background_image_layout_(ImageLayout::None),
-	suspend_layout_count_(0)
+	suspend_layout_count_(0), _d(new Data())
 {
 	thread_ = Threading::Thread::get_ManagedThreadID();
 	handle_ = FormManager::get_Instance().RegisterControl(*this);
@@ -69,8 +83,36 @@ void Control::OnPaint( PaintEventArgs* e )
 	Paint(this, e);
 }
 
+void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
+{
+	for (Control::ControlCollection::iterator iter = container.Controls.begin();
+		iter != container.Controls.end(); ++iter)
+	{
+		assert(*iter != NULL);
+		Control& element = **iter;
+
+		Rectangle bounds = element.get_Bounds();
+		if (element.get_AnchorStyles() == AnchorStyles::None)
+			continue;
+		if ((element.get_AnchorStyles() & AnchorStyles::Top) != 0)
+		{
+			bounds.set_Top(element._d->anchorInfo.Top);
+		}
+		if ((element.get_AnchorStyles() & AnchorStyles::Bottom) != 0)
+		{
+			int vertDelta = container.get_Size().Height 
+				- bounds.get_Bottom() 
+				- element._d->anchorInfo.Bottom;
+			bounds.set_Top(bounds.get_Top() + vertDelta);
+		}
+		element.set_Bounds(bounds);
+	}
+}
+
 void Control::OnLayout( LayoutEventArgs* e )
 {
+	PrivateLayout(*this, e);
+
 	if (suspend_layout_count_ == 0)
 		Layout(this, e);
 }
@@ -499,6 +541,36 @@ Drawing::Rectangle Control::RectangleToScreen( Drawing::Rectangle rect ) const
 void Control::OnKeyPress( KeyPressEventArgs* e )
 {
 	KeyPress(this, e);
+}
+
+void Control::set_AnchorStyles( AnchorStyles::Enum value )
+{
+	SetAnchor(value, *get_Parent());
+}
+
+AnchorStyles::Enum Control::get_AnchorStyles() const
+{
+	return _d->anchorStyles;
+}
+
+void Control::SetAnchor( AnchorStyles::Enum value, const Control &container )
+{
+	_d->anchorStyles = value;
+	_d->anchorInfo.Left = get_Location().X;
+	_d->anchorInfo.Right = container.get_Size().Width - get_Location().X - get_Size().Width;
+	_d->anchorInfo.Top = get_Location().Y;
+	_d->anchorInfo.Bottom = container.get_Size().Height - get_Location().Y - get_Size().Height;
+}
+
+Drawing::Rectangle Control::get_Bounds() const
+{
+	return Rectangle(get_Location(), get_Size());
+}
+
+void Control::set_Bounds( const Drawing::Rectangle& value )
+{
+	set_Location(value.Location);
+	set_Size(value.Size);
 }
 
 // ------------------------------------------------- //

@@ -37,6 +37,15 @@ public:
 	Rectangle operator+ (const Point& point) const;
 
 	bool Contains(const Point& location) const;
+
+	const Point& get_Location() const { return Location; }
+	void set_Location(const Point& value) { Location = value; }
+
+	int get_Top() const { return Location.Y; }
+	void set_Top(int value) { Location.Y = value; }
+
+	int get_Bottom() const { return Location.Y + Size.Height; }
+	void set_Bottom(int value) { Size.Height = value - get_Top(); }
 };
 
 }}}

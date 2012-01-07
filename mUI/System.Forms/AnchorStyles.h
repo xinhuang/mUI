@@ -7,11 +7,11 @@ namespace AnchorStyles
 {
 	enum Enum
 	{
-		Top,
-		Botton,
-		Left,
-		Right,
-		None
+		None	= 0x00,
+		Top		= 0x01,
+		Bottom	= 0x02,
+		Left	= 0x04,
+		Right	= 0x08,
 	};
 }
 

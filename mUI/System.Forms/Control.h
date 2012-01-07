@@ -123,6 +123,9 @@ public:
 	Size get_ClientSize() const;
 	Drawing::Rectangle get_ClientRectangle() const;
 
+	Drawing::Rectangle get_Bounds() const;
+	void set_Bounds(const Drawing::Rectangle& value);
+
 	const Color& get_BackColor() const;
 	void set_BackColor(const Color& color); 
 
@@ -148,8 +151,8 @@ public:
 	Control* get_Parent() { return parent_; }
 	const Control* get_Parent() const { return parent_; }
 
-	AnchorStyles::Enum get_AnchorStyles() const { return _anchorStyles; }
-	void set_AnchorStyles(AnchorStyles::Enum value) { _anchorStyles = value; }
+	AnchorStyles::Enum get_AnchorStyles() const;
+	void set_AnchorStyles(AnchorStyles::Enum value);
 
 	// ---------------------------------------------------------- //
 
@@ -251,7 +254,13 @@ private:
 	IAsyncResult* InvokeHelper(const Delegate<>& method, bool fSynchronous);
 	void _InvokeAll();
 
+	void SetAnchor( AnchorStyles::Enum value, const Control &container );
+	void Control::PrivateLayout(Control& container, LayoutEventArgs* e);
+
 private:
+	struct Data;
+	Data* _d;
+
 	IntPtr			thread_;
 	queue<Task*>	qutaskinvoke_;
 
@@ -271,7 +280,6 @@ private:
 
 	size_t			suspend_layout_count_;
 	vector<LayoutEventArgs> layout_queue_;
-	AnchorStyles::Enum _anchorStyles;
 };
 
 }}}
