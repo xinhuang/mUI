@@ -18,6 +18,7 @@ struct NumberLabel::Data
 
 	vector<Image*> imageList;
 	int value;
+	Image* minusSign;
 };
 
 NumberLabel::NumberLabel()
@@ -45,6 +46,7 @@ void NumberLabel::InitializeComponents()
 		String imageFile = sstr.str();
 		_d->imageList.push_back(Image::FromFile(imageFile));
 	}
+	_d->minusSign = Image::FromFile(L"res/-.png");
 }
 
 void NumberLabel::set_Value( int value )
@@ -61,7 +63,10 @@ void NumberLabel::OnPaint( PaintEventArgs* e )
 	{
 		int n = GetDigit(i);
 		Point pos = GetDigitPos(i);
-		e->Graphics.DrawImage(*_d->imageList[n], pos);
+		if (n >= 0 && n < 10)
+			e->Graphics.DrawImage(*_d->imageList[n], pos);
+		else
+			e->Graphics.DrawImage(*_d->minusSign, pos);
 	}
 }
 
