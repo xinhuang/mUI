@@ -6,6 +6,10 @@ using namespace mUI::System::Drawing;
 
 #include <System.Forms/FormManager.h>
 
+void CreateControl();
+
+void CreateForm();
+
 class FormManagerTest : public ::testing::Test
 {
 public:
@@ -18,6 +22,22 @@ public:
 	{
 		FormManager::Dispose();
 		FormManager::Initialize();
+	}
+
+	Form* CreateForm(const Point& location)
+	{
+		Form* form = new Form();
+		form->set_Size(Size(100, 100));
+		form->set_Location(location);
+		return form;
+	}
+
+	Control* CreateControl(const Point& location)
+	{
+		Control* control = new Control();
+		control->set_Size(Size(10, 10));
+		control->set_Location(location);
+		return control;
 	}
 
 protected:
@@ -33,12 +53,10 @@ TEST_F(FormManagerTest, MapWindowPoint_WhenTranslateFromFormToScreen)
 {
 	Point formLocation(100, 100);
 	Point offsetPoint(7, 7);
-	Form* container = new Form();
-	container->set_Size(Size(100, 100));
-	container->set_Location(formLocation);
+	Form* form = CreateForm(formLocation);
 
 	Point screenPoint = 
-		FormManager::get_Instance().MapWindowPoint(container->get_Handle(), null, offsetPoint);
+		FormManager::get_Instance().MapWindowPoint(form->get_Handle(), null, offsetPoint);
 
 	ASSERT_EQ(formLocation + offsetPoint, screenPoint);
 }
@@ -47,17 +65,13 @@ TEST_F(FormManagerTest, MapWindowPoint_WhenTranslateFromControlToScreen)
 {
 	Point offsetPoint(7, 7);
 	Point formLocation(100, 100);
-	Form* container = new Form();
-	container->set_Size(Size(100, 100));
-	container->set_Location(formLocation);
-	Point elementLocation(13, 13);
-	Control* element = new Control();
-	element->set_Size(Size(10, 10));
-	element->set_Location(elementLocation);
-	container->Controls.Add(*element);
+	Form* form = CreateForm(formLocation);
+	Point ctrlLocation(13, 13);
+	Control* control = CreateControl(ctrlLocation);
+	form->Controls.Add(*control);
 
 	Point screenPoint = 
-		FormManager::get_Instance().MapWindowPoint(element->get_Handle(), null, offsetPoint);
+		FormManager::get_Instance().MapWindowPoint(control->get_Handle(), null, offsetPoint);
 
-	ASSERT_EQ(formLocation + elementLocation + offsetPoint, screenPoint);
+	ASSERT_EQ(formLocation + ctrlLocation + offsetPoint, screenPoint);
 }
