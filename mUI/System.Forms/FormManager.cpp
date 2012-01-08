@@ -433,15 +433,46 @@ Control* FormManager::FromHandle( const IntPtr& h )
 		return iter->second;
 }
 
-Form* FormManager::get_RootForm()
+Form* FormManager::get_Form(IntPtr handle)
 {
-    return reinterpret_cast<Form*>(Control::FromHandle(_d->mainframe));
+	for (deque<Form*>::iterator iter = _d->formList.begin();
+		iter != _d->formList.end(); ++iter)
+	{
+		Form* f = *iter;
+		if (f->get_Handle() == handle)
+			return f;
+	}
+	return null;
 }
 
-Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, const Point& pt )
+const Form* FormManager::get_Form( IntPtr handle ) const
 {
-	Control* fromCtrl = FromHandle(from);
-	return fromCtrl->PointToScreen(pt);
+	for (deque<Form*>::iterator iter = _d->formList.begin();
+		iter != _d->formList.end(); ++iter)
+	{
+		Form* f = *iter;
+		if (f->get_Handle() == handle)
+			return f;
+	}
+	return null;
+}
+
+Form* FormManager::get_RootForm()
+{
+    return get_Form(_d->mainframe);
+}
+
+Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, Point pt )
+{
+	const Control* ctrl = FromHandle(from);
+	if (ctrl == null)
+		throw ArgumentException(L"From control can't be found.");
+	while (ctrl != null && ctrl->get_Handle() != to)
+	{
+		pt += ctrl->get_Location();
+		ctrl = ctrl->get_Parent();
+	}
+	return pt;
 }
 
 }}}
