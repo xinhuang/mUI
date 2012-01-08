@@ -45,6 +45,7 @@ FormManager::~FormManager()
 
 FormManager& FormManager::get_Instance()
 {
+	assert(Data::instance != null);
 	return *Data::instance;
 }
 
@@ -439,7 +440,8 @@ Form* FormManager::get_RootForm()
 
 Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, const Point& pt )
 {
-	return Point::Empty;
+	Control* fromCtrl = FromHandle(from);
+	return fromCtrl->PointToScreen(pt);
 }
 
 }}}
