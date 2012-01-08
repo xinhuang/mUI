@@ -102,7 +102,7 @@ void Control::OnPaint( PaintEventArgs* e )
 
 		case ImageLayout::Center:
 		case ImageLayout::Zoom:
-			throw new NotImplementedException();
+			throw NotImplementedException();
 			break;
 		}
 	}
@@ -570,8 +570,7 @@ Drawing::Rectangle Control::get_ClientRectangle() const
 
 Point Control::PointToScreen( Point pt ) const
 {
-	pt += get_Location();
-	return get_Parent()->PointToScreen(pt);
+	return FormManager::get_Instance().MapWindowPoint(get_Handle(), null, pt);
 }
 
 Drawing::Rectangle Control::RectangleToScreen( Drawing::Rectangle rect ) const
