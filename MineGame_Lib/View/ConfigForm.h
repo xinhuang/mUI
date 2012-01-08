@@ -5,7 +5,7 @@
 using namespace mUI::System;
 using namespace mUI::System::Forms;
 
-class ConfigForm : public Control
+class ConfigForm : public Form
 {
 public:
 	ConfigForm();

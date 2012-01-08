@@ -10,6 +10,9 @@ using namespace mUI::System::Drawing;
 
 struct MGameView::Data
 {
+	Data()
+		: configForm(new ConfigForm())
+	{}
 	~Data()
 	{
 		delete game;
@@ -20,7 +23,7 @@ struct MGameView::Data
 	MineFieldView fieldView;
 	NumberLabel remainMines;
 	bool lost;
-	ConfigForm configForm;
+	ConfigForm* configForm;
 };
 
 MGameView::MGameView() : _d(new Data())
@@ -111,7 +114,6 @@ void MGameView::InitializeComponents()
     _d->gameButton.set_NormalImage(L"res/smile.png");
 	_d->gameButton.set_PressedImage(L"res/smile_pressed.png");
 	_d->gameButton.set_Size(Size(24, 24));
-	_d->gameButton.Show();
 	_d->gameButton.Click += EventHandler<>(this, &MGameView::OnGameButtonClicked);
 
 	Controls.Add(_d->fieldView);
@@ -119,17 +121,15 @@ void MGameView::InitializeComponents()
 	_d->fieldView.ToggleFlag += SquareEventHandler(this, &MGameView::OnSquareToggleFlag);
 	_d->fieldView.SquareMouseDown += MouseEventHandler(this, &MGameView::OnSquareMouseDown);
 	_d->fieldView.SquareMouseUp += MouseEventHandler(this, &MGameView::OnSquareMouseUp);
-	_d->fieldView.Show();
 
 	Controls.Add(_d->remainMines);
 	_d->remainMines.set_Location(Point(5, 5));
 	_d->remainMines.set_Size(Size(39, 24));
 	_d->remainMines.set_AnchorStyles(AnchorStyles::TopLeft);
-	_d->remainMines.Show();
 
 	ResumeLayout(true);
 
-	_d->configForm.Show();
+	_d->configForm->Show();
 }
 
 void MGameView::OnGameButtonClicked(void* sender, EventArgs* e)

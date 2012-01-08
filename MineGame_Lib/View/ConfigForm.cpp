@@ -20,21 +20,21 @@ ConfigForm::~ConfigForm()
 
 void ConfigForm::InitializeComponents()
 {
-	set_Size(Size(200, 300));
+	set_Size(Size(50, 50));
+	set_DragMove(true);
 
-	_d->widthLabel.Show();
 	Controls.Add(_d->widthLabel);
 	_d->widthLabel.set_Text(L"Width:");
 	_d->widthLabel.set_AutoSize(true);
 
-	_d->heightLabel.Show();
 	Controls.Add(_d->heightLabel);
+	_d->heightLabel.Hide();
 	_d->heightLabel.set_Text(L"Height:");
 	_d->heightLabel.set_AutoSize(true);
 	_d->heightLabel.set_Height(_d->widthLabel.get_Height() + 10);
 
-	_d->mineTotalLabel.Show();
 	Controls.Add(_d->mineTotalLabel);
+	_d->mineTotalLabel.Hide();
 	_d->mineTotalLabel.set_Text(L"Mines:");
 	_d->mineTotalLabel.set_AutoSize(true);
 	_d->mineTotalLabel.set_Height(_d->heightLabel.get_Height() + 10);

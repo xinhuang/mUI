@@ -81,7 +81,6 @@ void FormManager::RegisterForm( Form& form )
 			return;
 		}
 	}
-
 	_d->formList.push_back(&form);		// 1st form.
 }
 

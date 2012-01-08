@@ -80,8 +80,6 @@ protected:
 private:
 	struct Data;
 	Data* _d;
-
-private:
 };
 
 }}}

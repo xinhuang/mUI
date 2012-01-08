@@ -50,7 +50,6 @@ public:
 	{
 		_childCtrl->set_Location(childBounds.Location);
 		_childCtrl->set_Size(childBounds.Size);
-		_childCtrl->Show();
 		_sut->Controls.Add(*_childCtrl);
 	}
 
