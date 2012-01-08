@@ -17,6 +17,7 @@
 #define __FORMMANAGER_H__
 
 #include <System/System.h>
+#include "Export.h"
 
 #include <deque>
 #include <map>
@@ -32,7 +33,7 @@ namespace mUI{ namespace System{  namespace Forms{
 class Form;
 class Control;
 
-class FormManager
+class FORMS_ENTRY FormManager
 {
 public:
 	static bool Initialize();
