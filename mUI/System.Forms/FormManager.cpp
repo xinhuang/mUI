@@ -462,15 +462,49 @@ Form* FormManager::get_RootForm()
     return get_Form(_d->mainframe);
 }
 
-Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, Point pt )
+Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, const Point& pt )
 {
-	const Control* ctrl = FromHandle(from);
-	if (ctrl == null)
+	const Control* fromCtrl = FromHandle(from);
+	if (fromCtrl == null)
 		throw ArgumentException(L"From control can't be found.");
-	while (ctrl != null && ctrl->get_Handle() != to)
+	const Control* toCtrl = FromHandle(to);
+	const Control* commonParent = FindCommonParent(fromCtrl, toCtrl);
+
+	Point mapOnCommonParent = MapWindowPointToAncestor(fromCtrl, commonParent, pt);
+	if (toCtrl == null)
+		return mapOnCommonParent;
+
+	Point toCtrlOnCommonParent = MapWindowPointToAncestor(toCtrl, commonParent, Point::Empty);
+	return mapOnCommonParent + toCtrlOnCommonParent;
+}
+
+const Control* FormManager::FindCommonParent( const Control* from, const Control* to )
+{
+	if (from == null || to == null)
+		return null;
+	map<IntPtr, const Control*> fromParents;
+	for (const Control* ctrl = from; ctrl != null; ctrl = ctrl->get_Parent())
 	{
-		pt += ctrl->get_Location();
-		ctrl = ctrl->get_Parent();
+		fromParents[ctrl->get_Handle()] = ctrl;
+	}
+	for (const Control* ctrl = to; ctrl != null; ctrl = ctrl->get_Parent())
+	{
+		if (fromParents.find(ctrl->get_Handle()) != fromParents.end())
+		{
+			return ctrl;
+		}
+	}
+	return null;
+}
+
+Point FormManager::MapWindowPointToAncestor( const Control* fromCtrl, 
+	const Control* commonParent, Point pt )
+{
+	for (const Control* control = fromCtrl; 
+		control != commonParent; 
+		control = control->get_Parent())
+	{
+		pt += control->get_Location();
 	}
 	return pt;
 }

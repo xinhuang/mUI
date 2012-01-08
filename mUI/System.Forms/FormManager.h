@@ -59,7 +59,7 @@ public:
 	Form* FormAt(const Point& location);
 	Control* ControlAt(const Point& pt);
 
-	Point MapWindowPoint(IntPtr from, IntPtr to, Point pt);
+	Point MapWindowPoint(IntPtr from, IntPtr to, const Point& pt);
 
 	static Point DeleteMe_GetControlFrameCoord(const Control& control);
 
@@ -74,6 +74,8 @@ private:
 	~FormManager();
 	Form* get_Form(IntPtr handle);
 	const Form* get_Form(IntPtr handle) const;
+	const Control* FindCommonParent( const Control* from, const Control* to );
+	Point MapWindowPointToAncestor( const Control* fromCtrl, const Control* commonParent, Point pt );
 
 private:
 	struct Data;
