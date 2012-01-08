@@ -616,6 +616,8 @@ void Control::set_Bounds( const Drawing::Rectangle& value )
 
 void Control::set_Height( int value )
 {
+	if (get_AutoSize())
+		return;
 	size_.Height = value;
 }
 
@@ -626,12 +628,24 @@ int Control::get_Height() const
 
 void Control::set_Width( int value )
 {
+	if (get_AutoSize())
+		return;
 	size_.Width = value;
 }
 
 int Control::get_Width() const
 {
 	return size_.Width;
+}
+
+int Control::get_Top() const
+{
+	return location_.Y;
+}
+
+void Control::set_Top( int value )
+{
+	location_.Y = value;
 }
 
 bool Control::get_AutoSize() const

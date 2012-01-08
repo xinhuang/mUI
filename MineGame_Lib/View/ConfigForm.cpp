@@ -20,23 +20,21 @@ ConfigForm::~ConfigForm()
 
 void ConfigForm::InitializeComponents()
 {
-	set_Size(Size(50, 50));
-	set_DragMove(true);
+	set_Size(Size(100, 70));
+
+	int gap = 3;
 
 	Controls.Add(_d->widthLabel);
 	_d->widthLabel.set_AutoSize(true);
 	_d->widthLabel.set_Text(L"Width:");
 
-	//Controls.Add(_d->heightLabel);
-	//_d->heightLabel.Hide();
-	//_d->heightLabel.set_Text(L"Height:");
-	//_d->heightLabel.set_AutoSize(true);
-	//_d->heightLabel.set_Height(_d->widthLabel.get_Height() + 10);
+	Controls.Add(_d->heightLabel);
+	_d->heightLabel.set_Text(L"Height:");
+	_d->heightLabel.set_AutoSize(true);
+	_d->heightLabel.set_Location(Point(0, _d->widthLabel.get_Height() + gap));
 
-	//Controls.Add(_d->mineTotalLabel);
-	//_d->mineTotalLabel.Hide();
-	//_d->mineTotalLabel.set_Text(L"Mines:");
-	//_d->mineTotalLabel.set_AutoSize(true);
-	//_d->mineTotalLabel.set_Height(_d->heightLabel.get_Height() + 10);
+	Controls.Add(_d->mineTotalLabel);
+	_d->mineTotalLabel.set_Text(L"Mines:");
+	_d->mineTotalLabel.set_AutoSize(true);
+	_d->mineTotalLabel.set_Location(Point(0, _d->heightLabel.get_Top() + _d->heightLabel.get_Height() + gap));
 }
-

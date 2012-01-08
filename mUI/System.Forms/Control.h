@@ -151,6 +151,9 @@ public:
 	const Point& get_Location() const;
 	void set_Location(const Point& pt);
 
+	int Control::get_Top() const;
+	void set_Top(int value);
+
 	IntPtr get_Handle() const { return handle_; }
 
 	bool get_Visible() const { return visibility_; }
