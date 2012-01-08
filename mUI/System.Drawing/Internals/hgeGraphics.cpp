@@ -15,7 +15,7 @@
 #include <hgesprite.h>
 #include "hgefont.h"
 
-// warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+#pragma warning(push)
 #pragma warning(disable: 4244)
 
 namespace mUI{ namespace System{  namespace Drawing{ namespace HGEDrawing{
@@ -24,7 +24,7 @@ const float Graphics::UI_Z = 0.5f;
 
 Graphics::Graphics(const Rectangle& clip_rect) : offset_(clip_rect.Location), enabled_(true)
 {
-	SetClip(mUI::System::Drawing::Rectangle(Point::Empty, clip_rect.Size));
+	SetClip(Rectangle(Point::Empty, clip_rect.Size));
 }
 
 Graphics::~Graphics()
@@ -267,3 +267,5 @@ SizeF Graphics::MeasureString( const String& text, const Font& font )
 }
 
 }}}}
+
+#pragma warning(pop)

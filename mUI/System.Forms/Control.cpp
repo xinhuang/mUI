@@ -224,7 +224,7 @@ void Control::Refresh()
 
 Graphics* Control::CreateGraphics()
 {
-	return Drawing::CreateGraphics(Drawing::Rectangle(PointToScreen(Point::Empty), get_Size()));
+	return Drawing::CreateGraphics(Rectangle(PointToScreen(Point::Empty), get_Size()));
 }
 
 const Point& Control::get_Location() const
