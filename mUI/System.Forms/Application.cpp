@@ -32,7 +32,7 @@ Application::Application() :
 	assert(ret);
 	ret = FormManager::Initialize();
 	assert(ret);
-	srand(static_cast<unsigned int>(time(NULL)));
+	srand(static_cast<unsigned int>(time(null)));
 }
 
 IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam )
@@ -80,14 +80,14 @@ IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, Int
 bool Application::DoEvents()
 {
 	bool ret = false;
-	if (!_application.IsDisposing() && _application._frame != NULL)
+	if (!_application.IsDisposing() && _application._frame != null)
 	{
 		PHGE hge;
 		ret = _application._frame->LogicTick(hge->Timer_GetDelta());
 	}
 
 	MSG msg;
-	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) != 0)
+	while (PeekMessage(&msg, null, 0, 0, PM_REMOVE) != 0)
 	{
 		if (msg.message != WM_QUIT)
 		{
@@ -110,7 +110,7 @@ bool Application::DoEvents()
 
 void Application::Run( Frame* frame )
 {
-	assert(frame != NULL);
+	assert(frame != null);
 	FormManager::get_Instance().set_RootForm(*frame);
 
 	_application._frame = frame;
@@ -140,7 +140,7 @@ void Application::Run( Frame* frame )
 	}
 	else
 	{
-		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		::MessageBoxA(null, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 	}
 }
 
@@ -157,7 +157,7 @@ void Application::Dispose()
 
 	_disposing = true;
 
-	_frame = NULL;
+	_frame = null;
 	FormManager::get_Instance().Dispose();
 	Threading::Dispose();
 	Drawing::Dispose();
@@ -198,7 +198,7 @@ bool Application::InitFunc()
 
 	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 
-	if (_application._frame != NULL)
+	if (_application._frame != null)
 	{
 		_application._frame->Initialize();
 		_application._frame->Show();
@@ -261,7 +261,7 @@ void Application::StartHge( const HgeContext &context )
 	}
 	else
 	{
-		::MessageBoxA(NULL, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		::MessageBoxA(null, hge->System_GetErrorMessage(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 	}
 }
 

@@ -30,9 +30,9 @@ public:
 	{
 		for (size_t i = 0; i < delegates.size(); ++i)
 		{
-			assert(delegates[i] != NULL);
+			assert(delegates[i] != null);
 			delete delegates[i];
-			delegates[i] = NULL;
+			delegates[i] = null;
 		}
 	}
 
@@ -120,9 +120,9 @@ public:
 	{
 		for (size_t i = 0; i < delegates.size(); ++i)
 		{
-			assert(delegates[i] != NULL);
+			assert(delegates[i] != null);
 			delete delegates[i];
-			delegates[i] = NULL;
+			delegates[i] = null;
 		}
 		delegates.clear();
 	}
@@ -169,9 +169,9 @@ public:
 	{
 		for (size_t i = 0; i < delegates.size(); ++i)
 		{
-			assert(delegates[i] != NULL);
+			assert(delegates[i] != null);
 			delete delegates[i];
-			delegates[i] = NULL;
+			delegates[i] = null;
 		}
 	}
 
@@ -258,9 +258,9 @@ public:
 	{
 		for (size_t i = 0; i < delegates.size(); ++i)
 		{
-			assert(delegates[i] != NULL);
+			assert(delegates[i] != null);
 			delete delegates[i];
-			delegates[i] = NULL;
+			delegates[i] = null;
 		}
 		delegates.clear();
 	}

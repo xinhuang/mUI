@@ -5,7 +5,7 @@ namespace mUI{ namespace System{  namespace Threading{
 
 ManualResetEvent::ManualResetEvent(void)
 {
-	IntPtr handle = Pal::NewEvent(true, false, NULL);
+	IntPtr handle = Pal::NewEvent(true, false, null);
 	set_SafeWaitHandle(handle);
 }
 

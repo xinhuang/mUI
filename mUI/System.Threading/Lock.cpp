@@ -3,17 +3,17 @@
 
 namespace mUI{ namespace System{  namespace Threading{
 
-Lock::Lock() : lock_(NULL)
+Lock::Lock() : lock_(null)
 {
 	lock_ = Pal::NewLock();
-	assert(lock_ != NULL);
+	assert(lock_ != null);
 }
 
 Lock::~Lock(void)
 {
 	Release();
 	Pal::DeleteLock(lock_);
-	lock_ = NULL;
+	lock_ = null;
 }
 
 void Lock::Acquire()

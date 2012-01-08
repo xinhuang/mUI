@@ -16,7 +16,7 @@ public:
 	Task(const Delegate<>& method, bool synchronous);
 	~Task()
 	{
-		async_result_ = NULL;
+		async_result_ = null;
 	}
 
 	void Invoke();
@@ -57,14 +57,14 @@ Control::Task::Task(const Delegate<>& method, bool synchronous)
 	}
 	else
 	{
-		async_result_ = NULL;
+		async_result_ = null;
 	}
 }
 
 void Control::Task::Invoke()
 {
 	method_();
-	if (async_result_ != NULL)
+	if (async_result_ != null)
 	{
 		async_result_->completed_ = true;
 		async_result_->wait_handle_.Set();
@@ -78,7 +78,7 @@ IAsyncResult* Control::Task::get_AsyncResult()
 
 Control::Task::AsyncResult::~AsyncResult()
 {
-	task_->async_result_ = NULL;
+	task_->async_result_ = null;
 }
 
 WaitHandle* Control::Task::AsyncResult::get_AsyncWaitHandle()
@@ -116,7 +116,7 @@ void Control::_InvokeAll()
 	{
 		Task* task = qutaskinvoke_.front();
 		qutaskinvoke_.pop();
-		assert(task != NULL);
+		assert(task != null);
 		task->Invoke();
 		delete task;
 	}

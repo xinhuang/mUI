@@ -2,6 +2,6 @@
 
 namespace mUI{ namespace System{  namespace Drawing{
 
-Font* SystemFonts::DefaultFont(NULL);
+Font* SystemFonts::DefaultFont(null);
 
 }}}

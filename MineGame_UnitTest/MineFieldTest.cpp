@@ -89,7 +89,7 @@ TEST_F(MineFieldTest, Constructor_Typical)
 {
 	MineField* mineField = new MineField(_game);
 
-	ASSERT_TRUE(NULL != mineField);
+	ASSERT_TRUE(null != mineField);
 	delete mineField;
 }
 
@@ -111,7 +111,7 @@ TEST_F(MineFieldTest, SquareAt_Typical)
         for (int x = 0; x < _sut->get_Size().Width; ++x)
 	    {
 			ISquare* square = _sut->SquareAt(x, y);
-			ASSERT_TRUE(NULL != square);
+			ASSERT_TRUE(null != square);
 			ASSERT_EQ(x, square->get_X());
 			ASSERT_EQ(y, square->get_Y());
 		}

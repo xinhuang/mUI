@@ -16,7 +16,7 @@ class MineSquareTest : public testing::Test
 public:
 	void SetUp()
 	{
-		_sut = new MineSquare(NULL, NULL, 
+		_sut = new MineSquare(null, null, 
 			ABITRARY_X, ABITRARY_Y);
 	}
 
@@ -32,7 +32,7 @@ protected:
 
 TEST_F(MineSquareTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _sut);
+	ASSERT_TRUE(null != _sut);
 	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 }
 
@@ -40,7 +40,7 @@ TEST_F(MineSquareTest, Uncover_Typical)
 {
     ViewMock view;
     MGameMock game(&view);
-    MineSquare mineSquare(&game, NULL, 0, 0);
+    MineSquare mineSquare(&game, null, 0, 0);
     SquareViewMock squareView;
     mineSquare.Bind(&squareView);
     EXPECT_CALL(squareView, set_State(SquareViewState::Boomed)).Times(1);	
@@ -55,7 +55,7 @@ TEST_F(MineSquareTest, Uncover_WhenMultipleTimes)
 {
     ViewMock view;
     MGameMock game(&view);
-    MineSquare mineSquare(&game, NULL, 0, 0);
+    MineSquare mineSquare(&game, null, 0, 0);
     SquareViewMock squareView;
     mineSquare.Bind(&squareView);
     EXPECT_CALL(squareView, set_State(SquareViewState::Boomed)).Times(1);	

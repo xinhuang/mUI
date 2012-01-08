@@ -5,7 +5,7 @@
 
 namespace mUI{ namespace System{  namespace Threading{
 
-WaitHandle::WaitHandle() : handle_(NULL)
+WaitHandle::WaitHandle() : handle_(null)
 {
 }
 
@@ -15,7 +15,7 @@ WaitHandle::~WaitHandle()
 
 void WaitHandle::WaitOne() const
 {
-	assert(handle_ != NULL);
+	assert(handle_ != null);
 	Pal::WaitForSingleObject(get_SafeWaitHandle(), INFINITE);
 }
 
@@ -25,7 +25,7 @@ void WaitHandle::WaitAll( const vector<WaitHandle>& whs )
 		return;
 
 	IntPtr* handles = new IntPtr[whs.size()];
-	assert(handles != NULL);
+	assert(handles != null);
 	for (size_t i = 0; i < whs.size(); ++i)
 	{
 		handles[i] = whs[i].handle_;
@@ -33,7 +33,7 @@ void WaitHandle::WaitAll( const vector<WaitHandle>& whs )
 
 	Pal::WaitForMultipleObjects(whs.size(), handles, true, INFINITE);
 	delete handles;
-	handles = NULL;
+	handles = null;
 }
 
 void WaitHandle::WaitAny( const vector<WaitHandle>& whs )
@@ -42,7 +42,7 @@ void WaitHandle::WaitAny( const vector<WaitHandle>& whs )
 		return;
 
 	IntPtr* handles = new IntPtr[whs.size()];
-	assert(handles != NULL);
+	assert(handles != null);
 	for (size_t i = 0; i < whs.size(); ++i)
 	{
 		handles[i] = whs[i].handle_;
@@ -50,7 +50,7 @@ void WaitHandle::WaitAny( const vector<WaitHandle>& whs )
 
 	Pal::WaitForMultipleObjects(whs.size(), handles, false, INFINITE);
 	delete handles;
-	handles = NULL;
+	handles = null;
 }
 
 IntPtr WaitHandle::get_SafeWaitHandle() const

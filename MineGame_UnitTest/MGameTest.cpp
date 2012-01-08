@@ -62,7 +62,7 @@ protected:
 
 TEST_F(MGameTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _sut);
+	ASSERT_TRUE(null != _sut);
 }
 
 TEST_F(MGameTest, NewGame_Typical)
@@ -87,7 +87,7 @@ TEST_F(MGameTest, NewGame_Typical)
 
 	_sut->NewGame();
 
-	ASSERT_TRUE(_sut->get_MineField() != NULL);
+	ASSERT_TRUE(_sut->get_MineField() != null);
 	ASSERT_EQ(arbitrarySize, _sut->get_MineField()->get_Size());
 	ASSERT_EQ(arbitraryMineTotal, _sut->get_MineField()->get_MineTotal());
 }
@@ -106,7 +106,7 @@ TEST_F(MGameTest, Lose_Typical)
 	_sut->set_MineFieldWidth(20);
 	_sut->set_MineTotal(20);
 	EXPECT_CALL(*_view, CreateSquares(_))
-		.WillOnce(Return(vector<ISquareView*>(20*20, NULL)));
+		.WillOnce(Return(vector<ISquareView*>(20*20, null)));
 	_sut->NewGame();
 
 	_sut->Lose();

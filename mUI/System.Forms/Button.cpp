@@ -13,7 +13,7 @@ Button::Button()
 	_state = Normal;
 	for (size_t i = 0; i < StateMax; ++i)
 	{
-		_stateImages[i] = NULL;
+		_stateImages[i] = null;
 	}
 }
 
@@ -68,7 +68,7 @@ void Button::OnPaint( PaintEventArgs* e )
 	{
 		set_BackColor(SystemColors::ButtonHighlight);
 		Image* image = _stateImages[Hover];
-		if (image == NULL)
+		if (image == null)
 			image = _stateImages[Normal];
 		set_BackgroundImage(image, false);
 	}	
@@ -76,7 +76,7 @@ void Button::OnPaint( PaintEventArgs* e )
 	{
 		set_BackColor(SystemColors::ButtonShadow);
 		Image* image = _stateImages[Pressed];
-		if (image == NULL)
+		if (image == null)
 			image = _stateImages[Normal];
 		set_BackgroundImage(image, false);
 	}
@@ -133,7 +133,7 @@ void Button::set_PressedImage( const String& image )
 
 void Button::set_StateImage( State s, const String& image )
 {
-	if (_stateImages[s] != NULL)
+	if (_stateImages[s] != null)
 	{
 		delete _stateImages[s];
 	}
@@ -142,11 +142,11 @@ void Button::set_StateImage( State s, const String& image )
 
 Button::~Button()
 {
-	set_BackgroundImage(NULL, false);
+	set_BackgroundImage(null, false);
 	for (size_t i = 0; i < StateMax; ++i)
 	{
 		delete _stateImages[i];
-		_stateImages[i] = NULL;
+		_stateImages[i] = null;
 	}
 }
 

@@ -58,13 +58,13 @@ namespace mUI{ namespace System{
 			: args_(ARG)
 		{
 			functor_ = new MemberFunctor<TClass, T_RET_ARG>(c, F);
-			assert(functor_ != NULL);
+			assert(functor_ != null);
 		}
 
 		virtual ~FunctorBinder()
 		{
 			delete functor_;
-			functor_ = NULL;
+			functor_ = null;
 		}
 
 		virtual TRet operator() ()

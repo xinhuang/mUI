@@ -20,7 +20,7 @@ struct Control::Data
 	Data()
 		: anchorStyles(AnchorStyles::None)
 		, autoSize(false)
-		, font(NULL)
+		, font(null)
 	{		
 	}
 
@@ -38,8 +38,8 @@ struct Control::Data
 #pragma warning(disable: 4355)
 
 Control::Control() : 
-	parent_(NULL), Controls(*this), visibility_(false), 
-	back_color_(SystemColors::Control), background_image_(NULL),
+	parent_(null), Controls(*this), visibility_(false), 
+	back_color_(SystemColors::Control), background_image_(null),
 	background_image_layout_(ImageLayout::None),
 	suspend_layout_count_(0), _d(new Data())
 {
@@ -55,10 +55,10 @@ Control::~Control()
 	FormManager::get_Instance().UnregisterControl(*this);
 
 	delete background_image_;
-	background_image_ = NULL;
+	background_image_ = null;
 
 	Control* parent = get_Parent();
-	if (parent != NULL)
+	if (parent != null)
 		parent->Controls.Remove(*this);
 	ResumeLayout(false);
 
@@ -73,7 +73,7 @@ void Control::OnPaint( PaintEventArgs* e )
 	SolidBrush brush(get_BackColor());
 	g.FillRectangle(brush, bounds);
 
-	if (get_BackgroundImage() != NULL)
+	if (get_BackgroundImage() != null)
 	{
 		// TODO: Use TextureBrush to do this.
 		switch (get_BackgroundImageLayout())
@@ -115,7 +115,7 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 	for (Control::ControlCollection::iterator iter = container.Controls.begin();
 		iter != container.Controls.end(); ++iter)
 	{
-		assert(*iter != NULL);
+		assert(*iter != null);
 		Control& element = **iter;
 
 		Rectangle bounds = element.get_Bounds();
@@ -217,7 +217,7 @@ void Control::Refresh()
 		iter != Controls.rend(); ++iter)
 	{
 		Control* control = *iter;
-		assert(control != NULL);
+		assert(control != null);
 		control->Refresh();
 	}
 }
@@ -243,7 +243,7 @@ const Control* Control::GetChildAtPoint( const Point& pt ) const
 		iter != Controls.end(); ++iter)
 	{
 		Control* control = *iter;
-		assert(control != NULL);
+		assert(control != null);
 		Drawing::Rectangle rect(control->get_Location(), control->get_Size());
 		rect = RectangleToScreen(rect);
 		if (rect.Contains(pt))
@@ -260,7 +260,7 @@ Control* Control::GetChildAtPoint( const Point& pt )
 		iter != Controls.end(); ++iter)
 	{
 		Control* control = *iter;
-		assert(control != NULL);
+		assert(control != null);
 		Drawing::Rectangle rect(control->get_Location(), control->get_Size());
 		if (rect.Contains(pt))
 		{
@@ -432,7 +432,7 @@ void Control::_BringToFront( Control& control )
 
 void Control::BringToFront()
 {
-	if (get_Parent() != NULL)
+	if (get_Parent() != null)
 	{
 		get_Parent()->_BringToFront(*this);
 	}
@@ -445,7 +445,7 @@ void Control::BringToFront()
 Form& Control::FindForm()
 {
 	Control* control = this;
-	while (control->get_Parent() != NULL)
+	while (control->get_Parent() != null)
 	{
 		control = control->get_Parent();
 	}
@@ -455,7 +455,7 @@ Form& Control::FindForm()
 const Form& Control::FindForm() const
 {
 	const Control* control = this;
-	while (control->get_Parent() != NULL)
+	while (control->get_Parent() != null)
 	{
 		control = control->get_Parent();
 	}
@@ -486,7 +486,7 @@ void Control::_Activate( Control& c )
 {
 	Control* control = &c;
 	vector<Control*> enter_list;
-	while (control != NULL)
+	while (control != null)
 	{
 		enter_list.push_back(control);
 		control = control->get_Parent();
@@ -504,7 +504,7 @@ void Control::_Deactivate( Control& c )
 {
 	Control* control = &c;
 	vector<Control*> leave_list;
-	while (control != NULL)
+	while (control != null)
 	{
 		leave_list.push_back(control);
 		control = control->get_Parent();
@@ -540,7 +540,7 @@ void Control::ResumeLayout( bool perform_layout )
 
 void Control::PerformLayout()
 {
-	PerformLayout(NULL, String::Empty);
+	PerformLayout(null, String::Empty);
 }
 
 void Control::PerformLayout( Control* affected_control, const String& affected_property )
@@ -651,11 +651,11 @@ void Control::set_AutoSize( bool value )
 
 const Drawing::Font* Control::get_Font() const
 {
-	if (_d->font != NULL)
+	if (_d->font != null)
 		return _d->font;
 
 	const Font* f = GetParentFont();
-	if (f != NULL)
+	if (f != null)
 		return f;
 
 	return get_DefaultFont();
@@ -668,10 +668,10 @@ void Control::set_Font( const Drawing::Font& value )
 
 const Drawing::Font* Control::GetParentFont() const
 {
-	if (get_Parent() != NULL)
+	if (get_Parent() != null)
 		return get_Parent()->get_Font();
 	else
-		return NULL;
+		return null;
 }
 
 const Drawing::Font* Control::get_DefaultFont()
@@ -696,7 +696,7 @@ Control::ControlCollection::~ControlCollection()
 	while (controls_.size() > 0)
 	{
 		Control* c = controls_.front();
-		assert(c != NULL);
+		assert(c != null);
 		assert(c->get_Parent() == &outer_class_);
 		delete c;
 	}
@@ -732,7 +732,7 @@ void Control::ControlCollection::Remove( Control& control )
 		if (*iter == &control)
 		{
 			controls_.erase(iter);
-			control.parent_ = NULL;
+			control.parent_ = null;
 			ControlEventArgs e(control);
 			outer_class_.OnControlRemoved(&e);
 			outer_class_.PerformLayout();

@@ -8,7 +8,7 @@ const String String::Empty;
 
 String::String( const wchar_t* value )
 {
-	if (value == NULL)
+	if (value == null)
 		return;
 
 	*this = value;
@@ -18,7 +18,7 @@ String& String::operator=( const wchar_t* value )
 {
 	clear();
 
-	if (value == NULL)
+	if (value == null)
 		return *this;
 
 	for (const wchar_t* p = value; *p != 0; ++p)
@@ -30,7 +30,7 @@ String& String::operator=( const wchar_t* value )
 
 String::String( const char* value )
 {
-	if (value == NULL)
+	if (value == null)
 		return;
 
 // warning C4996: 'mUI::System::String::String': was declared deprecated
@@ -57,7 +57,7 @@ String& String::operator=( const char* value )
 {
 	clear();
 
-	if (value == NULL)
+	if (value == null)
 		return *this;
 
 	wchar_t* buffer = Pal::Utf8ToUtf16(value);

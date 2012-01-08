@@ -26,7 +26,7 @@ protected:
 
 TEST_F(FormManagerTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _sut);
+	ASSERT_TRUE(null != _sut);
 }
 
 TEST_F(FormManagerTest, MapWindowPoint_Typical)

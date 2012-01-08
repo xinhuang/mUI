@@ -7,7 +7,7 @@ namespace mUI{ namespace System{  namespace Drawing{ namespace HGEDrawing{
 Drawing::Image* Image::FromFile( const String& filename )
 {
 	Image* image = new Image(filename);
-	assert(image != NULL);
+	assert(image != null);
 
 	return image;
 }

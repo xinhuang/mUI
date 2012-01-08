@@ -44,7 +44,7 @@ protected:
 
 TEST_F(NumberSquareTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _sut);
+	ASSERT_TRUE(null != _sut);
 	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 }
 

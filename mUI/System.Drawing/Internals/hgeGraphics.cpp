@@ -222,7 +222,7 @@ void Graphics::DrawString( const String& s, const Font& font, SolidBrush& brush,
 		iter != s.end(); ++iter)
 	{
 		Glyph* glyph = fi.get_Glyph(*iter);
-		if (glyph != NULL && glyph->get_Texture().IsValid())
+		if (glyph != null && glyph->get_Texture().IsValid())
 		{
 			Texture& texture = glyph->get_Texture();
 			texture.Render(hge, pos.X + glyph->get_X(), 
@@ -256,7 +256,7 @@ SizeF Graphics::MeasureString( const String& text, const Font& font )
 		iter != text.end(); ++iter)
 	{
 		Glyph* glyph = fi.get_Glyph(*iter);
-		if (glyph != NULL)
+		if (glyph != null)
 		{
 			height = max(height, glyph->get_Height());
 			width += glyph->get_Width();

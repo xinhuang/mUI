@@ -9,13 +9,13 @@ namespace mUI{ namespace System{  namespace Drawing{
 void CreateSystemFonts()
 {
 	SystemFonts::DefaultFont = new Font(L"res/arial.ttf", 10);
-	assert(SystemFonts::DefaultFont != NULL);
+	assert(SystemFonts::DefaultFont != null);
 }
 
 void FreeSystemFonts()
 {
 	delete SystemFonts::DefaultFont;
-	SystemFonts::DefaultFont = NULL;
+	SystemFonts::DefaultFont = null;
 }
 
 bool InitializeFont()

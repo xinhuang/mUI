@@ -31,7 +31,7 @@ struct FormManager::Data
 	static FormManager* instance;
 };
 
-FormManager* FormManager::Data::instance = NULL;
+FormManager* FormManager::Data::instance = null;
 
 FormManager::FormManager() 
 	: _d(new Data())
@@ -132,23 +132,23 @@ Form* FormManager::FormAt( const Point& location )
 	for (deque<Form*>::iterator iter = _d->formList.begin();
 		iter != _d->formList.end(); ++iter)
 	{
-		assert(*iter != NULL);
+		assert(*iter != null);
 		Form& form = **iter;
 		if (form.get_Visible() && Drawing::Rectangle(form.get_Location(), form.get_Size()).Contains(location))
 		{
 			return &form;
 		}
 	}
-	return NULL;
+	return null;
 }
 
 Control* FormManager::ControlAt( const Point& pt )
 {
 	Form* form = FormAt(pt);
-	if (form == NULL)
-		return NULL;
+	if (form == null)
+		return null;
 	Control* control = form->GetChildAtPoint(pt - form->get_Location());
-	if (control == NULL)
+	if (control == null)
 		return form;
 	return control;
 }
@@ -158,7 +158,7 @@ Point FormManager::DeleteMe_GetControlFrameCoord( const Control& control )
 	const Control* c = &control;
 
 	Point coord = c->get_Location();
-	while (c->get_Parent() != NULL)
+	while (c->get_Parent() != null)
 	{
 		coord += c->get_Parent()->get_Location();
 		c = c->get_Parent();
@@ -175,7 +175,7 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 	case WM_MOUSELEAVE:
 		{
 			Control* mouse_leave = Control::FromHandle(_d->mousedControl);
-			if (mouse_leave != NULL)
+			if (mouse_leave != null)
 				mouse_leave->OnMouseLeave(&EventArgs::Empty);
 			_d->mousedControl = INVALID_VALUE;
 		}
@@ -185,12 +185,12 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 		{
 			// Triggers MouseEnter & MouseLeave
 			Control* enter_control = ControlAt(pt);
-			if (enter_control != NULL)
+			if (enter_control != null)
 			{
 				if (enter_control->get_Handle() != _d->mousedControl)
 				{
 					Control* leave_control = Control::FromHandle(_d->mousedControl);
-					if (leave_control != NULL)
+					if (leave_control != null)
 						leave_control->OnMouseLeave(&EventArgs::Empty);
 					_d->mousedControl = enter_control->get_Handle();
 					enter_control->OnMouseEnter(&EventArgs::Empty);
@@ -199,14 +199,14 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 			else
 			{
 				Control* mouse_leave = Control::FromHandle(_d->mousedControl);
-				if (mouse_leave != NULL)
+				if (mouse_leave != null)
 					mouse_leave->OnMouseLeave(&EventArgs::Empty);
 				_d->mousedControl = INVALID_VALUE;
 			}
 
 			// Triggers MouseMove
 			Control* focused_control_control = Control::FromHandle(_d->focusedControl);
-			if (focused_control_control != NULL)
+			if (focused_control_control != null)
 			{
 				MouseEventArgs mea;
 				mea.Location = pt - DeleteMe_GetControlFrameCoord(*focused_control_control);
@@ -221,12 +221,12 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 	case WM_LBUTTONDOWN:
 		{
 			Control* lbtn_control = ControlAt(pt);
-			if (lbtn_control != NULL)
+			if (lbtn_control != null)
 			{
 				if (lbtn_control->get_Handle() != _d->focusedControl)
 				{
 					Control* lostf_control = Control::FromHandle(_d->focusedControl);
-					if (lostf_control != NULL)
+					if (lostf_control != null)
 						Control::_Deactivate(*lostf_control);
 
 					Control::_Activate(*lbtn_control);
@@ -250,9 +250,9 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 	case WM_LBUTTONUP:
 		{
 			Control* control = Control::FromHandle(_d->focusedControl);
-			if (control == NULL)
+			if (control == null)
 				control = ControlAt(pt);
-			if (control != NULL)
+			if (control != null)
 			{
 				MouseEventArgs mea;
 				mea.Button = MouseButtons::Left;
@@ -267,12 +267,12 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 	case WM_RBUTTONDOWN:
 		{
 			Control* lbtn_control = ControlAt(pt);
-			if (lbtn_control != NULL)
+			if (lbtn_control != null)
 			{
 				if (lbtn_control->get_Handle() != _d->focusedControl)
 				{
 					Control* lostf_control = Control::FromHandle(_d->focusedControl);
-					if (lostf_control != NULL)
+					if (lostf_control != null)
 						Control::_Deactivate(*lostf_control);
 
 					Control::_Activate(*lbtn_control);
@@ -296,9 +296,9 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 	case WM_RBUTTONUP:
 		{
 			Control* control = Control::FromHandle(_d->focusedControl);
-			if (control == NULL)
+			if (control == null)
 				control = ControlAt(pt);
-			if (control != NULL)
+			if (control != null)
 			{
 				MouseEventArgs mea;
 				mea.Button = MouseButtons::Right;
@@ -326,7 +326,7 @@ void FormManager::RaiseKeyboardEvent( unsigned int message, IntPtr wParam, IntPt
 		{
 			KeyPressEventArgs e(reinterpret_cast<char>(wParam));
 			Control* ctrl = FromHandle(_d->focusedControl);
-			while (ctrl != NULL && ctrl->get_Handle() != _d->mainframe)
+			while (ctrl != null && ctrl->get_Handle() != _d->mainframe)
 			{
 				ctrl->OnKeyPress(&e);
 				if (e.Handled)
@@ -349,7 +349,7 @@ void FormManager::DoEvents()
 		iter != _d->handleMap.end(); ++iter)
 	{
 		Control* control = iter->second;
-		assert(control != NULL);
+		assert(control != null);
 		control->_InvokeAll();
 	}
 }
@@ -357,7 +357,7 @@ void FormManager::DoEvents()
 void FormManager::OnFrameActivated()
 {
 	Control* focused = Control::FromHandle(_d->focusedControl);
-	if (focused != NULL)
+	if (focused != null)
 	{
 		Control::_Activate(*focused);
 	}
@@ -371,7 +371,7 @@ void FormManager::OnFrameActivated()
 void FormManager::OnFrameDeactivated()
 {
 	Control* focused = Control::FromHandle(_d->focusedControl);
-	if (focused != NULL)
+	if (focused != null)
 	{
 		Control::_Deactivate(*focused);
 	}
@@ -388,7 +388,7 @@ void FormManager::Dispose()
 	}
 
 	delete Data::instance;
-	Data::instance = NULL;
+	Data::instance = null;
 }
 
 void FormManager::Render()
@@ -404,9 +404,9 @@ void FormManager::Render()
 
 bool FormManager::Initialize()
 {
-	assert(Data::instance == NULL);
+	assert(Data::instance == null);
 	Data::instance = new FormManager();
-	return Data::instance != NULL;
+	return Data::instance != null;
 }
 
 IntPtr FormManager::RegisterControl( Control& ctrl )
@@ -420,7 +420,7 @@ void FormManager::UnregisterControl( Control& ctrl )
 {
 	map<IntPtr, Control*>::iterator iter = _d->handleMap.find(ctrl.get_Handle());
 	assert(iter != _d->handleMap.end());
-	iter->second = NULL;
+	iter->second = null;
 	_d->handleMap.erase(iter);
 }
 
@@ -428,7 +428,7 @@ Control* FormManager::FromHandle( const IntPtr& h )
 {
 	map<IntPtr, Control*>::iterator iter = _d->handleMap.find(h);
 	if (iter == _d->handleMap.end())
-		return NULL;
+		return null;
 	else
 		return iter->second;
 }

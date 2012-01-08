@@ -41,7 +41,7 @@ const LocalDataStoreSlot INVALID_LOCAL_DATA_STORAGE = reinterpret_cast<LocalData
 class THREADING_ENTRY Thread
 {
 public:
-	Thread() : _tcb(NULL) {}
+	Thread() : _tcb(null) {}
 
 	Thread(const Thread& thread);
 	Thread& operator=(const Thread& thread);

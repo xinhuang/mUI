@@ -34,7 +34,7 @@ public:
 	{
 		_view = new ViewMock();
 		_game = new MGameMock(_view);
-		_sut = new AbstractSquareFake(_game, NULL, 
+		_sut = new AbstractSquareFake(_game, null, 
 			ABITRARY_X, ABITRARY_Y);
 		_squareView = new SquareViewMock();
 		_sut->Bind(_squareView);
@@ -59,7 +59,7 @@ protected:
 
 TEST_F(AbstractSquareTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _sut);
+	ASSERT_TRUE(null != _sut);
 	ASSERT_EQ(SquareState::Covered, _sut->get_State());
 	ASSERT_EQ(ABITRARY_Y, _sut->get_Y());
 	ASSERT_EQ(ABITRARY_X, _sut->get_X());

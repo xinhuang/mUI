@@ -69,7 +69,7 @@ Glyph* FTFont::get_Glyph( utf32_t code ) const
 	if (IsCached(code))
 	{
 		Glyph* glyph = get_Cache(code);
-		assert(glyph != NULL);
+		assert(glyph != null);
 		if (glyph->get_Texture().IsValid())
 			return glyph;
 		else
@@ -100,7 +100,7 @@ Glyph* FTFont::get_Glyph( utf32_t code ) const
 
 __nil_glyph:
 	// TODO: Nil glyph.
-	return NULL;
+	return null;
 }
 
 bool FTFont::get_Bold() const
@@ -197,7 +197,7 @@ bool FTFont::IsCached( utf32_t code ) const
 
 void FTFont::Cache( Glyph* glyph ) const
 {
-	assert(glyph != NULL && glyph->get_Texture().IsValid());
+	assert(glyph != null && glyph->get_Texture().IsValid());
 	assert(!IsCached(glyph->get_Code()));
 	glyph_cache_[glyph->get_Code()] = glyph;
 }
@@ -218,7 +218,7 @@ Glyph* FTFont::get_Cache( utf32_t code ) const
 	if (iter != glyph_cache_.end())
 		return iter->second;
 	else
-		return NULL;
+		return null;
 }
 
 }}}

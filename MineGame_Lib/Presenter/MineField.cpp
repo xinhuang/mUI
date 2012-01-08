@@ -9,7 +9,7 @@ using mUI::System::ArgumentException;
 
 MineField::MineField(MGame* game)
 	: _game(game)
-	, _squareFactory(NULL)
+	, _squareFactory(null)
 {
 	set_SquareFactory(new SquareFactory());
 }
@@ -19,7 +19,7 @@ MineField::~MineField()
 	ClearFields();
 
 	delete _squareFactory;
-	_squareFactory = NULL;
+	_squareFactory = null;
 }
 
 const Size& MineField::get_Size() const

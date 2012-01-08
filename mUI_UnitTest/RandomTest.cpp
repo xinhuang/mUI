@@ -21,7 +21,7 @@ protected:
 
 TEST_F(RandomTest, Constructor_WhenTypical)
 {
-	ASSERT_FALSE(NULL == random_);
+	ASSERT_FALSE(null == random_);
 }
 
 TEST_F(RandomTest, Constructor_SameSeedSameSequence)

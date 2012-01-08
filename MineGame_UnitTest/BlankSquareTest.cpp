@@ -34,9 +34,9 @@ protected:
 
 TEST_F(BlankSquareTest, Constructor_Typical)
 {
-	BlankSquare* sut = new BlankSquare(NULL, NULL, 0, 0);
+	BlankSquare* sut = new BlankSquare(null, null, 0, 0);
 
-	ASSERT_TRUE(NULL != sut);
+	ASSERT_TRUE(null != sut);
 	ASSERT_EQ(SquareState::Covered, sut->get_State());
 	delete sut;
 }

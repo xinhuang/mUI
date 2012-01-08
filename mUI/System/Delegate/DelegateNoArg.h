@@ -34,7 +34,7 @@ namespace mUI{ namespace System{
 			{
 				assert(delegates[i]);
 				delete delegates[i];
-				delegates[i] = NULL;
+				delegates[i] = null;
 			}
 		}
 
@@ -136,9 +136,9 @@ namespace mUI{ namespace System{
 		{
 			for (size_t i = 0; i < delegates.size(); ++i)
 			{
-				assert(delegates[i] != NULL);
+				assert(delegates[i] != null);
 				delete delegates[i];
-				delegates[i] = NULL;
+				delegates[i] = null;
 			}
 			delegates.clear();
 		}
@@ -156,7 +156,7 @@ namespace mUI{ namespace System{
 		void Add(TClass& c, TRet (TClass::*F)(TArg0), const TArg0& arg0)
 		{
 			Functor<TRet>* f = new FunctorBinder<TRet, TArg0>(c, F, arg0);
-			assert(f != NULL);
+			assert(f != null);
 			delegates.push_back(f);
 		}
 		
@@ -171,7 +171,7 @@ namespace mUI{ namespace System{
 		void Add(TClass& c, TRet (TClass::*F)(TArg0, TArg1), const TArg0& arg0, const TArg1& arg1)
 		{
 			Functor<TRet>* f = new FunctorBinder<TRet, TArg0, TArg1>(c, F, arg0, arg1);
-			assert(f != NULL);
+			assert(f != null);
 			delegates.push_back(f);
 		}
 		
@@ -203,7 +203,7 @@ namespace mUI{ namespace System{
 				TArg0, TArg1, TArg2, TArg3, TArg4, 
 				TArg5, TArg6, TArg7, TArg8, TArg9>
 				(c, F, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-			assert(f != NULL);
+			assert(f != null);
 			delegates.push_back(f);
 		}
 	
@@ -358,9 +358,9 @@ namespace mUI{ namespace System{
 		{
 			for (size_t i = 0; i < delegates.size(); ++i)
 			{
-				assert(delegates[i] != NULL);
+				assert(delegates[i] != null);
 				delete delegates[i];
-				delegates[i] = NULL;
+				delegates[i] = null;
 			}
 			delegates.clear();
 		}
@@ -386,7 +386,7 @@ namespace mUI{ namespace System{
 		template <typename TClass, typename TClassF, TPL_ARGLIST>
 		Delegate(TClass* c, TRet (TClassF::*F)(T_ARGLIST), FUN_ARGLIST)
 		{
-			assert(c != NULL);
+			assert(c != null);
 			TRet (TClass::*f)(T_ARGLIST);
 			f = F;
 			Add(*c, f, ARGLIST);
@@ -398,7 +398,7 @@ namespace mUI{ namespace System{
 			TRet (TClass::*f)(T_ARGLIST);
 			f = F;
 			Functor<TRet>* functor = new FunctorBinder<TRet, T_ARGLIST>(c, f, ARGLIST);
-			assert(functor != NULL);
+			assert(functor != null);
 			delegates.push_back(functor);
 		}
 		template <typename TClass, typename TClassF, TPL_ARGLIST>
@@ -435,7 +435,7 @@ namespace mUI{ namespace System{
 		template <typename TClass, typename TClassF, TPL_ARGLIST>
 		Delegate(TClass* c, TRet (TClassF::*F)(T_ARGLIST), FUN_ARGLIST)
 		{
-			assert(c != NULL);
+			assert(c != null);
 			TRet (TClass::*f)(T_ARGLIST);
 			f = F;
 			Add(*c, f, ARGLIST);
@@ -447,7 +447,7 @@ namespace mUI{ namespace System{
 			TRet (TClass::*f)(T_ARGLIST);
 			f = F;
 			Functor<TRet>* functor = new FunctorBinder<TRet, T_ARGLIST>(c, f, ARGLIST);
-			assert(functor != NULL);
+			assert(functor != null);
 			delegates.push_back(functor);
 		}
 		template <typename TClass, typename TClassF, TPL_ARGLIST>
@@ -505,7 +505,7 @@ namespace mUI{ namespace System{
 		template <typename TClass, typename TClassF, TPL_ARGLIST>
 		Delegate(TClass* c, TRet (TClassF::*F)(T_ARGLIST), FUN_ARGLIST)
 		{
-			assert(c != NULL);
+			assert(c != null);
 			TRet (TClass::*f)(T_ARGLIST);
 			f = F;
 			Add(*c, f, ARGLIST);
@@ -517,7 +517,7 @@ namespace mUI{ namespace System{
 			TRet (TClass::*f)(T_ARGLIST);
 			f = F;
 			Functor<TRet>* functor = new FunctorBinder<TRet, T_ARGLIST>(c, f, ARGLIST);
-			assert(functor != NULL);
+			assert(functor != null);
 			delegates.push_back(functor);
 		}
 		template <typename TClass, typename TClassF, TPL_ARGLIST>
@@ -564,7 +564,7 @@ namespace mUI{ namespace System{
 		void Add(const Functor<TRet, TArg0>& F, TArg0 arg0)
 		{
 			Functor<TRet>* f = new FunctorBinder<TRet, TArg0>(F, arg0);
-			assert(f != NULL);
+			assert(f != null);
 			delegates.push_back(f);
 		}
 		template<typename TArg0>

@@ -29,7 +29,7 @@ struct Thread::ThreadControlBlock : public Lockable				// Lock this if nessesary
 		if (tcb->ReferenceCount == 0)
 		{
 			delete tcb;
-			tcb = NULL;
+			tcb = null;
 		}
 		return tcb;
 	}
@@ -40,7 +40,7 @@ struct Thread::ThreadControlBlock : public Lockable				// Lock this if nessesary
 size_t Thread::_foregroundThreadCount = 0;		// Using Interlocked method to access
 LocalDataStoreSlot Thread::_tcbSlot = INVALID_LOCAL_DATA_STORAGE;
 
-Thread::Thread( const ThreadStart& thread_start ) : _tcb(NULL)
+Thread::Thread( const ThreadStart& thread_start ) : _tcb(null)
 {
 	_threadStart = thread_start;
 }
@@ -54,7 +54,7 @@ Thread& Thread::operator=( const Thread& thread )
 {
 	this->Dispose();
 
-	if (thread._tcb != NULL)
+	if (thread._tcb != null)
 	{
 		AutoLock lock(*thread._tcb);
 		this->_tcb = thread._tcb;
@@ -100,7 +100,7 @@ void* Thread::GetData( const LocalDataStoreSlot& tls )
 void Thread::ThreadEntry( void* param )
 {
 	ThreadControlBlock* tcb = reinterpret_cast<ThreadControlBlock*>(param);
-	assert(tcb != NULL);
+	assert(tcb != null);
 	bool isForeground = !tcb->IsBackground;
 
 	LocalDataStoreSlot slot = _tcbSlot;
@@ -133,7 +133,7 @@ void Thread::ThreadEntry( void* param )
 	if (tcb->ReferenceCount == 0)
 	{
 		delete tcb;
-		tcb = NULL;
+		tcb = null;
 	}
 
 	if (isForeground)
@@ -161,39 +161,39 @@ void Thread::Sleep( unsigned int milliseconds )
 
 bool Thread::IsAlive() const
 {
-	if (_tcb == NULL)
+	if (_tcb == null)
 		return false;
 	return _tcb->IsAlive;
 }
 
 bool Thread::IsBackground() const
 {
-	assert(_tcb != NULL);
+	assert(_tcb != null);
 	return _tcb->IsBackground;
 }
 
 bool Thread::IsThreadPoolThread() const
 {
-	assert(_tcb != NULL);
+	assert(_tcb != null);
 	return _tcb->IsThreadPoolThread;
 }
 
 ThreadPriority Thread::Priority() const
 {
-	assert(_tcb != NULL);
+	assert(_tcb != null);
 	return _tcb->Priority;
 }
 
 void Thread::Abort()
 {
-	if (_tcb == NULL)
+	if (_tcb == null)
 		return;
 
 	AutoLock lock(*_tcb);
 	if (_tcb->IsAlive)
 	{
 		IntPtr h = _tcb->Handle;
-		assert(h != NULL && "Invalid Handle");
+		assert(h != null && "Invalid Handle");
 		bool tret = Pal::TerminateThread(h, -1) == TRUE;
 		assert(tret && "TherminateThread failed!");
 
@@ -214,7 +214,7 @@ void Thread::Join()
 
 bool Thread::Join( int miliseconds )
 {
-	if (_tcb == NULL)
+	if (_tcb == null)
 		return true;
 
 	{
@@ -224,7 +224,7 @@ bool Thread::Join( int miliseconds )
 	}
 
 	HANDLE h = _tcb->Handle;
-	assert(h != NULL && "Invalid Handle!");
+	assert(h != null && "Invalid Handle!");
 	bool ret = WaitForSingleObject(h, miliseconds) == WAIT_OBJECT_0;
 
 	return ret;
@@ -241,10 +241,10 @@ Thread Thread::CurrentThread()
 	LocalDataStoreSlot slot = _tcbSlot;
 	Thread thread;
 	thread._tcb = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
-	if (thread._tcb == NULL)
+	if (thread._tcb == null)
 		thread._tcb = MakeTckForCurrentThread();
 	
-	assert(thread._tcb != NULL);
+	assert(thread._tcb != null);
 	AutoLock lock(thread._tcb);
 	++thread._tcb->ReferenceCount;
 	return thread;
@@ -254,8 +254,8 @@ Thread::ThreadControlBlock* Thread::MakeTckForCurrentThread()
 {
 	LocalDataStoreSlot slot = _tcbSlot;
 	ThreadControlBlock* tcb = new ThreadControlBlock();
-	assert(tcb != NULL);
-	assert(Thread::GetData(slot) == NULL);
+	assert(tcb != null);
+	assert(Thread::GetData(slot) == null);
 	Thread::SetData(slot, tcb);
 
 	IntPtr tid = Thread::get_ManagedThreadID();
@@ -300,14 +300,14 @@ void Thread::DisposeTCBForMainThread()
 {
 	LocalDataStoreSlot slot = _tcbSlot;
 	ThreadControlBlock* tcb = reinterpret_cast<ThreadControlBlock*>(Thread::GetData(slot));
-	assert(tcb != NULL);
+	assert(tcb != null);
 	delete tcb;
-	Thread::SetData(slot, NULL);
+	Thread::SetData(slot, null);
 }
 
 void Thread::Dispose()
 {
-	if (_tcb != NULL)
+	if (_tcb != null)
 	{
 		AutoLock lock(*_tcb);
 		--_tcb->ReferenceCount;

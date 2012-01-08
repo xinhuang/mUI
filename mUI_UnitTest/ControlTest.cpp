@@ -83,7 +83,7 @@ protected:
 
 TEST_F(ControlTest, Contructor_Typical)
 {
-    ASSERT_TRUE(NULL != _sut);
+    ASSERT_TRUE(null != _sut);
 }
 
 TEST_F(ControlTest, Controls_Remove_WhenNotExist)

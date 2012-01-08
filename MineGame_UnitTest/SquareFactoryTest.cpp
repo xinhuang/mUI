@@ -30,12 +30,12 @@ public:
 	virtual void TearDown()
 	{
 		delete _sut;
-		_sut = NULL;
+		_sut = null;
 		for(size_t i = 0; i < _squares.size(); ++i)
 			delete _squares[i];
 		_squares.clear();
 		delete _game;
-		_game = NULL;
+		_game = null;
 		delete _view;
     }
 
@@ -76,7 +76,7 @@ protected:
 
 TEST_F(SquareFactoryTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _sut);
+	ASSERT_TRUE(null != _sut);
 }
 
 TEST_F(SquareFactoryTest, CreateSquares_When1x1Mine0)

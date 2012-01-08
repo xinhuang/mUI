@@ -7,7 +7,7 @@ using mUI::System::Drawing::Pen;
 
 namespace mUI{ namespace System{  namespace Forms{
 
-PictureBox::PictureBox() : image_(NULL)
+PictureBox::PictureBox() : image_(null)
 {
 
 }
@@ -15,7 +15,7 @@ PictureBox::PictureBox() : image_(NULL)
 PictureBox::~PictureBox()
 {
 	delete image_;
-	image_ = NULL;
+	image_ = null;
 	image_location_.clear();
 }
 
@@ -25,7 +25,7 @@ void PictureBox::OnPaint( PaintEventArgs* e )
 
 	Graphics& g = e->Graphics;
 
-	if (get_Image() != NULL)
+	if (get_Image() != null)
 	{
 		switch (get_BackgroundImageLayout())
 		{

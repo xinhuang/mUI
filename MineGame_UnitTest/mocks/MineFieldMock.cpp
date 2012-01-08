@@ -3,7 +3,7 @@
 #include "SquareFactoryMock.h"
 
 MineFieldMock::MineFieldMock()
-	: base(NULL)
+	: base(null)
 {
 	SquareFactory* oldFactory = get_SquareFactory();
 	delete oldFactory;

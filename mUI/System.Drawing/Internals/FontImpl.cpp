@@ -12,7 +12,7 @@ FontImpl* FontImpl::CreateFont( const String& family_name, float size )
 {
 	return new FTFont(family_name, size);
 	assert("Not implemented!");
-	return NULL;
+	return null;
 }
 
 bool FontImpl::Initialize()

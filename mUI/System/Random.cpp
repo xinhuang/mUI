@@ -1,11 +1,12 @@
 ﻿#include "Random.h"
+#include "BasicType.h"
 
 #include <cstdlib>
 #include <ctime>
 
 namespace mUI{ namespace System{
 
-Random::Random() : seed_(static_cast<size_t>(time(NULL)))
+Random::Random() : seed_(static_cast<size_t>(time(null)))
 {
 }
 
