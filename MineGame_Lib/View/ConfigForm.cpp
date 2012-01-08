@@ -24,8 +24,8 @@ void ConfigForm::InitializeComponents()
 	set_DragMove(true);
 
 	Controls.Add(_d->widthLabel);
-	_d->widthLabel.set_Text(L"Width:");
 	_d->widthLabel.set_AutoSize(true);
+	_d->widthLabel.set_Text(L"Width:");
 
 	Controls.Add(_d->heightLabel);
 	_d->heightLabel.Hide();

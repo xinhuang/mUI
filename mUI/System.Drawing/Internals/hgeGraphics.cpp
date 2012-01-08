@@ -258,8 +258,8 @@ SizeF Graphics::MeasureString( const String& text, const Font& font )
 		Glyph* glyph = fi.get_Glyph(*iter);
 		if (glyph != null)
 		{
-			height = max(height, glyph->get_Height());
-			width += glyph->get_Width();
+			height = max(height, glyph->get_Height() + glyph->get_Y());
+			width += glyph->get_Width() + glyph->get_X();
 			// TODO: add kerning here.
 		}
 	}
