@@ -297,7 +297,6 @@ private:
 	ImageLayout		background_image_layout_;
 
 	size_t			suspend_layout_count_;
-	vector<LayoutEventArgs> layout_queue_;
 };
 
 }}}
