@@ -24,7 +24,7 @@ const float Graphics::UI_Z = 0.5f;
 
 Graphics::Graphics(const Rectangle& clip_rect) : offset_(clip_rect.Location), enabled_(true)
 {
-	SetClip(Rectangle(Point::Empty, clip_rect.Size));
+	SetClip(0, 0, clip_rect.Size.Width, clip_rect.Size.Height);
 }
 
 Graphics::~Graphics()
