@@ -123,7 +123,7 @@ void Graphics::SetClip( int X, int Y, int Width, int Height )
 	int sw = hge_->System_GetState(HGE_SCREENWIDTH);
 	int sh = hge_->System_GetState(HGE_SCREENHEIGHT);
 
-	if (X == 0 && Y == 0 && Width == 0 && Height == 0)
+	if (Width == 0 || Height == 0)
 	{
 		enabled_ = false;
 		return;
@@ -258,8 +258,8 @@ SizeF Graphics::MeasureString( const String& text, const Font& font )
 		Glyph* glyph = fi.get_Glyph(*iter);
 		if (glyph != null)
 		{
-			height = max(height, glyph->get_Height() + glyph->get_Y());
-			width += glyph->get_Width() + glyph->get_X();
+			height = max(height, glyph->get_Height() - glyph->get_Y());
+			width += glyph->get_AdvanceX();
 			// TODO: add kerning here.
 		}
 	}
