@@ -74,17 +74,8 @@ private:
 	~FormManager();
 
 private:
-	IntPtr active_form_;
-	IntPtr focused_control_;
-	IntPtr moused_control_;
-	IntPtr mainframe_;
-	deque<Form*> form_list_;
-
-	IntPtr handle_count_;
-	map<IntPtr, Control*> handle_map_;
-
-private:
-	static FormManager* instance_;
+	struct Data;
+	Data* _d;
 };
 
 }}}

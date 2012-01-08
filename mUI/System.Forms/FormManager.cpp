@@ -9,29 +9,61 @@ using namespace mUI::System::Threading;
 
 namespace mUI{ namespace System{  namespace Forms{
 
-FormManager* FormManager::instance_ = NULL;
+struct FormManager::Data
+{
+	Data()
+		: activeForm(INVALID_VALUE)
+		, focusedControl(INVALID_VALUE)
+		, mousedControl(INVALID_VALUE)
+		, mainframe(INVALID_VALUE)
+		, handleCount(0)
+	{}
+
+	IntPtr activeForm;
+	IntPtr focusedControl;
+	IntPtr mousedControl;
+	IntPtr mainframe;
+	IntPtr handleCount;
+
+	deque<Form*> formList;
+	map<IntPtr, Control*> handleMap;
+
+	static FormManager* instance;
+};
+
+FormManager* FormManager::Data::instance = NULL;
+
+FormManager::FormManager() 
+	: _d(new Data())
+{
+}
+
+FormManager::~FormManager()
+{
+	delete _d;
+}
 
 FormManager& FormManager::get_Instance()
 {
-	return *instance_;
+	return *Data::instance;
 }
 
 void FormManager::set_RootForm( Form& form )
 {
-	mainframe_ = form.get_Handle();
-	focused_control_ = mainframe_;
-	active_form_ = mainframe_;
+	_d->mainframe = form.get_Handle();
+	_d->focusedControl = _d->mainframe;
+	_d->activeForm = _d->mainframe;
 }
 
 Form* FormManager::get_ActiveForm() const
 {
-	return reinterpret_cast<Form*>(Control::FromHandle(active_form_));
+	return reinterpret_cast<Form*>(Control::FromHandle(_d->activeForm));
 }
 
 void FormManager::RegisterForm( Form& form )
 {
-	for (deque<Form*>::iterator iter = form_list_.begin();
-		iter != form_list_.end(); ++iter)
+	for (deque<Form*>::iterator iter = _d->formList.begin();
+		iter != _d->formList.end(); ++iter)
 	{
 		if (*iter == &form)
 		{
@@ -39,27 +71,27 @@ void FormManager::RegisterForm( Form& form )
 		}
 	}
 
-	for (deque<Form*>::iterator iter = form_list_.begin();
-		iter != form_list_.end(); ++iter)
+	for (deque<Form*>::iterator iter = _d->formList.begin();
+		iter != _d->formList.end(); ++iter)
 	{
 		if (!(*iter)->get_TopMost())
 		{
-			form_list_.insert(iter, &form);
+			_d->formList.insert(iter, &form);
 			return;
 		}
 	}
 
-	form_list_.push_back(&form);		// 1st form.
+	_d->formList.push_back(&form);		// 1st form.
 }
 
 void FormManager::UnregisterForm( Form& form )
 {
-	for (deque<Form*>::iterator iter = form_list_.begin();
-		iter != form_list_.end(); ++iter)
+	for (deque<Form*>::iterator iter = _d->formList.begin();
+		iter != _d->formList.end(); ++iter)
 	{
 		if (*iter == &form)
 		{
-			form_list_.erase(iter);
+			_d->formList.erase(iter);
 			return;
 		}
 	}
@@ -71,33 +103,33 @@ void FormManager::BringToFront( Form& form )
 	if (form.get_TopMost())
 		return;
 
-	deque<Form*>::iterator target = form_list_.end(), swap_to = form_list_.end();
+	deque<Form*>::iterator target = _d->formList.end(), swap_to = _d->formList.end();
 
-	for (deque<Form*>::iterator iter = form_list_.begin(); iter != form_list_.end(); ++iter)
+	for (deque<Form*>::iterator iter = _d->formList.begin(); iter != _d->formList.end(); ++iter)
 	{
 		if (*iter == &form)
 		{
 			target = iter; break;
 		}
 	}
-	if (target == form_list_.end())
+	if (target == _d->formList.end())
 		assert(!"What have you put here, a dinosaur?");
-	form_list_.erase(target);
+	_d->formList.erase(target);
 
-	for (deque<Form*>::iterator iter = form_list_.begin(); iter != form_list_.end(); ++iter)
+	for (deque<Form*>::iterator iter = _d->formList.begin(); iter != _d->formList.end(); ++iter)
 	{
 		if (*iter != &form && !(*iter)->get_TopMost())
 		{
 			swap_to = iter; break;
 		}
 	}
-	form_list_.insert(swap_to, &form);
+	_d->formList.insert(swap_to, &form);
 }
 
 Form* FormManager::FormAt( const Point& location )
 {
-	for (deque<Form*>::iterator iter = form_list_.begin();
-		iter != form_list_.end(); ++iter)
+	for (deque<Form*>::iterator iter = _d->formList.begin();
+		iter != _d->formList.end(); ++iter)
 	{
 		assert(*iter != NULL);
 		Form& form = **iter;
@@ -141,10 +173,10 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 	{
 	case WM_MOUSELEAVE:
 		{
-			Control* mouse_leave = Control::FromHandle(moused_control_);
+			Control* mouse_leave = Control::FromHandle(_d->mousedControl);
 			if (mouse_leave != NULL)
 				mouse_leave->OnMouseLeave(&EventArgs::Empty);
-			moused_control_ = INVALID_VALUE;
+			_d->mousedControl = INVALID_VALUE;
 		}
 		break;
 
@@ -154,25 +186,25 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 			Control* enter_control = ControlAt(pt);
 			if (enter_control != NULL)
 			{
-				if (enter_control->get_Handle() != moused_control_)
+				if (enter_control->get_Handle() != _d->mousedControl)
 				{
-					Control* leave_control = Control::FromHandle(moused_control_);
+					Control* leave_control = Control::FromHandle(_d->mousedControl);
 					if (leave_control != NULL)
 						leave_control->OnMouseLeave(&EventArgs::Empty);
-					moused_control_ = enter_control->get_Handle();
+					_d->mousedControl = enter_control->get_Handle();
 					enter_control->OnMouseEnter(&EventArgs::Empty);
 				}
 			}
 			else
 			{
-				Control* mouse_leave = Control::FromHandle(moused_control_);
+				Control* mouse_leave = Control::FromHandle(_d->mousedControl);
 				if (mouse_leave != NULL)
 					mouse_leave->OnMouseLeave(&EventArgs::Empty);
-				moused_control_ = INVALID_VALUE;
+				_d->mousedControl = INVALID_VALUE;
 			}
 
 			// Triggers MouseMove
-			Control* focused_control_control = Control::FromHandle(focused_control_);
+			Control* focused_control_control = Control::FromHandle(_d->focusedControl);
 			if (focused_control_control != NULL)
 			{
 				MouseEventArgs mea;
@@ -190,18 +222,18 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 			Control* lbtn_control = ControlAt(pt);
 			if (lbtn_control != NULL)
 			{
-				if (lbtn_control->get_Handle() != focused_control_)
+				if (lbtn_control->get_Handle() != _d->focusedControl)
 				{
-					Control* lostf_control = Control::FromHandle(focused_control_);
+					Control* lostf_control = Control::FromHandle(_d->focusedControl);
 					if (lostf_control != NULL)
 						Control::_Deactivate(*lostf_control);
 
 					Control::_Activate(*lbtn_control);
 
 					Form& form = lbtn_control->FindForm();
-					if (form.get_Handle() != mainframe_)
+					if (form.get_Handle() != _d->mainframe)
 						form.BringToFront();
-					focused_control_ = lbtn_control->get_Handle();
+					_d->focusedControl = lbtn_control->get_Handle();
 				}
 
 				MouseEventArgs mea;
@@ -216,7 +248,7 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 
 	case WM_LBUTTONUP:
 		{
-			Control* control = Control::FromHandle(focused_control_);
+			Control* control = Control::FromHandle(_d->focusedControl);
 			if (control == NULL)
 				control = ControlAt(pt);
 			if (control != NULL)
@@ -236,18 +268,18 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 			Control* lbtn_control = ControlAt(pt);
 			if (lbtn_control != NULL)
 			{
-				if (lbtn_control->get_Handle() != focused_control_)
+				if (lbtn_control->get_Handle() != _d->focusedControl)
 				{
-					Control* lostf_control = Control::FromHandle(focused_control_);
+					Control* lostf_control = Control::FromHandle(_d->focusedControl);
 					if (lostf_control != NULL)
 						Control::_Deactivate(*lostf_control);
 
 					Control::_Activate(*lbtn_control);
 
 					Form& form = lbtn_control->FindForm();
-					if (form.get_Handle() != mainframe_)
+					if (form.get_Handle() != _d->mainframe)
 						form.BringToFront();
-					focused_control_ = lbtn_control->get_Handle();
+					_d->focusedControl = lbtn_control->get_Handle();
 				}
 
 				MouseEventArgs mea;
@@ -262,7 +294,7 @@ void FormManager::RaiseMouseEvent( unsigned int message, IntPtr wParam, IntPtr l
 
 	case WM_RBUTTONUP:
 		{
-			Control* control = Control::FromHandle(focused_control_);
+			Control* control = Control::FromHandle(_d->focusedControl);
 			if (control == NULL)
 				control = ControlAt(pt);
 			if (control != NULL)
@@ -292,8 +324,8 @@ void FormManager::RaiseKeyboardEvent( unsigned int message, IntPtr wParam, IntPt
 	case WM_CHAR:
 		{
 			KeyPressEventArgs e(reinterpret_cast<char>(wParam));
-			Control* ctrl = FromHandle(focused_control_);
-			while (ctrl != NULL && ctrl->get_Handle() != mainframe_)
+			Control* ctrl = FromHandle(_d->focusedControl);
+			while (ctrl != NULL && ctrl->get_Handle() != _d->mainframe)
 			{
 				ctrl->OnKeyPress(&e);
 				if (e.Handled)
@@ -302,7 +334,7 @@ void FormManager::RaiseKeyboardEvent( unsigned int message, IntPtr wParam, IntPt
 			}
 			if (!e.Handled)
 			{
-				Form* mainframe = reinterpret_cast<Form*>(FromHandle(mainframe_));
+				Form* mainframe = reinterpret_cast<Form*>(FromHandle(_d->mainframe));
 				mainframe->OnKeyPress(&e);
 			}
 		}
@@ -312,8 +344,8 @@ void FormManager::RaiseKeyboardEvent( unsigned int message, IntPtr wParam, IntPt
 
 void FormManager::DoEvents()
 {
-	for (map<IntPtr, Control*>::iterator iter = handle_map_.begin();
-		iter != handle_map_.end(); ++iter)
+	for (map<IntPtr, Control*>::iterator iter = _d->handleMap.begin();
+		iter != _d->handleMap.end(); ++iter)
 	{
 		Control* control = iter->second;
 		assert(control != NULL);
@@ -323,54 +355,45 @@ void FormManager::DoEvents()
 
 void FormManager::OnFrameActivated()
 {
-	Control* focused = Control::FromHandle(focused_control_);
+	Control* focused = Control::FromHandle(_d->focusedControl);
 	if (focused != NULL)
 	{
 		Control::_Activate(*focused);
 	}
 	else
 	{
-		active_form_ = mainframe_;
-		focused_control_ = mainframe_;
+		_d->activeForm = _d->mainframe;
+		_d->focusedControl = _d->mainframe;
 	}
 }
 
 void FormManager::OnFrameDeactivated()
 {
-	Control* focused = Control::FromHandle(focused_control_);
+	Control* focused = Control::FromHandle(_d->focusedControl);
 	if (focused != NULL)
 	{
 		Control::_Deactivate(*focused);
 	}
 }
 
-FormManager::FormManager() : 
-	active_form_(INVALID_VALUE), 
-	focused_control_(INVALID_VALUE), 
-	moused_control_(INVALID_VALUE),
-	mainframe_(INVALID_VALUE),
-	handle_count_(INVALID_VALUE)
-{
-}
-
 void FormManager::Dispose()
 {
 	for (int i = 0; i < 3; ++i)
-		instance_->DoEvents();
+		Data::instance->DoEvents();
 
-	while (instance_->form_list_.size() > 0)
+	while (Data::instance->_d->formList.size() > 0)
 	{
-		delete instance_->form_list_.front();
+		delete Data::instance->_d->formList.front();
 	}
 
-	delete instance_;
-	instance_ = NULL;
+	delete Data::instance;
+	Data::instance = NULL;
 }
 
 void FormManager::Render()
 {
-	for (deque<Form*>::reverse_iterator iter = form_list_.rbegin();
-		iter != form_list_.rend(); ++iter)
+	for (deque<Form*>::reverse_iterator iter = _d->formList.rbegin();
+		iter != _d->formList.rend(); ++iter)
 	{
 		assert(*iter);
 		Form& form = **iter;
@@ -380,43 +403,38 @@ void FormManager::Render()
 
 bool FormManager::Initialize()
 {
-	assert(instance_ == NULL);
-	instance_ = new FormManager();
-	return instance_ != NULL;
+	assert(Data::instance == NULL);
+	Data::instance = new FormManager();
+	return Data::instance != NULL;
 }
 
 IntPtr FormManager::RegisterControl( Control& ctrl )
 {
-	IntPtr handle = Interlocked::Increment(handle_count_);
-	handle_map_[handle] = &ctrl;
+	IntPtr handle = Interlocked::Increment(_d->handleCount);
+	_d->handleMap[handle] = &ctrl;
 	return handle;
 }
 
 void FormManager::UnregisterControl( Control& ctrl )
 {
-	map<IntPtr, Control*>::iterator iter = handle_map_.find(ctrl.get_Handle());
-	assert(iter != handle_map_.end());
+	map<IntPtr, Control*>::iterator iter = _d->handleMap.find(ctrl.get_Handle());
+	assert(iter != _d->handleMap.end());
 	iter->second = NULL;
-	handle_map_.erase(iter);
+	_d->handleMap.erase(iter);
 }
 
 Control* FormManager::FromHandle( const IntPtr& h )
 {
-	map<IntPtr, Control*>::iterator iter = handle_map_.find(h);
-	if (iter == handle_map_.end())
+	map<IntPtr, Control*>::iterator iter = _d->handleMap.find(h);
+	if (iter == _d->handleMap.end())
 		return NULL;
 	else
 		return iter->second;
 }
 
-FormManager::~FormManager()
-{
-
-}
-
 Form* FormManager::get_RootForm()
 {
-    return reinterpret_cast<Form*>(Control::FromHandle(mainframe_));
+    return reinterpret_cast<Form*>(Control::FromHandle(_d->mainframe));
 }
 
 Point FormManager::MapWindowPoint( IntPtr from, IntPtr to, const Point& pt )
