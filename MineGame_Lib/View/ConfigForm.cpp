@@ -27,14 +27,17 @@ void ConfigForm::InitializeComponents()
 	Controls.Add(_d->widthLabel);
 	_d->widthLabel.set_AutoSize(true);
 	_d->widthLabel.set_Text(L"Width:");
+    _d->widthLabel.set_AnchorStyles(AnchorStyles::Left);
 
 	Controls.Add(_d->heightLabel);
 	_d->heightLabel.set_Text(L"Height:");
 	_d->heightLabel.set_AutoSize(true);
 	_d->heightLabel.set_Location(Point(0, _d->widthLabel.get_Height() + gap));
+    _d->heightLabel.set_AnchorStyles(AnchorStyles::Left);
 
 	Controls.Add(_d->mineTotalLabel);
 	_d->mineTotalLabel.set_Text(L"Mines:");
 	_d->mineTotalLabel.set_AutoSize(true);
 	_d->mineTotalLabel.set_Location(Point(0, _d->heightLabel.get_Top() + _d->heightLabel.get_Height() + gap));
+    _d->mineTotalLabel.set_AnchorStyles(AnchorStyles::Left);
 }
