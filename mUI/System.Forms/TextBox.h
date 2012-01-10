@@ -4,7 +4,7 @@
 #include "Control.h"
 
 #include <System/System.h>
-#include "FormBoarderStyle.h"
+#include "FormBorderStyle.h"
 
 namespace mUI{ namespace System{  namespace Forms{
 

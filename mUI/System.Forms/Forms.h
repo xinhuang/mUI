@@ -10,7 +10,7 @@
 #include "Control.h"
 #include "ControlEventArgs.h"
 #include "Form.h"
-#include "FormBoarderStyle.h"
+#include "FormBorderStyle.h"
 #include "Frame.h"
 #include "ImageLayout.h"
 #include "KeyEventArgs.h"

@@ -19,7 +19,7 @@
 
 #include <System/System.h>
 #include "Control.h"
-#include "FormBoarderStyle.h"
+#include "FormBorderStyle.h"
 #include "Button.h"
 
 namespace mUI{ namespace System{  namespace Forms{
