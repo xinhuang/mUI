@@ -59,15 +59,15 @@ void Form::OnPaint( PaintEventArgs* e )
 
 	Graphics& g = e->Graphics;
 
-	switch (get_FormBorderStyle())
-	{
-	case FormBorderStyle::FixedSingle:
-		{
-			int borderSize = SystemInformation::GetBorderSize();
-			Pen pen(Color::Black);
-			g.DrawRectangle(pen, 1, 1, get_Size().Width - 1, get_Size().Height - 1);
-		}
-	}
+	//switch (get_FormBorderStyle())
+	//{
+	//case FormBorderStyle::FixedSingle:
+	//	{
+	//		int borderSize = SystemInformation::GetBorderSize();
+	//		Pen pen(Color::Black);
+	//		g.DrawRectangle(pen, 1, 1, get_Size().Width - 1, get_Size().Height - 1);
+	//	}
+	//}
 }
 
 void Form::InitializeComponent()

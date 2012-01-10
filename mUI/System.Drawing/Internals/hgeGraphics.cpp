@@ -159,10 +159,11 @@ void Graphics::SetClip( int X, int Y, int Width, int Height )
 		{
 			Height += Y; Y = 0;
 		}
-		if (Width < 0 || Height < 0)
+		// Starts from 0, while hge starts from 1.
+		if (Width < 1 || Height < 1)
 			enabled_ = false;
 		else
-			hge_->Gfx_SetClipping(X, Y, Width, Height);
+			hge_->Gfx_SetClipping(X - 1, Y - 1, Width, Height);
 	}
 }
 
@@ -173,6 +174,7 @@ void Graphics::DrawRectangle( Pen& pen, const Rectangle& rect )
 
 void Graphics::DrawRectangle( Pen& pen, int X, int Y, int Width, int Height )
 {
+	--Width; --Height;
 	DrawLine(pen, X, Y, X, Y + Height);
 	DrawLine(pen, X, Y + Height, X + Width, Y + Height);
 	DrawLine(pen, X + Width, Y, X + Width, Y + Height);

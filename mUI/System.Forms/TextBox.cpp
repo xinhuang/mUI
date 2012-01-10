@@ -23,6 +23,7 @@ void TextBox::OnPaint( PaintEventArgs* e )
 {
 	base::OnPaint(e);
 	e->Graphics.DrawString(get_Text(), *get_Font(), SolidBrush(get_ForeColor()), PointF::Empty);
+	DrawBorder(e->Graphics, e->ClipRectangle);
 }
 
 void TextBox::set_Text( const String& text )
@@ -59,6 +60,19 @@ void TextBox::set_BorderStyle( FormBorderStyle::Enum borderStyle )
 {
 	_d->borderStyle = borderStyle;
 	Update();
+}
+
+void TextBox::DrawBorder( Graphics& g, Rectangle& clipRectangle )
+{
+	if (get_BorderStyle() == FormBorderStyle::None)
+		return;
+
+	g.DrawRectangle(Pen(Color::Black), Rectangle(0, 0, get_Width(), get_Height()));
+}
+
+FormBorderStyle::Enum TextBox::get_BorderStyle() const
+{
+	return _d->borderStyle;
 }
 
 }}}
