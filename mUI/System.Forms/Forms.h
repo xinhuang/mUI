@@ -21,5 +21,6 @@
 #include "PaintEventArgs.h"
 #include "PictureBox.h"
 #include "SystemInformation.h"
+#include "TextBox.h"
 
 #endif // __MUISYSTEMFORMS_H__

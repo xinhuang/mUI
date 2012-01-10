@@ -5,6 +5,7 @@ struct ConfigForm::Data
 	Label widthLabel;
 	Label heightLabel;
 	Label mineTotalLabel;
+	TextBox widthTextBox;
 };
 
 ConfigForm::ConfigForm()
@@ -28,6 +29,12 @@ void ConfigForm::InitializeComponents()
 	_d->widthLabel.set_AutoSize(true);
 	_d->widthLabel.set_Text(L"Width:");
     _d->widthLabel.set_AnchorStyles(AnchorStyles::Left);
+
+	Controls.Add(_d->widthTextBox);
+	_d->widthTextBox.set_Location(Point(_d->widthLabel.get_Right(), _d->widthLabel.get_Location().Y));
+	_d->widthTextBox.set_Size(Size(get_Width() - _d->widthTextBox.get_Left() - 5, _d->widthLabel.get_Height()));
+	_d->widthTextBox.set_AnchorStyles(AnchorStyles::LeftRight);
+	_d->widthTextBox.set_BorderStyle(FormBorderStyle::FixedSingle);
 
 	Controls.Add(_d->heightLabel);
 	_d->heightLabel.set_Text(L"Height:");

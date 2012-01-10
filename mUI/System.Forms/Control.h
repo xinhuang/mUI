@@ -151,8 +151,13 @@ public:
 	const Point& get_Location() const;
 	void set_Location(const Point& pt);
 
-	int Control::get_Top() const;
+	int get_Top() const;
 	void set_Top(int value);
+
+	void set_Left(int value) { set_Location(Point(value, get_Top())); }
+	int get_Left() const { return get_Location().X; }
+
+	int get_Right() const { return get_Location().X + get_Width(); }
 
 	IntPtr get_Handle() const { return handle_; }
 
