@@ -234,7 +234,6 @@ const Point& Control::get_Location() const
 
 void Control::Update()
 {
-	Refresh();
 }
 
 const Control* Control::GetChildAtPoint( const Point& pt ) const
