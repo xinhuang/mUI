@@ -7,7 +7,7 @@ namespace mUI{ namespace System{  namespace Forms{
 
 struct TextBox::Data
 {
-	FormBorderStyle borderStyle;
+	FormBorderStyle::Enum borderStyle;
 };
 
 TextBox::TextBox() : _d(new Data())
@@ -35,8 +35,8 @@ void TextBox::set_Text( const String& text )
 void TextBox::AdjustSize()
 {
 	if (!get_AutoSize() 
-		|| (get_AnchorStyles() & AnchorStyles::LeftRight) == AnchorStyles::LeftRight
-		|| (get_AnchorStyles() & AnchorStyles::TopBottom) == AnchorStyles::TopBottom)
+		|| (get_Anchor() & AnchorStyles::LeftRight) == AnchorStyles::LeftRight
+		|| (get_Anchor() & AnchorStyles::TopBottom) == AnchorStyles::TopBottom)
 		return;
 
 	Graphics* g = CreateGraphics();
@@ -55,7 +55,7 @@ void TextBox::OnKeyPress( KeyPressEventArgs* e )
 	set_Text(get_Text() + e->KeyChar);
 }
 
-void TextBox::set_BorderStyle( FormBorderStyle borderStyle )
+void TextBox::set_BorderStyle( FormBorderStyle::Enum borderStyle )
 {
 	_d->borderStyle = borderStyle;
 	Update();

@@ -203,7 +203,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleTop)
 	Rectangle arbitraryBounds(30, 30, 10, 10);
 	AddChildCtrl(arbitraryBounds);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::Top);
+	_childCtrl->set_Anchor(AnchorStyles::Top);
 	_sut->set_Size(Size(200, 200));
 
 	ASSERT_EQ(arbitraryBounds.Location, _childCtrl->get_Location());
@@ -217,7 +217,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleBottom)
 
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::Bottom);
+	_childCtrl->set_Anchor(AnchorStyles::Bottom);
 	_sut->set_Size(Size(200, 200));
 
 	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
@@ -230,7 +230,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleLeft)
 	Rectangle arbitraryBounds(30, 30, 10, 10);
 	AddChildCtrl(arbitraryBounds);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::Left);
+	_childCtrl->set_Anchor(AnchorStyles::Left);
 	_sut->set_Size(Size(200, 200));
 
 	ASSERT_EQ(arbitraryBounds.Location, _childCtrl->get_Location());
@@ -243,7 +243,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleRight)
 	AddChildCtrl(arbitraryBounds);
 	int expectedDistance = DistanceFromChildRightToParentRight(*_sut, *_childCtrl);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::Right);
+	_childCtrl->set_Anchor(AnchorStyles::Right);
 	_sut->set_Size(Size(200, 200));
 
 	ASSERT_EQ(expectedDistance, DistanceFromChildRightToParentRight(*_sut, *_childCtrl));
@@ -261,7 +261,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleTopBottom)
 
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::TopBottom);
+	_childCtrl->set_Anchor(AnchorStyles::TopBottom);
 	_sut->set_Size(Size(333, newHeight));
 
 	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
@@ -279,7 +279,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleLeftRight)
 
 	int expectDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::LeftRight);
+	_childCtrl->set_Anchor(AnchorStyles::LeftRight);
 	_sut->set_Size(Size(newWidth, 333));
 
 	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);
@@ -297,7 +297,7 @@ TEST_F(ControlTest, PerformLayout_WhenAnchorStyleAll)
 	int expectVertDistance = DistanceFromChildBottomToParentBottom(*_sut, *_childCtrl);
 	int expectHoriDistance = DistanceFromChildRightToParentRight(*_sut, *_childCtrl);
 
-	_childCtrl->set_AnchorStyles(AnchorStyles::All);
+	_childCtrl->set_Anchor(AnchorStyles::All);
 	_sut->set_Size(Size(newWidth, newHeight));
 
 	ASSERT_EQ(arbitraryBounds.Location.X, _childCtrl->get_Location().X);

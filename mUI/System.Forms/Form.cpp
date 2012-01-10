@@ -16,13 +16,14 @@ struct Form::Data
 		: dragMove(false)
 		, moving(false)
 		, topMost(false)
+		, borderStyle(FormBorderStyle::FixedSingle)
 	{}
 
 	bool topMost;
 	bool dragMove;
 	bool moving;
 	Point mouseDownLocation;
-	FormBorderStyle formBoarderStyle;
+	FormBorderStyle::Enum borderStyle;
 
 	static const int DEFAULT_WIDTH = 800;
 	static const int DEFAULT_HEIGHT = 600;
@@ -96,18 +97,18 @@ void Form::OnDeactivate( EventArgs* e )
 	Deactivate(this, e);
 }
 
-void Form::set_FormBorderStyle( const FormBorderStyle& style )
+void Form::set_FormBorderStyle( FormBorderStyle::Enum style )
 {
 	if (get_FormBorderStyle() != style)
 	{
-		_d->formBoarderStyle = style;
+		_d->borderStyle = style;
 		OnBorderStyleChanged(&EventArgs::Empty);
 	}
 }
 
-const FormBorderStyle& Form::get_FormBorderStyle() const
+FormBorderStyle::Enum Form::get_FormBorderStyle() const
 {
-	return _d->formBoarderStyle;
+	return _d->borderStyle;
 }
 
 void Form::OnBorderStyleChanged( EventArgs* e )

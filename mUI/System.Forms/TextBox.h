@@ -18,7 +18,7 @@ public:
 
 	virtual void set_Text(const String& text);
 	virtual void set_AutoSize(bool value);
-	void set_BorderStyle( FormBorderStyle borderStyle );
+	void set_BorderStyle( FormBorderStyle::Enum borderStyle );
 
 protected:
 	virtual void OnPaint( PaintEventArgs* e );

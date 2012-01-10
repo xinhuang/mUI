@@ -119,11 +119,11 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 		Control& element = **iter;
 
 		Rectangle bounds = element.get_Bounds();
-		if (element.get_AnchorStyles() == AnchorStyles::None)
+		if (element.get_Anchor() == AnchorStyles::None)
 			continue;
-		if ((element.get_AnchorStyles() & AnchorStyles::Bottom) != 0)
+		if ((element.get_Anchor() & AnchorStyles::Bottom) != 0)
 		{
-			if ((element.get_AnchorStyles() & AnchorStyles::Top) != 0)
+			if ((element.get_Anchor() & AnchorStyles::Top) != 0)
 			{
 				bounds.Size.Height = container.get_Size().Height
 					- element._d->anchorInfo.Top
@@ -134,9 +134,9 @@ void Control::PrivateLayout(Control& container, LayoutEventArgs* e)
 				- element._d->anchorInfo.Bottom;
 			bounds.Location.Y = bounds.get_Top() + vertDelta;
 		}
-		if ((element.get_AnchorStyles() & AnchorStyles::Right) != 0)
+		if ((element.get_Anchor() & AnchorStyles::Right) != 0)
 		{
-			if ((element.get_AnchorStyles() & AnchorStyles::Left) != 0)
+			if ((element.get_Anchor() & AnchorStyles::Left) != 0)
 			{
 				bounds.Size.Width = container.get_Size().Width
 					- element._d->anchorInfo.Left
@@ -583,12 +583,12 @@ void Control::OnKeyPress( KeyPressEventArgs* e )
 	KeyPress(this, e);
 }
 
-void Control::set_AnchorStyles( AnchorStyles::Enum value )
+void Control::set_Anchor( AnchorStyles::Enum value )
 {
 	SetAnchor(value, *get_Parent());
 }
 
-AnchorStyles::Enum Control::get_AnchorStyles() const
+AnchorStyles::Enum Control::get_Anchor() const
 {
 	return _d->anchorStyles;
 }

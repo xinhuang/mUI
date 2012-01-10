@@ -125,7 +125,7 @@ void MGameView::InitializeComponents()
 	Controls.Add(_d->remainMines);
 	_d->remainMines.set_Location(Point(5, 5));
 	_d->remainMines.set_Size(Size(39, 24));
-	_d->remainMines.set_AnchorStyles(AnchorStyles::TopLeft);
+	_d->remainMines.set_Anchor(AnchorStyles::TopLeft);
 
 	ResumeLayout(true);
 

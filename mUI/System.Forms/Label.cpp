@@ -21,8 +21,8 @@ void Label::set_Text( const String& text )
 void Label::AdjustSize()
 {
 	if (!get_AutoSize() 
-		|| (get_AnchorStyles() & AnchorStyles::LeftRight) == AnchorStyles::LeftRight
-		|| (get_AnchorStyles() & AnchorStyles::TopBottom) == AnchorStyles::TopBottom)
+		|| (get_Anchor() & AnchorStyles::LeftRight) == AnchorStyles::LeftRight
+		|| (get_Anchor() & AnchorStyles::TopBottom) == AnchorStyles::TopBottom)
 		return;
 
 	Graphics* g = CreateGraphics();

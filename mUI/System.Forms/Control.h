@@ -175,8 +175,8 @@ public:
 	Control* get_Parent() { return parent_; }
 	const Control* get_Parent() const { return parent_; }
 
-	AnchorStyles::Enum get_AnchorStyles() const;
-	void set_AnchorStyles(AnchorStyles::Enum value);
+	AnchorStyles::Enum get_Anchor() const;
+	void set_Anchor(AnchorStyles::Enum value);
 
 	// ---------------------------------------------------------- //
 

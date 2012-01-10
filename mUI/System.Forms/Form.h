@@ -54,8 +54,8 @@ public:
 
 	virtual Point PointToScreen(Point pt) const;
 
-	const FormBorderStyle& get_FormBorderStyle() const;
-	void set_FormBorderStyle(const FormBorderStyle& style);
+	FormBorderStyle::Enum get_FormBorderStyle() const;
+	void set_FormBorderStyle(FormBorderStyle::Enum style);
 
 	Size get_ClientSize() const;
 

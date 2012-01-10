@@ -14,15 +14,14 @@
 	limitations under the License.
 */
 
-#ifndef __FORMBOARDERSTYLE_H__
-#define __FORMBOARDERSTYLE_H__
+#ifndef __MUI_FORMS_FORMBORDERSTYLE_H__
+#define __MUI_FORMS_FORMBORDERSTYLE_H__
 
 namespace mUI{ namespace System{  namespace Forms{
 
-class FORMS_ENTRY FormBorderStyle
+namespace FormBorderStyle
 {
-public:
-	enum FBS {
+	enum Enum {
 		None,
 		FixedSingle,
 		//Fixed3D,			// Not supported yet
@@ -31,18 +30,8 @@ public:
 		//FixedToolWindow,	// Not supported yet
 		//SizableToolWindow,	// Not supported yet
 	};
-
-	FormBorderStyle() : fbs_(None)
-	{}
-	FormBorderStyle(FBS fbs) : fbs_(fbs)
-	{}
-
-	operator FBS() const { return fbs_; }
-
-private:
-	FBS fbs_;
 };
 
 }}}
 
-#endif 
+#endif // __MUI_FORMS_FORMBORDERSTYLE_H__
