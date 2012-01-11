@@ -227,6 +227,12 @@ void Application::InitializeWindow()
 	assert(hwnd && hwnd != INVALID_HANDLE_VALUE);
 	_prevWndProc = reinterpret_cast<wndproc_t>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)ProcEvents));
 
+	if (_prevWndProc == NULL)		// This means window is closed.
+	{
+		Dispose();
+		exit(0);
+	}
+
 	hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
 }
 
