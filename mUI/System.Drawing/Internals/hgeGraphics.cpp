@@ -64,8 +64,10 @@ void Graphics::FillRectangle( SolidBrush& brush, int X, int Y, int Width, int He
 	hgeQuad quad;
 	hgeVertex vertex;
 
-	X += offset_.X;
-	Y += offset_.Y;
+	X += offset_.X - 1;
+	Y += offset_.Y - 1;
+	--Width;
+	--Height;
 
 	vertex.col = brush.get_Color().get_ARGB();
 	vertex.z = UI_Z;
