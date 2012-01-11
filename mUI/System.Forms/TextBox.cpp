@@ -8,6 +8,7 @@ namespace mUI{ namespace System{  namespace Forms{
 struct TextBox::Data
 {
 	FormBorderStyle::Enum borderStyle;
+	Size textBounds;
 };
 
 TextBox::TextBox() : _d(new Data())
@@ -26,23 +27,17 @@ void TextBox::OnPaint( PaintEventArgs* e )
 	DrawBorder(e->Graphics, e->ClipRectangle);
 }
 
-void TextBox::set_Text( const String& text )
-{
-	base::set_Text(text);
-	AdjustSize();
-	Update();
-}
-
 void TextBox::AdjustSize()
 {
+	Graphics* g = CreateGraphics();
+	_d->textBounds = g->MeasureString(get_Text(), *get_Font()).ToSize();
+
 	if (!get_AutoSize() 
 		|| (get_Anchor() & AnchorStyles::LeftRight) == AnchorStyles::LeftRight
 		|| (get_Anchor() & AnchorStyles::TopBottom) == AnchorStyles::TopBottom)
 		return;
 
-	Graphics* g = CreateGraphics();
-	Size textSize = g->MeasureString(get_Text(), *get_Font()).ToSize();
-	set_Size(textSize);
+	set_Size(_d->textBounds);
 }
 
 void TextBox::set_AutoSize( bool value )
@@ -73,6 +68,13 @@ void TextBox::DrawBorder( Graphics& g, Rectangle& clipRectangle )
 FormBorderStyle::Enum TextBox::get_BorderStyle() const
 {
 	return _d->borderStyle;
+}
+
+void TextBox::OnTextChanged( EventArgs* e )
+{
+	base::OnTextChanged(e);
+	AdjustSize();
+	Update();
 }
 
 }}}

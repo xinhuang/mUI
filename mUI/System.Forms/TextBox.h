@@ -20,7 +20,6 @@ public:
 	TextBox();
 	virtual ~TextBox();
 
-	virtual void set_Text(const String& text);
 	virtual void set_AutoSize(bool value);
 	void set_BorderStyle( FormBorderStyle::Enum borderStyle );
 	FormBorderStyle::Enum get_BorderStyle() const;
@@ -28,6 +27,7 @@ public:
 protected:
 	virtual void OnPaint( PaintEventArgs* e );
 	virtual void OnKeyPress( KeyPressEventArgs* e );
+	virtual void OnTextChanged( EventArgs* e );
 
 	void AdjustSize();
 	void DrawBorder( Graphics& g, Drawing::Rectangle& clipRectangle );

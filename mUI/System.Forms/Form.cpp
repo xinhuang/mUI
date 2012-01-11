@@ -57,7 +57,7 @@ void Form::OnPaint( PaintEventArgs* e )
 {
 	Control::OnPaint(e);
 
-	Graphics& g = e->Graphics;
+	//Graphics& g = e->Graphics;
 
 	//switch (get_FormBorderStyle())
 	//{
