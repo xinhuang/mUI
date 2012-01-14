@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <mUI.h>
+using namespace mUI;
 using namespace mUI::System::Forms;
 using namespace mUI::System::Drawing;
 
@@ -103,4 +104,18 @@ TEST_F(FormManagerTest, MapWindowPoint_WhenTranslateFromControlToControl)
 		control1->get_Handle(), offsetPoint);
 
 	ASSERT_EQ(ctrlLocation + ctrl1Location + offsetPoint, pt);
+}
+
+TEST_F(FormManagerTest, GetFocusedHandle_WhenNoForm)
+{
+	ASSERT_EQ(INVALID_VALUE, _sut->GetFocusedHandle());
+}
+
+TEST_F(FormManagerTest, SetFocus_Typical)
+{
+	Form* form = CreateForm(Point::Empty);
+
+	_sut->SetFocus(form->get_Handle());
+
+	ASSERT_EQ(form->get_Handle(), _sut->GetFocusedHandle());
 }

@@ -25,6 +25,10 @@ void TextBox::OnPaint( PaintEventArgs* e )
 	base::OnPaint(e);
 	e->Graphics.DrawString(get_Text(), *get_Font(), SolidBrush(get_ForeColor()), PointF::Empty);
 	DrawBorder(e->Graphics, e->ClipRectangle);
+
+	if (get_Focused())
+	{
+	}
 }
 
 void TextBox::AdjustSize()

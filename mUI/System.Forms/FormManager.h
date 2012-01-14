@@ -66,6 +66,9 @@ public:
 	void RaiseMouseEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
 	void RaiseKeyboardEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
 
+	IntPtr GetFocusedHandle() const;
+	void SetFocus(IntPtr value);
+
 	void OnFrameActivated();
 	void OnFrameDeactivated();
 

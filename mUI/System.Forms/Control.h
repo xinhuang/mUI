@@ -164,6 +164,9 @@ public:
 	bool get_Visible() const { return visibility_; }
 	void set_Visible(bool Value);
 
+	bool get_Focused() const;
+	void set_Focused(bool value);
+
 	Drawing::Image* get_BackgroundImage() { return background_image_; }
 	const Drawing::Image* get_BackgroundImage() const { return background_image_; }
 	void set_BackgroundImage(Drawing::Image* image);

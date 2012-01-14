@@ -508,4 +508,14 @@ Point FormManager::MapWindowPointToAncestor( const Control* fromCtrl,
 	return pt;
 }
 
+mUI::IntPtr FormManager::GetFocusedHandle() const
+{
+	return _d->focusedControl;
+}
+
+void FormManager::SetFocus( IntPtr value )
+{
+	_d->focusedControl = value;
+}
+
 }}}

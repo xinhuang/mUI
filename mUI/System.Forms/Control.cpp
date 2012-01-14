@@ -701,6 +701,15 @@ void Control::set_ForeColor( const Color& color )
 	_d->foreColor = color;
 }
 
+bool Control::get_Focused() const
+{
+	return false;
+}
+
+void Control::set_Focused( bool value )
+{
+}
+
 // ------------------------------------------------- //
 
 Control::ControlCollection::~ControlCollection()
