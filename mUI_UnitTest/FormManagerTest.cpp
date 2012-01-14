@@ -9,6 +9,7 @@ using namespace mUI::System::Drawing;
 #include <System.Forms/FormManager.h>
 
 #include "mocks/MockControl.h"
+#include "mocks/MockForm.h"
 
 class FormManagerTest : public ::testing::Test
 {
@@ -40,12 +41,17 @@ public:
 		return control;
 	}
 
-	MockControl* CreateControlMock()
+	MockControl* CreateMockControl()
 	{
 		return new NiceMock<MockControl>();
 	}
 
-	void SetUp_Control_WhenSetFocusd(MockControl& control)
+	MockForm* CreateMockForm()
+	{
+		return new NiceMock<MockForm>();
+	}
+
+	void SetUp_Control_WhenSetFocused(MockControl& control)
 	{
 		InSequence sequence;
 		EXPECT_CALL(control, OnEnter(&EventArgs::Empty));
@@ -59,6 +65,18 @@ public:
 		EXPECT_CALL(control, OnLeave(&EventArgs::Empty));
 		EXPECT_CALL(control, OnValidating(&EventArgs::Empty));
 		EXPECT_CALL(control, OnValidated(&EventArgs::Empty));
+	}
+
+	void SetUp_Form_WhenSetFocused(MockForm& form)
+	{
+		InSequence sequence;
+		EXPECT_CALL(form, OnActivated(&EventArgs::Empty));
+	}
+
+	void SetUp_Form_WhenLoseFocus(MockForm& form)
+	{
+		InSequence sequence;
+		EXPECT_CALL(form, OnDeactivate(&EventArgs::Empty));
 	}
 
 protected:
@@ -137,8 +155,8 @@ TEST_F(FormManagerTest, GetFocusedHandle_WhenNoForm)
 
 TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedControl)
 {
-	auto control = CreateControlMock();
-	SetUp_Control_WhenSetFocusd(*control);
+	MockControl* control = CreateMockControl();
+	SetUp_Control_WhenSetFocused(*control);
 
 	_sut->SetFocus(control->get_Handle());
 
@@ -149,11 +167,11 @@ TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedControl)
 
 TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedControlExists)
 {
-	MockControl* prevControl = CreateControlMock();
+	MockControl* prevControl = CreateMockControl();
 	_sut->SetFocus(prevControl->get_Handle());
 	SetUp_Control_WhenLoseFocus(*prevControl);
-	MockControl* focusedControl = CreateControlMock();
-	SetUp_Control_WhenSetFocusd(*focusedControl);
+	MockControl* focusedControl = CreateMockControl();
+	SetUp_Control_WhenSetFocused(*focusedControl);
 
 	_sut->SetFocus(focusedControl->get_Handle());
 
@@ -165,7 +183,7 @@ TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedControlExists)
 
 TEST_F(FormManagerTest, SetFocus_WhenHandleIsInvalid)
 {
-	MockControl* control = CreateControlMock();
+	MockControl* control = CreateMockControl();
 	_sut->SetFocus(control->get_Handle());
 
 	try 
@@ -180,4 +198,32 @@ TEST_F(FormManagerTest, SetFocus_WhenHandleIsInvalid)
 	}
 
 	ASSERT_TRUE(false);
+}
+
+TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedForm)
+{
+	MockForm* form = CreateMockForm();
+	SetUp_Form_WhenSetFocused(*form);
+
+	_sut->SetFocus(form->get_Handle());
+
+	ASSERT_EQ(form->get_Handle(), _sut->GetFocusedHandle());
+
+	delete form;
+}
+
+TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedFormExists)
+{
+	MockForm* prevForm = CreateMockForm();
+	_sut->SetFocus(prevForm->get_Handle());
+	SetUp_Form_WhenLoseFocus(*prevForm);
+	MockForm* focusedForm = CreateMockForm();
+	SetUp_Form_WhenSetFocused(*focusedForm);
+
+	_sut->SetFocus(focusedForm->get_Handle());
+
+	ASSERT_EQ(focusedForm->get_Handle(), _sut->GetFocusedHandle());
+
+	delete prevForm;
+	delete focusedForm;
 }
