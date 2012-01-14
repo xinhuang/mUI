@@ -7,7 +7,7 @@ using namespace mUI::System::Forms;
 
 #include <gmock/gmock.h>
 
-class ControlMock : public Control
+class MockControl : public Control
 {
 public:
 	MOCK_METHOD1(OnLayout, void(LayoutEventArgs*));

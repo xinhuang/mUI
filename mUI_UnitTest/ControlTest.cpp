@@ -4,7 +4,7 @@
 using namespace mUI::System::Forms;
 using namespace mUI::System::Drawing;
 
-#include "mocks/ControlMock.h"
+#include "mocks/MockControl.h"
 
 bool GetVertAnchorHeight();
 
@@ -28,7 +28,7 @@ public:
 		_sut->set_Size(Size(100, 100));
         _form->Controls.Add(*_sut);
         _aribitraryLocation = Point(33, 47);
-		_childMock = new ControlMock();
+		_childMock = new MockControl();
 		_childCtrl = new Control();
     }
 
@@ -75,7 +75,7 @@ public:
 protected:
     Control* _sut;
 	Control* _childCtrl;
-	ControlMock* _childMock;
+	MockControl* _childMock;
     Form* _form;
     Point _aribitraryLocation;
 };
