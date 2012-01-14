@@ -97,6 +97,8 @@ public:
 	EventHandler<>			Leave;
 	EventHandler<>			GotFocus;			// TODO: Need more study about the event and keyboard/mouse input.
 	EventHandler<>			LostFocus;			// TODO:
+	EventHandler<>			Validating;
+	EventHandler<>			Validated;
 
 	// -------------------------------------------------------//
 	Control();
@@ -270,6 +272,8 @@ protected:
 	virtual void OnLeave				( EventArgs* e );
 	virtual void OnGotFocus				( EventArgs* e );
 	virtual void OnLostFocus			( EventArgs* e );
+	virtual void OnValidating			( EventArgs* e );
+	virtual void OnValidated			( EventArgs* e );
 
 protected:			// Below is NON-CLR interface.
 	void _BringToFront( Control& control);

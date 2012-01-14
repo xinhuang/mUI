@@ -515,7 +515,21 @@ mUI::IntPtr FormManager::GetFocusedHandle() const
 
 void FormManager::SetFocus( IntPtr value )
 {
+	Control* prevControl = FromHandle(_d->focusedControl);
+	if (prevControl != null)
+	{
+		prevControl->OnLostFocus(&EventArgs::Empty);
+		prevControl->OnLeave(&EventArgs::Empty);
+		prevControl->OnValidating(&EventArgs::Empty);
+		prevControl->OnValidated(&EventArgs::Empty);
+	}
+
+	Control* focusedControl = FromHandle(value);
+	if (focusedControl == null)
+		throw new ArgumentException(L"Invalid handle");
 	_d->focusedControl = value;
+	focusedControl->OnEnter(&EventArgs::Empty);
+	focusedControl->OnGotFocus(&EventArgs::Empty);
 }
 
 }}}

@@ -710,6 +710,16 @@ void Control::set_Focused( bool value )
 {
 }
 
+void Control::OnValidating( EventArgs* e )
+{
+	Validating(this, e);
+}
+
+void Control::OnValidated( EventArgs* e )
+{
+	Validated(this, e);
+}
+
 // ------------------------------------------------- //
 
 Control::ControlCollection::~ControlCollection()
