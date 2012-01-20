@@ -227,3 +227,16 @@ TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedFormExists)
 	delete prevForm;
 	delete focusedForm;
 }
+
+TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusAndFocusOnControlInForm)
+{
+	MockForm* containerForm = CreateMockForm();
+	MockControl* focusControl = CreateMockControl();
+	containerForm->Controls.Add(*focusControl);
+
+	_sut->SetFocus(focusControl->get_Handle());
+
+	ASSERT_EQ(focusControl->get_Handle(), _sut->GetFocusedHandle());
+
+	delete containerForm;
+}
