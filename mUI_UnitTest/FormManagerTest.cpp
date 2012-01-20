@@ -51,14 +51,14 @@ public:
 		return new NiceMock<MockForm>();
 	}
 
-	void SetUp_Control_WhenSetFocused(MockControl& control)
+	void Mock_Control_WhenSetFocused(MockControl& control)
 	{
 		InSequence sequence;
 		EXPECT_CALL(control, OnEnter(&EventArgs::Empty));
 		EXPECT_CALL(control, OnGotFocus(&EventArgs::Empty));
 	}
 
-	void SetUp_Control_WhenLoseFocus(MockControl& control)
+	void Mock_Control_WhenLoseFocus(MockControl& control)
 	{
 		InSequence sequence;
 		EXPECT_CALL(control, OnLostFocus(&EventArgs::Empty));
@@ -67,13 +67,13 @@ public:
 		EXPECT_CALL(control, OnValidated(&EventArgs::Empty));
 	}
 
-	void SetUp_Form_WhenSetFocused(MockForm& form)
+	void Mock_Form_WhenSetFocused(MockForm& form)
 	{
 		InSequence sequence;
 		EXPECT_CALL(form, OnActivated(&EventArgs::Empty));
 	}
 
-	void SetUp_Form_WhenLoseFocus(MockForm& form)
+	void Mock_Form_WhenLoseFocus(MockForm& form)
 	{
 		InSequence sequence;
 		EXPECT_CALL(form, OnDeactivate(&EventArgs::Empty));
@@ -156,7 +156,7 @@ TEST_F(FormManagerTest, GetFocusedHandle_WhenNoForm)
 TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedControl)
 {
 	MockControl* control = CreateMockControl();
-	SetUp_Control_WhenSetFocused(*control);
+	Mock_Control_WhenSetFocused(*control);
 
 	_sut->SetFocus(control->get_Handle());
 
@@ -169,9 +169,9 @@ TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedControlExists)
 {
 	MockControl* prevControl = CreateMockControl();
 	_sut->SetFocus(prevControl->get_Handle());
-	SetUp_Control_WhenLoseFocus(*prevControl);
+	Mock_Control_WhenLoseFocus(*prevControl);
 	MockControl* focusedControl = CreateMockControl();
-	SetUp_Control_WhenSetFocused(*focusedControl);
+	Mock_Control_WhenSetFocused(*focusedControl);
 
 	_sut->SetFocus(focusedControl->get_Handle());
 
@@ -203,7 +203,7 @@ TEST_F(FormManagerTest, SetFocus_WhenHandleIsInvalid)
 TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedForm)
 {
 	MockForm* form = CreateMockForm();
-	SetUp_Form_WhenSetFocused(*form);
+	Mock_Form_WhenSetFocused(*form);
 
 	_sut->SetFocus(form->get_Handle());
 
@@ -216,9 +216,9 @@ TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedFormExists)
 {
 	MockForm* prevForm = CreateMockForm();
 	_sut->SetFocus(prevForm->get_Handle());
-	SetUp_Form_WhenLoseFocus(*prevForm);
+	Mock_Form_WhenLoseFocus(*prevForm);
 	MockForm* focusedForm = CreateMockForm();
-	SetUp_Form_WhenSetFocused(*focusedForm);
+	Mock_Form_WhenSetFocused(*focusedForm);
 
 	_sut->SetFocus(focusedForm->get_Handle());
 
