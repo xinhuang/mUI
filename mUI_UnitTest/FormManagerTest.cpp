@@ -51,7 +51,7 @@ public:
 		return new NiceMock<MockForm>();
 	}
 
-	void Mock_Control_WhenSetFocused(MockControl& control)
+	void Mock_Control_WhenSetFocus(MockControl& control)
 	{
 		InSequence sequence;
 		EXPECT_CALL(control, OnEnter(&EventArgs::Empty));
@@ -67,7 +67,7 @@ public:
 		EXPECT_CALL(control, OnValidated(&EventArgs::Empty));
 	}
 
-	void Mock_Form_WhenSetFocused(MockForm& form)
+	void Mock_Form_WhenSetFocus(MockForm& form)
 	{
 		InSequence sequence;
 		EXPECT_CALL(form, OnActivated(&EventArgs::Empty));
@@ -156,7 +156,7 @@ TEST_F(FormManagerTest, GetFocusedHandle_WhenNoForm)
 TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedControl)
 {
 	MockControl* control = CreateMockControl();
-	Mock_Control_WhenSetFocused(*control);
+	Mock_Control_WhenSetFocus(*control);
 
 	_sut->SetFocus(control->get_Handle());
 
@@ -171,7 +171,7 @@ TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedControlExists)
 	_sut->SetFocus(prevControl->get_Handle());
 	Mock_Control_WhenLoseFocus(*prevControl);
 	MockControl* focusedControl = CreateMockControl();
-	Mock_Control_WhenSetFocused(*focusedControl);
+	Mock_Control_WhenSetFocus(*focusedControl);
 
 	_sut->SetFocus(focusedControl->get_Handle());
 
@@ -203,7 +203,7 @@ TEST_F(FormManagerTest, SetFocus_WhenHandleIsInvalid)
 TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusedForm)
 {
 	MockForm* form = CreateMockForm();
-	Mock_Form_WhenSetFocused(*form);
+	Mock_Form_WhenSetFocus(*form);
 
 	_sut->SetFocus(form->get_Handle());
 
@@ -218,7 +218,7 @@ TEST_F(FormManagerTest, SetFocus_WhenPreviousFocusedFormExists)
 	_sut->SetFocus(prevForm->get_Handle());
 	Mock_Form_WhenLoseFocus(*prevForm);
 	MockForm* focusedForm = CreateMockForm();
-	Mock_Form_WhenSetFocused(*focusedForm);
+	Mock_Form_WhenSetFocus(*focusedForm);
 
 	_sut->SetFocus(focusedForm->get_Handle());
 
@@ -233,6 +233,8 @@ TEST_F(FormManagerTest, SetFocus_WhenNoPreviousFocusAndFocusOnControlInForm)
 	MockForm* containerForm = CreateMockForm();
 	MockControl* focusControl = CreateMockControl();
 	containerForm->Controls.Add(*focusControl);
+	Mock_Form_WhenSetFocus(*containerForm);
+	Mock_Control_WhenSetFocus(*focusControl);
 
 	_sut->SetFocus(focusControl->get_Handle());
 

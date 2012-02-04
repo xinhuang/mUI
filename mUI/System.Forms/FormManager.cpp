@@ -530,6 +530,13 @@ void FormManager::SetFocus( IntPtr value )
 	_d->focusedControl = value;
 	focusedControl->OnEnter(&EventArgs::Empty);
 	focusedControl->OnGotFocus(&EventArgs::Empty);
+
+	Control* control = focusedControl->get_Parent();
+	while (control != null)
+	{
+		control->OnEnter(&EventArgs::Empty);
+		control = control->get_Parent();
+	}
 }
 
 }}}

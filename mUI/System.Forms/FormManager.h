@@ -75,6 +75,8 @@ public:
 private:
 	FormManager();
 	~FormManager();
+
+	bool IsForm(IntPtr handle) const;
 	Form* get_Form(IntPtr handle);
 	const Form* get_Form(IntPtr handle) const;
 	const Control* FindCommonParent( const Control* from, const Control* to );
