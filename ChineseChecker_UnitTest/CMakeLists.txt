@@ -24,7 +24,7 @@ ENDIF()
 
 # Include Directories
 INCLUDE_DIRECTORIES(. 
-	${PROJECT_SOURCE_DIR}/MineGame_Lib
+	${PROJECT_SOURCE_DIR}/ChineseChecker_Lib
 	${PROJECT_SOURCE_DIR}/mUI)
 
 # Link Libraries
