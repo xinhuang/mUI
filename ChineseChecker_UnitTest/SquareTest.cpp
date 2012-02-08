@@ -1,4 +1,8 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+using ::testing::Return;
+
+#include "mocks/PieceMock.h"
 
 #include <Presenter/Square.h>
 
@@ -12,7 +16,7 @@ public:
 
 	virtual void TearDown()
 	{
-		delete _square; _square = NULL;
+		delete _square; _square = nullptr;
 	}
 
 protected:
@@ -21,15 +25,19 @@ protected:
 
 TEST_F(SquareTest, Constructor_Typical)
 {
-	ASSERT_TRUE(NULL != _square);
-}
-
-TEST_F(SquareTest, get_IsOccupied_WhenDefault)
-{
-	ASSERT_FALSE(_square->get_IsOccupied());
+	ASSERT_TRUE(nullptr != _square);
 }
 
 TEST_F(SquareTest, get_Piece_WhenDefault)
 {
-	ASSERT_TRUE(NULL == _square->get_Piece());
+	ASSERT_TRUE(nullptr == _square->get_Piece());
+}
+
+TEST_F(SquareTest, set_Piece_WhenPrevSquareIsNull)
+{
+	PieceMock piece;
+	EXPECT_CALL(piece, get_Square()).WillOnce(Return(nullptr));
+	_square->set_Piece(&piece);
+
+	ASSERT_EQ(&piece, _square->get_Piece());
 }

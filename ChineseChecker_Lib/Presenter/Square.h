@@ -6,8 +6,15 @@ class Piece;
 class Square
 {
 public:
-	bool get_IsOccupied() const { return false; }
-	const Piece* get_Piece() const { return NULL; }
+	Square();
+	virtual ~Square();
+
+	const Piece* get_Piece() const;
+	void set_Piece(Piece* piece);
+
+private:
+	struct Data;
+	Data* _d;
 };
 
 #endif // __SQUARE_H__
