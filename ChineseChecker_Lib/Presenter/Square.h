@@ -10,7 +10,7 @@ public:
 	virtual ~Square();
 
 	const Piece* get_Piece() const;
-	void set_Piece(Piece* piece);
+	virtual void set_Piece(Piece* piece);
 
 private:
 	struct Data;
