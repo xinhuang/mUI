@@ -3,12 +3,19 @@
 
 struct Square::Data
 {
+	Data()
+		: piece(nullptr)
+	{}
+
 	Piece* piece;
+	Point location;
 };
 
-Square::Square()
+Square::Square(const Point& location)
 	: _d(new Data())
-{}
+{
+	_d->location = location;
+}
 
 Square::~Square()
 {
@@ -34,4 +41,9 @@ void Square::set_Piece( Piece* piece )
 const Piece* Square::get_Piece() const
 {
 	return _d->piece;
+}
+
+const Point& Square::get_Location() const
+{
+	return _d->location;
 }

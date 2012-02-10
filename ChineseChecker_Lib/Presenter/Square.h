@@ -3,14 +3,19 @@
 
 class Piece;
 
+#include <mUI.h>
+using mUI::System::Drawing::Point;
+
 class Square
 {
 public:
-	Square();
+	Square(const Point& location);
 	virtual ~Square();
 
-	const Piece* get_Piece() const;
+	virtual const Piece* get_Piece() const;
 	virtual void set_Piece(Piece* piece);
+
+	virtual const Point& get_Location() const;
 
 private:
 	struct Data;

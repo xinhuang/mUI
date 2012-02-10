@@ -12,7 +12,7 @@ class SquareTest : public ::testing::Test
 public:
 	virtual void SetUp()
 	{
-		_sut = new Square();
+		_sut = new Square(Point::Empty);
 		_pieceMock = new PieceMock();
 	}
 
