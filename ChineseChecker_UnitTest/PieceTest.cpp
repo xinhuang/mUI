@@ -10,6 +10,17 @@ using ::testing::Return;
 class PieceTest : public ::testing::Test
 {
 public:
+	virtual void SetUp()
+	{
+		_sut = new Piece();
+	}
+	virtual void TearDown()
+	{
+		delete _sut; _sut = nullptr;
+	}
+
+protected:
+	Piece* _sut;
 };
 
 TEST_F(PieceTest, Constructor_Typical)
@@ -19,5 +30,15 @@ TEST_F(PieceTest, Constructor_Typical)
 	ASSERT_NE(nullptr, sut);
 
 	delete sut;
+}
+
+TEST_F(PieceTest, MoveTo_WhenNoPrevSquare)
+{
+	SquareMock square;
+	EXPECT_CALL(square, set_Piece(_sut)).Times(1);
+
+	_sut->MoveTo(&square);
+
+	ASSERT_EQ(&square, _sut->get_Square());
 }
 

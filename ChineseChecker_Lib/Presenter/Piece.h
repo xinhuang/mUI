@@ -6,8 +6,17 @@ class Square;
 class Piece
 {
 public:
-	virtual const Square* get_Square() const { return 0; }
-	virtual Square* get_Square() { return 0; }
+	Piece();
+	virtual ~Piece();
+
+	virtual const Square* get_Square() const;
+	virtual Square* get_Square();
+
+	virtual void MoveTo(Square* square);
+
+private:
+	struct Data;
+	Data* _d;
 };
 
 #endif // __PIECE_H__
