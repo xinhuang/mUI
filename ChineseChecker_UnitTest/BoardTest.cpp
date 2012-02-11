@@ -6,6 +6,7 @@
 using namespace std;
 
 #include <mUI.h>
+using namespace mUI::System;
 using namespace mUI::System::Drawing;
 
 class BoardTest : public ::testing::Test
@@ -117,4 +118,23 @@ TEST_F(BoardTest, GetGoalSquares_Location_12_16)
 			VerifySquareLocationsContain(goalSquares, Point(x, y));
 		}
 	}
+}
+
+TEST_F(BoardTest, GetGoalSquares_Location_4_12)
+{
+	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(4, 12));
+
+	ASSERT_EQ(15, goalSquares.size());
+	for (int y = 8; y < 13; ++y)
+	{
+		for (int x = y - 4; x < 9; ++x)
+		{
+			VerifySquareLocationsContain(goalSquares, Point(x, y));
+		}
+	}
+}
+
+TEST_F(BoardTest, GetGoalSquares_WhenArgIsNotTopSquare)
+{
+	EXPECT_THROW(_sut->GetGoalSquares(Point(8, 7)), ArgumentException*);
 }

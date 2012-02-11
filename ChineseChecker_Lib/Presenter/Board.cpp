@@ -13,6 +13,7 @@ struct Board::Data
 		, goalSquares_12_4(15, nullptr)
 		, goalSquares_16_12(15, nullptr)
 		, goalSquares_12_16(15, nullptr)
+		, goalSquares_4_12(15, nullptr)
 	{
 		int i = 0;
 		for (int x = 0; x < 5; ++x)
@@ -58,11 +59,24 @@ struct Board::Data
 				goalSquares_12_16[i++] = new Square(Point(x, y));
 			}
 		}
+
+		i = 0;
+		for (int y = 8; y < 13; ++y)
+		{
+			for (int x = y - 4; x < 9; ++x)
+			{
+				goalSquares_4_12[i++] = new Square(Point(x, y));
+			}
+		}
 	}
 	~Data()
 	{
 		ClearVector(goalSquares_0_4);
 		ClearVector(goalSquares_4_0);
+		ClearVector(goalSquares_12_4);
+		ClearVector(goalSquares_16_12);
+		ClearVector(goalSquares_12_16);
+		ClearVector(goalSquares_4_12);
 	}
 	template <typename T>
 	void ClearVector(T& vec) const
@@ -77,6 +91,7 @@ struct Board::Data
 	vector<Square*> goalSquares_12_4;
 	vector<Square*> goalSquares_16_12;
 	vector<Square*> goalSquares_12_16;
+	vector<Square*> goalSquares_4_12;
 };
 
 Board::Board() : _d(new Data())
@@ -99,5 +114,7 @@ vector<Square*> Board::GetGoalSquares( const Point& goalLocation ) const
 		return _d->goalSquares_16_12;
 	else if (goalLocation == Point(12, 16))
 		return _d->goalSquares_12_16;
+	else if (goalLocation == Point(4, 12))
+		return _d->goalSquares_4_12;
 	throw new ArgumentException();
 }
