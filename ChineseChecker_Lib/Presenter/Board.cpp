@@ -17,22 +17,6 @@ struct Board::Data
 		, squares(Width * Height, nullptr)
 	{
 	}
-	~Data()
-	{
-		ClearVector(goalSquares_0_4);
-		ClearVector(goalSquares_4_0);
-		ClearVector(goalSquares_12_4);
-		ClearVector(goalSquares_16_12);
-		ClearVector(goalSquares_12_16);
-		ClearVector(goalSquares_4_12);
-	}
-	template <typename T>
-	void ClearVector(T& vec) const
-	{
-		for (auto iter = vec.begin(); iter != vec.end(); ++iter)
-			delete *iter;
-		vec.clear();
-	}
 
 	vector<Square*> goalSquares_0_4;
 	vector<Square*> goalSquares_4_0;
@@ -45,61 +29,6 @@ struct Board::Data
 
 Board::Board() : _d(new Data())
 {
-
-	int i = 0;
-	for (int y = 4; y < 9; ++y)
-	{
-		for (int x = y - 4; x < 5; ++x)
-		{
-			_d->goalSquares_0_4[i++] = new Square(Point(x, y));
-		}
-	}
-
-	i = 0;
-	for (int x = 4; x < 9; ++x)
-	{
-		for (int y = x - 4; y < 5; ++y)
-		{
-			_d->goalSquares_4_0[i++] = new Square(Point(x, y));
-		}
-	}
-
-	i = 0;
-	for (int y = 4; y < 9; ++y)
-	{
-		for (int x = y + 4; x < 13; ++x)
-		{
-			_d->goalSquares_12_4[i++] = new Square(Point(x, y));
-		}
-	}
-
-	i = 0;
-	for (int x = 12; x < 17; ++x)
-	{
-		for (int y = x - 4; y < 13; ++y)
-		{
-			_d->goalSquares_16_12[i++] = new Square(Point(x, y));
-		}
-	}
-
-	i = 0;
-	for (int y = 12; y < 17; ++y)
-	{
-		for (int x = y - 4; x < 13; ++x)
-		{
-			_d->goalSquares_12_16[i++] = new Square(Point(x, y));
-		}
-	}
-
-	i = 0;
-	for (int x = 4; x < 9; ++x)
-	{
-		for (int y = x + 4; y < 13; ++y)
-		{
-			_d->goalSquares_4_12[i++] = new Square(Point(x, y));
-		}
-	}
-
 	for (int x = 0; x < Width; ++x)
 	{
 		for (int y = 0; y < Height; ++y)
@@ -107,10 +36,15 @@ Board::Board() : _d(new Data())
 			_d->squares[GetSquareIndex(x, y)] = new Square(Point(x, y));
 		}
 	}
+
+	InitializeGoalSquares();
 }
 
 Board::~Board()
 {
+	for (auto iter = _d->squares.begin(); iter != _d->squares.end(); ++iter)
+		delete *iter;
+	_d->squares.clear();
 	delete _d;
 }
 
@@ -144,4 +78,61 @@ int Board::GetSquareIndex(const Point& location) const
 int Board::GetSquareIndex(int x, int y) const
 {
 	return y * Width + x;
+}
+
+void Board::InitializeGoalSquares()
+{
+	int i = 0;
+	for (int y = 4; y < 9; ++y)
+	{
+		for (int x = y - 4; x < 5; ++x)
+		{
+			_d->goalSquares_0_4[i++] = SquareAt(Point(x, y));
+		}
+	}
+
+	i = 0;
+	for (int y = 4; y < 9; ++y)
+	{
+		for (int x = y + 4; x < 13; ++x)
+		{
+			_d->goalSquares_12_4[i++] = SquareAt(Point(x, y));
+		}
+	}
+
+	i = 0;
+	for (int y = 12; y < 17; ++y)
+	{
+		for (int x = y - 4; x < 13; ++x)
+		{
+			_d->goalSquares_12_16[i++] = SquareAt(Point(x, y));
+		}
+	}
+
+	i = 0;
+	for (int x = 4; x < 9; ++x)
+	{
+		for (int y = x - 4; y < 5; ++y)
+		{
+			_d->goalSquares_4_0[i++] = SquareAt(Point(x, y));
+		}
+	}
+
+	i = 0;
+	for (int x = 12; x < 17; ++x)
+	{
+		for (int y = x - 4; y < 13; ++y)
+		{
+			_d->goalSquares_16_12[i++] = SquareAt(Point(x, y));
+		}
+	}
+
+	i = 0;
+	for (int x = 4; x < 9; ++x)
+	{
+		for (int y = x + 4; y < 13; ++y)
+		{
+			_d->goalSquares_4_12[i++] = SquareAt(Point(x, y));
+		}
+	}
 }

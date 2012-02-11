@@ -21,6 +21,7 @@ public:
 	virtual Square* SquareAt(const Point& location);
 
 protected:
+	void InitializeGoalSquares();
 	int GetSquareIndex(const Point& location) const;
 	int GetSquareIndex(int x, int y) const;
 
