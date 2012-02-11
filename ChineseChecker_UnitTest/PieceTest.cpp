@@ -14,5 +14,10 @@ public:
 
 TEST_F(PieceTest, Constructor_Typical)
 {
+	Piece* sut = new Piece();
+
+	ASSERT_NE(nullptr, sut);
+
+	delete sut;
 }
 
