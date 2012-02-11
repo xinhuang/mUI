@@ -138,3 +138,12 @@ TEST_F(BoardTest, GetGoalSquares_WhenArgIsNotTopSquare)
 {
 	EXPECT_THROW(_sut->GetGoalSquares(Point(8, 7)), ArgumentException*);
 }
+
+TEST_F(BoardTest, SquareAt_WhenTypical)
+{
+	Point location(4, 0);
+	Square* square = _sut->SquareAt(location);
+	
+	ASSERT_NE(nullptr, square);
+	ASSERT_EQ(location, square->get_Location());
+}
