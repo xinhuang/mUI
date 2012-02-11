@@ -1,7 +1,10 @@
 #include <Presenter/CGame.h>
+
 #include <gtest/gtest.h>
 
 #include <Presenter/Player.h>
+#include <Presenter/Board.h>
+#include <Presenter/Square.h>
 
 class TestableCGame : public CGame
 {
@@ -16,6 +19,9 @@ public:
 	virtual void SetUp()
 	{
 		_sut = (TestableCGame*)new CGame();
+		_sut->set_PlayerTotal(2);
+		_sut->set_PlayerColor(0, Color::Black);
+		_sut->set_PlayerColor(1, Color::White);
 	}
 	virtual void TearDown()
 	{
@@ -32,16 +38,14 @@ TEST_F(CGameTest, Constructor_Typical)
 
 	ASSERT_NE(nullptr, sut);
 	ASSERT_NE(nullptr, sut->get_Board());
+	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
+		ASSERT_NE(nullptr, _sut->GetPieceGroup(i));
 
 	delete sut;
 }
 
 TEST_F(CGameTest, NewGame_Typical)
 {
-	_sut->set_PlayerTotal(2);
-    _sut->set_PlayerColor(0, Color::Black);
-    _sut->set_PlayerColor(1, Color::White);
-
 	_sut->NewGame();
 
     Player* p0 = _sut->PlayerAt(0);
@@ -56,11 +60,22 @@ TEST_F(CGameTest, NewGame_Typical)
 
 TEST_F(CGameTest, TakeTurn_Typical)
 {
-	_sut->set_PlayerTotal(2);
 	_sut->NewGame();
 
 	_sut->TakeTurn(0);
 
 	ASSERT_EQ(0, _sut->get_CurrentPlayerIndex());
 	ASSERT_EQ(_sut->PlayerAt(0), _sut->get_CurrentPlayer());
+}
+
+TEST_F(CGameTest, MovePiece_WhenMoveToAdjacentSquare)
+{
+	_sut->NewGame();
+	auto board = _sut->get_Board();
+	auto fromSquare = board->SquareAt(Point(8, 8));
+	auto toSquare = board->SquareAt(Point(8, 9));
+	Piece* piece = board->SquareAt(Point(4, 0))->get_Piece();
+	piece->MoveTo(fromSquare);
+
+	_sut->MovePiece(Point(8, 8), Point(8, 9));
 }

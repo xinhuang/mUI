@@ -3,6 +3,7 @@
 
 class Board;
 class Player;
+class PieceGroup;
 
 #include <mUI.h>
 using mUI::System::Drawing::Color;
@@ -10,6 +11,8 @@ using mUI::System::Drawing::Color;
 class CGame
 {
 public:
+	static const int PieceGroupTotal = 6;
+
 	CGame();
 	~CGame();
 
@@ -20,6 +23,10 @@ public:
 	Player* PlayerAt(size_t playerNumber);
 	Player* get_CurrentPlayer();
     void set_PlayerColor(size_t playerNumber, const Color& color);
+
+	void MovePiece(const Point& from, const Point& to);
+
+	PieceGroup* GetPieceGroup(int groupId);
 
 protected:
 	void TakeTurn(int playerIndex);

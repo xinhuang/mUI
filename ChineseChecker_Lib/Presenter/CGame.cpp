@@ -2,10 +2,12 @@
 
 #include "Board.h"
 #include "Player.h"
+#include "PieceGroup.h"
 
 struct CGame::Data
 {
 	Board* board;
+	vector<PieceGroup*> pieceGroups;
 	size_t playerTotal;
 	vector<Player*> players;
     map<size_t, vector<Color>> colorMap;
@@ -14,6 +16,10 @@ struct CGame::Data
 CGame::CGame() : _d(new Data)
 {
 	_d->board = new Board();
+
+	_d->pieceGroups.resize(CGame::PieceGroupTotal);
+	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
+		_d->pieceGroups[i] = new PieceGroup(i);
 }
 
 CGame::~CGame()
@@ -79,4 +85,14 @@ void CGame::set_PlayerColor(size_t playerNumber, const Color& color)
         playerColor->second.clear();
         playerColor->second.push_back(color);
     }
+}
+
+void CGame::MovePiece( const Point& from, const Point& to )
+{
+
+}
+
+PieceGroup* CGame::GetPieceGroup( int groupId )
+{
+	return _d->pieceGroups[groupId];
 }

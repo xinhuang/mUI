@@ -38,7 +38,7 @@ void Square::set_Piece( Piece* piece )
 	_d->piece = piece;
 }
 
-const Piece* Square::get_Piece() const
+Piece* Square::get_Piece()
 {
 	return _d->piece;
 }

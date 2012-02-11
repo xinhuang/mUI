@@ -12,7 +12,7 @@ public:
 	Square(const Point& location);
 	virtual ~Square();
 
-	virtual const Piece* get_Piece() const;
+	virtual Piece* get_Piece();
 
 	virtual const Point& get_Location() const;
 
