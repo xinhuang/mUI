@@ -35,7 +35,7 @@ struct Board::Data
 		i = 0;
 		for (int y = 4; y < 9; ++y)
 		{
-			for (int x = 8 + y - 4; x < 13; ++x)
+			for (int x = y + 4; x < 13; ++x)
 			{
 				goalSquares_12_4[i++] = new Square(Point(x, y));
 			}
@@ -44,7 +44,7 @@ struct Board::Data
 		i = 0;
 		for (int x = 12; x < 17; ++x)
 		{
-			for (int y = 8 + x - 12; y < 13; ++y)
+			for (int y = x - 4; y < 13; ++y)
 			{
 				goalSquares_16_12[i++] = new Square(Point(x, y));
 			}
