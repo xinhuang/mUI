@@ -18,7 +18,15 @@ struct Board::Data
 				goalSquares_0_4[i++] = new Square(Point(x, y));
 			}
 		}
-		goalSquares_4_0[0] = new Square(Point(4, 0));
+
+		i = 0;
+		for (int y = 0; y < 5; ++y)
+		{
+			for (int x = 4; x < 4 + y; ++x)
+			{
+				goalSquares_4_0[i++] = new Square(Point(x, y));
+			}
+		}
 	}
 	~Data()
 	{

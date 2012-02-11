@@ -58,5 +58,11 @@ TEST_F(BoardTest, GetGoalSquares_Location_4_0)
 	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(4, 0));
 
 	ASSERT_EQ(15, goalSquares.size());
-	VerifySquareLocationsContain(goalSquares, Point(4, 0));
+	for (int y = 0; y < 5; ++y)
+	{
+		for (int x = 4; x < 4 + y; ++x)
+		{
+			VerifySquareLocationsContain(goalSquares, Point(x, y));
+		}
+	}
 }
