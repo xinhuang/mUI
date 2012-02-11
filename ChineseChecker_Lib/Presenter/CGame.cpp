@@ -52,7 +52,7 @@ void CGame::NewGame()
 	_d->players.resize(_d->playerTotal);
 	for (size_t i = 0; i < _d->playerTotal; ++i)
 	{
-		_d->players[i] = new Player();
+		_d->players[i] = new Player(_d->colorMap[i]);
 	}
 }
 
