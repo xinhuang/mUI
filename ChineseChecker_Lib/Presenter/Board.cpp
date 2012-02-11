@@ -100,6 +100,7 @@ Board::Board() : _d(new Data())
 
 Board::~Board()
 {
+	delete _d;
 }
 
 vector<Square*> Board::GetGoalSquares( const Point& goalLocation ) const
