@@ -1,7 +1,7 @@
 #ifndef __SQUARE_H__
 #define __SQUARE_H__
 
-class Piece;
+#include "Piece.h"
 
 #include <mUI.h>
 using mUI::System::Drawing::Point;
@@ -13,9 +13,12 @@ public:
 	virtual ~Square();
 
 	virtual const Piece* get_Piece() const;
-	virtual void set_Piece(Piece* piece);
 
 	virtual const Point& get_Location() const;
+
+private:
+	friend void Piece::MoveTo(Square*);
+	virtual void set_Piece(Piece* piece);
 
 private:
 	struct Data;
