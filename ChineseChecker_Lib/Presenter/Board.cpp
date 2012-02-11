@@ -47,18 +47,18 @@ Board::Board() : _d(new Data())
 {
 
 	int i = 0;
-	for (int x = 0; x < 5; ++x)
+	for (int y = 4; y < 9; ++y)
 	{
-		for (int y = x + 4; y < 9; ++y)
+		for (int x = y - 4; x < 5; ++x)
 		{
 			_d->goalSquares_0_4[i++] = new Square(Point(x, y));
 		}
 	}
 
 	i = 0;
-	for (int y = 0; y < 5; ++y)
+	for (int x = 4; x < 9; ++x)
 	{
-		for (int x = 4; x < 5 + y; ++x)
+		for (int y = x - 4; y < 5; ++y)
 		{
 			_d->goalSquares_4_0[i++] = new Square(Point(x, y));
 		}
@@ -92,9 +92,9 @@ Board::Board() : _d(new Data())
 	}
 
 	i = 0;
-	for (int y = 8; y < 13; ++y)
+	for (int x = 4; x < 9; ++x)
 	{
-		for (int x = y - 4; x < 9; ++x)
+		for (int y = x + 4; y < 13; ++y)
 		{
 			_d->goalSquares_4_12[i++] = new Square(Point(x, y));
 		}
