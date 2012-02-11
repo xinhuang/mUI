@@ -19,7 +19,7 @@ CGame::CGame() : _d(new Data)
 
 	_d->pieceGroups.resize(CGame::PieceGroupTotal);
 	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
-		_d->pieceGroups[i] = new PieceGroup(i);
+		_d->pieceGroups[i] = new PieceGroup(i, _d->board, Point::Empty, Point::Empty);
 }
 
 CGame::~CGame()
