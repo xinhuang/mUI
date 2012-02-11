@@ -8,6 +8,7 @@ struct CGame::Data
 	Board* board;
 	size_t playerTotal;
 	vector<Player*> players;
+    map<size_t, vector<Color>> colorMap;
 };
 
 CGame::CGame() : _d(new Data)
@@ -65,3 +66,17 @@ Player* CGame::get_CurrentPlayer()
 	return PlayerAt(get_CurrentPlayerIndex());
 }
 
+void CGame::set_PlayerColor(size_t playerNumber, const Color& color)
+{
+    auto playerColor = _d->colorMap.find(playerNumber);
+    if (playerColor == _d->colorMap.end())
+    {
+        _d->colorMap.insert(make_pair(playerNumber, vector<Color>(1, color)));
+        return;
+    }
+    else
+    {
+        playerColor->second.clear();
+        playerColor->second.push_back(color);
+    }
+}

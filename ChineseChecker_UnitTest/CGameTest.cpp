@@ -1,6 +1,8 @@
 #include <Presenter/CGame.h>
 #include <gtest/gtest.h>
 
+#include <Presenter/Player.h>
+
 class TestableCGame : public CGame
 {
 public:
@@ -37,11 +39,17 @@ TEST_F(CGameTest, Constructor_Typical)
 TEST_F(CGameTest, NewGame_Typical)
 {
 	_sut->set_PlayerTotal(2);
+    _sut->set_PlayerColor(0, Color::Black);
+    _sut->set_PlayerColor(1, Color::White);
 
 	_sut->NewGame();
 
-	ASSERT_NE(nullptr, _sut->PlayerAt(0));
-	ASSERT_NE(nullptr, _sut->PlayerAt(1));
+    Player* p0 = _sut->PlayerAt(0);
+    Player* p1 = _sut->PlayerAt(1);
+	ASSERT_NE(nullptr, p0);
+	ASSERT_NE(nullptr, p1);
+    ASSERT_TRUE(p0->Owns(Color::Black));
+    ASSERT_FALSE(p0->Owns(Color::White));
 }
 
 TEST_F(CGameTest, TakeTurn_Typical)

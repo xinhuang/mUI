@@ -179,6 +179,10 @@ bool Application::RenderFunc()
 	PHGE hge;
 	hge->Gfx_BeginScene();
 
+    //if (_application._hgeContext.get_ClearBack())
+        hge->Gfx_Clear(ARGB(255,128,128,128));
+        //hge->Gfx_Clear(_application._hgeContext.get_BackColor().ARGB);
+
 	FormManager::get_Instance().Render();
 
 	hge->Gfx_EndScene();

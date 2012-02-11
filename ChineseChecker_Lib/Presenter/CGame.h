@@ -4,6 +4,9 @@
 class Board;
 class Player;
 
+#include <mUI.h>
+using mUI::System::Drawing::Color;
+
 class CGame
 {
 public:
@@ -16,6 +19,7 @@ public:
 	void NewGame();
 	Player* PlayerAt(size_t playerNumber);
 	Player* get_CurrentPlayer();
+    void set_PlayerColor(size_t playerNumber, const Color& color);
 
 protected:
 	void TakeTurn(int playerIndex);

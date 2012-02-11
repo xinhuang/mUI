@@ -6,8 +6,9 @@
 #include <System/System.h>
 using mUI::System::String;
 
-#include <System.Drawing/Size.h>
+#include <System.Drawing/Drawing.h>
 using mUI::System::Drawing::Size;
+using mUI::System::Drawing::Color;
 
 namespace mUI{ namespace Extra{
 
@@ -30,6 +31,8 @@ public:
 	bool get_HideMouse() const { return false; }
 	const String& get_Title() const { return String::Empty; }
 	const Size get_Size() const { return Size(400, 300); }
+    bool get_ClearBack() const { return true; }
+    Color get_BackColor() const { return Color::Black; }
 };
 
 }}
