@@ -90,3 +90,17 @@ TEST_F(BoardTest, GetGoalSquares_Location_12_4)
 	VerifySquareLocationsContain(goalSquares, Point(12, 7));
 	VerifySquareLocationsContain(goalSquares, Point(12, 8));
 }
+
+TEST_F(BoardTest, GetGoalSquares_Location_16_12)
+{
+	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(16, 12));
+
+	ASSERT_EQ(15, goalSquares.size());
+	for (int x = 12; x < 17; ++x)
+	{
+		for (int y = 8 + x - 12; y < 13; ++y)
+		{
+			VerifySquareLocationsContain(goalSquares, Point(x, y));
+		}
+	}
+}

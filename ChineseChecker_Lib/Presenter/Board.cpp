@@ -2,6 +2,7 @@
 #include "Square.h"
 
 #include <mUI.h>
+using namespace mUI::System;
 using namespace mUI::System::Drawing;
 
 struct Board::Data
@@ -10,6 +11,7 @@ struct Board::Data
 		: goalSquares_0_4(15, nullptr) 
 		, goalSquares_4_0(15, nullptr) 
 		, goalSquares_12_4(15, nullptr)
+		, goalSquares_16_12(15, nullptr)
 	{
 		int i = 0;
 		for (int x = 0; x < 5; ++x)
@@ -37,6 +39,15 @@ struct Board::Data
 				goalSquares_12_4[i++] = new Square(Point(x, y));
 			}
 		}
+
+		i = 0;
+		for (int x = 12; x < 17; ++x)
+		{
+			for (int y = 8 + x - 12; y < 13; ++y)
+			{
+				goalSquares_16_12[i++] = new Square(Point(x, y));
+			}
+		}
 	}
 	~Data()
 	{
@@ -54,6 +65,7 @@ struct Board::Data
 	vector<Square*> goalSquares_0_4;
 	vector<Square*> goalSquares_4_0;
 	vector<Square*> goalSquares_12_4;
+	vector<Square*> goalSquares_16_12;
 };
 
 Board::Board() : _d(new Data())
@@ -70,6 +82,9 @@ vector<Square*> Board::GetGoalSquares( const Point& goalLocation ) const
 		return _d->goalSquares_0_4;
 	else if (goalLocation == Point(4, 0))
 		return _d->goalSquares_4_0;
-	else 
+	else if (goalLocation == Point(12, 4))
 		return _d->goalSquares_12_4;
+	else if (goalLocation == Point(16, 12))
+		return _d->goalSquares_16_12;
+	throw new ArgumentException();
 }
