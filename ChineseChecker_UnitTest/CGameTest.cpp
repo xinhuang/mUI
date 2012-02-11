@@ -47,9 +47,11 @@ TEST_F(CGameTest, NewGame_Typical)
     Player* p0 = _sut->PlayerAt(0);
     Player* p1 = _sut->PlayerAt(1);
 	ASSERT_NE(nullptr, p0);
-	ASSERT_NE(nullptr, p1);
+    ASSERT_NE(nullptr, p1);
     ASSERT_TRUE(p0->Owns(Color::Black));
     ASSERT_FALSE(p0->Owns(Color::White));
+    ASSERT_FALSE(p1->Owns(Color::Black));
+    ASSERT_TRUE(p1->Owns(Color::White));
 }
 
 TEST_F(CGameTest, TakeTurn_Typical)
