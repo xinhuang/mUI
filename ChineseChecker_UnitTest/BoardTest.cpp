@@ -23,6 +23,8 @@ public:
 	void VerifySquareLocationsContain(const vector<Square*>& container, const Point& location) const
 	{
 		for (auto iter = container.begin(); iter != container.end(); ++iter)
+			ASSERT_NE(nullptr, *iter);
+		for (auto iter = container.begin(); iter != container.end(); ++iter)
 			if (location == (*iter)->get_Location())
 				return;
 		ASSERT_TRUE(false);
@@ -65,4 +67,26 @@ TEST_F(BoardTest, GetGoalSquares_Location_4_0)
 			VerifySquareLocationsContain(goalSquares, Point(x, y));
 		}
 	}
+}
+
+TEST_F(BoardTest, GetGoalSquares_Location_12_4)
+{
+	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(12, 4));
+
+	ASSERT_EQ(15, goalSquares.size());
+	VerifySquareLocationsContain(goalSquares, Point(8, 4));
+	VerifySquareLocationsContain(goalSquares, Point(9, 4));
+	VerifySquareLocationsContain(goalSquares, Point(10, 4));
+	VerifySquareLocationsContain(goalSquares, Point(11, 4));
+	VerifySquareLocationsContain(goalSquares, Point(12, 4));
+	VerifySquareLocationsContain(goalSquares, Point(9, 5));
+	VerifySquareLocationsContain(goalSquares, Point(10, 5));
+	VerifySquareLocationsContain(goalSquares, Point(11, 5));
+	VerifySquareLocationsContain(goalSquares, Point(12, 5));
+	VerifySquareLocationsContain(goalSquares, Point(10, 6));
+	VerifySquareLocationsContain(goalSquares, Point(11, 6));
+	VerifySquareLocationsContain(goalSquares, Point(12, 6));
+	VerifySquareLocationsContain(goalSquares, Point(11, 7));
+	VerifySquareLocationsContain(goalSquares, Point(12, 7));
+	VerifySquareLocationsContain(goalSquares, Point(12, 8));
 }
