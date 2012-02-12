@@ -6,10 +6,13 @@
 
 struct Piece::Data
 {
+	Data(int id) : id(id) {}
+
+	const int id;
 	Square* square;
 };
 
-Piece::Piece() : _d(new Data())
+Piece::Piece(int id) : _d(new Data(id))
 {
 	_d->square = nullptr;
 }
@@ -42,4 +45,9 @@ const Square* Piece::get_Square() const
 Square* Piece::get_Square()
 {
 	return _d->square;
+}
+
+int Piece::get_Id() const
+{
+	return _d->id;
 }

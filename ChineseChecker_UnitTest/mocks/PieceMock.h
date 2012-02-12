@@ -7,6 +7,8 @@
 class PieceMock : public Piece
 {
 public:
+	PieceMock() : Piece(-1) {}
+
 	MOCK_CONST_METHOD0(get_Square, const Square*());
 	MOCK_METHOD0(get_Square, Square*());
 };

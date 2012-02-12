@@ -5,6 +5,8 @@ using ::testing::Return;
 
 #include <mocks/BoardMock.h>
 
+#include <Presenter/Piece.h>
+
 class PieceGroupTest : public ::testing::Test
 {
 public:
@@ -43,6 +45,7 @@ TEST_F(PieceGroupTest, Constructor_Typical)
 	for (auto iter = pieces.begin(); iter != pieces.end(); ++iter)
 	{
 		ASSERT_NE(nullptr, *iter);
+		ASSERT_EQ(sut->get_Id(), (*iter)->get_Id());
 	}
 
 	delete sut;

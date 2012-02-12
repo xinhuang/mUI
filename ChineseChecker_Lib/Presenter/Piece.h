@@ -6,11 +6,12 @@ class Square;
 class Piece
 {
 public:
-	Piece();
+	Piece(int id);
 	virtual ~Piece();
 
 	virtual const Square* get_Square() const;
 	virtual Square* get_Square();
+	virtual int get_Id() const;
 
 	virtual void MoveTo(Square* square);
 
