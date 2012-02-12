@@ -12,6 +12,8 @@ using ::testing::_;
 
 #include "mocks/BoardMock.h"
 #include "mocks/PieceGroupMock.h"
+#include "mocks/SquareMock.h"
+#include "mocks/PieceMock.h"
 
 class TestableCGame : public CGame
 {
@@ -29,12 +31,17 @@ public:
 
 		_boardMock = nullptr;
 		_pieceGroupMock = nullptr;
+		_squareMock = nullptr;
+		_pieceMock = nullptr;
 		SaveSutState();
 		InstallNiceMock();
 
 		_sut->set_PlayerTotal(2);
-		_sut->set_PlayerGroupId(0, Color::Black);
-		_sut->set_PlayerGroupId(1, Color::White);
+		_sut->set_PlayerGroupId(0, 0);
+		_sut->set_PlayerGroupId(1, 1);
+
+		_fromPoint = Point(4, 4);
+		_toPoint = Point(5, 5);
 	}
 
 	void InstallNiceMock();
@@ -55,6 +62,10 @@ protected:
 	Board* _savedBoard;
 	PieceGroupMock* _pieceGroupMock;
 	vector<PieceGroup*> _savedPieceGroups;
+	SquareMock* _squareMock;
+	PieceMock* _pieceMock;
+	Point _fromPoint;
+	Point _toPoint;
 };
 
 void CGameTest::InstallNiceMock()
@@ -63,7 +74,10 @@ void CGameTest::InstallNiceMock()
 
 	_boardMock = new NiceMock<BoardMock>();
 	_pieceGroupMock = new NiceMock<PieceGroupMock>();
+	_squareMock = new NiceMock<SquareMock>();
+	_pieceMock = new NiceMock<PieceMock>();
 
+	EXPECT_CALL(*_boardMock, SquareAt(_)).WillRepeatedly(Return(_squareMock));
 	_sut->set_Board(_boardMock);
 
 	_savedPieceGroups.resize(CGame::PieceGroupTotal);
@@ -79,8 +93,11 @@ void CGameTest::InstallStrictMock()
 	UninstallMock();
 
 	_boardMock = new StrictMock<BoardMock>();
+	_squareMock = new NiceMock<SquareMock>();
 	_pieceGroupMock = new StrictMock<PieceGroupMock>();
+	_pieceMock = new NiceMock<PieceMock>();
 
+	EXPECT_CALL(*_boardMock, SquareAt(_)).WillRepeatedly(Return(_squareMock));
 	_sut->set_Board(_boardMock);
 
 	_savedPieceGroups.resize(CGame::PieceGroupTotal);
@@ -100,6 +117,8 @@ void CGameTest::UninstallMock()
 		_sut->SetPieceGroup(i, _savedPieceGroups[i]);
 	}
 	delete _pieceGroupMock;
+
+	delete _squareMock;
 }
 
 void CGameTest::SaveSutState()
@@ -136,10 +155,10 @@ TEST_F(CGameTest, NewGame_Typical)
     Player* p1 = _sut->PlayerAt(1);
 	ASSERT_NE(nullptr, p0);
     ASSERT_NE(nullptr, p1);
-    ASSERT_TRUE(p0->Owns(Color::Black));
-    ASSERT_FALSE(p0->Owns(Color::White));
-    ASSERT_FALSE(p1->Owns(Color::Black));
-    ASSERT_TRUE(p1->Owns(Color::White));
+    ASSERT_TRUE(p0->Owns(0));
+    ASSERT_FALSE(p0->Owns(1));
+    ASSERT_FALSE(p1->Owns(0));
+    ASSERT_TRUE(p1->Owns(1));
 }
 
 TEST_F(CGameTest, TakeTurn_Typical)
@@ -156,7 +175,22 @@ TEST_F(CGameTest, TakeTurn_Typical)
 TEST_F(CGameTest, MovePiece_Typical)
 {
 	_sut->NewGame();
-	EXPECT_CALL(*_boardMock, MovePiece(_, _)).Times(1).WillOnce(Return(true));
+	EXPECT_CALL(*_squareMock, get_Piece()).WillOnce(Return(_pieceMock));
+	EXPECT_CALL(*_boardMock, MovePiece(_, _))
+		.Times(1).WillOnce(Return(true));
 
-	_sut->MovePiece(Point(8, 8), Point(8, 9));
+	bool result = _sut->MovePiece(_fromPoint, _toPoint);
+
+	ASSERT_TRUE(result);
+}
+
+TEST_F(CGameTest, MovePiece_WhenFromSquareIsEmpty)
+{
+	_sut->NewGame();
+	EXPECT_CALL(*_squareMock, get_Piece()).WillOnce(Return(nullptr));
+	EXPECT_CALL(*_boardMock, MovePiece(_, _)).Times(0);
+
+	bool result = _sut->MovePiece(_fromPoint, _toPoint);
+
+	ASSERT_FALSE(result);
 }

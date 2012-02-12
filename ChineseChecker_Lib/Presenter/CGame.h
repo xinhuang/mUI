@@ -29,7 +29,7 @@ public:
 	Player* get_CurrentPlayer();
     void set_PlayerGroupId(size_t playerNumber, int id);
 
-	void MovePiece(const Point& from, const Point& to);
+	bool MovePiece(const Point& from, const Point& to);
 
 
 protected:

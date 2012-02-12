@@ -3,6 +3,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "PieceGroup.h"
+#include "Square.h"
 
 struct CGame::Data
 {
@@ -76,13 +77,20 @@ void CGame::set_PlayerGroupId(size_t playerNumber, int id)
         playerColor->second.resize(1, id);
 }
 
-void CGame::MovePiece( const Point& from, const Point& to )
+bool CGame::MovePiece( const Point& from, const Point& to )
 {
 	auto fromSquare = _d->board->SquareAt(from);
 	auto toSquare = _d->board->SquareAt(to);
 	assert(fromSquare != nullptr);
 	assert(toSquare != nullptr);
-	_d->board->MovePiece(*fromSquare, *toSquare);
+	if (fromSquare->get_Piece() != nullptr)
+	{
+		return _d->board->MovePiece(*fromSquare, *toSquare);
+	}
+	else
+	{
+		return false;
+	}
 }
 
 PieceGroup* CGame::GetPieceGroup( int groupId )

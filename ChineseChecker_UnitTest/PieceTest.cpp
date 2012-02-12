@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 using ::testing::Return;
+using ::testing::NiceMock;
 
 #include "mocks/PieceMock.h"
 #include "mocks/SquareMock.h"
@@ -36,7 +37,7 @@ TEST_F(PieceTest, Constructor_Typical)
 
 TEST_F(PieceTest, MoveTo_WhenNoPrevSquare)
 {
-	SquareMock square;
+	NiceMock<SquareMock> square;
 	EXPECT_CALL(square, set_Piece(_sut)).Times(1);
 
 	_sut->MoveTo(&square);
