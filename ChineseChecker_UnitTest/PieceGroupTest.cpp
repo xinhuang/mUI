@@ -2,8 +2,11 @@
 
 #include <gmock/gmock.h>
 using ::testing::Return;
+using ::testing::_;
 
 #include <mocks/BoardMock.h>
+#include <mocks/SquareMock.h>
+#include <mocks/PieceMock.h>
 
 #include <Presenter/Piece.h>
 
@@ -13,24 +16,32 @@ public:
 	virtual void SetUp()
 	{
 		_boardMock = new BoardMock();
-		_sut = new PieceGroup(Index, _boardMock, FromLocation, GoalLocation);
+		_pieceMock = new PieceMock();
+		_sut = new PieceGroup(Index, _boardMock, StartPoint, GoalPoint);
+		_savedPieces = _sut->get_Pieces();
+		_sut->set_Pieces(vector<Piece*>(PieceGroup::PieceMax, _pieceMock));
 	}
 	virtual void TearDown()
 	{
+		_sut->set_Pieces(_savedPieces);
 		delete _sut; _sut = nullptr;
 		delete _boardMock; _boardMock = nullptr;
+		delete _pieceMock; _pieceMock = nullptr;
 	}
 
 protected:
 	static const int Index = 5;
-	static const Point FromLocation;
-	static const Point GoalLocation;
+	static const Point StartPoint;
+	static const Point GoalPoint;
+
 	PieceGroup* _sut;
 	BoardMock* _boardMock;
+	PieceMock* _pieceMock;
+	vector<Piece*> _savedPieces;
 };
 
-const Point PieceGroupTest::FromLocation = Point(4, 0);
-const Point PieceGroupTest::GoalLocation = Point(12, 16);
+const Point PieceGroupTest::StartPoint = Point(4, 0);
+const Point PieceGroupTest::GoalPoint = Point(12, 16);
 
 TEST_F(PieceGroupTest, Constructor_Typical)
 {
@@ -51,10 +62,12 @@ TEST_F(PieceGroupTest, Constructor_Typical)
 	delete sut;
 }
 
-TEST_F(PieceGroupTest, get_StartSquares_Typical)
+TEST_F(PieceGroupTest, Reset_Typical)
 {
-	EXPECT_CALL(*_boardMock, GetGoalSquares(FromLocation))
-		.Times(1).WillOnce(Return(vector<Square*>()));
+	EXPECT_CALL(*_boardMock, GetGoalSquares(_sut->get_StartPoint()))
+		.Times(1)
+		.WillOnce(Return(vector<Square*>(PieceGroup::PieceMax, nullptr)));
+	EXPECT_CALL(*_pieceMock, MoveTo(nullptr)).Times(PieceGroup::PieceMax);
 
-	auto startSquares = _sut->get_StartSquares();
+	_sut->Reset();
 }

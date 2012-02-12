@@ -9,8 +9,8 @@ struct PieceGroup::Data
 {
 	int id;
 	Board* board;
-	Point fromLocation;
-	Point goalLocation;
+	Point startPoint;
+	Point goalPoint;
 	vector<Piece*> pieces;
 };
 
@@ -20,8 +20,8 @@ PieceGroup::PieceGroup( int id, Board* board,
 {
 	_d->id = id;
 	_d->board = board;
-	_d->fromLocation = fromLocation;
-	_d->goalLocation = goalLocation;
+	_d->startPoint = fromLocation;
+	_d->goalPoint = goalLocation;
 	CreatePieces(PieceMax);
 }
 
@@ -56,10 +56,26 @@ void PieceGroup::CreatePieces( int pieceTotal )
 
 std::vector<Square*> PieceGroup::get_StartSquares()
 {
-	return _d->board->GetGoalSquares(_d->fromLocation);
+	return _d->board->GetGoalSquares(_d->startPoint);
 }
 
 void PieceGroup::Reset()
 {
+	auto startSquares = get_StartSquares();
+	assert(startSquares.size() == _d->pieces.size());
+	for (size_t i = 0; i < _d->pieces.size(); ++i)
+	{
+		_d->pieces[i]->MoveTo(startSquares[i]);
+	}
+}
+
+const Point& PieceGroup::get_StartPoint() const
+{
+	return _d->startPoint;
+}
+
+void PieceGroup::set_Pieces( const std::vector<Piece*>& pieces )
+{
+	_d->pieces = pieces;
 }
 

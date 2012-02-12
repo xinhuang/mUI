@@ -28,6 +28,10 @@ public:
 
 	virtual void Reset();
 
+	const Point& get_StartPoint() const;
+
+	void set_Pieces(const std::vector<Piece*>& pieces);
+
 private:
 	struct Data;
 	Data* _d;
