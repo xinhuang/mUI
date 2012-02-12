@@ -10,7 +10,7 @@ struct CGame::Data
 	vector<PieceGroup*> pieceGroups;
 	size_t playerTotal;
 	vector<Player*> players;
-    map<size_t, vector<Color>> colorMap;
+    PlayerIdMap idMap;
 };
 
 CGame::CGame() : _d(new Data)
@@ -50,16 +50,9 @@ void CGame::set_PlayerTotal( size_t playerTotal )
 
 void CGame::NewGame()
 {
-	while (!_d->players.empty())
-	{
-		delete _d->players.back();
-		_d->players.pop_back();
-	}
-	_d->players.resize(_d->playerTotal);
-	for (size_t i = 0; i < _d->playerTotal; ++i)
-	{
-		_d->players[i] = new Player(_d->colorMap[i]);
-	}
+	CreatePlayers(_d->idMap);
+
+	_d->board->Reset();
 }
 
 Player* CGame::PlayerAt( size_t playerNumber )
@@ -72,19 +65,13 @@ Player* CGame::get_CurrentPlayer()
 	return PlayerAt(get_CurrentPlayerIndex());
 }
 
-void CGame::set_PlayerColor(size_t playerNumber, const Color& color)
+void CGame::set_PlayerGroupId(size_t playerNumber, int id)
 {
-    auto playerColor = _d->colorMap.find(playerNumber);
-    if (playerColor == _d->colorMap.end())
-    {
-        _d->colorMap.insert(make_pair(playerNumber, vector<Color>(1, color)));
-        return;
-    }
+    auto playerColor = _d->idMap.find(playerNumber);
+    if (playerColor == _d->idMap.end())
+        _d->idMap[playerNumber] = vector<int>(1, id);
     else
-    {
-        playerColor->second.clear();
-        playerColor->second.push_back(color);
-    }
+        playerColor->second.resize(1, id);
 }
 
 void CGame::MovePiece( const Point& from, const Point& to )
@@ -95,4 +82,23 @@ void CGame::MovePiece( const Point& from, const Point& to )
 PieceGroup* CGame::GetPieceGroup( int groupId )
 {
 	return _d->pieceGroups[groupId];
+}
+
+void CGame::set_Board( Board* board )
+{
+	_d->board = board;
+}
+
+void CGame::CreatePlayers(const PlayerIdMap& idMap)
+{
+	while (!_d->players.empty())
+	{
+		delete _d->players.back();
+		_d->players.pop_back();
+	}
+	_d->players.resize(_d->playerTotal);
+	for (size_t i = 0; i < _d->playerTotal; ++i)
+	{
+		_d->players[i] = new Player(idMap.at(i));
+	}
 }

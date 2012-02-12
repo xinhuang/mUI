@@ -136,3 +136,8 @@ void Board::InitializeGoalSquares()
 		}
 	}
 }
+
+void Board::Reset()
+{
+
+}

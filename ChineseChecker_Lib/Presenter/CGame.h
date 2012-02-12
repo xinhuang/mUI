@@ -6,7 +6,7 @@ class Player;
 class PieceGroup;
 
 #include <mUI.h>
-using mUI::System::Drawing::Color;
+using mUI::System::Drawing::Point;
 
 class CGame
 {
@@ -17,20 +17,25 @@ public:
 	~CGame();
 
 	Board* get_Board();
+	void set_Board(Board* board);
 
 	void set_PlayerTotal(size_t playerTotal);
 	void NewGame();
+
 	Player* PlayerAt(size_t playerNumber);
 	Player* get_CurrentPlayer();
-    void set_PlayerColor(size_t playerNumber, const Color& color);
+    void set_PlayerGroupId(size_t playerNumber, int id);
 
 	void MovePiece(const Point& from, const Point& to);
 
 	PieceGroup* GetPieceGroup(int groupId);
 
 protected:
+	typedef std::map<size_t, vector<int>> PlayerIdMap;
+	void CreatePlayers(const PlayerIdMap& idMap);
 	void TakeTurn(int playerIndex);
 	size_t get_CurrentPlayerIndex() const;
+
 
 private:
 	struct Data;

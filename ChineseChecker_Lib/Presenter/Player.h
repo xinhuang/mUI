@@ -7,10 +7,10 @@ using mUI::System::Drawing::Color;
 class Player
 {
 public:
-    Player(const vector<Color>& colorList);
+    Player(const vector<int>& colorList);
     virtual ~Player();
 
-    bool Owns(const Color& color) const;
+	bool Owns(int color) const;
 
 private:
     struct Data;

@@ -6,6 +6,8 @@
 #include <Presenter/Board.h>
 #include <Presenter/Square.h>
 
+#include "mocks/BoardMock.h"
+
 class TestableCGame : public CGame
 {
 public:
@@ -18,18 +20,25 @@ class CGameTest : public ::testing::Test
 public:
 	virtual void SetUp()
 	{
+		_boardMock = new BoardMock();
 		_sut = (TestableCGame*)new CGame();
+		_savedBoard = _sut->get_Board();
+		_sut->set_Board(_boardMock);
 		_sut->set_PlayerTotal(2);
-		_sut->set_PlayerColor(0, Color::Black);
-		_sut->set_PlayerColor(1, Color::White);
+		_sut->set_PlayerGroupId(0, Color::Black);
+		_sut->set_PlayerGroupId(1, Color::White);
 	}
 	virtual void TearDown()
 	{
+		_sut->set_Board(_savedBoard);
 		delete _sut;
+		delete _boardMock;
 	}
 
 protected:
 	TestableCGame* _sut;
+	BoardMock* _boardMock;
+	Board* _savedBoard;
 };
 
 TEST_F(CGameTest, Constructor_Typical)
@@ -46,6 +55,8 @@ TEST_F(CGameTest, Constructor_Typical)
 
 TEST_F(CGameTest, NewGame_Typical)
 {
+	EXPECT_CALL(*_boardMock, Reset()).Times(1);
+
 	_sut->NewGame();
 
     Player* p0 = _sut->PlayerAt(0);

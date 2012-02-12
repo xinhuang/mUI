@@ -7,7 +7,7 @@ class PlayerTest : public ::testing::Test
 public:
     virtual void SetUp()
     {
-        _sut = new Player(vector<Color>());
+        _sut = new Player(vector<int>());
     }
     virtual void TearDown()
     {
@@ -20,5 +20,5 @@ protected:
 
 TEST_F(PlayerTest, Owns_WhenColorListIsEmpty)
 {
-    ASSERT_FALSE(_sut->Owns(Color::Black));
+    ASSERT_FALSE(_sut->Owns(2));
 }
