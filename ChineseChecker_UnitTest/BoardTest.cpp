@@ -51,9 +51,9 @@ TEST_F(BoardTest, Constructor_Typical)
 	delete sut;
 }
 
-TEST_F(BoardTest, GetGoalSquares_Location_0_4)
+TEST_F(BoardTest, GetSquaresInFormation_Location_0_4)
 {
-	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(0, 4));
+	vector<Square*> goalSquares = _sut->GetSquaresInFormation(Point(0, 4));
 
 	ASSERT_EQ(15, goalSquares.size());
 	for (int y = 4; y < 9; ++y)
@@ -65,9 +65,9 @@ TEST_F(BoardTest, GetGoalSquares_Location_0_4)
 	}
 }
 
-TEST_F(BoardTest, GetGoalSquares_Location_4_0)
+TEST_F(BoardTest, GetSquaresInFormation_Location_4_0)
 {
-	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(4, 0));
+	vector<Square*> goalSquares = _sut->GetSquaresInFormation(Point(4, 0));
 
 	ASSERT_EQ(15, goalSquares.size());
 	for (int x = 4; x < 9; ++x)
@@ -79,9 +79,9 @@ TEST_F(BoardTest, GetGoalSquares_Location_4_0)
 	}
 }
 
-TEST_F(BoardTest, GetGoalSquares_Location_12_4)
+TEST_F(BoardTest, GetSquaresInFormation_Location_12_4)
 {
-	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(12, 4));
+	vector<Square*> goalSquares = _sut->GetSquaresInFormation(Point(12, 4));
 
 	ASSERT_EQ(15, goalSquares.size());
 	VerifySquareLocationsContain(goalSquares, Point(8, 4));
@@ -101,9 +101,9 @@ TEST_F(BoardTest, GetGoalSquares_Location_12_4)
 	VerifySquareLocationsContain(goalSquares, Point(12, 8));
 }
 
-TEST_F(BoardTest, GetGoalSquares_Location_16_12)
+TEST_F(BoardTest, GetSquaresInFormation_Location_16_12)
 {
-	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(16, 12));
+	vector<Square*> goalSquares = _sut->GetSquaresInFormation(Point(16, 12));
 
 	ASSERT_EQ(15, goalSquares.size());
 	for (int x = 12; x < 17; ++x)
@@ -115,9 +115,9 @@ TEST_F(BoardTest, GetGoalSquares_Location_16_12)
 	}
 }
 
-TEST_F(BoardTest, GetGoalSquares_Location_12_16)
+TEST_F(BoardTest, GetSquaresInFormation_Location_12_16)
 {
-	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(12, 16));
+	vector<Square*> goalSquares = _sut->GetSquaresInFormation(Point(12, 16));
 
 	ASSERT_EQ(15, goalSquares.size());
 	for (int y = 12; y < 17; ++y)
@@ -129,9 +129,9 @@ TEST_F(BoardTest, GetGoalSquares_Location_12_16)
 	}
 }
 
-TEST_F(BoardTest, GetGoalSquares_Location_4_12)
+TEST_F(BoardTest, GetSquaresInFormation_Location_4_12)
 {
-	vector<Square*> goalSquares = _sut->GetGoalSquares(Point(4, 12));
+	vector<Square*> goalSquares = _sut->GetSquaresInFormation(Point(4, 12));
 
 	ASSERT_EQ(15, goalSquares.size());
 	for (int x = 4; x < 9; ++x)
@@ -143,9 +143,9 @@ TEST_F(BoardTest, GetGoalSquares_Location_4_12)
 	}
 }
 
-TEST_F(BoardTest, GetGoalSquares_WhenArgIsNotTopSquare)
+TEST_F(BoardTest, GetSquaresInFormation_WhenArgIsNotTopSquare)
 {
-	EXPECT_THROW(_sut->GetGoalSquares(Point(8, 7)), ArgumentException*);
+	EXPECT_THROW(_sut->GetSquaresInFormation(Point(8, 7)), ArgumentException*);
 }
 
 TEST_F(BoardTest, SquareAt_WhenTypical)

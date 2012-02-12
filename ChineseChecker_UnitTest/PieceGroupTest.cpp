@@ -64,7 +64,7 @@ TEST_F(PieceGroupTest, Constructor_Typical)
 
 TEST_F(PieceGroupTest, Reset_Typical)
 {
-	EXPECT_CALL(*_boardMock, GetGoalSquares(_sut->get_StartPoint()))
+	EXPECT_CALL(*_boardMock, GetSquaresInFormation(_sut->get_StartPoint()))
 		.Times(1)
 		.WillOnce(Return(vector<Square*>(PieceGroup::PieceMax, nullptr)));
 	EXPECT_CALL(*_pieceMock, MoveTo(nullptr)).Times(PieceGroup::PieceMax);

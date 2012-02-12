@@ -44,7 +44,7 @@ Board::~Board()
 	delete _d;
 }
 
-vector<Square*> Board::GetGoalSquares( const Point& goalLocation ) const
+vector<Square*> Board::GetSquaresInFormation( const Point& goalLocation ) const
 {
 	if (goalLocation == Point(0, 4))
 		return _d->goalSquares_0_4;

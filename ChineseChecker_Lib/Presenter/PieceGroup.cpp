@@ -56,7 +56,7 @@ void PieceGroup::CreatePieces( int pieceTotal )
 
 std::vector<Square*> PieceGroup::get_StartSquares()
 {
-	return _d->board->GetGoalSquares(_d->startPoint);
+	return _d->board->GetSquaresInFormation(_d->startPoint);
 }
 
 void PieceGroup::Reset()

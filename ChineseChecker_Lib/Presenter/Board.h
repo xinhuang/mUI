@@ -17,7 +17,7 @@ public:
 	Board();
 	virtual ~Board();
 
-	virtual std::vector<Square*> GetGoalSquares(const Point& goalLocation) const;
+	virtual std::vector<Square*> GetSquaresInFormation(const Point& goalLocation) const;
 	virtual Square* SquareAt(const Point& location);
 
 protected:
