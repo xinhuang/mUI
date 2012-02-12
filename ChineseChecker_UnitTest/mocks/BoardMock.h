@@ -8,6 +8,7 @@ class BoardMock : public Board
 {
 public:
 	MOCK_CONST_METHOD1(GetSquaresInFormation, vector<Square*>(const Point& topLocation));
+	MOCK_METHOD2(MovePiece, bool(Square& from, Square& to));
 };
 
 #endif // __BOARDMOCK_H__

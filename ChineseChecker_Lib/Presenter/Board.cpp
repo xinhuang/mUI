@@ -132,3 +132,8 @@ void Board::InitializeGoalSquares()
 		}
 	}
 }
+
+bool Board::MovePiece( Square& from, Square& to )
+{
+	return true;
+}

@@ -3,6 +3,8 @@
 #include <gmock/gmock.h>
 using ::testing::NiceMock;
 using ::testing::StrictMock;
+using ::testing::Return;
+using ::testing::_;
 
 #include <Presenter/Player.h>
 #include <Presenter/Board.h>
@@ -151,15 +153,10 @@ TEST_F(CGameTest, TakeTurn_Typical)
 	ASSERT_EQ(_sut->PlayerAt(0), _sut->get_CurrentPlayer());
 }
 
-TEST_F(CGameTest, MovePiece_WhenMoveToAdjacentSquare)
+TEST_F(CGameTest, MovePiece_Typical)
 {
-	//EXPECT_CALL(*_pieceGroupMock, Reset());
 	_sut->NewGame();
-	auto board = _sut->get_Board();
-	auto fromSquare = board->SquareAt(Point(8, 8));
-	auto toSquare = board->SquareAt(Point(8, 9));
-	Piece* piece = board->SquareAt(Point(4, 0))->get_Piece();
-	piece->MoveTo(fromSquare);
+	EXPECT_CALL(*_boardMock, MovePiece(_, _)).Times(1).WillOnce(Return(true));
 
 	_sut->MovePiece(Point(8, 8), Point(8, 9));
 }

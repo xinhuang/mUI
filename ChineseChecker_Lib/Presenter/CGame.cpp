@@ -78,7 +78,11 @@ void CGame::set_PlayerGroupId(size_t playerNumber, int id)
 
 void CGame::MovePiece( const Point& from, const Point& to )
 {
-
+	auto fromSquare = _d->board->SquareAt(from);
+	auto toSquare = _d->board->SquareAt(to);
+	assert(fromSquare != nullptr);
+	assert(toSquare != nullptr);
+	_d->board->MovePiece(*fromSquare, *toSquare);
 }
 
 PieceGroup* CGame::GetPieceGroup( int groupId )
