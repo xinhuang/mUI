@@ -37,9 +37,18 @@ protected:
 
 TEST_F(BoardTest, Constructor_Typical)
 {
-	Board* board = new Board();
-	ASSERT_TRUE(nullptr != board);
-	delete board;
+	Board* sut = new Board();
+
+	ASSERT_TRUE(nullptr != sut);
+	for (int x = 0; x < Board::Width; ++x)
+	{
+		for (int y = 0; y < Board::Height; ++y)
+		{
+			ASSERT_NE(nullptr, sut->SquareAt(Point(x, y)));
+		}
+	}
+
+	delete sut;
 }
 
 TEST_F(BoardTest, GetGoalSquares_Location_0_4)
