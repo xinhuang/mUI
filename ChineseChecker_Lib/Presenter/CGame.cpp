@@ -51,8 +51,10 @@ void CGame::set_PlayerTotal( size_t playerTotal )
 void CGame::NewGame()
 {
 	CreatePlayers(_d->idMap);
-
-	_d->board->Reset();
+	for (int i = 0; i < PieceGroupTotal; ++i)
+	{
+		GetPieceGroup(i)->Reset();
+	}
 }
 
 Player* CGame::PlayerAt( size_t playerNumber )
@@ -82,6 +84,10 @@ void CGame::MovePiece( const Point& from, const Point& to )
 PieceGroup* CGame::GetPieceGroup( int groupId )
 {
 	return _d->pieceGroups[groupId];
+}
+void CGame::SetPieceGroup( int groupId, PieceGroup* pieceGroup )
+{
+	_d->pieceGroups[groupId] = pieceGroup;
 }
 
 void CGame::set_Board( Board* board )

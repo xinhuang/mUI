@@ -19,6 +19,9 @@ public:
 	Board* get_Board();
 	void set_Board(Board* board);
 
+	PieceGroup* GetPieceGroup(int groupId);
+	void SetPieceGroup(int groupId, PieceGroup* pieceGroup);
+
 	void set_PlayerTotal(size_t playerTotal);
 	void NewGame();
 
@@ -28,7 +31,6 @@ public:
 
 	void MovePiece(const Point& from, const Point& to);
 
-	PieceGroup* GetPieceGroup(int groupId);
 
 protected:
 	typedef std::map<size_t, vector<int>> PlayerIdMap;

@@ -17,8 +17,6 @@ public:
 	Board();
 	virtual ~Board();
 
-	virtual void Reset();
-
 	virtual std::vector<Square*> GetGoalSquares(const Point& goalLocation) const;
 	virtual Square* SquareAt(const Point& location);
 

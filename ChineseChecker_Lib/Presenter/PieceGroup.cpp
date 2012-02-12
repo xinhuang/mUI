@@ -59,3 +59,7 @@ std::vector<Square*> PieceGroup::get_StartSquares()
 	return _d->board->GetGoalSquares(_d->fromLocation);
 }
 
+void PieceGroup::Reset()
+{
+}
+

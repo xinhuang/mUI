@@ -7,17 +7,6 @@ using namespace mUI::System::Drawing;
 
 struct Board::Data
 {
-	Data() 
-		: goalSquares_0_4(15, nullptr) 
-		, goalSquares_4_0(15, nullptr) 
-		, goalSquares_12_4(15, nullptr)
-		, goalSquares_16_12(15, nullptr)
-		, goalSquares_12_16(15, nullptr)
-		, goalSquares_4_12(15, nullptr)
-		, squares(Width * Height, nullptr)
-	{
-	}
-
 	vector<Square*> goalSquares_0_4;
 	vector<Square*> goalSquares_4_0;
 	vector<Square*> goalSquares_12_4;
@@ -29,6 +18,13 @@ struct Board::Data
 
 Board::Board() : _d(new Data())
 {
+	_d->goalSquares_0_4.resize(15, nullptr);
+	_d->goalSquares_4_0.resize(15, nullptr);
+	_d->goalSquares_12_4.resize(15, nullptr);
+	_d->goalSquares_16_12.resize(15, nullptr);
+	_d->goalSquares_12_16.resize(15, nullptr);
+	_d->goalSquares_4_12.resize(15, nullptr);
+	_d->squares.resize(Width * Height, nullptr);
 	for (int x = 0; x < Width; ++x)
 	{
 		for (int y = 0; y < Height; ++y)
@@ -135,9 +131,4 @@ void Board::InitializeGoalSquares()
 			_d->goalSquares_4_12[i++] = SquareAt(Point(x, y));
 		}
 	}
-}
-
-void Board::Reset()
-{
-
 }

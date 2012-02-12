@@ -1,12 +1,15 @@
 #include <Presenter/CGame.h>
 
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+using ::testing::NiceMock;
+using ::testing::StrictMock;
 
 #include <Presenter/Player.h>
 #include <Presenter/Board.h>
 #include <Presenter/Square.h>
 
 #include "mocks/BoardMock.h"
+#include "mocks/PieceGroupMock.h"
 
 class TestableCGame : public CGame
 {
@@ -20,26 +23,93 @@ class CGameTest : public ::testing::Test
 public:
 	virtual void SetUp()
 	{
-		_boardMock = new BoardMock();
 		_sut = (TestableCGame*)new CGame();
-		_savedBoard = _sut->get_Board();
-		_sut->set_Board(_boardMock);
+
+		_boardMock = nullptr;
+		_pieceGroupMock = nullptr;
+		SaveSutState();
+		InstallNiceMock();
+
 		_sut->set_PlayerTotal(2);
 		_sut->set_PlayerGroupId(0, Color::Black);
 		_sut->set_PlayerGroupId(1, Color::White);
 	}
+
+	void InstallNiceMock();
+	void InstallStrictMock();
+	void SaveSutState();
+
 	virtual void TearDown()
 	{
-		_sut->set_Board(_savedBoard);
+		UninstallMock();
 		delete _sut;
-		delete _boardMock;
 	}
+
+	void UninstallMock();
 
 protected:
 	TestableCGame* _sut;
 	BoardMock* _boardMock;
 	Board* _savedBoard;
+	PieceGroupMock* _pieceGroupMock;
+	vector<PieceGroup*> _savedPieceGroups;
 };
+
+void CGameTest::InstallNiceMock()
+{
+	UninstallMock();
+
+	_boardMock = new NiceMock<BoardMock>();
+	_pieceGroupMock = new NiceMock<PieceGroupMock>();
+
+	_sut->set_Board(_boardMock);
+
+	_savedPieceGroups.resize(CGame::PieceGroupTotal);
+	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
+	{
+		_sut->SetPieceGroup(i, _pieceGroupMock);
+	}
+	_pieceGroupMock = new PieceGroupMock();
+}
+
+void CGameTest::InstallStrictMock()
+{
+	UninstallMock();
+
+	_boardMock = new StrictMock<BoardMock>();
+	_pieceGroupMock = new StrictMock<PieceGroupMock>();
+
+	_sut->set_Board(_boardMock);
+
+	_savedPieceGroups.resize(CGame::PieceGroupTotal);
+	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
+	{
+		_sut->SetPieceGroup(i, _pieceGroupMock);
+	}
+}
+
+void CGameTest::UninstallMock()
+{
+	_sut->set_Board(_savedBoard);
+	delete _boardMock;
+
+	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
+	{
+		_sut->SetPieceGroup(i, _savedPieceGroups[i]);
+	}
+	delete _pieceGroupMock;
+}
+
+void CGameTest::SaveSutState()
+{
+	_savedBoard = _sut->get_Board();
+
+	_savedPieceGroups.resize(CGame::PieceGroupTotal);
+	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
+	{
+		_savedPieceGroups[i] = _sut->GetPieceGroup(i);
+	}
+}
 
 TEST_F(CGameTest, Constructor_Typical)
 {
@@ -55,7 +125,8 @@ TEST_F(CGameTest, Constructor_Typical)
 
 TEST_F(CGameTest, NewGame_Typical)
 {
-	EXPECT_CALL(*_boardMock, Reset()).Times(1);
+	InstallStrictMock();
+	EXPECT_CALL(*_pieceGroupMock, Reset()).Times(CGame::PieceGroupTotal);
 
 	_sut->NewGame();
 
@@ -71,6 +142,7 @@ TEST_F(CGameTest, NewGame_Typical)
 
 TEST_F(CGameTest, TakeTurn_Typical)
 {
+	//EXPECT_CALL(*_pieceGroupMock, Reset());
 	_sut->NewGame();
 
 	_sut->TakeTurn(0);
@@ -81,6 +153,7 @@ TEST_F(CGameTest, TakeTurn_Typical)
 
 TEST_F(CGameTest, MovePiece_WhenMoveToAdjacentSquare)
 {
+	//EXPECT_CALL(*_pieceGroupMock, Reset());
 	_sut->NewGame();
 	auto board = _sut->get_Board();
 	auto fromSquare = board->SquareAt(Point(8, 8));
