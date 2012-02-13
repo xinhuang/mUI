@@ -12,6 +12,7 @@ public:
 	MOCK_CONST_METHOD0(get_Square, const Square*());
 	MOCK_METHOD0(get_Square, Square*());
 	MOCK_METHOD1(MoveTo, void(Square*));
+	MOCK_CONST_METHOD0(get_Id, int());
 };
 
 #endif // __PIECEMOCK_H__

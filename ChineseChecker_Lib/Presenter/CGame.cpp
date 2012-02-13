@@ -10,6 +10,7 @@ struct CGame::Data
 	Board* board;
 	vector<PieceGroup*> pieceGroups;
 	size_t playerTotal;
+	size_t currentPlayerIndex;
 	vector<Player*> players;
     PlayerIdMap idMap;
 };
@@ -36,12 +37,12 @@ Board* CGame::get_Board()
 
 void CGame::TakeTurn( int playerIndex )
 {
-
+	_d->currentPlayerIndex = playerIndex;
 }
 
 size_t CGame::get_CurrentPlayerIndex() const
 {
-	return 0;
+	return _d->currentPlayerIndex;
 }
 
 void CGame::set_PlayerTotal( size_t playerTotal )
@@ -83,9 +84,11 @@ bool CGame::MovePiece( const Point& from, const Point& to )
 	auto toSquare = _d->board->SquareAt(to);
 	assert(fromSquare != nullptr);
 	assert(toSquare != nullptr);
-	if (fromSquare->get_Piece() != nullptr)
+	auto piece = fromSquare->get_Piece();
+	if (piece != nullptr)
 	{
-		return _d->board->MovePiece(*fromSquare, *toSquare);
+		if (get_CurrentPlayer()->Owns(piece->get_Id()))
+			return _d->board->MovePiece(*fromSquare, *toSquare);
 	}
 	else
 	{
