@@ -164,13 +164,13 @@ TEST_F(CGameTest, NewGame_Typical)
 
 TEST_F(CGameTest, TakeTurn_Typical)
 {
-	//EXPECT_CALL(*_pieceGroupMock, Reset());
+	size_t playerId = 1;
 	_sut->NewGame();
 
-	_sut->TakeTurn(0);
+	_sut->TakeTurn(playerId);
 
-	ASSERT_EQ(0, _sut->get_CurrentPlayerIndex());
-	ASSERT_EQ(_sut->PlayerAt(0), _sut->get_CurrentPlayer());
+	ASSERT_EQ(playerId, _sut->get_CurrentPlayerIndex());
+	ASSERT_EQ(_sut->PlayerAt(playerId), _sut->get_CurrentPlayer());
 }
 
 TEST_F(CGameTest, MovePiece_Typical)
