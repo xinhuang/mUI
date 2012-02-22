@@ -1,7 +1,11 @@
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+using namespace ::testing;
 
 #include <Presenter/Board.h>
 #include <Presenter/Square.h>
+
+#include "mocks/SquareMock.h"
+#include "mocks/PieceMock.h"
 
 using namespace std;
 
@@ -15,10 +19,16 @@ public:
 	virtual void SetUp()
 	{
 		_sut = new Board();
+		_sq0 = new SquareMock();
+		_sq1 = new SquareMock();
+		_piece = new PieceMock();
 	}
 	virtual void TearDown()
 	{
 		delete _sut; _sut = nullptr;
+		delete _sq0; _sq0 = nullptr;
+		delete _sq1; _sq1 = nullptr;
+		delete _piece; _piece = nullptr;
 	}
 
 	void VerifySquareLocationsContain(const vector<Square*>& container, const Point& location) const
@@ -33,6 +43,9 @@ public:
 
 protected:
 	Board* _sut;
+	SquareMock *_sq0;
+	SquareMock *_sq1;
+	PieceMock *_piece;
 };
 
 TEST_F(BoardTest, Constructor_Typical)
@@ -155,4 +168,30 @@ TEST_F(BoardTest, SquareAt_WhenTypical)
 	
 	ASSERT_NE(nullptr, square);
 	ASSERT_EQ(location, square->get_Location());
+}
+
+TEST_F(BoardTest, MovePiece_WhenMoveOneStep)
+{
+	EXPECT_CALL(*_sq0, get_Piece()).WillRepeatedly(Return(_piece));
+	EXPECT_CALL(*_sq1, get_Piece()).WillRepeatedly(Return(nullptr));
+	EXPECT_CALL(*_sq0, get_Location()).WillRepeatedly(ReturnRef(Point(4, 0)));
+	EXPECT_CALL(*_sq1, get_Location()).WillRepeatedly(ReturnRef(Point(5, 1)));
+	EXPECT_CALL(*_piece, MoveTo(_sq1)).Times(1);
+
+	bool result = _sut->MovePiece(*_sq0, *_sq1);
+
+	ASSERT_TRUE(result);
+}
+
+TEST_F(BoardTest, MovePiece_WhenMoveTwoStep)
+{
+	EXPECT_CALL(*_sq0, get_Piece()).WillRepeatedly(Return(_piece));
+	EXPECT_CALL(*_sq1, get_Piece()).WillRepeatedly(Return(nullptr));
+	EXPECT_CALL(*_sq0, get_Location()).WillRepeatedly(ReturnRef(Point(4, 0)));
+	EXPECT_CALL(*_sq1, get_Location()).WillRepeatedly(ReturnRef(Point(6, 2)));
+	EXPECT_CALL(*_piece, MoveTo(_sq1)).Times(0);
+
+	bool result = _sut->MovePiece(*_sq0, *_sq1);
+
+	ASSERT_FALSE(result);
 }

@@ -11,6 +11,8 @@ public:
 
 	MOCK_METHOD1(set_Piece, void(Piece*));
 	MOCK_METHOD0(get_Piece, Piece*());
+
+	MOCK_CONST_METHOD0(get_Location, const Point&());
 };
 
 #endif // __SQUAREMOCK_H__

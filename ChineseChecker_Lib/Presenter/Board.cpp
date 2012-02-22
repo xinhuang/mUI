@@ -135,5 +135,29 @@ void Board::InitializeGoalSquares()
 
 bool Board::MovePiece( Square& from, Square& to )
 {
-	return true;
+	assert(from.get_Piece() != nullptr);
+	if (from.get_Piece() == nullptr)
+		return false;
+	if (IsAccessible(from, to))
+	{
+		from.get_Piece()->MoveTo(&to);
+		return true;
+	}
+	return false;
+}
+
+bool Board::IsAccessible( const Square& from, const Square& to ) const
+{
+	if (to.get_Piece() != nullptr)
+		return false;
+	if (IsAdjacent(from, to))
+		return true;
+	else
+		return false;
+}
+
+bool Board::IsAdjacent( const Square &from, const Square &to ) const
+{
+	return abs(from.get_Location().X - to.get_Location().X) < 2
+		&& abs(from.get_Location().Y - to.get_Location().Y) < 2;
 }

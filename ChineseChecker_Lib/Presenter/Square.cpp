@@ -43,6 +43,11 @@ Piece* Square::get_Piece()
 	return _d->piece;
 }
 
+const Piece* Square::get_Piece() const
+{
+	return _d->piece;
+}
+
 const Point& Square::get_Location() const
 {
 	return _d->location;
