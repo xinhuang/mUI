@@ -85,15 +85,10 @@ bool CGame::MovePiece( const Point& from, const Point& to )
 	assert(fromSquare != nullptr);
 	assert(toSquare != nullptr);
 	auto piece = fromSquare->get_Piece();
-	if (piece != nullptr)
-	{
-		if (get_CurrentPlayer()->Owns(piece->get_Id()))
-			return _d->board->MovePiece(*fromSquare, *toSquare);
-	}
+	if (piece != nullptr && get_CurrentPlayer()->Owns(piece->get_Id()))
+		return _d->board->MovePiece(*fromSquare, *toSquare);
 	else
-	{
 		return false;
-	}
 }
 
 PieceGroup* CGame::GetPieceGroup( int groupId )
