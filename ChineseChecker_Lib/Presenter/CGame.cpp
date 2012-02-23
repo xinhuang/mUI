@@ -13,6 +13,7 @@ struct CGame::Data
 	size_t currentPlayerIndex;
 	vector<Player*> players;
     PlayerIdMap idMap;
+	Piece* picked;
 };
 
 CGame::CGame() : _d(new Data)
@@ -22,6 +23,8 @@ CGame::CGame() : _d(new Data)
 	_d->pieceGroups.resize(CGame::PieceGroupTotal);
 	for (int i = 0; i < CGame::PieceGroupTotal; ++i)
 		_d->pieceGroups[i] = new PieceGroup(i, _d->board, Point::Empty, Point::Empty);
+
+	_d->picked = nullptr;
 }
 
 CGame::~CGame()
@@ -117,4 +120,14 @@ void CGame::CreatePlayers(const PlayerIdMap& idMap)
 	{
 		_d->players[i] = new Player(idMap.at(i));
 	}
+}
+
+Piece* CGame::get_Picked()
+{
+	return _d->picked;
+}
+
+void CGame::set_Picked( Piece* piece )
+{
+	_d->picked = piece;
 }

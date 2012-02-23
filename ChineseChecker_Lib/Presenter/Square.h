@@ -5,11 +5,14 @@
 
 #include <mUI.h>
 using mUI::System::Drawing::Point;
+using mUI::System::Forms::MouseEventArgs;
+
+class CGame;
 
 class Square
 {
 public:
-	Square(const Point& location);
+	Square(CGame* game, const Point& location);
 	virtual ~Square();
 
 	virtual Piece* get_Piece();
@@ -17,9 +20,12 @@ public:
 
 	virtual const Point& get_Location() const;
 
+protected:
+	virtual void OnMouseClick(void* sender, MouseEventArgs* e);
+	virtual void set_Piece(Piece* piece);
+
 private:
 	friend void Piece::MoveTo(Square*);
-	virtual void set_Piece(Piece* piece);
 
 private:
 	struct Data;

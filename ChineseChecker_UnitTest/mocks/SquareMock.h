@@ -7,7 +7,7 @@
 class SquareMock : public Square
 {
 public:
-	SquareMock() : Square(Point::Empty) {}
+	SquareMock() : Square(nullptr, Point::Empty) {}
 
 	MOCK_METHOD1(set_Piece, void(Piece*));
 	MOCK_METHOD0(get_Piece, Piece*());

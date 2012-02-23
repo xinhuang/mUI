@@ -5,8 +5,11 @@
 using namespace mUI::System;
 using namespace mUI::System::Drawing;
 
+class game;
+
 struct Board::Data
 {
+	CGame* game;
 	vector<Square*> goalSquares_0_4;
 	vector<Square*> goalSquares_4_0;
 	vector<Square*> goalSquares_12_4;
@@ -29,7 +32,7 @@ Board::Board() : _d(new Data())
 	{
 		for (int y = 0; y < Height; ++y)
 		{
-			_d->squares[GetSquareIndex(x, y)] = new Square(Point(x, y));
+			_d->squares[GetSquareIndex(x, y)] = new Square(_d->game, Point(x, y));
 		}
 	}
 

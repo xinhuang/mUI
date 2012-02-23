@@ -4,6 +4,7 @@
 class Board;
 class Player;
 class PieceGroup;
+class Piece;
 
 #include <mUI.h>
 using mUI::System::Drawing::Point;
@@ -18,6 +19,9 @@ public:
 
 	Board* get_Board();
 	void set_Board(Board* board);
+
+	virtual Piece* get_Picked();
+	virtual void set_Picked(Piece* piece);
 
 	PieceGroup* GetPieceGroup(int groupId);
 	void SetPieceGroup(int groupId, PieceGroup* pieceGroup);
