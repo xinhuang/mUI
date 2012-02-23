@@ -195,3 +195,13 @@ TEST_F(BoardTest, MovePiece_WhenMoveTwoStep)
 
 	ASSERT_FALSE(result);
 }
+
+TEST_F(BoardTest, MovePiece_WhenDestinationIsOccupied)
+{
+	EXPECT_CALL(*_sq0, get_Piece()).WillRepeatedly(Return(_piece));
+	EXPECT_CALL(*_sq1, get_Piece()).WillRepeatedly(Return(_piece));
+
+	bool result = _sut->MovePiece(*_sq0, *_sq1);
+
+	ASSERT_FALSE(result);
+}

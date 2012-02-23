@@ -138,6 +138,8 @@ bool Board::MovePiece( Square& from, Square& to )
 	assert(from.get_Piece() != nullptr);
 	if (from.get_Piece() == nullptr)
 		return false;
+	if (to.get_Piece() != nullptr)
+		return false;
 	if (IsAccessible(from, to))
 	{
 		from.get_Piece()->MoveTo(&to);
