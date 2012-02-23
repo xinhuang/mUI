@@ -49,15 +49,9 @@ void Square::OnMouseClick( void* sender, MouseEventArgs* e )
 {
 	Piece* picked = _d->game->get_Picked();
 	if (picked == get_Piece())
-	{
-		_d->game->set_Picked(nullptr);
-	}
-	else
-	{
-		if (picked != nullptr)
-		{
-			picked->MoveTo(this);
-		}
-		_d->game->set_Picked(get_Piece());
-	}
+		_d->game->Pick(nullptr);
+	else if (picked == nullptr)
+		_d->game->Pick(get_Piece());
+	else if (picked->MoveTo(this))
+		_d->game->Pick(nullptr);
 }

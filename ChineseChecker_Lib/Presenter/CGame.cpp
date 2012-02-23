@@ -127,7 +127,7 @@ Piece* CGame::get_Picked()
 	return _d->picked;
 }
 
-void CGame::set_Picked( Piece* piece )
+void CGame::Pick( Piece* piece )
 {
 	_d->picked = piece;
 }

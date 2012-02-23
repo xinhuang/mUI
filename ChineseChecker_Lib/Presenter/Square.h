@@ -24,8 +24,7 @@ protected:
 	virtual void OnMouseClick(void* sender, MouseEventArgs* e);
 	virtual void set_Piece(Piece* piece);
 
-private:
-	friend void Piece::MoveTo(Square*);
+	friend bool Piece::MoveTo(Square*);
 
 private:
 	struct Data;

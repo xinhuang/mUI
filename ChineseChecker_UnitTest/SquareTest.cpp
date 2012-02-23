@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-using ::testing::Return;
+using namespace ::testing;
 
 #include "mocks/PieceMock.h"
 #include "mocks/SquareMock.h"
@@ -54,7 +54,7 @@ TEST_F(SquareTest, OnMouseClick_WhenNoPiecePicked)
 {
 	_sut->set_Piece(_piece);
 	EXPECT_CALL(*_game, get_Picked()).WillRepeatedly(Return(nullptr));
-	EXPECT_CALL(*_game, set_Picked(_piece)).Times(1);
+	EXPECT_CALL(*_game, Pick(_piece)).Times(1);
 
 	_sut->OnMouseClick(nullptr, nullptr);
 }
@@ -63,17 +63,26 @@ TEST_F(SquareTest, OnMouseClick_WhenPiecePickedAndClickOnSameSquare)
 {
 	_sut->set_Piece(_piece);
 	EXPECT_CALL(*_game, get_Picked()).WillRepeatedly(Return(_piece));
-	EXPECT_CALL(*_game, set_Picked(nullptr)).Times(1);
+	EXPECT_CALL(*_game, Pick(nullptr)).Times(1);
 
 	_sut->OnMouseClick(nullptr, nullptr);
 }
 
-TEST_F(SquareTest, OnMouseClick_WhenPiecePickedAndClickOnAnotherSquare)
+TEST_F(SquareTest, OnMouseClick_WhenPiecePickedAndClickOnAnotherEmptySquare)
 {
 	_sut->set_Piece(nullptr);
 	EXPECT_CALL(*_game, get_Picked()).WillRepeatedly(Return(_piece));
-	EXPECT_CALL(*_game, set_Picked(nullptr)).Times(1);
-	EXPECT_CALL(*_piece, MoveTo(_sut)).Times(1);
+	EXPECT_CALL(*_game, Pick(nullptr)).Times(1);
+	EXPECT_CALL(*_piece, MoveTo(_sut)).WillOnce(Return(true));
+
+	_sut->OnMouseClick(nullptr, nullptr);
+}
+
+TEST_F(SquareTest, OnMouseClick_WhenMoveFailed)
+{
+	EXPECT_CALL(*_game, get_Picked()).WillRepeatedly(Return(_piece));
+	EXPECT_CALL(*_game, Pick(_)).Times(0);
+	EXPECT_CALL(*_piece, MoveTo(_sut)).WillOnce(Return(false));
 
 	_sut->OnMouseClick(nullptr, nullptr);
 }

@@ -8,7 +8,7 @@ class CGameMock : public CGame
 {
 public:
 	MOCK_METHOD0(get_Picked, Piece*());
-	MOCK_METHOD1(set_Picked, void(Piece*));
+	MOCK_METHOD1(Pick, void(Piece*));
 };
 
 #endif // __CGAMEMOCK_H__

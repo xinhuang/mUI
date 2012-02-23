@@ -21,7 +21,7 @@ public:
 	void set_Board(Board* board);
 
 	virtual Piece* get_Picked();
-	virtual void set_Picked(Piece* piece);
+	virtual void Pick(Piece* piece);
 
 	PieceGroup* GetPieceGroup(int groupId);
 	void SetPieceGroup(int groupId, PieceGroup* pieceGroup);

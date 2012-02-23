@@ -13,7 +13,7 @@ public:
 	virtual Square* get_Square();
 	virtual int get_Id() const;
 
-	virtual void MoveTo(Square* square);
+	virtual bool MoveTo(Square* square);
 
 private:
 	struct Data;

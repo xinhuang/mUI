@@ -22,7 +22,7 @@ Piece::~Piece()
 	delete _d;
 }
 
-void Piece::MoveTo( Square* square )
+bool Piece::MoveTo( Square* square )
 {
 	if (_d->square != nullptr)
 	{
@@ -35,6 +35,7 @@ void Piece::MoveTo( Square* square )
 		square->set_Piece(this);
 	}
 	_d->square = square;
+	return true;
 }
 
 const Square* Piece::get_Square() const
