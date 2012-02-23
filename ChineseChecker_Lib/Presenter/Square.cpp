@@ -47,5 +47,8 @@ const Point& Square::get_Location() const
 
 void Square::OnMouseClick( void* sender, MouseEventArgs* e )
 {
-	_d->game->set_Picked(get_Piece());
+	if (_d->game->get_Picked() == get_Piece())
+		_d->game->set_Picked(nullptr);
+	else
+		_d->game->set_Picked(get_Piece());
 }
