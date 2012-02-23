@@ -68,3 +68,13 @@ TEST_F(SquareTest, OnMouseClick_WhenPiecePickedAndClickOnSameSquare)
 	_sut->OnMouseClick(nullptr, nullptr);
 }
 
+TEST_F(SquareTest, OnMouseClick_WhenPiecePickedAndClickOnAnotherSquare)
+{
+	_sut->set_Piece(nullptr);
+	EXPECT_CALL(*_game, get_Picked()).WillRepeatedly(Return(_piece));
+	EXPECT_CALL(*_game, set_Picked(nullptr)).Times(1);
+	EXPECT_CALL(*_piece, MoveTo(_sut)).Times(1);
+
+	_sut->OnMouseClick(nullptr, nullptr);
+}
+
