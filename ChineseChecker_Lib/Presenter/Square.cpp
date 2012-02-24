@@ -4,10 +4,6 @@
 
 struct Square::Data
 {
-	Data()
-		: piece(nullptr)
-	{}
-
 	Piece* piece;
 	Point location;
 	CGame* game;
@@ -18,6 +14,7 @@ Square::Square(CGame* game, const Point& location)
 {
 	_d->location = location;
 	_d->game = game;
+	_d->piece = nullptr;
 }
 
 Square::~Square()
