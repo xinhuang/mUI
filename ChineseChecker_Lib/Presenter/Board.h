@@ -20,8 +20,6 @@ public:
 	virtual std::vector<Square*> GetSquaresInFormation(const Point& goalLocation) const;
 	virtual Square* SquareAt(const Point& location);
 
-	virtual bool MovePiece(Square& from, Square& to);
-
 protected:
 	void InitializeGoalSquares();
 	int GetSquareIndex(const Point& location) const;

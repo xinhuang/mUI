@@ -33,9 +33,6 @@ public:
 	Player* get_CurrentPlayer();
     void set_PlayerGroupId(size_t playerNumber, int id);
 
-	bool MovePiece(const Point& from, const Point& to);
-
-
 protected:
 	typedef std::map<size_t, vector<int>> PlayerIdMap;
 	void CreatePlayers(const PlayerIdMap& idMap);

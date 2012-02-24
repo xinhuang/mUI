@@ -169,39 +169,3 @@ TEST_F(BoardTest, SquareAt_WhenTypical)
 	ASSERT_NE(nullptr, square);
 	ASSERT_EQ(location, square->get_Location());
 }
-
-TEST_F(BoardTest, MovePiece_WhenMoveOneStep)
-{
-	EXPECT_CALL(*_sq0, get_Piece()).WillRepeatedly(Return(_piece));
-	EXPECT_CALL(*_sq1, get_Piece()).WillRepeatedly(Return(nullptr));
-	EXPECT_CALL(*_sq0, get_Location()).WillRepeatedly(ReturnRef(Point(4, 0)));
-	EXPECT_CALL(*_sq1, get_Location()).WillRepeatedly(ReturnRef(Point(5, 1)));
-	EXPECT_CALL(*_piece, MoveTo(_sq1)).Times(1);
-
-	bool result = _sut->MovePiece(*_sq0, *_sq1);
-
-	ASSERT_TRUE(result);
-}
-
-TEST_F(BoardTest, MovePiece_WhenMoveTwoStep)
-{
-	EXPECT_CALL(*_sq0, get_Piece()).WillRepeatedly(Return(_piece));
-	EXPECT_CALL(*_sq1, get_Piece()).WillRepeatedly(Return(nullptr));
-	EXPECT_CALL(*_sq0, get_Location()).WillRepeatedly(ReturnRef(Point(4, 0)));
-	EXPECT_CALL(*_sq1, get_Location()).WillRepeatedly(ReturnRef(Point(6, 2)));
-	EXPECT_CALL(*_piece, MoveTo(_sq1)).Times(0);
-
-	bool result = _sut->MovePiece(*_sq0, *_sq1);
-
-	ASSERT_FALSE(result);
-}
-
-TEST_F(BoardTest, MovePiece_WhenDestinationIsOccupied)
-{
-	EXPECT_CALL(*_sq0, get_Piece()).WillRepeatedly(Return(_piece));
-	EXPECT_CALL(*_sq1, get_Piece()).WillRepeatedly(Return(_piece));
-
-	bool result = _sut->MovePiece(*_sq0, *_sq1);
-
-	ASSERT_FALSE(result);
-}
