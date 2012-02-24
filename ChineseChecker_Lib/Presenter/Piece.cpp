@@ -4,17 +4,21 @@
 
 #include <cassert>
 
+#include "Board.h"
+
 struct Piece::Data
 {
 	Data(int id) : id(id) {}
 
 	const int id;
 	Square* square;
+	Board* board;
 };
 
-Piece::Piece(int id) : _d(new Data(id))
+Piece::Piece(Board* board, int id) : _d(new Data(id))
 {
 	_d->square = nullptr;
+	_d->board = board;
 }
 
 Piece::~Piece()
@@ -24,6 +28,9 @@ Piece::~Piece()
 
 bool Piece::MoveTo( Square* square )
 {
+	if (square != nullptr && _d->square != nullptr 
+		&& !_d->board->IsAccessible(*get_Square(), *square))
+		return false;
 	if (_d->square != nullptr)
 	{
 		assert(this == _d->square->get_Piece());

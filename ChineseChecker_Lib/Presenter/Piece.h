@@ -2,11 +2,12 @@
 #define __PIECE_H__
 
 class Square;
+class Board;
 
 class Piece
 {
 public:
-	Piece(int id);
+	Piece(Board* board, int id);
 	virtual ~Piece();
 
 	virtual const Square* get_Square() const;

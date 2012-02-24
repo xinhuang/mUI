@@ -20,11 +20,12 @@ public:
 	virtual std::vector<Square*> GetSquaresInFormation(const Point& goalLocation) const;
 	virtual Square* SquareAt(const Point& location);
 
+	virtual bool IsAccessible( const Square& from, const Square& to ) const;
+
 protected:
 	void InitializeGoalSquares();
 	int GetSquareIndex(const Point& location) const;
 	int GetSquareIndex(int x, int y) const;
-	bool IsAccessible( const Square& from, const Square& to ) const;
 
 	bool IsAdjacent( const Square &from, const Square &to ) const;
 

@@ -4,6 +4,7 @@ using ::testing::Return;
 using ::testing::NiceMock;
 
 #include "mocks/PieceMock.h"
+#include "mocks/BoardMock.h"
 #include "mocks/SquareMock.h"
 
 #include <Presenter/Piece.h>
@@ -13,21 +14,25 @@ class PieceTest : public ::testing::Test
 public:
 	virtual void SetUp()
 	{
-		_sut = new Piece(Id);
+		_board = new BoardMock();
+		_sut = new Piece(_board, Id);
 	}
 	virtual void TearDown()
 	{
 		delete _sut; _sut = nullptr;
+		delete _board; _board = nullptr;
 	}
 
 protected:
 	static const int Id = 2;
 	Piece* _sut;
+	BoardMock* _board;
+	SquareMock* _locSquare;
 };
 
 TEST_F(PieceTest, Constructor_Typical)
 {
-	Piece* sut = new Piece(Id);
+	Piece* sut = new Piece(nullptr, Id);
 
 	ASSERT_NE(nullptr, sut);
 	ASSERT_EQ(Id, sut->get_Id());

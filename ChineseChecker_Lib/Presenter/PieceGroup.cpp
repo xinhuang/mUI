@@ -50,7 +50,7 @@ void PieceGroup::CreatePieces( int pieceTotal )
 	_d->pieces.resize(pieceTotal);
 	for (int i = 0; i < pieceTotal; ++i)
 	{
-		_d->pieces[i] = new Piece(get_Id());
+		_d->pieces[i] = new Piece(_d->board, get_Id());
 	}
 }
 
