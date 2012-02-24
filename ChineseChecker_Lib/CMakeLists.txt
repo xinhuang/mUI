@@ -4,6 +4,7 @@ SET(TARGET_NAME ChineseChecker_Lib)
 
 SET(DIR_WITH_SRC .
 	Presenter
+	View
 )
 	
 INCLUDE_DIRECTORIES(. 
