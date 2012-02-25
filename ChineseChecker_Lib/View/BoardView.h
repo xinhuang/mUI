@@ -7,6 +7,12 @@ using namespace mUI::System::Forms;
 class BoardView : public Control
 {
 public:
+    BoardView();
+    virtual ~BoardView();
+
+private:
+    struct Data;
+    Data* _d;
 };
 
 #endif // __BOARDVIEW_H__
