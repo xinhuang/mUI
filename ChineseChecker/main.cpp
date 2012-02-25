@@ -1,4 +1,4 @@
-#include <View/CGameForm.h>
+#include <View/CGameView.h>
 #include <mUI.h>
 using namespace mUI::System::Forms;
 #include <Windows.h>
@@ -8,7 +8,7 @@ int WINAPI WinMain( __in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 	mUI::Extra::HgeContext context;
 	context.set_Size(Size(800, 600));
 	Application::StartHge(context);
-	Application::Run(new CGameForm());
+	Application::Run(new CGameView());
 
 	return EXIT_SUCCESS;
 }
