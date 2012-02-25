@@ -29,12 +29,12 @@ namespace mUI{ namespace System{  namespace Drawing{
 class DRAWING_ENTRY Color
 {
 public:
-	static const unsigned int Black = 0xFF000000;
-	static const unsigned int White = 0xFFFFFFFF;
-	static const unsigned int Silver = 0xFFC0C0C0;
-	static const unsigned int Grey = 0xFF545454;
-	static const unsigned int Red = 0xFFFF0000;
-
+    static const unsigned int Black = 0xFF000000;
+    static const unsigned int Grey = 0xFF545454;
+    static const unsigned int Red = 0xFFFF0000;
+    static const unsigned int Silver = 0xFFC0C0C0;
+    static const unsigned int Transparent = 0x00000000;
+    static const unsigned int White = 0xFFFFFFFF;
 
 	Color() { FromARGB(Black); }
 
