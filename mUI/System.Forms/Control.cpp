@@ -585,6 +585,9 @@ void Control::OnKeyPress( KeyPressEventArgs* e )
 
 void Control::set_Anchor( AnchorStyles::Enum value )
 {
+    // TODO: Throw exception or just guard when parent is nullptr?
+    if (get_Parent() == nullptr)
+        throw new Exception();
 	SetAnchor(value, *get_Parent());
 }
 
