@@ -282,7 +282,7 @@ void Graphics::DrawEllipse( Pen& pen, int x, int y, int width, int height )
     if (width != height)
         throw new Exception(L"Ellipse not supported, circle only.");
 
-    DrawEllipseSegments(pen, x, y, width, height, width);
+    DrawEllipseSegments(pen, x, y, width, height, max(width, height));
 }
 
 void Graphics::SetPixel( const Pen& pen, int x, int y )
@@ -308,6 +308,61 @@ void Graphics::DrawEllipseSegments( Pen& pen, int x, int y, int width, int heigh
         x2 = radius * cos(i);
         y2 = radius * sin(i);
         DrawLine(pen, cx + x1, cy + y1, cx + x2, cy + y2);
+    }
+}
+
+void Graphics::FillEllipse( Brush& brush, const Rectangle& rect )
+{
+    FillEllipse(brush, rect.Location.X, rect.Location.Y, rect.Size.Width, rect.Size.Height);
+}
+
+void Graphics::FillEllipse( Brush& brush, int x, int y, int width, int height )
+{
+    switch (brush.get_Type())
+    {
+    case Brush::Solid:
+        FillEllipse(static_cast<SolidBrush&>(brush), x, y, width, height);
+        break;
+    }
+}
+
+void Graphics::FillEllipse( SolidBrush& brush, int x, int y, int width, int height )
+{
+    assert(brush.get_Type() == Brush::Solid);
+    Pen pen(brush.get_Color());
+
+    int r = (width - 1) / 2;
+    int cx = x + r, cy = y + r;
+
+    //SetPixel(pen, cx, cy + r);
+    //SetPixel(pen, cx, cy - r);
+    //SetPixel(pen, cx + r, cy);
+    //SetPixel(pen, cx - r, cy);
+    DrawLine(pen, cx - r, cy, cx + r, cy);
+
+    y = r;
+    int d = -r;
+    while (x < y)
+    {
+        ++x;
+        d += 2 * x - 1;
+        if (d >= 0)
+        {
+            --y;
+            d -= 2 * y + 1;
+        }
+        DrawLine(pen, cx - x, cy - y, cx + x, cy - y);
+        DrawLine(pen, cx - x, cy + y, cx + x, cy + y);
+        DrawLine(pen, cy - y, cx - x, cy + y, cx - x);
+        DrawLine(pen, cy - y, cx + x, cy + y, cx + x);
+        //SetPixel(pen, cx + x, cy + y);
+        //SetPixel(pen, cx + x, cy - y);
+        //SetPixel(pen, cx - x, cy + y);
+        //SetPixel(pen, cx - x, cy - y);
+        //SetPixel(pen, cy + y, cx + x);
+        //SetPixel(pen, cy + y, cx - x);
+        //SetPixel(pen, cy - y, cx + x);
+        //SetPixel(pen, cy - y, cx - x);
     }
 }
 

@@ -14,6 +14,6 @@ void SquareView::InitializeComponents()
 void SquareView::OnPaint( PaintEventArgs* e )
 {
     Control::OnPaint(e);
-    e->Graphics.FillRectangle(SolidBrush(Color::Grey), 0, 0, Width, Height);
+    e->Graphics.FillEllipse(SolidBrush(Color::Grey), 0, 0, Width, Height);
 }
 

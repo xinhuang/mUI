@@ -52,6 +52,9 @@ public:
     virtual void DrawEllipse(Pen& pen, const Rectangle& rect) = 0;
     virtual void DrawEllipse(Pen& pen, int x, int y, int width, int height) = 0;
 
+    virtual void FillEllipse(Brush& brush, const Rectangle& rect) = 0;
+    virtual void FillEllipse(Brush& brush, int x, int y, int width, int height) = 0;
+
 	virtual void DrawImage(const Image& image, Point pt) = 0;
 	virtual void DrawImage(const Image& image, const Rectangle& rect) = 0;
 	virtual void DrawImage(const Image& image, int X, int Y, int Width, int Height) = 0;

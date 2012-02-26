@@ -60,6 +60,9 @@ public:
     virtual void DrawEllipse(Pen& pen, const Rectangle& rect);
     virtual void DrawEllipse(Pen& pen, int x, int y, int width, int height);
 
+    virtual void FillEllipse(Brush& brush, const Rectangle& rect);
+    virtual void FillEllipse(Brush& brush, int x, int y, int width, int height);
+
 	virtual void DrawImage(const Drawing::Image& image, Point pt);
 	virtual void DrawImage(const Drawing::Image& image, const Rectangle& rect);
 	virtual void DrawImage(const Image& image, int X, int Y, int Width, int Height);
@@ -75,7 +78,9 @@ public:
 
 protected:
 	void FillRectangle(SolidBrush& brush, const Rectangle& rect);
-	void FillRectangle(SolidBrush& brush, int X, int Y, int Width, int Height);
+    void FillRectangle(SolidBrush& brush, int X, int Y, int Width, int Height);
+
+    void FillEllipse(SolidBrush& brush, int x, int y, int width, int height);
 
 	void DrawString(const String& s, const Font& font, SolidBrush& brush, const PointF& pt);
     void DrawEllipseSegments( Pen& pen, int x, int y, int width, int height, int nSegments );
