@@ -40,14 +40,17 @@ public:
 	Graphics() {}
 	virtual ~Graphics() {}
 
-	virtual void DrawLine(Pen& pen, const Point& pt1, const Point& pt2) = 0;
-	virtual void DrawLine(Pen& pen, int X1, int Y1, int X2, int Y2) = 0;
+	virtual void DrawLine(const Pen& pen, const Point& pt1, const Point& pt2) = 0;
+	virtual void DrawLine(const Pen& pen, int X1, int Y1, int X2, int Y2) = 0;
 
 	virtual void FillRectangle(Brush& brush, const Rectangle& rect) = 0;
 	virtual void FillRectangle(Brush& brush, int X, int Y, int Width, int Height) = 0;
 
 	virtual void DrawRectangle(Pen& pen, const Rectangle& rect) = 0;
-	virtual void DrawRectangle(Pen& pen, int X, int Y, int Width, int Height) = 0;
+    virtual void DrawRectangle(Pen& pen, int X, int Y, int Width, int Height) = 0;
+
+    virtual void DrawEllipse(Pen& pen, const Rectangle& rect) = 0;
+    virtual void DrawEllipse(Pen& pen, int x, int y, int width, int height) = 0;
 
 	virtual void DrawImage(const Image& image, Point pt) = 0;
 	virtual void DrawImage(const Image& image, const Rectangle& rect) = 0;
@@ -58,7 +61,11 @@ public:
 
 	virtual void DrawString(const String& s, const Font& font, Brush& brush, const PointF& pt) = 0;
 
-	virtual SizeF MeasureString(const String& text, const Font& font) = 0;
+    virtual SizeF MeasureString(const String& text, const Font& font) = 0;
+
+    // Non WinForm Graphics Interfaces.
+    virtual void SetPixel(const Pen& pen, const Point& location) = 0;
+    virtual void SetPixel(const Pen& pen, int x, int y) = 0;
 
 private:
 	Graphics(const Graphics&) {}

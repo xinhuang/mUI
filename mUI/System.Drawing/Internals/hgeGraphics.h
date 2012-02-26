@@ -47,15 +47,18 @@ public:
 	Graphics(const Rectangle& clip_rect);
 	virtual ~Graphics();
 
-	virtual void DrawLine(Pen& pen, const Point& pt1, const Point& pt2);
-	virtual void DrawLine(Pen& pen, int X1, int Y1, int X2, int Y2);
-	virtual void DrawLine(Pen& pen, float X1, float Y1, float X2, float Y2);
+	virtual void DrawLine(const Pen& pen, const Point& pt1, const Point& pt2);
+	virtual void DrawLine(const Pen& pen, int X1, int Y1, int X2, int Y2);
+	virtual void DrawLine(const Pen& pen, float X1, float Y1, float X2, float Y2);
 
 	virtual void FillRectangle(Brush& brush, const Rectangle& rect);
 	virtual void FillRectangle(Brush& brush, int x, int y, int width, int height);
 
 	virtual void DrawRectangle(Pen& pen, const Rectangle& rect);
-	virtual void DrawRectangle(Pen& pen, int X, int Y, int Width, int Height);
+    virtual void DrawRectangle(Pen& pen, int X, int Y, int Width, int Height);
+
+    virtual void DrawEllipse(Pen& pen, const Rectangle& rect);
+    virtual void DrawEllipse(Pen& pen, int x, int y, int width, int height);
 
 	virtual void DrawImage(const Drawing::Image& image, Point pt);
 	virtual void DrawImage(const Drawing::Image& image, const Rectangle& rect);
@@ -65,7 +68,10 @@ public:
 	virtual void SetClip(int X, int Y, int Width, int Height);
 
 	virtual void DrawString(const String& s, const Font& font, Brush& brush, const PointF& pt);
-	virtual SizeF MeasureString(const String& text, const Font& font);
+    virtual SizeF MeasureString(const String& text, const Font& font);
+
+    virtual void SetPixel(const Pen& color, const Point& location);
+    virtual void SetPixel(const Pen& color, int x, int y);
 
 protected:
 	void FillRectangle(SolidBrush& brush, const Rectangle& rect);

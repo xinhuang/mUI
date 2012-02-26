@@ -31,12 +31,12 @@ Graphics::~Graphics()
 {
 }
 
-void Graphics::DrawLine( Pen& pen, const Point& pt1, const Point& pt2 )
+void Graphics::DrawLine( const Pen& pen, const Point& pt1, const Point& pt2 )
 {
 	DrawLine(pen, pt1.X, pt1.Y, pt2.X, pt2.Y);
 }
 
-void Graphics::DrawLine( Pen& pen, int X1, int Y1, int X2, int Y2 )
+void Graphics::DrawLine( const Pen& pen, int X1, int Y1, int X2, int Y2 )
 {
 	DrawLine(pen, static_cast<float>(X1), 
 		static_cast<float>(Y1), 
@@ -44,7 +44,7 @@ void Graphics::DrawLine( Pen& pen, int X1, int Y1, int X2, int Y2 )
 		static_cast<float>(Y2));
 }
 
-void Graphics::DrawLine( Pen& pen, float X1, float Y1, float X2, float Y2 )
+void Graphics::DrawLine( const Pen& pen, float X1, float Y1, float X2, float Y2 )
 {
 	X1 += offset_.X;
 	Y1 += offset_.Y;
@@ -268,6 +268,26 @@ SizeF Graphics::MeasureString( const String& text, const Font& font )
 		}
 	}
 	return SizeF(width, height);
+}
+
+void Graphics::DrawEllipse( Pen& pen, const Rectangle& rect )
+{
+    DrawEllipse(pen, rect.Location.X, rect.Location.Y, rect.Size.Width, rect.Size.Height);
+}
+
+void Graphics::DrawEllipse( Pen& pen, int x, int y, int width, int height )
+{
+
+}
+
+void Graphics::SetPixel( const Pen& pen, int x, int y )
+{
+    DrawLine(pen, x, y, x + 1, y + 1);
+}
+
+void Graphics::SetPixel( const Pen& pen, const Point& location )
+{
+    SetPixel(pen, location.X, location.Y);
 }
 
 }}}}
