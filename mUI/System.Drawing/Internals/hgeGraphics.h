@@ -78,6 +78,7 @@ protected:
 	void FillRectangle(SolidBrush& brush, int X, int Y, int Width, int Height);
 
 	void DrawString(const String& s, const Font& font, SolidBrush& brush, const PointF& pt);
+    void DrawEllipseSegments( Pen& pen, int x, int y, int width, int height, int nSegments );
 
 private:
 	bool enabled_;				// If the clipping is so small that we ignore the request.

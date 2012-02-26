@@ -277,7 +277,12 @@ void Graphics::DrawEllipse( Pen& pen, const Rectangle& rect )
 
 void Graphics::DrawEllipse( Pen& pen, int x, int y, int width, int height )
 {
+    if (width == 0 || height == 0)
+        return;
+    if (width != height)
+        throw new Exception(L"Ellipse not supported, circle only.");
 
+    DrawEllipseSegments(pen, x, y, width, height, width);
 }
 
 void Graphics::SetPixel( const Pen& pen, int x, int y )
@@ -288,6 +293,22 @@ void Graphics::SetPixel( const Pen& pen, int x, int y )
 void Graphics::SetPixel( const Pen& pen, const Point& location )
 {
     SetPixel(pen, location.X, location.Y);
+}
+
+void Graphics::DrawEllipseSegments( Pen& pen, int x, int y, int width, int height, int nSegments )
+{
+    float radius = (width - 1) / 2;
+    float cx = x + (width - 1) / 2, cy = y + (height - 1) / 2;
+    float segAngle = 2.0 * M_PI / nSegments;
+    float x1, y1;
+    float x2 = width / 2, y2 = 0.f;
+    for (float i = 0.f; i < 2 * M_PI + segAngle; i += segAngle)
+    {
+        x1 = x2; y1 = y2;
+        x2 = radius * cos(i);
+        y2 = radius * sin(i);
+        DrawLine(pen, cx + x1, cy + y1, cx + x2, cy + y2);
+    }
 }
 
 }}}}
