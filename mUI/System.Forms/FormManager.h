@@ -19,6 +19,8 @@
 #include <System/System.h>
 #include "Export.h"
 
+#include "MouseButtons.h"
+
 #include <deque>
 #include <map>
 using namespace std;
@@ -71,7 +73,9 @@ public:
 
     void RaiseLBottonUpEvent( Point pt );
 
-    void RaiseLButtonDown( Point pt );
+    void RaiseLButtonDownEvent( Point pt );
+
+    void RaiseMouseButtonDownEvent( MouseButtons button, Point pt );
 
     void RaiseMouseMoveEvent( Point pt );
 
