@@ -73,6 +73,8 @@ public:
 
     void RaiseLBottonUpEvent( Point pt );
 
+    void RaiseMouseButtonUpEvent( MouseButtons button, Point pt );
+
     void RaiseLButtonDownEvent( Point pt );
 
     void RaiseMouseButtonDownEvent( MouseButtons button, Point pt );
