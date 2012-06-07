@@ -28,6 +28,14 @@ namespace mUI{ namespace System{  namespace Forms{
 class FORMS_ENTRY MouseEventArgs : public EventArgs
 {
 public:
+    MouseEventArgs() {}
+    MouseEventArgs(MouseButtons button, int clicks, int delta, const Drawing::Point& location)
+        : Button(button)
+        , Clicks(clicks)
+        , Delta(delta)
+        , Location(Location)
+    {}
+
 	MouseButtons Button;
 	int Clicks;
 	int Delta;

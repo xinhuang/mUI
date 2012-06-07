@@ -491,29 +491,25 @@ void FormManager::RaiseRButtonUpEvent( Point pt )
 
 void FormManager::RaiseMouseButtonDownEvent( MouseButtons button, Point pt )
 {
-    Control* lbtn_control = ControlAt(pt);
-    if (lbtn_control != null)
+    Control* control = ControlAt(pt);
+    if (control != null)
     {
-        if (lbtn_control->get_Handle() != _d->focusedControl)
+        if (control->get_Handle() != _d->focusedControl)
         {
             Control* lostf_control = Control::FromHandle(_d->focusedControl);
             if (lostf_control != null)
                 Control::_Deactivate(*lostf_control);
 
-            Control::_Activate(*lbtn_control);
+            Control::_Activate(*control);
 
-            Form& form = lbtn_control->FindForm();
+            Form& form = control->FindForm();
             if (form.get_Handle() != _d->mainframe)
                 form.BringToFront();
-            _d->focusedControl = lbtn_control->get_Handle();
+            _d->focusedControl = control->get_Handle();
         }
 
-        MouseEventArgs mea;
-        mea.Button = button;
-        mea.Delta = 0;
-        mea.Location = pt - DeleteMe_GetControlFrameCoord(*lbtn_control);
-        mea.Clicks = 1;
-        lbtn_control->OnMouseDown(&mea);
+        MouseEventArgs mea(button, 1, 0, pt - DeleteMe_GetControlFrameCoord(*control));
+        control->OnMouseDown(&mea);
     }
 }
 
@@ -524,11 +520,7 @@ void FormManager::RaiseMouseButtonUpEvent( MouseButtons button, Point pt )
         control = ControlAt(pt);
     if (control != null)
     {
-        MouseEventArgs mea;
-        mea.Button = button;
-        mea.Clicks = 1;
-        mea.Delta = 0;
-        mea.Location = pt - DeleteMe_GetControlFrameCoord(*control);
+        MouseEventArgs mea(button, 1, 0, pt - DeleteMe_GetControlFrameCoord(*control));
         control->OnMouseUp(&mea);
     }
 }
