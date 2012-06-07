@@ -64,7 +64,20 @@ public:
 	static Point DeleteMe_GetControlFrameCoord(const Control& control);
 
 	void RaiseMouseEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
-	void RaiseKeyboardEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
+
+    void RaiseRButtonUpEvent( Point pt );
+
+    void RaiseRButtonDownEvent( Point pt );
+
+    void RaiseLBottonUpEvent( Point pt );
+
+    void RaiseLButtonDown( Point pt );
+
+    void RaiseMouseMoveEvent( Point pt );
+
+    void RaiseMouseLeaveEvent();
+
+    void RaiseKeyboardEvent(unsigned int message, IntPtr wParam, IntPtr lParam);
 
 	IntPtr GetFocusedHandle() const;
 	void SetFocus(IntPtr value);
