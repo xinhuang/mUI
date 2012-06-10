@@ -38,16 +38,11 @@ Application::Application() :
 IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam )
 {
 	if (_application.IsDisposing())
-		return reinterpret_cast<IntPtr>(CallWindowProc(
-			reinterpret_cast<WNDPROC>(_application._prevWndProc), 
-			reinterpret_cast<HWND>(hWnd), 
-			message, 
-			reinterpret_cast<WPARAM>(wParam), 
-			reinterpret_cast<WPARAM>(lParam)));
+        return CallPreviousWndProc(hWnd, message, wParam, lParam);
 
-	if (message >= WM_MOUSEFIRST && message <= WM_MOUSELAST)
+    if (IsMouseMessage(message))
 		FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
-	else if (message >= WM_KEYFIRST && message <= WM_KEYLAST)
+    else if (IsKeyboardMessage(message))
 		FormManager::get_Instance().RaiseKeyboardEvent(message, wParam, lParam);
 	else
 	{
@@ -69,12 +64,8 @@ IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, Int
 			break;
 		}
 	}
-	return reinterpret_cast<IntPtr>(CallWindowProc(
-		reinterpret_cast<WNDPROC>(_application._prevWndProc), 
-		reinterpret_cast<HWND>(hWnd), 
-		message, 
-		reinterpret_cast<WPARAM>(wParam), 
-		reinterpret_cast<LPARAM>(lParam)));
+
+    return CallPreviousWndProc(hWnd, message, wParam, lParam);
 }
 
 bool Application::DoEvents()
@@ -294,6 +285,26 @@ void Application::Run( Form* form )
 const Size& Application::get_Size()
 {
     return _application._windowSize;
+}
+
+bool Application::IsMouseMessage( unsigned int message )
+{
+    return message >= WM_MOUSEFIRST && message <= WM_MOUSELAST;
+}
+
+bool Application::IsKeyboardMessage( unsigned int message )
+{
+    return message >= WM_KEYFIRST && message <= WM_KEYLAST;
+}
+
+IntPtr Application::CallPreviousWndProc( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam )
+{
+    return reinterpret_cast<IntPtr>(CallWindowProc(
+        reinterpret_cast<WNDPROC>(_application._prevWndProc), 
+        reinterpret_cast<HWND>(hWnd), 
+        message, 
+        reinterpret_cast<WPARAM>(wParam), 
+        reinterpret_cast<LPARAM>(lParam)));
 }
 
 }}}
