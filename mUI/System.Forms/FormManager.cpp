@@ -496,9 +496,9 @@ void FormManager::RaiseMouseButtonDownEvent( MouseButtons button, Point pt )
     {
         if (control->get_Handle() != _d->focusedControl)
         {
-            Control* lostf_control = Control::FromHandle(_d->focusedControl);
-            if (lostf_control != null)
-                Control::_Deactivate(*lostf_control);
+            Control* lostFocusControl = Control::FromHandle(_d->focusedControl);
+            if (lostFocusControl != null)
+                Control::_Deactivate(*lostFocusControl);
 
             Control::_Activate(*control);
 
