@@ -41,29 +41,11 @@ IntPtr __stdcall Application::ProcEvents( IntPtr hWnd, unsigned int message, Int
         return CallPreviousWndProc(hWnd, message, wParam, lParam);
 
     if (IsMouseMessage(message))
-		FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
+        ProcessMouseMessages(message, wParam, lParam);
     else if (IsKeyboardMessage(message))
-		FormManager::get_Instance().RaiseKeyboardEvent(message, wParam, lParam);
+        ProcessKeyboardMessages(message, wParam, lParam);
 	else
-	{
-		switch (message)
-		{
-		case WM_CLOSE:
-			break;
-
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			_application.Dispose();
-			break;
-
-		case WM_ACTIVATE:
-			if (wParam == WA_INACTIVE)
-				FormManager::get_Instance().OnFrameDeactivated();
-			else
-				FormManager::get_Instance().OnFrameActivated();
-			break;
-		}
-	}
+        ProcessMiscMessages(message, wParam);
 
     return CallPreviousWndProc(hWnd, message, wParam, lParam);
 }
@@ -305,6 +287,47 @@ IntPtr Application::CallPreviousWndProc( IntPtr hWnd, unsigned int message, IntP
         message, 
         reinterpret_cast<WPARAM>(wParam), 
         reinterpret_cast<LPARAM>(lParam)));
+}
+
+void Application::OnWindowActivation( IntPtr wParam )
+{
+    if (wParam == WA_INACTIVE)
+        FormManager::get_Instance().OnFrameDeactivated();
+    else
+        FormManager::get_Instance().OnFrameActivated();
+}
+
+void Application::OnWindowDestruction()
+{
+    PostQuitMessage(0);
+    _application.Dispose();
+}
+
+void Application::ProcessMouseMessages( unsigned int message, IntPtr wParam, IntPtr lParam )
+{
+    FormManager::get_Instance().RaiseMouseEvent(message, wParam, lParam);
+}
+
+void Application::ProcessKeyboardMessages( unsigned int message, IntPtr wParam, IntPtr lParam )
+{
+    FormManager::get_Instance().RaiseKeyboardEvent(message, wParam, lParam);
+}
+
+void Application::ProcessMiscMessages( unsigned int message, IntPtr wParam )
+{
+    switch (message)
+    {
+    case WM_DESTROY:
+        OnWindowDestruction();
+        break;
+
+    case WM_ACTIVATE:
+        OnWindowActivation(wParam);
+        break;
+
+    default:
+        break;
+    }
 }
 
 }}}

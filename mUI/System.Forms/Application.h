@@ -80,6 +80,16 @@ private:
 
 	static IntPtr __stdcall ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam );
 
+    static void ProcessMiscMessages( unsigned int message, IntPtr wParam );
+
+    static void ProcessKeyboardMessages( unsigned int message, IntPtr wParam, IntPtr lParam );
+
+    static void ProcessMouseMessages( unsigned int message, IntPtr wParam, IntPtr lParam );
+
+    static void OnWindowDestruction();
+
+    static void OnWindowActivation( IntPtr wParam );
+
     static IntPtr CallPreviousWndProc( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam );
 
     static bool IsKeyboardMessage( unsigned int message );
