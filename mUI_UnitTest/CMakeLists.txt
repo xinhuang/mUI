@@ -27,7 +27,7 @@ INCLUDE_DIRECTORIES(.
 	${PROJECT_SOURCE_DIR}/mUI)
 
 # Link Libraries
-SET(DEPENDENCY_LIBS mUI gtest gmock gtest_main)
+SET(DEPENDENCY_LIBS mUI gtest gmock gmock_main)
 LINK_DIRECTORIES(
 )
 
