@@ -28,7 +28,10 @@ else ()
 	message(FATAL_ERROR "Unable to find FreeType2")
 endif ()
 
-SET(DEPENDENCY_LIBS Pal HGE hgehelp freetype245MT_D)
+SET(DEPENDENCY_LIBS Pal HGE hgehelp 
+	debug debug/freetype245MT_D
+	optimized release/freetype245MT_D
+)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/dependency/freetype2/include)
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/dependency/freetype2/lib
 	${PROJECT_SOURCE_DIR}/dependency/hge/lib/vc)
