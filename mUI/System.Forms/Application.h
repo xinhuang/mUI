@@ -62,14 +62,13 @@ public:
     static const Size& get_Size();
 
 protected:
-
 	// HGE functions
 	static bool InitFunc();
 	static bool FrameFunc();
 	static bool RenderFunc();
 	static bool PrivateInitialize();
 
-	// Clean Up
+	// Clean up
 	void Dispose();
 	void OnFormClose( void* sender, EventArgs* e );
 
@@ -79,9 +78,25 @@ private:
 	Application();
 	~Application();
 
-	//static LRESULT CALLBACK ProcEvents( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
 	static IntPtr __stdcall ProcEvents( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam );
-	typedef IntPtr (__stdcall *wndproc_t)(IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam);
+
+    static void ProcessMiscMessages( unsigned int message, IntPtr wParam );
+
+    static void ProcessKeyboardMessages( unsigned int message, IntPtr wParam, IntPtr lParam );
+
+    static void ProcessMouseMessages( unsigned int message, IntPtr wParam, IntPtr lParam );
+
+    static void OnWindowDestruction();
+
+    static void OnWindowActivation( IntPtr wParam );
+
+    static IntPtr CallPreviousWndProc( IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam );
+
+    static bool IsKeyboardMessage( unsigned int message );
+
+    static bool IsMouseMessage( unsigned int message );
+
+    typedef IntPtr (__stdcall *wndproc_t)(IntPtr hWnd, unsigned int message, IntPtr wParam, IntPtr lParam);
 
 	bool IsDisposing() const;
 private:
