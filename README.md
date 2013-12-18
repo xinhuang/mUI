@@ -39,6 +39,19 @@ The way to add UI widget and listen to event is just the WinForm way in C++:
 
         _d->configForm->Show();
     }
+    
+Demos
+====
+There are 2 demos using mUI:
+
+***Mine Game***
+=====
+The classic Windows game with exact same apperance.
+
+***Visual Sort***
+=====
+A visually demo of quick sort, with a worker thread sorting the array while showing sort steps on screen.
+
 
 Dependencies
 ====
