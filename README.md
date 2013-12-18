@@ -56,10 +56,10 @@ A visually demo of quick sort, with a worker thread sorting the array while show
 Dependencies
 ====
 
-Rendering: [HGE](http://hge.relishgames.com/)
-Font:      [FreeType](http://www.freetype.org/)
-Testing:   [googletest](https://code.google.com/p/googletest/)
-           [googlemock](http://code.google.com/p/googlemock/)
+Rendering: [HGE](http://hge.relishgames.com/)    
+Font:      [FreeType](http://www.freetype.org/)    
+Testing:   [googletest](https://code.google.com/p/googletest/) 
+           [googlemock](http://code.google.com/p/googlemock/)    
            
 License
 ====
