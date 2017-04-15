@@ -1,6 +1,8 @@
 mUI
 ===
 
+__This project is deprecated and will no longer be maintained. It is kept here for demostration purpose only. If you are looking for a UI GUI framework for your game, there are plenty [alter](https://www.reddit.com/r/gamedev/comments/2hrwfi/anyone_know_a_flexible_gui_library_for_games_in_c/)[natives](http://stackoverflow.com/questions/4845969/game-gui-framework). Choose the one suits you the best.__
+
 mUI is a 2D game GUI based on HGE, in C++, similiar to WinForm .NET.
 
 mUI is has implementation of C# `delegate`, and adopt same event driven model and threading interface as WinForm .NET.  
